@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Java",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "cwd": "${fileDirname}",
+            "startupClass": "mainCode",
+            "options": [
+            ]
+        },
+        {
+            "name": "Java Console App",
+            "type": "java",
+            "request": "launch",
+            "stopOnEntry": true,
+            "cwd": "${fileDirname}",
+            "startupClass": "mainCode",
+            "options": [
+            ],
+            "externalConsole": true
+        }
+    ]
+}
