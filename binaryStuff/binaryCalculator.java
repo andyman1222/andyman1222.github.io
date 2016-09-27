@@ -1,7 +1,12 @@
 import java.util.*;
 import java.util.Scanner;
 
-class binaryCalculator{
+/**
+A testerish class for binaryFunctions
+@author Andy Herbert
+*/
+
+public class binaryCalculator{
     static List<Long> bytes = new ArrayList<Long>();
     static int valueToPrint = 0;
     static String input;
