@@ -1,0 +1,6 @@
+{
+    "bitrate": 2000,
+    "gpu": 1,
+    "preset": "hq",
+    "profile": "high"
+}

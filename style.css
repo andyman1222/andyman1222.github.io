@@ -1,0 +1,161 @@
+p{
+	font-family: Verdana;
+	color:white;
+}
+h1{
+	font-family: "Lucida Console";
+	color:white;
+}
+h2{
+	font-family: "Lucida Console";
+	color:white;
+}
+a{
+	font-family: Verdana;
+	color:white;
+}
+li{
+	font-family: Verdana;
+	color:white;
+}
+#currentPage{
+	background-color: white;
+	color: white;
+}
+#head{
+	width:100%;
+	height:60px;
+	border-width:1px;
+	border-style:solid;
+	text-align:left;
+	overflow-x: auto;
+	white-space:nowrap;
+    overflow-y: hidden;
+    background-color:black;
+}
+#head a{
+	display:inline;
+	border-width:1px;
+	border-style:solid;
+	text-decoration: none;
+	color:white;
+	background-color:black;
+}
+h5{
+	color:white;
+	font-family:"Lucida Console";
+}
+h3{
+	color:white;
+	font-family:"Lucida Console";
+}
+#headAndText{
+	background-color:black;
+}
+#pageList{
+	background-color: black;
+	}
+#headAndText h1{
+	color:white;
+	font-family: "Lucida Console";
+}
+body{
+	background-color:black;
+	font-family: Verdana;
+}
+iframe{
+    border-width:0px;
+	border-style:solid;
+}
+
+#leftMenu{
+	text-align:center;
+	float:left;
+	width:20%;
+	height:100%;
+	word-wrap:break-word;
+	min-height:100%;
+}
+
+#leftMenu button{
+	width:90%;
+}
+
+#rightMenu{
+	text-align:center;
+	float:right;
+	width:18%;
+	height:100%;
+	min-height:100%;
+	word-wrap:break-word;
+}
+
+#rightMenu button{
+	width:90%;
+}
+
+#centerMenu{
+	float:center;
+	width:56%;
+	height:100%;
+	word-wrap:break-word;
+	margin-left: 22%;
+	padding-left: 2%;
+	padding-right: 2%;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+
+button{
+	background-color:white;
+	color:black;
+	-webkit-transition-duration:1s;
+	transition-duration:1s;
+	border: 1px solid black;
+	padding:5px 5px;
+}
+button:hover{
+	background-color:grey;
+	color:white;
+}
+
+#buttonMenu{
+	background-color:white;
+	color:black;
+	-webkit-transition-duration:1s;
+	transition-duration:1s;
+	border-width: 0px;
+	padding:16% 5px;
+}
+#buttonMenu:hover{
+	background-color:grey;
+	color:white;
+}
+#headerButtons button{
+	display:block;
+	float:left;
+}
+#headerBttons button:hover{
+	border: 1px solid white;
+}
+
+#posts img{
+	width:25%;
+	height:25%;
+}
+
+#preview img{
+	width:25%;
+	height:25%;
+}
+
+#content img{
+	width:100%;
+	height:100%;
+}
+#content{
+	line-height: 200%;
+}
+#content li{
+	margin-bottom: 10px;
+}

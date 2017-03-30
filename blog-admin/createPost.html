@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Edit or create post</title>
+  <link rel="stylesheet" href="//quantumquantonium.ddns.net/style.css" id="style" type="text/css">
+  <link rel="icon" href="//quantumquantonium.ddns.net/_images/fish.png" id="icon" type="image/x-icon">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script src="//apis.google.com/js/platform.js" async defer></script>
+	<script src='//andyherbert254.ddns.net/headerGet.js'></script>
+	<script src='//andyherbert254.ddns.net/google+badge.js'></script>
+  <script src='//andyherbert254.ddns.net/blog-admin/create.js'></script>
+
+</head>
+
+<body>
+	<div id='headAndText'>
+	</div>
+  <div id="centerMenu">
+    <h1>Create post</h1>
+    <br><br>
+    <p>Title:</p>
+    <input id="post-title" style="width:100%;"></textarea><br><br>
+    <p>Front page:</p>
+    
+    <textarea rows=5 id="post-preview" style="width:100%;" ondrop="drop(document.getElementById('post-preview'), event)" ondragover="allowDrop(event)"></textarea>
+    <p>Content:</p><br>
+    <textarea rows=10 id="post-content" style="width:100%;" ondrop="drop(document.getElementById('post-content'),event)" ondragover="allowDrop(event)"></textarea>
+    <br>
+    <p>drag-and-drop above to upload files</p>
+    <div id="output">
+      <p>Uploaded files shown here.</p>
+    </div>
+    <button onClick="createPost();">Create post</button>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>image gallery</title>
+    <link rel="stylesheet" href="//quantumquantonium.ddns.net/style.css" id="style" type="text/css">
+    <link rel="icon" href="//quantumquantonium.ddns.net/_images/fish.png" id="icon" type="image/x-icon">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script src="//apis.google.com/js/platform.js" async defer></script>
+    <script src="//andyherbert254.ddns.net/headerGet.js"></script>
+    <script src="//andyherbert254.ddns.net/google+badge.js"></script>
+
+
+</head>
+
+<body>
+    <div id='headAndText'>
+    </div>
+    <div id="centerMenu">
+        <h1>Other screenshots</h1>
+        <p>Click an image to open and enlarge it in another tab.</p>
+        <button onClick="window.location.href='epic'">Go to the epic screenshots</button>
+        <div style="width:100%;">
+            <hr>
+            <div id="thumbnails" align="center"></div>
+        </div>
+
+        <script type="text/javascript">
+var xhttp2 = new XMLHttpRequest();
+var output2;
+function update2(){
+    xhttp2.onreadystatechange = function() {
+		if (xhttp2.readyState == 4 && xhttp2.status == 200) {
+			console.log("readystate = 4");
+			output2 = xhttp2.responseText;
+            console.log(output2);
+            document.getElementById("thumbnails").innerHTML = output2;
+        }
+    }
+}
+function getPics(){
+    xhttp2.open("GET", window.location.protocol + "//" + window.location.host + "/images_and_videos/screenshots/php.php?path=null" ,true);
+	xhttp2.send();
+    update2();
+}
+
+getPics();
+</script>
+    </div>
+
+    <!-- Place this tag after the last widget tag. -->
+    <script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</body>
+
+</html>

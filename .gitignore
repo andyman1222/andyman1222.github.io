@@ -1,0 +1,33 @@
+# specific files
+google768d1a053aa52dc3.html
+config.dat
+web.config
+ftp.cs
+ftp.exe
+posts/
+*.xml
+secret/
+swbf2_pc_v1.1.zip
+
+# files that may have personal info
+.htaccess
+.htpasswd
+*.htaccess
+*.htpasswd
+client_secret_850373061539-jill6m3e555ls2gvovbf8lk92ie0fvo2.apps.googleusercontent.com.json
+
+# ignore screenshots
+images_and_videos/Screenshots/*.jpg
+images_and_videos/Screenshots/*.png
+images_and_videos/Screenshots/epic/*.jpg
+images_and_videos/Screenshots/epic/*.png
+images_and_videos/Screenshots/epic/thumbnails/
+images_and_videos/Screenshots/thumbnails/
+
+# JS secure file stuffs
+_javascript/PHPServerTest/storage.txt
+_javascript/PHPServerTest/userFiles/
+.well-known/
+*.ini
+*.db
+sitemap/php.php
