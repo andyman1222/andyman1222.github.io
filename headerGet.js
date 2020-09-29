@@ -25,6 +25,8 @@ function getHead(){
 $(document).ready(function(){
     $("#headAndText").load("//" + window.location.host + "/header.html");
     if(date.getMonth()+1==12||date.getMonth()+1<4) $.getScript("//" + window.location.host + "/snowstorm.js");
+    var setFav = document.createElement('link');
+    setFav.setAttribute('href', "//" + window.location.host + "/images/fish.png");
   });
 
 //getHead();
