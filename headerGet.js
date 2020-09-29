@@ -29,10 +29,10 @@ $(document).ready(function () {
 });
 
 var headTitle = document.querySelector('head');
-    var setFav = document.createElement('link');
-    setFav.setAttribute('rel', 'icon');
-    setFav.setAttribute('href', "//" + window.location.host + "/images/fish.png");
-    headTitle.appendChild(setFav);
+var setFav = document.createElement('link');
+setFav.setAttribute('rel', 'icon');
+setFav.setAttribute('href', "//" + window.location.host + "/images/fish.png");
+headTitle.appendChild(setFav);
 
 //getHead();
 (function () {
