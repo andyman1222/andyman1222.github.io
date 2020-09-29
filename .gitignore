@@ -7,7 +7,7 @@ ftp.exe
 posts/
 *.xml
 secret/
-swbf2_pc_v1.1.zip
+
 
 # files that may have personal info
 .htaccess

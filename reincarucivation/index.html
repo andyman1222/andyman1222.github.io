@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Reincarucivation</title>
+  <link rel="stylesheet" href="../style.css" id="style" type="text/css">
+  <link rel="icon" href="../_images/fish.png" id="icon" type="image/x-icon">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="../headerGet.js"></script>
+
+
+</head>
+
+<body>
+  <div id='headAndText'>
+  </div>
+  <div id="centerMenu">
+      <h1>"Reincarucivation"</h1>
+      <p>In the Hindu and Buddhist traditions, it is believed that everyone is reborn into a new life when they die. Hinduism stemmed from Upanishadic beliefs, which concluded that everyone is essentially god, and the world is an illusion. As a result of this illusion, everyone is reborn acter they die. Known as samsara, many Hindus strived to break this cycle of rebirth by trying to understand more about their world and their minds, through yoga and meditation. After experiencing suffering, death, and meditation, the Enlightened One, or Buddha, discovered the path to Enlightenment.<br><br>
+      To demonstrate samsara, I have created a program on this website that causes rebirth of code, or recursion. Below is a log of all the different "lives" or loops that the program has gone through. By enduring suffering and believing that everything on the is page is nothing (aka scrolling down to the bottom of the page), one can reach enlightnment with the simple click of a button and break the cycle of recursion<a href="enlightened.html">.</a> Looping through the same code infinitely many times is like samsara, and with the lucky number, each rebirth will have similarities and differences to all the other rebirths. However, luckily your computer isn't stuck in rebirth forever- all you have to do is close the web page or just wait for your computer's memory to overflow, and this "rebirth" will stop instantly.</p>
+      <div id="text"></div>
+      <script>
+        var liveCount = 0;
+          function a(){
+            liveCount++;
+            
+            document.getElementById("text").innerHTML = "<p>Congratulations on your reincarnation number " + liveCount + "! Your lucky number is: " + Math.random() + "</p>" + document.getElementById("text").innerHTML;
+            
+          }
+          var loop = setInterval(a, 100);
+        </script>
+        <a href="enlightened.html">Click here to reach enlightenment.</a>
+    </div>
+  
+
+  </div>
+
+</body>
+
+</html>

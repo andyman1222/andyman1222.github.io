@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>document template</title>
+  <link rel="stylesheet" href="style.css" id="style" type="text/css">
+  <link rel="stylesheet" href="error-style.css" id="style" type="text/css">
+  <link rel="icon" href="_images/fish.png" id="icon" type="image/x-icon">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="headerGet.js"></script>
+
+
+</head>
+
+<body bgcolor=#1173aa style="background-color:#1173aa;">
+  <div id='headAndText'>
+  </div>
+  <div id="centerMenu">
+    <h1 style="font-size:500%;">:)</h1>
+    <h3>Your PC ran into a problem that it couldn't handle, and now it's forcing you to restart. Rest assured, the website you
+      are trying to visit requires you to login.</h3>
+    <p>If you think this is an issue, please report it to <a href="mailto:andycherbert@gmail.com">The server admin.</a><br>      IMPORTANT STUFF:
+      <ul>
+        <li>
+          <!--#echo var="HTTP_REFERER" -->(where you came from)
+          <li>
+            <!--#echo var="REMOTE_ADDR" -->(this is =
+            <!--#echo var="HTTP_HOST" -->)
+            <li>
+              <!--#echo var="REQUEST_URI" -->(the bad URL)
+              <li>
+                <!--#echo var="HTTP_HOST" -->(gud naem)
+                <li>
+                  <!--#echo var="HTTP_USER_AGENT" -->(Did you know HTML can steal all this info?)
+                  <li>
+                    <!--#echo var="REDIRECT_STATUS" -->(pointless codes...)
+                  </li>
+    </p>
+  </div>
+
+</body>
+
+</html>

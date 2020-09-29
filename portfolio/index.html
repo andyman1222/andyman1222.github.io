@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+
+<head>
+  <meta charset="utf-8">
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="../style.css" id="style" type="text/css">
+  <link rel="icon" href="../_images/fish.png" id="icon" type="image/x-icon">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="../headerGet.js"></script>
+  <script>
+    function showDescription(parentId, textId, imageDiv) {
+      document.getElementById(textId).style.display = 'block';
+      document.getElementById(parentId).style.height = '100%';
+      //document.getElementById(parentId).style.position='relative';
+      document.getElementById(parentId).style.marginTop = '-10em';
+      document.getElementById(parentId).style.paddingBottom = '0%';
+      document.getElementById(imageDiv).style.filter = "blur(10px)";
+      document.getElementById(imageDiv).style.webkitFilter = "blur(10px)";
+    }
+    function hideDescription(parentId, textId, imageDiv) {
+      //return;
+      document.getElementById(textId).style.display = 'none';
+      document.getElementById(parentId).style.height = null;
+      //document.getElementById(parentId).style.position='absolute';
+      document.getElementById(parentId).style.marginTop = null;
+      document.getElementById(parentId).style.paddingBottom = null;
+      document.getElementById(imageDiv).style.filter = null;
+      document.getElementById(imageDiv).style.webkitFilter = null;
+    }
+  </script>
+
+</head>
+
+<body>
+  <style>
+    div.port-item {
+      height: 10em;
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+      margin-bottom: 2em;
+      display: inline-block;
+    }
+
+    div.nice-background {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      filter: blur(0);
+      -webkit-filter: blur(0);
+      z-index: 1;
+
+      /*position:absolute;*/
+    }
+
+    div.nice-text {
+      width: 100%;
+      height: 4em;
+      background-color: rgba(0, 0, 0, .5);
+      text-align: center;
+      word-wrap: break-word;
+      margin-top: -4.5em;
+      padding-top: .5em;
+      position: relative;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    p.description {
+      position: absolute;
+      width: 100%;
+      margin-top: 4em;
+    }
+
+    h3.port-item {
+      position: absolute;
+      width: 100%;
+    }
+  </style>
+  <div id='headAndText'>
+  </div>
+  <div id="centerMenu">
+    <!--PAGE CONTENTS HERE-->
+    <h1>Portfolio</h1>
+    <hr>
+    <p>All sorts of works and what not that I have accomplished, I guess. This is a temporary description anyways.</p>
+
+    <h2>Game development</h2>
+
+    <div class="port-item" onmouseover="showDescription('amazeingD', 'amazeing', 'amazeingImg');"
+      onmouseout="hideDescription('amazeingD', 'amazeing', 'amazeingImg');">
+      <div class="nice-background" id="amazeingImg" style="background-image: url('images/Amazeing.png');">
+        <img src="images/Amazeing.png" style="visibility: hidden;">
+      </div>
+      <div id="amazeingD" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/Amazeing';">
+        <h3 class="port-item">Amazeing</h3>
+        <p id="amazeing" style="display: none;" class="description">My WIP indie puzzle/maze game</p>
+      </div>
+    </div>
+
+
+    <div class="port-item" onmouseover="showDescription('kD', 'k', 'kI');"
+      onmouseout="hideDescription('kD', 'k', 'kI');">
+      <div class="nice-background" id="kI" style="background-image: url('images/kungfurun.png');">
+        <img src="images/kungfurun.png" style="visibility: hidden;">
+      </div>
+      <div id="kD" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/KungFuRun';">
+        <h3 class="port-item">Kung-Fu Run</h3>
+        <p id="k" style="display: none;" class="description">A class project created in a group of 5</p>
+      </div>
+    </div>
+
+    <div class="port-item" onmouseover="showDescription('testD2', 'test2', 'testImg2');"
+      onmouseout="hideDescription('testD2', 'test2', 'testImg2');">
+      <div class="nice-background" id="testImg2" style="background-image: url('../_images/fish.png');">
+        <img src="../_images/fish.png" style="visibility: hidden;">
+      </div>
+      <div id="testD2" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/test.html';">
+        <h3 class="port-item">Test</h3>
+        <p id="test2" style="display: none;" class="description">This is a test.</p>
+      </div>
+    </div>
+
+    <div class="port-item" onmouseover="showDescription('testD3', 'test3', 'testImg3');"
+      onmouseout="hideDescription('testD3', 'test3', 'testImg3');">
+      <div class="nice-background" id="testImg3" style="background-image: url('../_images/fish.png');">
+        <img src="../_images/fish.png" style="visibility: hidden;">
+      </div>
+      <div id="testD3" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/test.html';">
+        <h3 class="port-item">Test</h3>
+        <p id="test3" style="display: none;" class="description">This is a test.</p>
+      </div>
+    </div>
+    <br>
+    <h2>3D</h2>
+
+
+</body>
+
+</html>

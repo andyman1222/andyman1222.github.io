@@ -1,5 +1,13 @@
-<?php
-    $file = file_get_contents("https://picasaweb.google.com/data/feed/api/user/116696308179792866362/albumid/6131096177041228785");
+<!--?php
+#Obselete!
+header("Content-Type: text/javascript; charset=utf-8");
+$http_origin = $_SERVER['HTTP_ORIGIN'];
+
+if ($http_origin == "http://quantumquantonium.blogspot.com" || $http_origin == "https://quantumquantonium.blogspot.com" )
+{  
+    header("Access-Control-Allow-Origin: $http_origin");
+}
+    $file = file_get_contents("http://picasaweb.google.com/data/feed/api/user/brick1222.andycman/albumid/6131096177041228785");
     $xml = new SimpleXMLElement($file);
     $dom_sxe = dom_import_simplexml($xml);  // Returns a DomElement object
 
@@ -8,22 +16,30 @@
     $dom_sxe = $dom_output->importNode($dom_sxe, true);
     $dom_sxe = $dom_output->appendChild($dom_sxe);
 
-    $xmlFormatted = $dom_output->saveXML($dom_output, LIBXML_NOEMPTYTAG);
+    $xmlFormatted = (string)($dom_output->saveXML($dom_output, LIBXML_NOEMPTYTAG));
     $xmlObj = simplexml_load_string($xmlFormatted);
-    foreach ($xmlObj->children() as $entry){
-        $currentItem = (string)$entry->id;
-        if($currentItem != ""){
-            $file2 = file_get_contents($currentItem) or die("Cannot read " . $currentItem);
-            $xml2 = new SimpleXMLElement($file2);
-            $dom_sxe2 = dom_import_simplexml($xml2);  // Returns a DomElement object
-            $dom_output2 = new DOMDocument('1.0');
-            $dom_output2->formatOutput2 = true;
-            $dom_sxe2 = $dom_output2->importNode($dom_sxe2, true);
-            $dom_sxe2 = $dom_output2->appendChild($dom_sxe2);
-            $xmlFormatted2 = $dom_output2->saveXML($dom_output2, LIBXML_NOEMPTYTAG);
-            $xmlObj2 = simplexml_load_string($xmlFormatted2);
-            echo "<video width='25%'><source src=\"" . (string)($xmlObj2->content) . "\" type='video/mp4'></video>";
-            echo $xmlObj2->content;
-        }
+    $list = $xmlObj->children()->entry;
+    $info = "";
+    for($i = (sizeof($list)-$_GET['start']-1)%sizeof($list); $i > (sizeof($list)-$_GET['end']-1)%sizeof($list); $i--){
+        $entry = $list[abs($i)];
+        //echo $entry;
+        $id = $entry->children()->id;
+        $currentItem = $entry->children("media", true)->group;
+        $dom_sxe = dom_import_simplexml($currentItem);  // Returns a DomElement object
+
+        $dom_output = new DOMDocument('1.0');
+        $dom_output->formatOutput = true;
+        $dom_sxe = $dom_output->importNode($dom_sxe, true);
+        $dom_sxe = $dom_output->appendChild($dom_sxe);
+
+        $xmlFormatted = (string)($dom_output->saveXML($dom_output, LIBXML_NOEMPTYTAG));
+        $xmlObj = simplexml_load_string($xmlFormatted);
+        $item = $xmlObj->children("media", true)->content[1];
+        echo $item;
+        $content = explode("\"", $item->asXML());
+        $item2 = $xmlObj->children("media", true)->content[sizeof($xmlObj->children("media", true)->content)-1];
+        $largeVid = explode("\"", $item2->asXML())[1];
+        echo "<video width='25%' loop muted onmouseover='clickable?document.getElementById(\"$id\").play():document.getElementById(\"$id\").pause()' onmouseout='document.getElementById(\"$id\").pause()' onClick= 'displayVideo(\"$largeVid\");'\" id=\"$id\"><source src=\"$content[1]\" type='video/mp4'></video>";
     }
-?>
+
+?-->

@@ -1,0 +1,41 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" href="../../style.css" id="style" type="text/css">
+  <link rel="icon" href="../../_images/fish.png" id="icon" type="image/x-icon">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="../../headerGet.js"></script>
+
+
+</head>
+
+<body>
+	<div id='headAndText'>
+	</div>
+<div id='centerMenu'>
+<h1 id="title"></h1>
+<button onClick='window.location.href="imgur-viewer-normal.html"'>Go back to other screenshots</button><br>
+<button onClick='window.location.href="imgur-viewer-epic.html"'>Go back to EPIC screenshots</button><br>
+<div id = 'thumbnails'>
+	<p>Click image to view in full size and download.</p>
+	<a id="downloadLink" title='Click to view in full size and download.' >
+		<img id="img" style='width:100%;height:100%;' alt=''>
+	</a>
+	<br>
+
+</div>
+</div>
+<script>
+	var query = window.location.search;
+	var params = new URLSearchParams(query);
+	var file = params.get('image');
+	document.title = file;
+	
+	document.getElementById("title").innerText = file;
+	document.getElementById("downloadLink").href="//i.imgur.com/" + file + ".jpg";
+	document.getElementById("img").src = "//i.imgur.com/" + file + ".jpg";
+	</script>
+</body>
+</html>

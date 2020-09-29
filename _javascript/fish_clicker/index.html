@@ -1,18 +1,16 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>Fish Clicker!!!</title>
 
-<!--script imported from fish_clicker.js -->
-<script src="fish_clicker.js" type="text/javascript"></script>
-<link rel="stylesheet" href="//quantumquantonium.ddns.net/style.css" id="style" type="text/css">
-  <link rel="icon" href="//quantumquantonium.ddns.net/_images/fish.png" id="icon" type="image/x-icon">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script src="//apis.google.com/js/platform.js" async defer></script>
-	<script src='//andyherbert254.ddns.net/headerGet.js'></script>
-	<script src='//andyherbert254.ddns.net/google+badge.js'></script>
+	<!--script imported from fish_clicker.js -->
+	<script src="fish_clicker.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="../../style.css" id="style" type="text/css">
+	<link rel="icon" href="../../_images/fish.png" id="icon" type="image/x-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src='../../headerGet.js'></script>
 
 
 </head>
@@ -20,74 +18,96 @@
 <body>
 	<div id='headAndText'>
 	</div>
-<div id="centerMenu">
-<!--title-->
-<h1>CLICK DA FISH</h1>
+	<div id="centerMenu">
+		<!--title-->
+		<h1>CLICK DA FISH</h1>
 
-<!--money count-->
-<div id="loot" style="background-color:black;color:gold;">
-	<p>Gills "borrowed" from fish (aka gold):</p><div id="lootNumber" style="font-family:arial;">0</div></div>
+		<!--money count-->
+		<div id="loot" style="background-color:black;color:gold;">
+			<p>Gills "borrowed" from fish (aka gold):</p>
+			<div id="lootNumber" style="font-family:arial;">0</div>
+		</div>
 
-<!--fish image-->
-<div id="fish">
-	<img onCLick="press()" style="visibility:visible;" src="fish.png"></img>
-</div>
+		<!--fish image-->
+		<div id="fish">
+			<img onCLick="press()" style="visibility:visible;" src="fish.png"></img>
+		</div>
 
-<!--health for fish an player-->
-<p>hitpoints: <p id="hitpoints">100</p></p>
-<p>fish hitpoints: <p id="fishHitpoints">100</p></p><br>
+		<!--health for fish an player-->
+		<p>hitpoints:
+			<p id="hitpoints">100</p>
+		</p>
+		<p>fish hitpoints:
+			<p id="fishHitpoints">100</p>
+		</p><br>
 
-<!--All the buttons for the shoppe. The buttons' visibility is handled in the script-->
-<div id="shop">
+		<!--All the buttons for the shoppe. The buttons' visibility is handled in the script-->
+		<div id="shop">
 
-<hr>
-	<!--title and "shoppe status-->
-	<h2>Welcome to the shoppe!</h2>
-	<p id="shoppe status">Welcome to the shoppe! Nothing's on sale, why not try to tap that fish over there?</p>
-	
-	<!--buttons for all the stuff you can buy
+			<hr>
+			<!--title and "shoppe status-->
+			<h2>Welcome to the shoppe!</h2>
+			<p id="shoppe status">Welcome to the shoppe! Nothing's on sale, why not try to tap that fish over there?</p>
+
+			<!--buttons for all the stuff you can buy
 	
 	buy 1 healthpoint for 10 gold-->
-	<button id="health" style="visibility:hidden;"  onClick="healthAdd();">Click to buy 1 health point! (10 gold)</button><br>
-	
-	<!--buy an auto clicker that will give you one gold/sec per clicker-->
-	<button id="clickerv1" style="visibility:hidden;" onClick="addClicker();">Click to buy a clicker to click for you! (200 gold)</button><br>
-	
-	<!--buy a defender. Defender code helps you survive fish attacks. See fish_clicker.js for how defender works.-->
-	<button id="defender" style="visibility:hidden" onClick="defenderAdd()">Click to buy a defender to defend you against the fish! (300 gold)</button><br>
-	
-	<!--buy an attacker, which boosts you attacking the fish. Check code for how it works.-->
-	<button id="attacker" style="visibility:hidden;" onClick="attackerAdd();">Click to add an attacker to get revenge on the fish!!! (400 gold)</button>
-	
-</div>
+			<button id="health" style="visibility:hidden;" onClick="healthAdd();">Click to buy 1 health point! (10 gold)</button><br>
 
-<hr>
+			<!--buy an auto clicker that will give you one gold/sec per clicker-->
+			<button id="clickerv1" style="visibility:hidden;" onClick="addClicker();">Click to buy a clicker to click for you! (200 gold)</button><br>
 
-<!--status showing all sorts of info-->
-<div id="status">
-	<h2>Your stats:</h2>
-	
-	<!--how many clicks were clicked or simulated by clickers-->
-	<p id = "clickerz">You and your clickers have clicked 0 times.</p>
-	
-	<!--a list of what items you bought from the shoppe.-->
-	<p>You have bought:
-	<ul id="what u bought">
-		<li>Clickers: <p id="click-buy">0</p></li>
-		<li>Defenders: <p id="def-buy">0</p></li>
-		<li>Attackers: <p id="att-buy">0</p></li>
-		<li>Health: <p id="heal-buy">0</p></li>
-		</ul>
-	</p>
-	
-	<!--shows you how many times the fish attacks-->
-	<p>The fish attacked you </p><div id="fishAttack" style="color:white;font-family:arial;">0</div> <p>times.<br><br>
-	
-	<!--shows you how many times you attacked the fish-->
-	You have attacked the fish </p><div id="playerAttack" style="color:white;font-family:arial;">0</div> <p>times.<br><br>
-	
-	<!--how many fish you defeat-->
-	You have defeated </p><div id="fishKill" style="color:white;font-family:arial;">0</div><p> fish.</p></div>
+			<!--buy a defender. Defender code helps you survive fish attacks. See fish_clicker.js for how defender works.-->
+			<button id="defender" style="visibility:hidden" onClick="defenderAdd()">Click to buy a defender to defend you against the fish! (300 gold)</button><br>
+
+			<!--buy an attacker, which boosts you attacking the fish. Check code for how it works.-->
+			<button id="attacker" style="visibility:hidden;" onClick="attackerAdd();">Click to add an attacker to get revenge on the fish!!! (400 gold)</button>
+
+		</div>
+
+		<hr>
+
+		<!--status showing all sorts of info-->
+		<div id="status">
+			<h2>Your stats:</h2>
+
+			<!--how many clicks were clicked or simulated by clickers-->
+			<p id="clickerz">You and your clickers have clicked 0 times.</p>
+
+			<!--a list of what items you bought from the shoppe.-->
+			<p>You have bought:
+				<ul id="what u bought">
+					<li>Clickers:
+						<p id="click-buy">0</p>
+					</li>
+					<li>Defenders:
+						<p id="def-buy">0</p>
+					</li>
+					<li>Attackers:
+						<p id="att-buy">0</p>
+					</li>
+					<li>Health:
+						<p id="heal-buy">0</p>
+					</li>
+				</ul>
+			</p>
+
+			<!--shows you how many times the fish attacks-->
+			<p>The fish attacked you </p>
+			<div id="fishAttack" style="color:white;font-family:arial;">0</div>
+			<p>times.<br><br>
+
+				<!--shows you how many times you attacked the fish-->
+				You have attacked the fish </p>
+			<div id="playerAttack" style="color:white;font-family:arial;">0</div>
+			<p>times.<br><br>
+
+				<!--how many fish you defeat-->
+				You have defeated </p>
+			<div id="fishKill" style="color:white;font-family:arial;">0</div>
+			<p> fish.</p>
+		</div>
 	</div>
 </body>
+
 </html>
