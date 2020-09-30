@@ -33,7 +33,7 @@ var iconList = ["circular_blur.png", "cursedfish.png", "eue.png", "fish flipped.
 })();
 
 function randomFishImage(){
-    return iconList[Math.random()*iconList.length];
+    return iconList[parseInt(Math.random()*iconList.length)];
 }
 
 function clickFish(){
