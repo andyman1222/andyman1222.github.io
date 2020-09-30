@@ -27,7 +27,7 @@
 	</div>
 	<div id="centerMenu">
 	<div id="posts">
-		<p id="alert">If you see this text, please reload the page.</p>
+		<p id="alert">This blog is no longer active. Please visit <a href="http://quantonium.tk/blog-archive.php">quantonium.tk</a> for blog archive.</p>
 		<?php
 			$dir = 'posts/';
 			$ffs = scandir($dir);
