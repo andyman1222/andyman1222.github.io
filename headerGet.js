@@ -41,7 +41,7 @@ function clickFish(){
 }
 
 function unclickFish(){
-    document.getElementById("fishy").src="//" + window.location.host + "/images/pirahna-resized.jpg";
+    document.getElementById("fishy").src="//" + window.location.host + "/images/piranha-resized.jpg";
 }
 
 $(document).ready(function () {
