@@ -22,7 +22,7 @@ function getHead() {
     applyHead();
 }
 
-var iconList = ["circular_blur.png", "cursedfish.png", "eue.png", "fish flipped.png", "fish mosaic.png", "fish.png", "fish-click.png", "fishvr.png", "fishwatery.png", "image0001.gif", "implode.png", "new icon v2.png", "piranha quantum.png", "piranha-resized - christmas.jpg"];
+var iconList = ["circlular_blur.png", "cursedfish.png", "eue.png", "fish flipped.png", "fish mosaic.png", "fish.png", "fish-click.png", "fishvr.png", "fishwatery.png", "image0001.gif", "implode.png", "new icon v2.png", "piranha quantum.png", "piranha-resized - christmas.jpg"];
 
 //getHead();
 (function () {
