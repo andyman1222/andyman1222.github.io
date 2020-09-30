@@ -38,7 +38,7 @@ var fish = { health: 100, attack: 0, kill: 0 };
 function press() {
 
 	//the fish quickly gets wide eyes then goes to normal
-	document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/_javascript/fish_clicker/fish-click.png' style='width:64px;height:64px'></img>";
+	document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/javascript/fish_clicker/fish-click.png' style='width:64px;height:64px'></img>";
 
 	//increase number of clicks
 	clickings = clickings + 1;
@@ -81,7 +81,7 @@ function loop() {
 		gold = gold + 1;
 
 		//changes fish image to big eye fish
-		document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/_javascript/fish_clicker/fish-click.png' style='width:64px;height:64px'></img>";
+		document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/javascript/fish_clicker/fish-click.png' style='width:64px;height:64px'></img>";
 
 		//increases number of clicks
 		clickings = clickings + 1;
@@ -97,7 +97,7 @@ function loop() {
 
 //code that changes fish image to big eye fish
 function poke() {
-	document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/_javascript/fish_clicker/fish.png' style='width:64px;height:64px'></img>";
+	document.getElementById("fish").innerHTML = "<img onCLick='press()' src='//" + window.location.host + "/javascript/fish_clicker/fish.png' style='width:64px;height:64px'></img>";
 }
 
 //what happens when you click the button to buy a clicker
