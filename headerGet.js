@@ -50,6 +50,12 @@ $(document).ready(function () {
 
 });
 
+preloadImages = [];
+for(i = 0; i < iconList.length; i++){
+    preloadImages.push(new Image());
+    preloadImages[i].src="//" + window.location.host + "/images/" + iconList[i];
+}
+
 var headTitle = document.querySelector('head');
 var setFav = document.createElement('link');
 setFav.setAttribute('rel', 'icon');
