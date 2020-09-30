@@ -177,13 +177,15 @@ button:hover{
 #dropdown {
 	position: relative;
 	clear: both;
-    display: inline-block;
+	display: inline-block;
+	flex: 1;
 }
 
 #dropdown-content {
     display: none;
     position: absolute;
-    min-width: 160px;
+	min-width: 160px;
+	width: 100%;
     z-index: 1;
 }
 
