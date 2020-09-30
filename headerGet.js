@@ -22,6 +22,28 @@ function getHead() {
     applyHead();
 }
 
+var iconList = ["circular_blur.png", "cursedfish.png", "eue.png", "fish flipped.png", "fish mosaic.png", "fish.png", "fish-click.png", "fishvr.png", "fishwatery.png", "image0001.gif", "implode.png", "new icon v2.png", "piranha quantum.png", "piranha-resized - christmas.jpg"];
+
+//getHead();
+(function () {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    //console.log('this ran!');
+})();
+
+function randomFishImage(){
+    return iconList[Math.random()*iconList.length];
+}
+
+function clickFish(){
+    document.getElementById("fishy").src="//" + window.location.host + "/images/" + randomFishImage();
+}
+
+function unclickFish(){
+    document.getElementById("fishy").src="//" + window.location.host + "/images/pirahna-resized.jpg";
+}
+
 $(document).ready(function () {
     $("#headAndText").load("//" + window.location.host + "/header.html");
     if (date.getMonth() + 1 == 12 || date.getMonth() + 1 < 4) $.getScript("//" + window.location.host + "/snowstorm.js");
@@ -31,13 +53,5 @@ $(document).ready(function () {
 var headTitle = document.querySelector('head');
 var setFav = document.createElement('link');
 setFav.setAttribute('rel', 'icon');
-setFav.setAttribute('href', "//" + window.location.host + "/images/fish.png");
+setFav.setAttribute('href', "//" + window.location.host + "/images/" + randomFishImage());
 headTitle.appendChild(setFav);
-
-//getHead();
-(function () {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = '//apis.google.com/js/platform.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-    //console.log('this ran!');
-})();
