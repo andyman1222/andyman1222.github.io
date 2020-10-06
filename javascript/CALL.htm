@@ -39,7 +39,7 @@
                 else if(code.charAt(i) == '\n' || code.charAt(i) == '\r'){
                 }
                 else{
-                    alert("Invalid character: '" + code.charAt(i) + "'");
+                    //alert("Invalid character: '" + code.charAt(i) + "'");
                     code = code.substr(0,i) + code.substr(i+1, code.length);
                     document.getElementById("source").value = code;
                 }
