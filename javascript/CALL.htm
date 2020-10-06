@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>CALL emulator</title>
+    <link rel="stylesheet" href="../style.css" id="style" type="text/css">
+    <link rel="icon" href="../images/fish.png" id="icon" type="image/x-icon">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="../headerGet.js"></script>
+    <style>
+        #currentStep {
+            background-color: gold;
+        }
+    </style>
+    <script>
+        var binary = '';
+        function updateTranslate(){
+            var code = document.getElementById("source").innerText;
+            binary = '';
+            document.getElementById("translate").innerText = '';
+            for(i = 0; i < code.length; i++){
+                if(code.charAt(i) == '0'){
+                    document.getElementById("translate").innerText += '0';
+                    binary += '0';
+                }
+                else if(code.charAt(i) == '1'){
+                    document.getElementById("translate").innerText += '1';
+                    binary += '1';
+                }
+                else if(code.charAt(i) == '\n' || code.charAt(i) == '\r'){
+                    document.getElementById("translate").innerText += '<br>';
+                }
+                else{
+                    alert("Invalid character: '" + code.charAt(i) + "'");
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id='headAndText'>
+    </div>
+    <div id="centerMenu">
+        <h1>CALL Emulator</h1>
+        <p>Emulator for the Compact Assembly Language List.</p>
+        <br>
+        <hr>
+        <p>Paste <s>binary code</s> in the text box below. Click "run" to simulate all at once, or "step" to move one
+            instruction at a time.</p>
+        <div style="position:relative;display: inline;">
+            <textarea id="source" style="width:50%;" rows='10' onchange="updateTranslate();"></textarea>
+            <p id="translate"></p>
+        </div>
+        <br><button onclick="runAll();">Run</button><button onclick="step();">Step</button><button
+            onclick="reset();">Reset</button><br><br>
+        <div style="position:relative;display: inline;">
+            <div style="width:50%;">
+                <p>Registers (decimal):<br>
+                    0 ($0) : 0<br>
+                    1 ($at) : <textarea id="at" rows='1' cols="6">0</textarea><br>
+                    2 ($v) : <textarea id="v" rows='1' cols="6">0</textarea><br>
+                    3 ($a0) : <textarea id="a0" rows='1' cols="6">0</textarea><br>
+                    4 ($a1) : <textarea id="a1" rows='1' cols="6">0</textarea><br>
+                    5 ($d) : <textarea id="d" rows='1' cols="6">0</textarea><br>
+                    6 ($in) : <textarea id="in" rows='1' cols="6">0</textarea><br>
+                    7 ($out): <textarea id="out" rows='1' cols="6">0</textarea><br>
+                    8 ($g0) : <textarea id="g0" rows='1' cols="6">0</textarea><br>
+                    9 ($g1) : <textarea id="g1" rows='1' cols="6">0</textarea><br>
+                    10 ($g2): <textarea id="g2" rows='1' cols="6">0</textarea><br>
+                    11 ($g3): <textarea id="g3" rows='1' cols="6">0</textarea><br>
+                    12 ($g4): <textarea id="g4" rows='1' cols="6">0</textarea><br>
+                    13 ($g5): <textarea id="g5" rows='1' cols="6">0</textarea><br>
+                    14 ($sp): <textarea id="sp" rows='1' cols="6">0</textarea><br>
+                    15 ($ra): <textarea id="ra" rows='1' cols="6">0</textarea><br>
+
+                </p>
+            </div>
+            <div>
+                <p>Stack (decimal):
+                <div id="stackList"></div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+
+</html>
