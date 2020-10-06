@@ -26,11 +26,15 @@
                     document.getElementById("translate").innerText += '0';
                     binary += '0';
                     x++;
+                    if(x%16==0)
+                        document.getElementById("translate").innerText += '\n';
                 }
                 else if(code.charAt(i) == '1'){
                     document.getElementById("translate").innerText += '1';
                     binary += '1';
                     x++;
+                    if(x%16==0)
+                        document.getElementById("translate").innerText += '\n';
                 }
                 else if(code.charAt(i) == '\n' || code.charAt(i) == '\r'){
                 }
@@ -39,8 +43,6 @@
                     code = code.substr(0,i) + code.substr(i+1, code.length);
                     document.getElementById("source").value = code;
                 }
-                if(x%16==0)
-                document.getElementById("translate").innerText += '\n';
             }
         }
     </script>
