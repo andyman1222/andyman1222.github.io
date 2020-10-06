@@ -51,7 +51,7 @@
         <p>Paste <b>binary code</b> in the text box below. Click "run" to simulate all at once, or "step" to move one
             instruction at a time.</p>
         <div style="display: flex;">
-            <textarea id="source" style="width:50%;" rows='10' onchange="updateTranslate();"></textarea>
+            <textarea id="source" style="width:50%;" rows='10' onkeydown="updateTranslate();" oninput="updateTranslate();"></textarea>
             <p id="translate"></p>
         </div>
         <br><button onclick="runAll();">Run</button><button onclick="step();">Step</button><button
