@@ -41,8 +41,8 @@
                 else{
                     //alert("Invalid character: '" + code.charAt(i) + "'");
                     code = code.substr(0,i) + code.substr(i+1, code.length);
-                    updateTranslate();
-                    break;
+                    document.getElementById("source").value = code;
+                    i--;
                 }
             }
         }
