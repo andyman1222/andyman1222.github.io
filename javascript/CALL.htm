@@ -19,7 +19,9 @@
             var code = document.getElementById("source").value;
             binary = '';
             document.getElementById("translate").innerText = '';
+            var x = 0;
             for(i = 0; i < code.length; i++){
+                x++;
                 if(code.charAt(i) == '0'){
                     document.getElementById("translate").innerText += '0';
                     binary += '0';
@@ -35,7 +37,7 @@
                     code = code.substr(0,i) + code.substr(i+1, code.length);
                     document.getElementById("source").value = code;
                 }
-                if(i%16==15)
+                if(x%16==0)
                 document.getElementById("translate").innerText += '\n';
             }
         }
