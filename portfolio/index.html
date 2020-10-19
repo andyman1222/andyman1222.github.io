@@ -88,8 +88,6 @@
     <!--PAGE CONTENTS HERE-->
     <h1>Portfolio</h1>
     <hr>
-    <p>All sorts of works and what not that I have accomplished, I guess. This is a temporary description anyways.</p>
-
     <h2>Game development</h2>
 
     <div class="port-item" onmouseover="showDescription('amazeingD', 'amazeing', 'amazeingImg');"
@@ -113,7 +111,7 @@
       <div id="kD" class="nice-text"
         onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/KungFuRun/';">
         <h3 class="port-item">Kung-Fu Run</h3>
-        <p id="k" style="display: none;" class="description">A class project created in a group of 5</p>
+        <p id="k" style="display: none;" class="description">A class project, a 3D Chinese-themed platformer</p>
       </div>
     </div>
 
@@ -140,6 +138,18 @@
         <p id="horror" style="display: none;" class="description">Simple yet fundamental horror-style game</p>
       </div>
     </div>
+
+    <!--div class="port-item" onmouseover="showDescription('laserTagD', 'laserTag', 'laserTagI');"
+      onmouseout="hideDescription('laserTagD', 'laserTag', 'laserTagI');">
+      <div class="nice-background" id="laserTagI" style="background-image: url('images/laserTag.png');">
+        <img src="images/laserTag.png" style="visibility: hidden;">
+      </div>
+      <div id="laserTagD" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/LaserTag/';">
+        <h3 class="port-item">LaserTag</h3>
+        <p id="laserTag" style="display: none;" class="description">Multiplayer laser tag in Unreal Engine 4</p>
+      </div>
+    </div-->
 
     <!--div class="port-item" onmouseover="showDescription('getOverD', 'getOver', 'getOverI');"
       onmouseout="hideDescription('getOverD', 'getOver', 'getOverI');">
@@ -211,34 +221,76 @@
       </div>
     </div>
     <br>
-    <h2>Video editing/cinematography</h2>
-    
-    <br>
     <h2>Photo editing/photography</h2>
-    <div class="port-item" onmouseover="showDescription('amazeingD', 'amazeing', 'amazeingImg');"
-      onmouseout="hideDescription('amazeingD', 'amazeing', 'amazeingImg');">
-      <div class="nice-background" id="amazeingImg" style="background-image: url('images/Amazeing.png');">
-        <img src="images/Amazeing.png" style="visibility: hidden;">
+    <div class="port-item" onmouseover="showDescription('photoD', 'photo', 'photoImg');"
+      onmouseout="hideDescription('photoD', 'photo', 'photoImg');">
+      <div class="nice-background" id="photoImg" style="background-image: url('images/picture.jpg');">
+        <img src="images/picture.jpg" style="visibility: hidden;">
       </div>
-      <div id="amazeingD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/Amazeing/';">
-        <h3 class="port-item">TEMPORARY pls replace kthx</h3>
-        <p id="amazeing" style="display: none;" class="description">Replacement</p>
+      <div id="photoD" class="nice-text"
+        onmousedown="document.location.href= 'https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8';">
+        <h3 class="port-item">Photo album</h3>
+        <p id="photo" style="display: none;" class="description">Photo album of images (and some videos) I took</p>
+      </div>
+    </div>
+    <div class="port-item" onmouseover="showDescription('droneD', 'drone', 'droneImg');"
+      onmouseout="hideDescription('droneD', 'drone', 'droneImg');">
+      <div class="nice-background" id="droneImg" style="background-image: url('images/drone.png');">
+        <img src="images/drone.png" style="visibility: hidden;">
+      </div>
+      <div id="photoD" class="nice-text"
+        onmousedown="document.location.href= 'https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA';">
+        <h3 class="port-item">Drone album</h3>
+        <p id="photo" style="display: none;" class="description">Photo album of drone videos/photos and similar</p>
+      </div>
+    </div>
+    <div class="port-item" onmouseover="showDescription('randomImgD', 'randomImg', 'randomImgImg');"
+      onmouseout="hideDescription('randomImgD', 'randomImg', 'randomImgImg');">
+      <div class="nice-background" id="randomImgImg" style="background-image: url('images/arte\ contesto\ entry.png');">
+        <img src="images/arte contesto entry.png" style="visibility: hidden;">
+      </div>
+      <div id="randomImgD" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/randomPhotoshops/';">
+        <h3 class="port-item">Random photo edits</h3>
+        <p id="randomImg" style="display: none;" class="description">An assortment of photo editing done in Photoshop or GIMP</p>
+      </div>
+    </div>
+    <div class="port-item" onmouseover="showDescription('youtubeImgD', 'youtubeImg', 'youtubeImgImg');"
+      onmouseout="hideDescription('youtubeImgD', 'youtubeImg', 'youtubeImgImg');">
+      <div class="nice-background" id="randomImgImg" style="background-image: url('youtubeChannelArt/new\ channel\ art.png');">
+        <img src="youtubeChannelArt/new channel art.png" style="visibility: hidden;">
+      </div>
+      <div id="randomImgD" class="nice-text"
+        onmousedown="document.location.href= document.location.origin + '/portfolio/randomPhotoshops/';">
+        <h3 class="port-item">Youtube channel art</h3>
+        <p id="randomImg" style="display: none;" class="description">Channel art and branding for my gaming Youtbe channel</p>
       </div>
     </div>
     <br>
-    <h2>Other</h2>
-    <div class="port-item" onmouseover="showDescription('amazeingD', 'amazeing', 'amazeingImg');"
-      onmouseout="hideDescription('amazeingD', 'amazeing', 'amazeingImg');">
-      <div class="nice-background" id="amazeingImg" style="background-image: url('images/Amazeing.png');">
-        <img src="images/Amazeing.png" style="visibility: hidden;">
+    <h2>Video editing/cinematography</h2>
+    <div class="port-item" onmouseover="showDescription('youtube1D', 'youtube1', 'youtube1Img');"
+      onmouseout="hideDescription('youtube1D', 'youtube1', 'youtube1Img');">
+      <div class="nice-background" id="youtube1Img" style="background-image: url('images/piranha-resized.jpg');">
+        <img src="images/piranha-resized.jpg" style="visibility: hidden;">
       </div>
-      <div id="amazeingD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/Amazeing/';">
-        <h3 class="port-item">TEMPORARY pls replace kthx</h3>
-        <p id="amazeing" style="display: none;" class="description">Replacement</p>
+      <div id="youtube1D" class="nice-text"
+        onmousedown="document.location.href= 'https:\/\/youtube.com/c/AndyHerbert254';">
+        <h3 class="port-item">Non-gaming Youtube channel</h3>
+        <p id="youtube1" style="display: none;" class="description">Contains some videos featuring editing and VFX.</p>
       </div>
     </div>
+    <div class="port-item" onmouseover="showDescription('youtube2D', 'youtube2', 'youtube2Img');"
+      onmouseout="hideDescription('youtube2D', 'youtube2', 'youtube2Img');">
+      <div class="nice-background" id="youtube2Img" style="background-image: url('images/new\ icon\ v3\ transparent\ no\ glow.png');">
+        <img src="images/new icon v3 transparent no glow.png" style="visibility: hidden;">
+      </div>
+      <div id="youtube2D" class="nice-text"
+        onmousedown="document.location.href= 'https:\/\/youtube.com/c/quantumquantonium';">
+        <h3 class="port-item">Gaming Youtube channel</h3>
+        <p id="youtube2" style="display: none;" class="description">Contains an assortment of good and bad edited videosa</p>
+      </div>
+    </div>
+    <br>
 </body>
 
 </html>
