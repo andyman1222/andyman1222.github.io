@@ -27,6 +27,5 @@ images_and_videos/Screenshots/thumbnails/
 # JS secure file stuffs
 _javascript/PHPServerTest/storage.txt
 _javascript/PHPServerTest/userFiles/
-.well-known/
 *.ini
 *.db
