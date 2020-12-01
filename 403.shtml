@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 
-<head>
+<head lang="en">
   <meta charset="utf-8">
   <title>document template</title>
   <link rel="stylesheet" href="style.css" id="style" type="text/css">
@@ -13,7 +13,7 @@
 
 </head>
 
-<body bgcolor=#1173aa style="background-color:#1173aa;">
+<body style="background-color:#1173aa;">
   <div id='headAndText'>
   </div>
   <div id="centerMenu" style="background-color:#1173aa">
