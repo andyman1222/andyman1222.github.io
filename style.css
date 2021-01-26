@@ -216,4 +216,5 @@ button:hover{
 #portSection{
 	display: flex;
 	align-content: space-between;
+	flex-wrap: wrap;
 }
