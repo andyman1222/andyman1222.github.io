@@ -97,7 +97,7 @@
           
             for (c in data) {
               console.log(c);
-              t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2>");
+              t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2><div id='portSection'>");
               console.log(data[c]);
               for (j in data[c]) {
                 let i = data[c][j];
@@ -114,6 +114,7 @@
       </div>
     </div>`);
               }
+              t.innerHTML = t.innerHTML + ("</div>");
             }
         });
       </script>
