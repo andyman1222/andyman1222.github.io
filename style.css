@@ -184,6 +184,11 @@ button:hover{
 	clear: both;
 	display: inline-block;
 	flex: 1;
+	width: fit-content;
+}
+
+#dropdown>button{
+	width: 100%;
 }
 
 #dropdown-content {
