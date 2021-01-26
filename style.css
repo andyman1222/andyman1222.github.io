@@ -204,6 +204,7 @@ button:hover{
 	clear: both;
 	display: block;
 	width: 100%;
+	text-overflow: ellipsis;
 }
 
 #dropdown:hover #dropdown-content {
