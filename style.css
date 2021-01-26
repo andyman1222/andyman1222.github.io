@@ -195,7 +195,8 @@ button:hover{
     display: none;
     position: absolute;
 	min-width: 160px;
-	width: 100%;
+	width: fit-content;
+	min-width: 100%;
     z-index: 1;
 }
 
