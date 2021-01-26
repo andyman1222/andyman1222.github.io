@@ -1,0 +1,90 @@
+{
+    "Game development": {
+        "Amazeing": {
+            "image": "images/Amazeing.png",
+            "link": "/portfolio/game_dev/Amazeing/",
+            "desc": "WIP indie puzzle/maze game"
+        },
+        "Kung-Fu Run": {
+            "image": "images/kungfurun.png",
+            "link": "/portfolio/game_dev/KungFuRun/",
+            "desc": "A class project, a 3D Chinese-themed platformer"
+        },
+        "Schooled In": {
+            "image": "images/schooledin.png",
+            "link": "https://quantumquantonium.itch.io/schooled-in",
+            "desc": "Epic Games MegaJam 2020 submission"
+        },
+        "Betaa": {
+            "image": "images/betaa.PNG",
+            "link": "/portfolio/game_dev/Betaa/",
+            "desc": "Fast-paced multiplayer FPS concept"
+        },
+        "Untitled Horror Game": {
+            "image": "images/horror.PNG",
+            "link": "/portfolio/game_dev/HorrorGame/",
+            "desc": "Simple yet fundamental horror-style game"
+        },
+        "Other Games": {
+            "image": "images/other.png",
+            "link": "/portfolio/game_dev/other/",
+            "desc": "Etc projects and games developed in Unity or Unreal Engine"
+        }
+    },
+    "Other 3D": {
+        "CP_city_beta": {
+            "image": "images/cpcitybeta.jpg",
+            "link": "/portfolio/3D/cp_city_beta/",
+            "desc": "A Team Fortress 2 custom map"
+        },
+        "3D trophy model": {
+            "image": "images/trophy.png",
+            "link": "/portfolio/3D/trophy",
+            "desc": "A 3D modeled and 3D printed trophy design"
+        },
+        "3D speaker model": {
+            "image": "images/speaker.png",
+            "link": "/portfolio/3D/speaker",
+            "desc": "A 3D modeled and 3D printed speaker design"
+        },
+        "Other": {
+            "image": "images/other3D.png",
+            "link": "/portfolio/3D/other",
+            "desc": "Other 3D models and animation"
+        }
+    },
+    "Photo editing/photography": {
+        "Photo album": {
+            "image": "images/picture.jpg",
+            "link": "https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8",
+            "desc": "Photo album of images (and some videos) I took"
+        },
+        "Drone album": {
+            "image": "images/drone.png",
+            "link": "https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA",
+            "desc": "Photo album of drone videos/photos and similar"
+        },
+        "Random photo edits": {
+            "image": "images/arte contesto entry.png",
+            "link": "/portfolio/randomPhotoshops/",
+            "desc": "An assortment of photo editing done in Photoshop or GIMP"
+        },
+        "Youtube channel art": {
+            "image": "youtubeChannelArt/new channel art.png",
+            "link": "/portfolio/youtubeChannelArt/",
+            "desc": "Channel art and branding for my gaming Youtbe channel"
+        }
+    },
+    "Video editing/cinematography": {
+        "Non-gaming Youtube": {
+            "image": "images/piranha-resized.jpg",
+            "link": "https:\/\/youtube.com/c/AndyHerbert254",
+            "desc": "Videos featuring editing and VFX."
+        },
+        "Gaming Youtube": {
+            "image": "images/new icon v3 transparent no glow.png",
+            "link": "https:\/\/youtube.com/c/quantumquantonium",
+            "desc": "Assortment of good and bad edited videos"
+        }
+    }
+}

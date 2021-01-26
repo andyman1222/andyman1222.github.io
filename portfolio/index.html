@@ -18,6 +18,7 @@
       document.getElementById(imageDiv).style.filter = "blur(10px)";
       document.getElementById(imageDiv).style.webkitFilter = "blur(10px)";
     }
+
     function hideDescription(parentId, textId, imageDiv) {
       //return;
       document.getElementById(textId).style.display = 'none';
@@ -89,214 +90,28 @@
     <!--PAGE CONTENTS HERE-->
     <h1>Portfolio</h1>
     <hr>
-    <h2>Game development</h2>
-
-    <div class="port-item" onmouseover="showDescription('amazeingD', 'amazeing', 'amazeingImg');"
-      onmouseout="hideDescription('amazeingD', 'amazeing', 'amazeingImg');">
-      <div class="nice-background" id="amazeingImg" style="background-image: url('images/Amazeing.png');">
-        <img src="images/Amazeing.png" style="visibility: hidden;">
+    <section id="ports">
+      <script>
+        let j = $.getJSON("porfolioDocs.json");
+        for (c in j) {
+          document.write("<h2>" + c + "</h2>");
+          for (i in c)
+            document.write(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
+      onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
+      <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
+        <img src="${i.image}" style="visibility: hidden;">
       </div>
-      <div id="amazeingD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/Amazeing/';">
-        <h3 class="port-item">Amazeing</h3>
-        <p id="amazeing" style="display: none;" class="description">WIP indie puzzle/maze game</p>
+      <div id="${i}D" class="nice-text"
+        onmousedown="document.location.href= ${i.link.indexOf('http') == 0 ? '' : document.location.origin} + '${i.link}';">
+        <h3 class="port-item">${i}</h3>
+        <p id="${i}" style="display: none;" class="description">${i.desc}</p>
       </div>
-    </div>
-
-
-    <div class="port-item" onmouseover="showDescription('kD', 'k', 'kI');"
-      onmouseout="hideDescription('kD', 'k', 'kI');">
-      <div class="nice-background" id="kI" style="background-image: url('images/kungfurun.png');">
-        <img src="images/kungfurun.png" style="visibility: hidden;">
-      </div>
-      <div id="kD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/KungFuRun/';">
-        <h3 class="port-item">Kung-Fu Run</h3>
-        <p id="k" style="display: none;" class="description">A class project, a 3D Chinese-themed platformer</p>
-      </div>
-    </div>
-
-    <div class="port-item" onmouseover="showDescription('betaaD', 'betaa', 'betaaI');"
-      onmouseout="hideDescription('betaaD', 'betaa', 'betaaI');">
-      <div class="nice-background" id="betaaI" style="background-image: url('images/betaa.PNG');">
-        <img src="images/betaa.PNG" style="visibility: hidden;">
-      </div>
-      <div id="betaaD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/Betaa/';">
-        <h3 class="port-item">Betaa</h3>
-        <p id="betaa" style="display: none;" class="description">Fast-paced multiplayer FPS concept</p>
-      </div>
-    </div>
-
-    <div class="port-item" onmouseover="showDescription('horrorD', 'horror', 'horrorI');"
-      onmouseout="hideDescription('horrorD', 'horror', 'horrorI');">
-      <div class="nice-background" id="horrorI" style="background-image: url('images/horror.PNG');">
-        <img src="images/horror.PNG" style="visibility: hidden;">
-      </div>
-      <div id="horrorD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/HorrorGame/';">
-        <h3 class="port-item">Untitled horror game</h3>
-        <p id="horror" style="display: none;" class="description">Simple yet fundamental horror-style game</p>
-      </div>
-    </div>
-
-    <!--div class="port-item" onmouseover="showDescription('laserTagD', 'laserTag', 'laserTagI');"
-      onmouseout="hideDescription('laserTagD', 'laserTag', 'laserTagI');">
-      <div class="nice-background" id="laserTagI" style="background-image: url('images/laserTag.png');">
-        <img src="images/laserTag.png" style="visibility: hidden;">
-      </div>
-      <div id="laserTagD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/LaserTag/';">
-        <h3 class="port-item">LaserTag</h3>
-        <p id="laserTag" style="display: none;" class="description">Multiplayer laser tag in Unreal Engine 4</p>
-      </div>
-    </div-->
-
-    <!--div class="port-item" onmouseover="showDescription('getOverD', 'getOver', 'getOverI');"
-      onmouseout="hideDescription('getOverD', 'getOver', 'getOverI');">
-      <div class="nice-background" id="getOverI" style="background-image: url('images/getoveritinvr.png');">
-        <img src="images/getoveritinvr.png" style="visibility: hidden;">
-      </div>
-      <div id="getOverD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/getOverItInVr/';">
-        <h3 class="port-item">Get Over It In VR</h3>
-        <p id="getOver" style="display: none;" class="description">A VR prototype based off the game "Getting Over It"</p>
-      </div>
-    </div-->
-
-    <div class="port-item" onmouseover="showDescription('otherD', 'other', 'otherI');"
-      onmouseout="hideDescription('otherD', 'other', 'otherI');">
-      <div class="nice-background" id="otherI" style="background-image: url('images/other.png');">
-        <img src="images/other.png" style="visibility: hidden;">
-      </div>
-      <div id="otherD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/game_dev/other/';">
-        <h3 class="port-item">Other games</h3>
-        <p id="other" style="display: none;" class="description">Etc projects and games developed in Unity or Unreal
-          Engine</p>
-      </div>
-    </div>
+    </div>`);
+        }
+      </script>
+    </section>
     <br>
-    <h2>other 3D</h2>
-    <div class="port-item" onmouseover="showDescription('CPCityBD', 'CPCityB', 'CPCityBImg');"
-      onmouseout="hideDescription('CPCityBD', 'CPCityB', 'CPCityBImg');">
-      <div class="nice-background" id="CPCityBImg" style="background-image: url('images/cpcitybeta.jpg');">
-        <img src="images/cpcitybeta.jpg" style="visibility: hidden;">
-      </div>
-      <div id="CPCityBD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/3D/cp_city_beta/';">
-        <h3 class="port-item">CP_city_beta</h3>
-        <p id="CPCityB" style="display: none;" class="description">A Team Fortress 2 custom map</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('trophyD', 'trophy', 'trophyImg');"
-      onmouseout="hideDescription('trophyD', 'trophy', 'trophyImg');">
-      <div class="nice-background" id="trophyImg" style="background-image: url('images/trophy.png');">
-        <img src="images/trophy.png" style="visibility: hidden;">
-      </div>
-      <div id="trophyD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/3D/trophy';">
-        <h3 class="port-item">3D trophy model</h3>
-        <p id="trophy" style="display: none;" class="description">A 3D modeled and 3D printed trophy design</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('speakerD', 'speaker', 'speakerImg');"
-      onmouseout="hideDescription('speakerD', 'speaker', 'speakerImg');">
-      <div class="nice-background" id="speakerImg" style="background-image: url('images/speaker.png');">
-        <img src="images/speaker.png" style="visibility: hidden;">
-      </div>
-      <div id="speakerD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/3D/speaker';">
-        <h3 class="port-item">3D speaker model</h3>
-        <p id="speaker" style="display: none;" class="description">A 3D modeled and 3D printed speaker design</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('other3DD', 'other3D', 'other3DImg');"
-      onmouseout="hideDescription('other3DD', 'other3D', 'other3DImg');">
-      <div class="nice-background" id="other3DImg" style="background-image: url('images/other3D.png');">
-        <img src="images/other3D.png" style="visibility: hidden;">
-      </div>
-      <div id="other3DD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/3D/other';">
-        <h3 class="port-item">Other</h3>
-        <p id="other3D" style="display: none;" class="description">Other 3D models and animation</p>
-      </div>
-    </div>
-    <br>
-    <h2>Photo editing/photography</h2>
-    <div class="port-item" onmouseover="showDescription('photoD', 'photo', 'photoImg');"
-      onmouseout="hideDescription('photoD', 'photo', 'photoImg');">
-      <div class="nice-background" id="photoImg" style="background-image: url('images/picture.jpg');">
-        <img src="images/picture.jpg" style="visibility: hidden;">
-      </div>
-      <div id="photoD" class="nice-text"
-        onmousedown="document.location.href= 'https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8';">
-        <h3 class="port-item">Photo album</h3>
-        <p id="photo" style="display: none;" class="description">Photo album of images (and some videos) I took</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('droneD', 'drone', 'droneImg');"
-      onmouseout="hideDescription('droneD', 'drone', 'droneImg');">
-      <div class="nice-background" id="droneImg" style="background-image: url('images/drone.png');">
-        <img src="images/drone.png" style="visibility: hidden;">
-      </div>
-      <div id="droneD" class="nice-text"
-        onmousedown="document.location.href= 'https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA';">
-        <h3 class="port-item">Drone album</h3>
-        <p id="drone" style="display: none;" class="description">Photo album of drone videos/photos and similar</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('randomImgD', 'randomImg', 'randomImgImg');"
-      onmouseout="hideDescription('randomImgD', 'randomImg', 'randomImgImg');">
-      <div class="nice-background" id="randomImgImg" style="background-image: url('images/arte\ contesto\ entry.png');">
-        <img src="images/arte contesto entry.png" style="visibility: hidden;">
-      </div>
-      <div id="randomImgD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/randomPhotoshops/';">
-        <h3 class="port-item">Random photo edits</h3>
-        <p id="randomImg" style="display: none;" class="description">An assortment of photo editing done in Photoshop or
-          GIMP</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('youtubeImgD', 'youtubeImg', 'youtubeImgImg');"
-      onmouseout="hideDescription('youtubeImgD', 'youtubeImg', 'youtubeImgImg');">
-      <div class="nice-background" id="youtubeImgImg"
-        style="background-image: url('youtubeChannelArt/new\ channel\ art.png');">
-        <img src="youtubeChannelArt/new channel art.png" style="visibility: hidden;">
-      </div>
-      <div id="youtubeImgD" class="nice-text"
-        onmousedown="document.location.href= document.location.origin + '/portfolio/youtubeChannelArt/';">
-        <h3 class="port-item">Youtube channel art</h3>
-        <p id="youtubeImg" style="display: none;" class="description">Channel art and branding for my gaming Youtbe
-          channel</p>
-      </div>
-    </div>
-    <br>
-    <h2>Video editing/cinematography</h2>
-    <div class="port-item" onmouseover="showDescription('youtube1D', 'youtube1', 'youtube1Img');"
-      onmouseout="hideDescription('youtube1D', 'youtube1', 'youtube1Img');">
-      <div class="nice-background" id="youtube1Img" style="background-image: url('images/piranha-resized.jpg');">
-        <img src="images/piranha-resized.jpg" style="visibility: hidden;">
-      </div>
-      <div id="youtube1D" class="nice-text"
-        onmousedown="document.location.href= 'https:\/\/youtube.com/c/AndyHerbert254';">
-        <h3 class="port-item">Non-gaming Youtube</h3>
-        <p id="youtube1" style="display: none;" class="description">Videos featuring editing and VFX.</p>
-      </div>
-    </div>
-    <div class="port-item" onmouseover="showDescription('youtube2D', 'youtube2', 'youtube2Img');"
-      onmouseout="hideDescription('youtube2D', 'youtube2', 'youtube2Img');">
-      <div class="nice-background" id="youtube2Img"
-        style="background-image: url('images/new\ icon\ v3\ transparent\ no\ glow.png');">
-        <img src="images/new icon v3 transparent no glow.png" style="visibility: hidden;">
-      </div>
-      <div id="youtube2D" class="nice-text"
-        onmousedown="document.location.href= 'https:\/\/youtube.com/c/quantumquantonium';">
-        <h3 class="port-item">Gaming Youtube</h3>
-        <p id="youtube2" style="display: none;" class="description">Assortment of good and bad edited videos</p>
-      </div>
-    </div>
-    <br>
+
 </body>
 
 </html>
