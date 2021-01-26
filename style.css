@@ -148,7 +148,6 @@ button:hover{
 
 #headerButtons{
 	display: flex;
-	overflow-x: auto;
 	overflow-y: visible;
 }
 
@@ -225,6 +224,9 @@ button:hover{
 		padding-left: 0;
 		padding-right: 0;
 		border: 0;
+	}
+	#dropdown-content{
+		display: none;
 	}
 }
 
