@@ -92,11 +92,12 @@
     <hr>
     <section id="ports">
       <script>
-        let j = $.getJSON("portfolioDocs.json", function (d) {
-          $.each(j, function (k, i) {
+        let j = $.getJSON("portfolioDocs.json");
+          /*$.each(d, function (k, i) {
             document.write("<h2>" + k + "</h2>");
-            document.write(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
-      onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
+            $.each(i, function (l, w) {
+            document.write(`<div class="port-item" onmouseover="showDescription('${l}D', '${i}', '${i}Img');"
+      onmouseout="hideDescription('${l}D', '${l}', '${l}Img');">
       <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
         <img src="${i.image}" style="visibility: hidden;">
       </div>
@@ -106,8 +107,9 @@
         <p id="${i}" style="display: none;" class="description">${i.desc}</p>
       </div>
     </div>`);
-          });
-        });
+            });
+          });*/
+        
       </script>
     </section>
     <br>
