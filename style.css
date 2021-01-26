@@ -190,7 +190,6 @@ button:hover{
     display: none;
     position: absolute;
 	width: fit-content;
-	min-width: 100%;
     z-index: 1;
 }
 
