@@ -200,7 +200,7 @@ button:hover{
     display: block;
 }
 
-@media screen and (max-width: 900px or not any-pointer){
+@media screen and (max-width: 900px){
 	#leftMenu{
 		display: none;
 	}
