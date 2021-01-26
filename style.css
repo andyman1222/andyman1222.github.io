@@ -146,10 +146,6 @@ button:hover{
 	color:white;
 }
 
-#headerButtons{
-	overflow: auto;
-}
-
 #headerButtons button{
 	display:block;
 	float:left;
