@@ -149,6 +149,7 @@ button:hover{
 #headerButtons{
 	display: flex;
 	overflow-x: auto;
+	overflow-y: visible;
 }
 
 #headerButtons button{
