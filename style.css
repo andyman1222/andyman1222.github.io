@@ -145,11 +145,16 @@ button:hover{
 	background-color:grey;
 	color:white;
 }
+
+#headerButtons{
+	overflow: scroll;
+}
+
 #headerButtons button{
 	display:block;
 	float:left;
 }
-#headerBttons button:hover{
+#headerButtons button:hover{
 	border: 1px solid white;
 }
 
