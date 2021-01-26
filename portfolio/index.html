@@ -93,7 +93,8 @@
     <section id="ports">
       <script>
         let j = $.getJSON("portfolioDocs.json");
-        j.done = function () {
+        j.done = function (data) {
+          console.log(data);
             for (c of j.responseJSON) {
               document.write("<h2>" + c + "</h2>");
               for (i of c) {
