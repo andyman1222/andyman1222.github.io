@@ -151,7 +151,7 @@ button:hover{
 }
 
 #headerButtons button{
-	flex: 1;
+
 }
 
 #headerButtons button:hover{
@@ -183,7 +183,6 @@ button:hover{
 	position: relative;
 	clear: both;
 	display: inline-block;
-	flex: 1;
 	width: fit-content;
 }
 
@@ -195,6 +194,7 @@ button:hover{
     display: none;
     position: absolute;
 	width: fit-content;
+	min-width: 100%;
     z-index: 1;
 }
 
