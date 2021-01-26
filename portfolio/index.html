@@ -102,7 +102,7 @@
         <img src="${i.image}" style="visibility: hidden;">
       </div>
       <div id="${i}D" class="nice-text"
-        onmousedown="document.location.href= ${i.link.indexOf('http') == 0 ? '' : document.location.origin} + '${i.link}';">
+        onmousedown="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : document.location.origin} + '${i.link}';">
         <h3 class="port-item">${i}</h3>
         <p id="${i}" style="display: none;" class="description">${i.desc}</p>
       </div>
