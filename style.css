@@ -212,3 +212,8 @@ button:hover{
 		margin-left: 0%;
 	}
 }
+
+#portSection{
+	display: flex;
+	align-content: space-between;
+}
