@@ -93,9 +93,10 @@
     <section id="ports">
       <script>
         $.getJSON("portfolioDocs.json").done (function (data) {
-            for (c of data) {
+          console.log(data);
+            for (c in data) {
               document.write("<h2>" + c + "</h2>");
-              for (i of c) {
+              for (i in c) {
                 document.write(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
       onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
       <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
