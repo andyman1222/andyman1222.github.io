@@ -149,6 +149,11 @@ button:hover{
 #headerButtons{
 	display: flex;
 }
+
+#headerButtons button{
+	flex: 1;
+}
+
 #headerButtons button:hover{
 	border: 1px solid white;
 }
