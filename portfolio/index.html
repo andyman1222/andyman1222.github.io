@@ -93,29 +93,30 @@
     <section id="ports">
       <script>
         let t = document.getElementById("ports");
-        $.getJSON("portfolioDocs.json").done (function (data) {
-          
-            for (c in data) {
-              console.log(c);
-              t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2><div id='portSection'>");
-              console.log(data[c]);
-              for (j in data[c]) {
-                let i = data[c][j];
-                console.log(i);
-                t.innerHTML = t.innerHTML + (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
-      onmouseout="hideDescription('${j}D', '${j}', '${j}Img');">
-      <div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
-        <img src="${i.image}" style="visibility: hidden;">
-      </div>
-      <div id="${j}D" class="nice-text"
-        onmousedown="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : "document.location.origin + "} '${i.link}';">
-        <h3 class="port-item">${j}</h3>
-        <p id="${j}" style="display: none;" class="description">${i.desc}</p>
-      </div>
-    </div>`);
-              }
-              t.innerHTML = t.innerHTML + ("</div>");
+        $.getJSON("portfolioDocs.json").done(function (data) {
+
+          for (c in data) {
+            console.log(c);
+            t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2><div id='portSection'>");
+            console.log(data[c]);
+            for (j in data[c]) {
+              let i = data[c][j];
+              console.log(i);
+              t.innerHTML = t.innerHTML + (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
+                onmouseout="hideDescription('${j}D', '${j}', '${j}Img');">
+                <div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
+                  <img src="${i.image}" style="visibility: hidden;">
+                </div>
+                <div id="${j}D" class="nice-text"
+                  onmousedown="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : "document.location.origin + "} '${i.link}';">
+                  <h3 class="port-item">${j}</h3>
+                  <p id="${j}" style="display: none;" class="description">${i.desc}</p>
+                </div>
+                </div>`
+              );
             }
+            t.innerHTML = t.innerHTML + ("</div>");
+          }
         });
       </script>
     </section>
