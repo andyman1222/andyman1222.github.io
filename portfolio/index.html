@@ -102,15 +102,15 @@
               for (j in data[c]) {
                 let i = data[c][j];
                 console.log(i);
-                t.innerHTML = t.innerHTML + (`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
-      onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
-      <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
+                t.innerHTML = t.innerHTML + (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
+      onmouseout="hideDescription('${j}D', '${j}', '${j}Img');">
+      <div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
         <img src="${i.image}" style="visibility: hidden;">
       </div>
-      <div id="${i}D" class="nice-text"
+      <div id="${j}D" class="nice-text"
         onmousedown="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : document.location.origin} + '${i.link}';">
-        <h3 class="port-item">${i}</h3>
-        <p id="${i}" style="display: none;" class="description">${i.desc}</p>
+        <h3 class="port-item">${j}</h3>
+        <p id="${j}" style="display: none;" class="description">${i.desc}</p>
       </div>
     </div>`);
               }
