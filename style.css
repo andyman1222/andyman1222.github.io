@@ -148,10 +148,11 @@ button:hover{
 
 #headerButtons{
 	display: flex;
+	overflow-x: auto;
 }
 
 #headerButtons button{
-
+	overflow-wrap: normal;
 }
 
 #headerButtons button:hover{
