@@ -98,6 +98,7 @@
               console.log(c);
               document.write("<h2>" + c + "</h2>");
               for (i in c) {
+                console.log(i);
                 document.write(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
       onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
       <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
