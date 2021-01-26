@@ -92,8 +92,7 @@
     <hr>
     <section id="ports">
       <script>
-        let j = $.getJSON("portfolioDocs.json");
-        j.done = function (data) {
+        $.getJSON("portfolioDocs.json").done (function (data) {
           console.log(data);
             for (c of j.responseJSON) {
               document.write("<h2>" + c + "</h2>");
@@ -111,7 +110,7 @@
     </div>`);
               }
             }
-        };
+        });
       </script>
     </section>
     <br>
