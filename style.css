@@ -153,6 +153,7 @@ button:hover{
 
 #headerButtons button{
 	overflow-wrap: normal;
+	text-overflow: ellipsis;
 }
 
 #headerButtons button:hover{
