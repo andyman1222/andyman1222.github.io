@@ -146,9 +146,8 @@ button:hover{
 	color:white;
 }
 
-#headerButtons button{
-	display:block;
-	float:left;
+#headerButtons{
+	display: flex;
 }
 #headerButtons button:hover{
 	border: 1px solid white;
@@ -190,7 +189,6 @@ button:hover{
 #dropdown-content {
     display: none;
     position: absolute;
-	min-width: 160px;
 	width: fit-content;
 	min-width: 100%;
     z-index: 1;
@@ -199,7 +197,8 @@ button:hover{
 #dropdown-content button {
 	text-decoration: none;
 	clear: both;
-    display: block;
+	display: block;
+	width: 100%;
 }
 
 #dropdown:hover #dropdown-content {
