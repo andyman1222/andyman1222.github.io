@@ -93,8 +93,7 @@
     <section id="ports">
       <script>
         $.getJSON("portfolioDocs.json").done (function (data) {
-          console.log(data);
-            for (c of j.responseJSON) {
+            for (c of data) {
               document.write("<h2>" + c + "</h2>");
               for (i of c) {
                 document.write(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
