@@ -147,7 +147,7 @@ button:hover{
 }
 
 #headerButtons{
-	overflow: scroll;
+	overflow: auto;
 }
 
 #headerButtons button{
