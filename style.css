@@ -151,9 +151,11 @@ button:hover{
 	overflow-y: visible;
 }
 
-#headerButtons button{
+	
+#headerButtons button span{
 	overflow-wrap: normal;
 	text-overflow: ellipsis;
+}
 }
 
 #headerButtons button:hover{
@@ -205,6 +207,10 @@ button:hover{
 	clear: both;
 	display: block;
 	width: 100%;
+	
+}
+
+#dropdown-content button span{
 	text-overflow: ellipsis;
 }
 
