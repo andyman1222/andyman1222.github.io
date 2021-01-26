@@ -92,17 +92,17 @@
     <hr>
     <section id="ports">
       <script>
-        let t = document.querySelector("ports");
+        let t = document.getElementById("ports");
         $.getJSON("portfolioDocs.json").done (function (data) {
           
             for (c in data) {
               console.log(c);
-              t.append("<h2>" + c + "</h2>");
+              t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2>");
               console.log(data[c]);
               for (j in data[c]) {
                 let i = data[c][j];
                 console.log(i);
-                t.append(`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
+                t.innerHTML = t.innerHTML + (`<div class="port-item" onmouseover="showDescription('${i}D', '${i}', '${i}Img');"
       onmouseout="hideDescription('${i}D', '${i}', '${i}Img');">
       <div class="nice-background" id="${i}Img" style="background-image: url('${i.image}');">
         <img src="${i.image}" style="visibility: hidden;">
