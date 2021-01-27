@@ -211,6 +211,8 @@ button:hover{
 }
 
 #dropdown-content button span{
+	width: 100%;
+	height: inherit;
 	text-overflow: ellipsis;
 }
 
