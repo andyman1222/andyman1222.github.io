@@ -18,6 +18,10 @@ a{
   margin-left: 40px;
 }
 
+.indent3{
+  margin-left: 60px;
+}
+
 @media print{
 
   @page{
@@ -42,7 +46,7 @@ a{
 
   a, #printOnly a{
     display: inline;
-    color: #391566 !important;
+    color: #868686 !important;
   }
 
   p, li, ul, h3, h4, h5{
