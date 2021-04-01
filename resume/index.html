@@ -37,7 +37,9 @@
         oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('#noCSin').checked ? 'initial' : 'none'));"
         checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="other"  id="otherin"
         oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('#otherin').checked ? 'initial' : 'none'));"
-        checked><label for="other">Show EE/IoT/other related fields?</label></div>
+        checked><label for="other">Show EE/IoT/other related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="projects"  id="projectsin"
+        oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
+        checked><label for="projects">Show projects?</label></div>
     <h1>Andrew Herbert</h1>
 
     <div class="indent1">
@@ -152,10 +154,8 @@
         <ul class="indent2">
           <li>Software experience</li>
           <ul>
-            <li>FXHome Hitfilm (Express)</li>
-            <li>GiMP</li>
-            <li>Adobe Premiere</li>
-            <li>Adobe Photoshop</li>
+            <li>FXHome Hitfilm (Express), Adobe Premiere</li>
+            <li>GiMP, Adobe Photoshop</li>
           </ul>
           <li>Experience with editing and compositing/VFX</li>
         </ul>
@@ -165,10 +165,8 @@
         <ul class="indent2">
           <li>Languages</li>
           <ul>
-            <li>C, C++</li>
-            <li>C#, Java, Python</li>
-            <li>HTML, CSS, JS, NodeJS, PHP</li>
-            <li>Microsoft SQL</li>
+            <li>C, C++, C#, Java, Python</li>
+            <li>HTML, CSS, JS, NodeJS, PHP, Microsoft SQL</li>
             <li>Assembly (limited) (ARM, MIPS)</li>
           </ul>
           <li>Windows power user, experience with Linux (Ubuntu, Debian/Raspbian, RHEL)</li>
@@ -219,7 +217,7 @@
         <p class="indent2"><strong>More games on portfolio: </strong> <a
             href="https://andyherbert.net/portfolio">https://andyherbert.net/portfolio</a></p>
       </section>
-      <section>
+      <section class="CS">
         <h3 class="indent1">Software</h3>
         <section>
           <h4 class="indent2">RoseGamesOnline</h4>
