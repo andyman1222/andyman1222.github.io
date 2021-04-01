@@ -51,6 +51,7 @@ a{
   p, ul{
     page-break-inside: avoid;
     page-break-after: auto;
+    page-break-before: avoid;
   }
 
   h1, h2, h3, h4, h5{
