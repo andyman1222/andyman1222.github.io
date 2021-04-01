@@ -23,7 +23,11 @@ a{
   }
 
   #printOnly{
-    display: block !important;
+    display: block;
+  }
+
+  a{
+    display: inline;
   }
 
   #h1{
