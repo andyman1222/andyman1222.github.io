@@ -12,23 +12,23 @@ a{
 
 @media print{
   @page{
-    margin: 0;
+    margin: 0 !important;
   }
   body{
-    background-color: black;
-    color: white;
+    background-color: black !important;
+    color: white !important;
   }
   img, #headAndText, btn{
-    display: none;
+    display: none !important;
   }
 
   #printOnly{
-    display: block;
+    display: block !important;
   }
 
   #h1{
-    margin: 0;
-    margin-bottom: 5px;
+    margin: 0 !important;
+    margin-bottom: 5px !important;
   }
 
   #centerMenu{
