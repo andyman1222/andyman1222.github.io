@@ -11,7 +11,16 @@
   <link rel="icon" href="../images/fish.png" id="icon" type="image/x-icon">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="../headerGet.js"></script>
-
+  <script>
+    function resetView() {
+      document.QuerySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.QuerySelector('#CSin').checked = true;
+      document.QuerySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.QuerySelector('#noCSin').checked = true;
+      document.QuerySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.QuerySelector('#otherin').checked = true;
+    }
+  </script>
 
 
 </head>
@@ -20,7 +29,15 @@
   <div id='headAndText'>
   </div>
   <div id="centerMenu">
-    <div class="noprint"><button>Test</button></div>
+    <div class="noprint" style="display: inline;"><button onclick="window.print()">Print/export</button><button
+        onclick="resetView();">Reset visible fields</button>
+      <input type="checkbox" name="CS" id="CSin"
+        oninput="document.QuerySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        checked><label for="CS">Show Computer Science related fields?</label><input type="checkbox" name="noCS" id="noCSin"
+        oninput="document.QuerySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        checked><label for="noCS">Show animation/design/VFX related fields?</label><input type="checkbox" name="other"  id="otherin"
+        oninput="document.QuerySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        checked><label for="other">Show EE/IoT/other related fields?</label></div>
     <h1>Andrew Herbert</h1>
 
     <div class="indent1">
@@ -173,9 +190,12 @@
         <h3 class="indent1">Games</h3>
         <section>
           <h4 class="indent2">Schooled In</h4>
-          <p class="indent3">VR game initially designed in one week for the Epic Games MegaJam 2020. Developed in a team of 3.</p>
+          <p class="indent3">VR game initially designed in one week for the Epic Games MegaJam 2020. Developed in a team
+            of 3.</p>
           <ul class="indent3">
-            <li><strong>Information and download page: </strong><a href="https://quantumquantonium.itch.io/schooled-in">https://quantumquantonium.itch.io/schooled-in</a></li>
+            <li><strong>Information and download page: </strong><a
+                href="https://quantumquantonium.itch.io/schooled-in">https://quantumquantonium.itch.io/schooled-in</a>
+            </li>
             <li><strong>Status: </strong>Work-in-progress (download available)</li>
           </ul>
         </section>
@@ -191,19 +211,25 @@
           <h4 class="indent2">Kung-Fu Run</h4>
           <p class="indent3">Singleplayer parkour map developed for a class. Created in a team of 4 people.</p>
           <ul class="indent3">
-            <li><strong>Information: </strong><a href="https://andyherbert.net/portfolio/game_dev/KungFuRun/">https://andyherbert.net/portfolio/game_dev/KungFuRun/</a></li>
+            <li><strong>Information: </strong><a
+                href="https://andyherbert.net/portfolio/game_dev/KungFuRun/">https://andyherbert.net/portfolio/game_dev/KungFuRun/</a>
+            </li>
             <li><strong>Status: </strong>Complete</li>
           </ul>
         </section>
-        <p class="indent2"><strong>More games on portfolio: </strong> <a href="https://andyherbert.net/portfolio">https://andyherbert.net/portfolio</a></p>
+        <p class="indent2"><strong>More games on portfolio: </strong> <a
+            href="https://andyherbert.net/portfolio">https://andyherbert.net/portfolio</a></p>
       </section>
       <section>
         <h3 class="indent1">Software</h3>
         <section>
           <h4 class="indent2">RoseGamesOnline</h4>
-          <p class="indent3">Realtime NodeJS WebSocket website designed to host user-created JS games and allow others to play. Created for a class in a group of 2.</p>
+          <p class="indent3">Realtime NodeJS WebSocket website designed to host user-created JS games and allow others
+            to play. Created for a class in a group of 2.</p>
           <ul class="indent3">
-            <li><strong>Github page: </strong><a href="https://github.com/rhit-herberac/RoseGamesOnline">https://github.com/rhit-herberac/RoseGamesOnline</a></li>
+            <li><strong>Github page: </strong><a
+                href="https://github.com/rhit-herberac/RoseGamesOnline">https://github.com/rhit-herberac/RoseGamesOnline</a>
+            </li>
             <li><strong>Status: </strong>Complete</li>
           </ul>
         </section>
@@ -215,11 +241,14 @@
             <li><strong>Status: </strong>Work-in-progress (demo available)</li>
           </ul>
         </section>
-        <p class="indent2"><strong>Code repositories</strong><ul>
-          <li><a href="https://github.com/rhit-herberac">https://github.com/rhit-herberac</a> (Rose Hulman Github)</li>
-          <li><a href="https://github.com/rhit-herberac">https://github.com/andyman1222</a> (Personal Github)</li>
-          <li><a href="https://gitlab.com/andyman1222">https://gitlab.com/andyman1222</a> (Gitlab)</li>
-        </ul> </p>
+        <p class="indent2"><strong>Code repositories</strong>
+          <ul>
+            <li><a href="https://github.com/rhit-herberac">https://github.com/rhit-herberac</a> (Rose Hulman Github)
+            </li>
+            <li><a href="https://github.com/rhit-herberac">https://github.com/andyman1222</a> (Personal Github)</li>
+            <li><a href="https://gitlab.com/andyman1222">https://gitlab.com/andyman1222</a> (Gitlab)</li>
+          </ul>
+        </p>
       </section>
     </section>
 
