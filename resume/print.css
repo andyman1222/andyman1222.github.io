@@ -1,4 +1,4 @@
-#printOnly{
+.printOnly{
   display: none;
 }
 
@@ -43,8 +43,12 @@ a{
     color: black;
   }
 
-  #printOnly{
+  .printOnly{
     display: initial;
+  }
+
+  .noprint{
+    display: none !important;
   }
 
   hr{
