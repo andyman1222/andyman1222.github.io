@@ -19,6 +19,8 @@
       document.querySelector('#noCSin').checked = true;
       document.querySelectorAll('.other').forEach((v) => v.style.display = 'initial');
       document.querySelector('#otherin').checked = true;
+      document.querySelectorAll('#projects').forEach((v) => v.style.display = 'initial');
+      document.querySelector('#projectsin').checked = true;
     }
   </script>
 
@@ -29,7 +31,7 @@
   <div id='headAndText'>
   </div>
   <div id="centerMenu">
-    <div class="noprint" style="display: inline;"><button onclick="window.print()">Print/export</button><button
+    <div class="noprint" style="display: inline;"><button onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
         onclick="resetView();">Reset visible fields</button><br>
       <input type="checkbox" name="CS" id="CSin"
         oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('#CSin').checked ? 'initial' : 'none'));"
@@ -106,9 +108,9 @@
         </p>
         <p class="indent3">
           Used Principal Component Analysis to identify patterns in cancer patients’ RNA data. Worked with
-            engineering graduate students under the guidance of Prof. Roger Howe. Used R programming language to
-            graphically present the data.
-          </p>
+          engineering graduate students under the guidance of Prof. Roger Howe. Used R programming language to
+          graphically present the data.
+        </p>
       </section>
     </section>
     <section id="skills">
