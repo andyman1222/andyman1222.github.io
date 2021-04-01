@@ -32,11 +32,11 @@
     <div class="noprint" style="display: inline;"><button onclick="window.print()">Print/export</button><button
         onclick="resetView();">Reset visible fields</button><br>
       <input type="checkbox" name="CS" id="CSin"
-        oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('CS').checked ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('#CSin').checked ? 'initial' : 'none'));"
         checked><label for="CS">Show Computer Science related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="noCS" id="noCSin"
-        oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('noCS').checked ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('#noCSin').checked ? 'initial' : 'none'));"
         checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="other"  id="otherin"
-        oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('other').checked ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('#otherin').checked ? 'initial' : 'none'));"
         checked><label for="other">Show EE/IoT/other related fields?</label></div>
     <h1>Andrew Herbert</h1>
 
