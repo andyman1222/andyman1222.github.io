@@ -19,16 +19,21 @@ a{
 }
 
 @media print{
+
   @page{
     margin: 0 !important;
   }
-  body{
+  
+  @page body{
     background-color: white !important;
     color: black !important;
     text-align: left;
     margin: 0 50px 30px 20px !important;
   }
 
+  @page:first body{
+    margin-top: 20px;
+  }
   
   img, #headAndText, btn{
     display: none !important;
