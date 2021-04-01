@@ -13,12 +13,12 @@
   <script src="../headerGet.js"></script>
   <script>
     function resetView() {
-      document.QuerySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'initial'));
-      document.QuerySelector('#CSin').checked = true;
-      document.QuerySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'initial'));
-      document.QuerySelector('#noCSin').checked = true;
-      document.QuerySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'initial'));
-      document.QuerySelector('#otherin').checked = true;
+      document.querySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.querySelector('#CSin').checked = true;
+      document.querySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.querySelector('#noCSin').checked = true;
+      document.querySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'initial'));
+      document.querySelector('#otherin').checked = true;
     }
   </script>
 
@@ -32,11 +32,11 @@
     <div class="noprint" style="display: inline;"><button onclick="window.print()">Print/export</button><button
         onclick="resetView();">Reset visible fields</button><br>
       <input type="checkbox" name="CS" id="CSin"
-        oninput="document.QuerySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
         checked><label for="CS">Show Computer Science related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="noCS" id="noCSin"
-        oninput="document.QuerySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
         checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="other"  id="otherin"
-        oninput="document.QuerySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
+        oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (v.style.display == 'none' ? 'initial' : 'none'));"
         checked><label for="other">Show EE/IoT/other related fields?</label></div>
     <h1>Andrew Herbert</h1>
 
