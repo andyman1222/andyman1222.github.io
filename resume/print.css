@@ -15,21 +15,17 @@ a{
     margin: 0 !important;
   }
   body{
-    background-color: black !important;
-    color: white !important;
+    background-color: white !important;
+    color: black !important;
   }
   img, #headAndText, btn{
     display: none !important;
   }
 
-  a{
+  a, #printOnly a{
     display: inline;
     color: blue !important;
   }
-
-  
-
-  
 
   #h1{
     margin: 0 !important;
