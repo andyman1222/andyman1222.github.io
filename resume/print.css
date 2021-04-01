@@ -36,6 +36,10 @@ a{
     display: initial;
   }
 
+  hr{
+    width: 50%;
+  }
+
   #centerMenu{
     margin: 0 !important;
     padding: 0 10px !important;
