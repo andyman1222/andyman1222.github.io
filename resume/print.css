@@ -42,14 +42,14 @@ a{
 
   a, #printOnly a{
     display: inline;
-    color: #792ed3 !important;
+    color: #391566 !important;
   }
 
-  p, li, ul{
+  p, li, ul, h3, h4, h5{
     color: black;
   }
 
-  h1, h2{
+  h1, h2, strong{
     color: #792ed3 !important;
   }
 
