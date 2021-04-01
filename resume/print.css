@@ -42,12 +42,17 @@ a{
 
   a, #printOnly a{
     display: inline;
-    color: blue !important;
+    color: #792ed3 !important;
   }
 
-  h1, p, h1, h2, h3, h4, h5, li, ul{
+  p, li, ul{
     color: black;
   }
+
+  h1, h2, h3, h4, h5{
+    color: #792ed3 !important;
+  }
+
   p, ul, div, section{
     page-break-inside: avoid;
     page-break-after: auto;
