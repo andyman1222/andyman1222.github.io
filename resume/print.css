@@ -33,7 +33,7 @@ a{
   }
 
   #printOnly{
-    display: block;
+    display: initial;
   }
 
   #centerMenu{
