@@ -17,6 +17,7 @@ a{
   body, p, ol, ul, h1, h2{
     background-color: white !important;
     color: black !important;
+    text-align: left;
   }
   img, #headAndText, btn{
     display: none !important;
