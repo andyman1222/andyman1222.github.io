@@ -1,3 +1,7 @@
+#printOnly{
+  display: none;
+}
+
 @media print{
   @page{
     margin: 0;
@@ -8,6 +12,10 @@
   }
   img, #headAndText, btn{
     display: none;
+  }
+
+  #printOnly{
+    display: block;
   }
 }
 
