@@ -4,14 +4,11 @@ p, ol, ul{
 	line-height: 1.5em;
 	font-size: 1em;
 }
-h1{
+h1, h2, h3, h4, h5{
 	font-family: "Lucida Console";
 	color:white;
 }
-h2{
-	font-family: "Lucida Console";
-	color:white;
-}
+
 a{
 	font-family: Verdana;
 	color:white;
@@ -43,14 +40,7 @@ li{
 	color:white;
 	background-color:black;
 }
-h5{
-	color:white;
-	font-family:"Lucida Console";
-}
-h3{
-	color:white;
-	font-family:"Lucida Console";
-}
+
 #headAndText{
 	width: 100%;
 	position: fixed;
