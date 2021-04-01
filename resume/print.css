@@ -22,17 +22,21 @@ a{
     display: none !important;
   }
 
-  #printOnly{
-    display: block;
-  }
-
   a{
     display: inline;
   }
 
+  
+
+  
+
   #h1{
     margin: 0 !important;
     margin-bottom: 5px !important;
+  }
+
+  #printOnly{
+    display: block;
   }
 
   #centerMenu{
