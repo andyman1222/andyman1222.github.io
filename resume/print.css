@@ -2,6 +2,10 @@
   display: none;
 }
 
+body{
+  font-size: 9pt;
+}
+
 @media print{
   @page{
     margin: 0;
@@ -16,6 +20,10 @@
 
   #printOnly{
     display: block;
+  }
+
+  #centerMenu{
+    margin: 0;
   }
 }
 
