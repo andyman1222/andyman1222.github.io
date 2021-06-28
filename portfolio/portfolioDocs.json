@@ -20,10 +20,15 @@
             "link": "/portfolio/game_dev/Betaa/",
             "desc": "Fast-paced multiplayer FPS concept"
         },
-        "Untitled Horror Game": {
-            "image": "images/horror.PNG",
-            "link": "/portfolio/game_dev/HorrorGame/",
-            "desc": "Simple yet fundamental horror-style game"
+        "LaserTag": {
+            "image": "images/LaserTag.png",
+            "link": "/portfolio/game_dev/LaserTag/",
+            "desc": "FPS based off of laser tag group ativities"
+        },
+        "Action Demo": {
+            "image": "images/actiondemo.png",
+            "link": "/portfolio/game_dev/ActionDemo/",
+            "desc": "single level WIP project to demonstrate cool gameplay"
         },
         "Other Games": {
             "image": "images/other.png",
@@ -76,15 +81,10 @@
         }
     },
     "Video editing/cinematography": {
-        "Non-gaming Youtube": {
+        "Youtube": {
             "image": "images/piranha-resized.jpg",
             "link": "https:\/\/youtube.com/c/AndyHerbert254",
             "desc": "Videos featuring editing and VFX."
-        },
-        "Gaming Youtube": {
-            "image": "images/new icon v3 transparent no glow.png",
-            "link": "https:\/\/youtube.com/c/quantumquantonium",
-            "desc": "Assortment of good and bad edited videos"
         }
     }
 }
