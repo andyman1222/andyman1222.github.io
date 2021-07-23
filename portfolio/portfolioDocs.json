@@ -46,11 +46,6 @@
             "image": "images/speaker.png",
             "link": "/portfolio/3D/speaker",
             "desc": "A 3D modeled and 3D printed speaker design"
-        },
-        "Other": {
-            "image": "images/other3D.png",
-            "link": "/portfolio/3D/other",
-            "desc": "Other 3D models and animation"
         }
     },
     "Photo editing/photography": {
