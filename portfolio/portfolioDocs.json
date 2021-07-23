@@ -1,5 +1,5 @@
 {
-    "Game development": {
+    "Game Design/Development": {
         "Amazeing": {
             "image": "images/Amazeing.png",
             "link": "/portfolio/game_dev/Amazeing/",
@@ -29,11 +29,6 @@
             "image": "images/actiondemo.png",
             "link": "/portfolio/game_dev/ActionDemo/",
             "desc": "single level WIP project to demonstrate cool gameplay"
-        },
-        "Other Games": {
-            "image": "images/other.png",
-            "link": "/portfolio/game_dev/other/",
-            "desc": "Etc projects and games developed in Unity or Unreal Engine"
         }
     },
     "Other 3D": {
@@ -59,15 +54,15 @@
         }
     },
     "Photo editing/photography": {
-        "Photo album": {
-            "image": "images/picture.jpg",
-            "link": "https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8",
-            "desc": "Photo album of images (and some videos) I took"
-        },
         "Drone album": {
             "image": "images/drone.png",
             "link": "https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA",
             "desc": "Photo album of drone videos/photos and similar"
+        },
+        "Photo album": {
+            "image": "images/picture.jpg",
+            "link": "https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8",
+            "desc": "Photo album of images (and some videos) I took"
         },
         "Random photo edits": {
             "image": "images/arte contesto entry.png",
