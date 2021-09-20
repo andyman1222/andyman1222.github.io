@@ -10,6 +10,11 @@
             "link": "/portfolio/game_dev/KungFuRun/",
             "desc": "A class project, a 3D Chinese-themed platformer"
         },
+        "Space Bar Defender": {
+            "image": "images/spacebardefenders.png",
+            "link": "/portfolio/game_dev/spacebardefenders/",
+            "desc": "Epic Games MegaJam 2021 submission"
+        },
         "Schooled In": {
             "image": "images/schooledin.png",
             "link": "https://quantumquantonium.itch.io/schooled-in",
@@ -29,52 +34,6 @@
             "image": "images/actiondemo.png",
             "link": "/portfolio/game_dev/ActionDemo/",
             "desc": "single level WIP project to demonstrate cool gameplay"
-        }
-    },
-    "Other 3D": {
-        "CP_city_beta": {
-            "image": "images/cpcitybeta.jpg",
-            "link": "/portfolio/3D/cp_city_beta/",
-            "desc": "A Team Fortress 2 custom map"
-        },
-        "3D trophy model": {
-            "image": "images/trophy.png",
-            "link": "/portfolio/3D/trophy",
-            "desc": "A 3D modeled and 3D printed trophy design"
-        },
-        "3D speaker model": {
-            "image": "images/speaker.png",
-            "link": "/portfolio/3D/speaker",
-            "desc": "A 3D modeled and 3D printed speaker design"
-        }
-    },
-    "Photo editing/photography": {
-        "Drone album": {
-            "image": "images/drone.png",
-            "link": "https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA",
-            "desc": "Photo album of drone videos/photos and similar"
-        },
-        "Photo album": {
-            "image": "images/picture.jpg",
-            "link": "https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8",
-            "desc": "Photo album of images (and some videos) I took"
-        },
-        "Random photo edits": {
-            "image": "images/arte contesto entry.png",
-            "link": "/portfolio/randomPhotoshops/",
-            "desc": "An assortment of photo editing done in Photoshop or GIMP"
-        },
-        "Youtube channel art": {
-            "image": "youtubeChannelArt/new channel art.png",
-            "link": "/portfolio/youtubeChannelArt/",
-            "desc": "Channel art and branding for my gaming Youtbe channel"
-        }
-    },
-    "Video editing/cinematography": {
-        "Youtube": {
-            "image": "images/piranha-resized.jpg",
-            "link": "https:\/\/youtube.com/c/AndyHerbert254",
-            "desc": "Videos featuring editing and VFX."
         }
     }
 }
