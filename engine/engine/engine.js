@@ -43,7 +43,7 @@ function initGraphics() {
 	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 	//  Load shaders and initialize attribute buffers
-	var program = initShaders(gl, "vertex.glsl", "fragment.glsl");
+	var program = initShaders(gl, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl");
 	gl.useProgram(program);
 
 	bData = new buffer(gl, program, "coordinates", "inColor", "projMatrix", "viewMatrix");
