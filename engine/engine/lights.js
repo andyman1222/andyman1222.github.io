@@ -1,6 +1,5 @@
-class directionalLight{
+class directionalLight extends primitive{
     color;
-    transform;
     lightmask;
 
     /**
@@ -19,9 +18,8 @@ class directionalLight{
 }
 
 
-class pointLight{
+class pointLight extends primitive{
     color;
-    transform;
     lightmask;
     attenuation;
     /**
@@ -32,16 +30,29 @@ class pointLight{
      * @param {*} a linear attenuation of light
      */
     constructor(t, c, m, a){
-        this.transform = t
+        super(t)
         this.color = c
         this.lightmask = m
         this.attenuation = a
     }
 }
 
-class spotLight{
+class ambientLight{
     color;
-    transform;
+    lightmask;
+    /**
+     * 
+     * @param {*} b brightness/color of light
+     * @param {*} m bitwise mask indicating how many channels the light casts onto (up to 256)
+     */
+    constructor(c, m){
+        this.color = c
+        this.lightmask = m
+    }
+}
+
+class spotLight extends primitive{
+    color;
     lightmask;
     attenuation;
     angle;
@@ -54,7 +65,7 @@ class spotLight{
      * @param {*} h angle of spread of the spotlight
      */
     constructor(t, c, m, a, h){
-        this.transform = t
+        super(t)
         this.color = c
         this.lightmask = m
         this.attenuation = a

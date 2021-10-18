@@ -383,23 +383,24 @@ class camera extends primitive {
 
 
 /**
- * 3D primitive containing color data, coordinate data, and bounds
+ * 3D primitive containing material data, coordinate data, and bounds
  */
 class object extends primitive {
 	/**
 	 * 
 	 * @param {transform} startTransform
-	 * @param {drawInfo} drawInfo 
+	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[]}]
 	 * @param {enum} drawType 
 	 */
-	constructor(startTransform, drawInfo, colorGroup, boundsType, isEngine = false, visible = true) {
+	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, isEngine = false, visible = true) {
 		//if(startTransform.rot.length != 4) throw "Rotations must be quaternions!"
 		super(startTransform)
 		this.id = newID();
 		this.drawInfo = drawInfo;
 		this.bounds = new bounds(drawInfo, boundsType);
 		this.isEngine = isEngine
-		this.colorGroup = colorGroup
+		this.matInfo = matInfo
+		this.pointInfo = pointInfo
 		this.visible = visible
 		objects[this.id] = this
 	}
@@ -420,19 +421,19 @@ class object extends primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], types: [], colors: [], bounds: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
+		var ret = { points: [], types: [], mats: [], bounds: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
 
 		for (var g = 0; g < this.drawInfo.length; g++) {
 
 			ret.points.push(new Array())
-			ret.colors.push(new Array())
+			ret.mats.push(new Array())
 			ret.types.push(this.drawInfo[g].type)
 			for (var i = 0; i < this.drawInfo[g].points.length; i++) {
 				var tmp = mult(newMat, vec3to4(this.drawInfo[g].points[i]))
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.points[g].push(vec4to3(tmp));
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
-				ret.colors[g].push(this.colorGroup[this.drawInfo[g].colorIndex[i % this.drawInfo[g].colorIndex.length]])
+				ret.mats[g].push(this.matGroup[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
 			}
 		}
 

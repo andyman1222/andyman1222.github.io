@@ -163,6 +163,7 @@ function init() {
 	altCamera = new camera(bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera.enabled = false
 	mainCamera.transform.pos = vec3(-20, 2, -20)
+	mainCamera.fov=180
 	//mainCamera.renderEngine = true
 	generateMaze_()
 	new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
