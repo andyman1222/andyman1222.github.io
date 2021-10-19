@@ -188,34 +188,32 @@ class buffer {
  * extremely rough class representing visibility bounds for an object
  */
 class bounds {
-	constructor(drawInfo, type) {
+	constructor(pointInfo, type) {
 		this.type = type;
 
 		//get center of all points rendered
 		this.pos = vec3()
 		if (drawInfo.length > 0) {
-			var min = vec3(drawInfo[0].points[0][0], drawInfo[0].points[0][1], drawInfo[0].points[0][2]) //POINTERS PLS
-			var max = vec3(drawInfo[0].points[0][0], drawInfo[0].points[0][1], drawInfo[0].points[0][2])
+			var min = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2]) //POINTERS PLS
+			var max = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2])
 			//get min and max x, y, z values
-			for (var g = 0; g < drawInfo.length; g++)
-				for (var i = 0; i < drawInfo[g].points.length; i++) {
-					for (var ii = 0; ii < drawInfo[g].points[i].length; ii++) {
-						if (drawInfo[g].points[i][ii] > max[ii]) { max[ii] = drawInfo[g].points[i][ii] }
-						if (drawInfo[g].points[i][ii] < min[ii]) { min[ii] = drawInfo[g].points[i][ii] }
-					}
+			for (var i = 0; i < pointInfo.length; i++) {
+				for (var ii = 0; ii < pointInfo[i].length; ii++) {
+					if (pointInfo[i][ii] > max[ii]) { max[ii] = pointInfo[i][ii] }
+					if (pointInfo[i][ii] < min[ii]) { min[ii] = pointInfo[i][ii] }
 				}
+			}
 
 			this.pos = mult(.5, add(min, max))
 			//(this.pos)
 
 			if (type == "sphere") {
 				//get furthest point from points rendered
-				this.radius = subtract(drawInfo[0].points[0], this.pos)
-				for (var g = 0; g < drawInfo.length; g++)
-					for (var i = 1; i < drawInfo[g].points.length; i++) {
-						var tmp = subtract(drawInfo[g].points[i], this.pos)
-						if (length(tmp) > length(this.radius)) this.radius = tmp
-					}
+				this.radius = subtract(pointInfo[0], this.pos)
+				for (var i = 1; i < drawInfo[g].points.length; i++) {
+					var tmp = subtract(pointInfo[i], this.pos)
+					if (length(tmp) > length(this.radius)) this.radius = tmp
+				}
 			} else if (type == "rect") {
 
 				this.extent = mult(.5, subtract(max, min));
@@ -354,6 +352,16 @@ class camera extends primitive {
 		}
 	}
 
+	updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000]){
+		this.fov = fov;
+		this.ortho = orthographic;
+		this.range = range;
+		if (aspect < 0)
+			this.aspect = this.buf.gTarget.canvas.clientWidth / this.buf.gTarget.canvas.clientHeight
+		else this.aspect = aspect;
+		this.buf.setProjMatrix(this.getProjMat());
+	}
+
 	/**
 	 * 
 	 * @param {vec3} pos 
@@ -366,17 +374,10 @@ class camera extends primitive {
 	constructor(targetBuffer, pos = vec3(0, 0, 0), rot = eulerToQuat(vec3(1, 0, 0), 0), scl = vec3(1, 1, 1), fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], enabled = true, renderEngine = false) {
 		//if(rot.length != 4) throw "Rotations must be quaternions!"
 		super({ pos: pos, rot: rot, scl: scl })
-		this.fov = fov;
-		this.aspect = aspect;
-		this.ortho = orthographic;
-		this.range = range;
 		this.buf = targetBuffer
 		this.enabled = enabled
 		this.renderEngine = renderEngine
-		if (aspect < 0)
-			this.aspect = this.buf.gTarget.canvas.clientWidth / this.buf.gTarget.canvas.clientHeight
-		else this.aspect = aspect;
-		this.buf.setProjMatrix(this.getProjMat());
+		this.updateCameraView(fov, aspect, orthographic, range)
 		cameras.push(this);
 	}
 }
@@ -384,27 +385,37 @@ class camera extends primitive {
 
 /**
  * 3D primitive containing material data, coordinate data, and bounds
+ * Note: For attached primitives to object, if you want to attach a primitive to a point, you must set the primitive's transform to the point location manually.
  */
 class object extends primitive {
+
+	/**To be called whenever individual points are adjusted */
+	reevaluateBounds(pointInfo, boundsType){
+		this.bounds = new bounds(drawInfo, pointInfo, boundsType);
+	}
+
+
 	/**
 	 * 
 	 * @param {transform} startTransform
-	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[]}]
+	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[], texCoords[], type}]
 	 * @param {enum} drawType 
 	 */
-	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, isEngine = false, visible = true) {
+	constructor(startTransform, drawInfo, pointInfo, matInfo, normalInfo, boundsType, isEngine = false, visible = true) {
 		//if(startTransform.rot.length != 4) throw "Rotations must be quaternions!"
 		super(startTransform)
 		this.id = newID();
 		this.drawInfo = drawInfo;
-		this.bounds = new bounds(drawInfo, boundsType);
+		this.normalInfo = normalInfo
+		this.pointInfo = pointInfo
+		this.reevaluateBounds(pointInfo, boundsType)
 		this.isEngine = isEngine
 		this.matInfo = matInfo
-		this.pointInfo = pointInfo
 		this.visible = visible
 		objects[this.id] = this
 	}
 
+	
 	/**
 	 * Returns points array and bounding box relative to world coordinates
 	 */
@@ -421,19 +432,23 @@ class object extends primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], types: [], mats: [], bounds: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
+		var ret = { points: [], types: [], mats: [], texCoords: [], normals: [], bounds: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
 
 		for (var g = 0; g < this.drawInfo.length; g++) {
 
 			ret.points.push(new Array())
 			ret.mats.push(new Array())
 			ret.types.push(this.drawInfo[g].type)
-			for (var i = 0; i < this.drawInfo[g].points.length; i++) {
-				var tmp = mult(newMat, vec3to4(this.drawInfo[g].points[i]))
+			ret.normals.push(new Array())
+			ret.texCoords.push(new Array())
+			for (var i = 0; i < this.drawInfo[g].pointIndex.length; i++) {
+				var tmp = mult(newMat, vec3to4(this.pointInfo[this.drawInfo[g].pointIndex[i]]))
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.points[g].push(vec4to3(tmp));
+				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
+				ret.normals[g].push(this.normalInfo[this.drawInfo[g].pointIndex[i]])
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
-				ret.mats[g].push(this.matGroup[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
+				ret.mats[g].push(this.matInfo[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
 			}
 		}
 

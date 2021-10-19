@@ -163,12 +163,12 @@ function init() {
 	altCamera = new camera(bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera.enabled = false
 	mainCamera.transform.pos = vec3(-20, 2, -20)
-	mainCamera.fov=180
 	//mainCamera.renderEngine = true
 	generateMaze_()
+	var tmp = getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ points: getRect(vec3(0, 0, 0), vec3(100, 1, 100)), colorIndex: [0], type: gl.TRIANGLES }]
-		, [vec4(.75, .75, .75, 1), vec4(0, .25, .25, 1), vec4(.25, 0, .25, 1), vec4(.25, .25, 0, 1), vec4(.25, .25, .25, 1)], "rect")
+		{ pointIndex: tmp.index, matIndex: [0], texCoord: tmp.texCoords, type: gl.TRIANGLES }]
+		, tmp.points, [new material()], tmp.normals, "rect")
 }
 
 window.onload = function () {

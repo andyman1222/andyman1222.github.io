@@ -192,7 +192,12 @@ step_maze()
   }
 }
 
-var colors = [vec4(1,0,0,.5), vec4(0,1,0,.5), vec4(0,0,1,.5),vec4(1,1,0,.5),vec4(1,0,1,.5),vec4(0,1,1,.5)]
+var materials = [new material(0, [vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1)]),
+  new material(0, [vec4(0,1,0,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1,1,1,1)]),
+  new material(0, [vec4(0,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1)]),
+  new material(0, [vec4(1,1,0,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1)]),
+  new material(0, [vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1)]),
+  new material(0, [vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1)])]
 
 function
 draw_maze()
@@ -207,9 +212,10 @@ draw_maze()
       if (edge[i].draw == true) {
         p1 = vertex[Math.floor(edge[i].vertex1)];
         p2 = vertex[Math.floor(edge[i].vertex2)];
+        var tmp = getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
-        [{points: getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5)), colorIndex: [0], type: gl.TRIANGLES}],
-        [colors[i%colors.length]], "rect"))
+        [{pointIndex: tmp.index, matIndex: [0], texCoord: tmp.texCoords, type: gl.TRIANGLES}],
+        tmp.points, [materials[i%materials.length]], tmp.normals, "rect"))
       }
     }
     /* draw the perimeter edges */
@@ -217,9 +223,10 @@ draw_maze()
       if (perimeter[i].draw == true) {
         p1 = vertex[Math.floor(perimeter[i].vertex1)];
         p2 = vertex[Math.floor(perimeter[i].vertex2)];
+        var tmp = getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
-        [{points: getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5)), colorIndex: [0], type: gl.TRIANGLES}],
-        [vec4(.25,.25,.25,1)], "rect"))
+        [{pointIndex: tmp.index, matIndex: [0], texCoord: tmp.texCoords, type: gl.TRIANGLES}],
+        tmp.points, [materials[i%materials.length]], tmp.normals, "rect"))
       }
     }
   }

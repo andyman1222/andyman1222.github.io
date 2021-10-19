@@ -26,7 +26,7 @@ function tick(prevTime) {
 	queueNewTick(tick);
 }
 
-function initGraphics() {
+function initDefaultGraphics(vertexPath, fragmentPath) {
 	canvas = document.getElementById("gl-canvas");
 
 	gl = canvas.getContext('webgl2');
@@ -43,7 +43,7 @@ function initGraphics() {
 	gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
 	//  Load shaders and initialize attribute buffers
-	var program = initShaders(gl, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl");
+	var program = initShaders(gl, vertexPath, fragmentPath);
 	gl.useProgram(program);
 
 	bData = new buffer(gl, program, "coordinates", "inColor", "projMatrix", "viewMatrix");
@@ -53,14 +53,14 @@ function initGraphics() {
 	coords = new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, [{
 		points: [
 			vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)/*, vec3(-1, 0, -1), vec3(0, 0, 1)*/
-		], colorIndex: [0, 0, 1, 1, 2, 2], type: gl.LINES
+		], matIndex: [0, 0, 1, 1, 2, 2], type: gl.LINES
 	}], [vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)], "rect", true)
 }
 
-function engineInit(userInit, userTick) {
+function engineInit(userInit, userTick, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../default-shaders/fragment.glsl") {
 	userInitFunction = userInit
 	userTickFunction = userTick;
-	initGraphics();
+	initDefaultGraphics(defaultVertex, defaultFragment);
 	userInitFunction();
 	queueNewTick(tick);
 	render();
