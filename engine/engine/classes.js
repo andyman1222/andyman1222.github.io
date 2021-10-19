@@ -365,10 +365,10 @@ class camera extends primitive {
 			var base = 0
 			objects.forEach(function (o) {
 				if ((this.renderEngine && o.isEngine) || !o.isEngine) {
-					var current = o.localToWorld();
 					if (o.visible) {
+						var current = o.localToWorld();
 						for(var g = 0; g < current.points.length; g++){
-							this.buf.points.push(mult(p[g], vec3(1, 1, -1)))
+							this.buf.points.push(mult(current.points[g], vec3(1, 1, -1)))
 						}
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
