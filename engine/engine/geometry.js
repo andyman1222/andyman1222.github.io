@@ -78,45 +78,44 @@ function getRect(pos, extent) {
 	var brb = vec3(pos[0] + extent[0], pos[1] - extent[1], pos[2] - extent[2])
 	//8
 	var flt = vec3(pos[0] - extent[0], pos[1] + extent[1], pos[2] + extent[2])
-
+	
 	var ind = []
 	var tx = []
-	var norm = [normalize(vec3(-1, -1, -1)), normalize(vec3(-1, -1, 1)), normalize(vec3(1, -1, 1)), normalize(vec3(1, 1, 1)), normalize(vec3(1, 1, -1)), normalize(vec3(1, -1, -1)), normalize(vec3(-1, 1, 1))] //again, lazy normals calculation
+	var norm = [normalize(vec3(-1,-1,-1)), normalize(vec3(-1,-1,1)), normalize(vec3(1,-1,1)), normalize(vec3(1,1,1)), normalize(vec3(1,1,-1)), normalize(vec3(1,-1,-1)), normalize(vec3(-1,1,1))] //again, lazy normals calculation
 	var p = [blb, flb, frb, frt, brt, blt, brb, flt]
-	var pb = { blb: 0, flb: 1, frb: 2, frt: 3, brt: 4, blt: 5, brb: 6, flt: 7 }
-	ind.push(pb[blb], pb[brb], pb[frb],
-		pb[frb], pb[flb], pb[blb],
+	ind.push(0, 6, 2,
+		2, 1, 0,
+		
+		4, 5, 3,
+		7, 3, 5,
 
-		pb[brt], pb[blt], pb[frt],
-		pb[flt], pb[frt], pb[blt],
+		6, 0, 4,
+		5, 4, 0,
 
-		pb[brb], pb[blb], pb[brt],
-		pb[blt], pb[brt], pb[blb],
+		1, 2, 3,
+		3, 7, 1,
 
-		pb[flb], pb[frb], pb[frt],
-		pb[frt], pb[flt], pb[flb],
+		5, 0, 7,
+		1, 7, 0,
 
-		pb[blt], pb[blb], pb[flt],
-		pb[flb], pb[flt], pb[blb],
+		6, 4, 3,
+		3, 2, 6) //intended for TRIANGLES. I'm no longer supporting LINE_LOOP or anything else fancy like that
+	tx.push(vec2(1,1), vec2(0, 1), vec2(0,0),
+	vec2(0,0), vec2(1, 0), vec2(1,1),
 
-		pb[brb], pb[brt], pb[frt],
-		pb[frt], pb[frb], pb[brb]) //intended for TRIANGLES. I'm no longer supporting LINE_LOOP or anything else fancy like that
-	tx.push(vec2(1, 1), vec2(0, 1), vec2(0, 0),
-		vec2(0, 0), vec2(1, 0), vec2(1, 1),
+	vec2(1,0), vec2(0, 0), vec2(1,1),
+	vec2(0,1), vec2(1, 1), vec2(0,0),
 
-		vec2(1, 0), vec2(0, 0), vec2(1, 1),
-		vec2(0, 1), vec2(1, 1), vec2(0, 0),
-
-		vec2(1, 0), vec2(0, 0), vec2(1, 1),
-		vec2(0, 1), vec2(1, 1), vec2(0, 0),
-
-		vec2(1, 0), vec2(0, 0), vec2(0, 1),
-		vec2(0, 1), vec2(1, 1), vec2(1, 0),
-
-		vec2(1, 1), vec2(1, 0), vec2(0, 1),
-		vec2(0, 0), vec2(0, 1), vec2(1, 0),
-
-		vec2(0, 0), vec2(0, 1), vec2(1, 1),
-		vec2(1, 1), vec2(1, 0), vec2(0, 0))
-	return { points: p, index: ind, texCoords: tx, normals: norm }
+	vec2(1,0), vec2(0, 0), vec2(1,1),
+	vec2(0,1), vec2(1, 1), vec2(0,0),
+	
+	vec2(1,0), vec2(0, 0), vec2(0,1),
+	vec2(0,1), vec2(1, 1), vec2(1,0),
+	
+	vec2(1,1), vec2(1, 0), vec2(0,1),
+	vec2(0,0), vec2(0, 1), vec2(1,0),
+	
+	vec2(0,0), vec2(0, 1), vec2(1,1),
+	vec2(1,1), vec2(1, 0), vec2(0,0))
+	return{points: p, index: ind, texCoords: tx, normals: norm}
 }
