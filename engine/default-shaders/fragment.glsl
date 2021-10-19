@@ -6,6 +6,8 @@ in vec2 texCoord;
 in mat4 matProperties;
 in int flat matIndex;
 
+out vec4 fColor;
+
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
 struct light
