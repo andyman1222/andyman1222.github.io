@@ -17,7 +17,7 @@ out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
 out mat4 matProperties;
-out int matIndex;
+flat out int matIndex;
 
 
 void main(void) {

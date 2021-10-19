@@ -4,7 +4,7 @@ precision lowp float;
 in vec4 color;
 in vec2 texCoord;
 in mat4 matProperties;
-in int matIndex;
+flat in int matIndex;
 
 out vec4 fColor;
 
