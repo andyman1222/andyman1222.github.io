@@ -245,6 +245,17 @@ class buffer {
 			this.gTarget.drawElements(this.types[i], offset, this.gTarget.UNSIGNED_SHORT, this.offsets[i]);
 			offset += this.offsets[i];
 		}
+		var tmp = this.gTarget.getError()
+		if(tmp != this.gTarget.NO_ERROR){
+			switch (tmp){
+				case this.gTarget.INVALID_OPERATION:
+				case this.gTarget.INVALID_FRAMEBUFFER_OPERATION:
+				case this.gTarget.OUT_OF_MEMORY:
+					alert("WebGL error " + tmp + "; Make sure hardware acceleration is enabled in your web browser. gTarget: " + this.gTarget)
+				default:
+					alert("WebGL error " + tmp + "; gTarget: " + this.gTarget)
+			}
+		}
 	}
 }
 
