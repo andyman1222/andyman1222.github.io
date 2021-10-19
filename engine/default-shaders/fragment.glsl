@@ -13,11 +13,11 @@ struct light
     vec3 color;
     vec3 diffuseMultiply;
     vec3 specularMultiply;
-}
+};
 
 
 
-vec2 parallax(vec2 TexCoord, vec3 V)
+/*vec2 parallax(vec2 TexCoord, vec3 V)
 {
   float layer_depth = 1.0/32.0;
   float cur_layer_depth = 0.0;
@@ -42,7 +42,7 @@ vec2 parallax(vec2 TexCoord, vec3 V)
   float weight = next/(next-prev);
   return mix(curTexCoord, prevTexCoord, weight);
   //return curTexCoord;
-}
+}*/
 
 
 void main(void) {
