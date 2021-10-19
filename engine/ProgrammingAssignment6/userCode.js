@@ -33,45 +33,45 @@ function userTick(delta, time) {
 			if (mainCamera.enabled) {
 				var f = forward(mainCamera.transform.rot), r = right(mainCamera.transform.rot)
 				if ((i == 87) || (i == 119)) {//w
-					var n = add(mainCamera.transform.pos, mult(.01, vec3(f[0], 0, f[2])))
+					var n = add(mainCamera.transform.pos, mult(.01*delta, vec3(f[0], 0, f[2])))
 					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2,0,.2)))
 						mainCamera.transform.pos = n
 				}
 
 				if ((i == 65) || (i == 97)) {//a
-					var n = add(mainCamera.transform.pos, mult(-.01, vec3(r[0], 0, r[2])))
+					var n = add(mainCamera.transform.pos, mult(-.01*delta, vec3(r[0], 0, r[2])))
 					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2,0,.2)))
 						mainCamera.transform.pos = n
 				}
 
 				if ((i == 83) || (i == 115)) {//s
-					var n = add(mainCamera.transform.pos, mult(-.01, vec3(f[0], 0, f[2])))
+					var n = add(mainCamera.transform.pos, mult(-.01*delta, vec3(f[0], 0, f[2])))
 					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2,0,.2)))
 						mainCamera.transform.pos = n
 				}
 
 				if ((i == 68) || (i == 100)) {//d
-					var n = add(mainCamera.transform.pos, mult(.01, vec3(r[0], 0, r[2])))
+					var n = add(mainCamera.transform.pos, mult(.01*delta, vec3(r[0], 0, r[2])))
 					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2,0,.2)))
 						mainCamera.transform.pos = n
 				}
 			}
 			else {
 				if ((i == 87) || (i == 119)) //w
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1, forward(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1*delta, forward(altCamera.transform.rot)))
 
 				if ((i == 65) || (i == 97))//a
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1, right(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1*delta, right(altCamera.transform.rot)))
 				if ((i == 83) || (i == 115))//s
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1, forward(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1*delta, forward(altCamera.transform.rot)))
 
 				if ((i == 68) || (i == 100))//d
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1, right(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1*delta, right(altCamera.transform.rot)))
 				if ((i == 81))//q
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1, up(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.1*delta, up(altCamera.transform.rot)))
 
 				if ((i == 69))//e
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1, up(altCamera.transform.rot)))
+					altCamera.transform.pos = add(altCamera.transform.pos, mult(.1*delta, up(altCamera.transform.rot)))
 			}
 
 
