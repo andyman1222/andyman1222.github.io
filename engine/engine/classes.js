@@ -251,9 +251,9 @@ class buffer {
 				case this.gTarget.INVALID_OPERATION:
 				case this.gTarget.INVALID_FRAMEBUFFER_OPERATION:
 				case this.gTarget.OUT_OF_MEMORY:
-					alert("WebGL error " + tmp + "; Make sure hardware acceleration is enabled in your web browser. gTarget: " + this.gTarget)
+					alert("WebGL error " + tmp + "; Make sure hardware acceleration is enabled in your web browser.")
 				default:
-					alert("WebGL error " + tmp + "; gTarget: " + this.gTarget)
+					alert("WebGL error " + tmp)
 			}
 		}
 	}
