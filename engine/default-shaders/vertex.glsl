@@ -2,10 +2,10 @@
 
 precision lowp float;
 
-in vec4 coordinates;
-in vec4 inMatProperties[8];
-in int inMatIndex;
-in vec2 inTexCoord;
+layout(location=0) in vec4 coordinates;
+layout(location=7) in vec4 inMatProperties[8];
+layout(location=6) in int inMatIndex;
+layout(location=1) in vec2 inTexCoord;
 //attribute vec3 inNormal;
 
 uniform mat4 viewMatrix;
