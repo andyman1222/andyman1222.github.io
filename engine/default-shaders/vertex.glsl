@@ -3,7 +3,10 @@
 precision lowp float;
 
 in vec4 coordinates;
-in mat4 inMatProperties;
+in vec4 inMatProp1;
+in vec4 inMatProp2;
+in vec4 inMatProp3;
+in vec4 inMatProp4;
 in int inMatIndex;
 in vec2 inTexCoord;
 //attribute vec3 inNormal;
@@ -34,6 +37,6 @@ void main(void) {
     //normal = tsMatrix*N;
 
     texCoord = inTexCoord;
-    matProperties = inMatProperties;
+    matProperties = mat4(inMatProp1, inMatProp2, inMatProp3, inMatProp4);
     matIndex = inMatIndex;
 }

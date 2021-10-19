@@ -121,28 +121,43 @@ class primitive {
 
 //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class buffer {
-	matParams = []
+	matParams1 = []
+	matParams2 = []
+	matParams3 = []
+	matParams4 = []
 	matIndicies = []
 	points = []
 	types = []
 	offsets = []
 	posBuffer;
-	matBuf;
+	matBuf1;
+	matBuf2;
+	matBuf3;
+	matBuf4;
 	matIndBuf;
 	projMatrix;
 	viewMatrix;
 	normalMatrix;
 	inPos;
-	inMat;
+	inMat1;
+	inMat2;
+	inMat3;
+	inMat4;
 	inMatIndex;
-	constructor(gTarget, program, coordStr, matStr, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
+	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
 		this.matIndBuf = this.gTarget.createBuffer();
-		this.matBuf = this.gTarget.createBuffer();
+		this.matBuf1 = this.gTarget.createBuffer();
+		this.matBuf2 = this.gTarget.createBuffer();
+		this.matBuf3 = this.gTarget.createBuffer();
+		this.matBuf4 = this.gTarget.createBuffer();
 		this.inPos = this.gTarget.getAttribLocation(this.program, coordStr);
-		this.inMat = this.gTarget.getAttribLocation(this.program, matStr);
+		this.inMat1 = this.gTarget.getAttribLocation(this.program, matStr1);
+		this.inMat2 = this.gTarget.getAttribLocation(this.program, matStr2);
+		this.inMat3 = this.gTarget.getAttribLocation(this.program, matStr3);
+		this.inMat4 = this.gTarget.getAttribLocation(this.program, matStr4);
 		this.inMatIndex = this.gTarget.getAttribLocation(this.program, matIndStr);
 		this.projMatrix = this.gTarget.getUniformLocation(this.program, projMatrixStr);
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
@@ -152,7 +167,10 @@ class buffer {
 	}
 
 	clearBuffers() {
-		this.matParams = []
+		this.matParams1 = []
+		this.matParams2 = []
+		this.matParams3 = []
+		this.matParams4 = []
 		this.points = []
 		this.types = []
 		this.offsets = []
@@ -166,6 +184,13 @@ class buffer {
 
 	setProjMatrix(p) {
 		this.gTarget.uniformMatrix4fv(this.projMatrix, false, flatten(p));
+	}
+
+	pushMaterial(m){
+		this.matParams1.push(flatten(m[0]))
+		this.matParams2.push(flatten(m[1]))
+		this.matParams3.push(flatten(m[2]))
+		this.matParams4.push(flatten(m[3]))
 	}
 
 	render() {
@@ -185,10 +210,25 @@ class buffer {
 			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.SHORT, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMatIndex);
 
-			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribPointer(this.inMat, 4, this.gTarget.FLOAT, false, 0, 0);
-			this.gTarget.enableVertexAttribArray(this.inMat);
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf1);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams1), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat1, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat1);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf2);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams2), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat2, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat2);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf3);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams3), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat3, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat3);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf4);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams4), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat4);
 		}
 		//draw
 		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
@@ -338,7 +378,7 @@ class camera extends primitive {
 									this.buf.matIndicies.push(-1)
 								}
 								this.buf.points.push(mult(p[ii], vec3(1, 1, -1)))
-								this.buf.matParams.push(flatten(m[ii % m.length].parameters))
+								this.buf.pushMaterial(m[ii % m.length].parameters)
 							}
 
 						}
@@ -349,7 +389,7 @@ class camera extends primitive {
 							for (var i = 0; i < current.bounds.length; i++) {
 								this.buf.points.push(mult(current.bounds[i], vec3(1, 1, -1)))
 								this.buf.matIndicies.push(-1)
-								this.buf.matParams.push(flatten(new solidColorNoLighting(current.boundColors[i % current.boundColors.length]).parameters));
+								this.buf.pushMaterial(new solidColorNoLighting(current.boundColors[i % current.boundColors.length]).parameters);
 							}
 							this.buf.offsets.push(current.bounds.length)
 						}
