@@ -58,6 +58,7 @@ void main(void) {
             fColor = matProperties[0];
             break;
         default:
-            
+        fColor = vec4(1,1,1,1); //temp
+            break;
     }
 }
