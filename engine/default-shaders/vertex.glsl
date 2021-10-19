@@ -4,7 +4,7 @@ precision lowp float;
 
 in vec4 coordinates;
 in mat4 inMatProperties;
-flat in int inMatIndex;
+in int inMatIndex;
 in vec2 inTexCoord;
 //attribute vec3 inNormal;
 
@@ -17,7 +17,7 @@ out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
 out mat4 matProperties;
-flat out int matIndex;
+out int matIndex;
 
 
 void main(void) {
