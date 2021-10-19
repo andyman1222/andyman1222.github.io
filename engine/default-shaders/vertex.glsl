@@ -13,14 +13,13 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
 
-out vec4 color;
 //varying vec3 normal;
 out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
 out mat4 matProperties;
 out mat4 matProperties2;
-out int matIndex;
+out flat int matIndex;
 
 
 void main(void) {
@@ -35,7 +34,7 @@ void main(void) {
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
-    color = inColor;
+
     texCoord = inTexCoord;
     matProperties = inMatProperties;
     matIndex = inMatIndex;

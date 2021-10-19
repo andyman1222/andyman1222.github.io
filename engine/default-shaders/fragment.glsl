@@ -5,7 +5,7 @@ in vec4 color;
 in vec2 texCoord;
 in mat4 matProperties;
 in mat4 matProperties2;
-in int matIndex;
+in flat int matIndex;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
