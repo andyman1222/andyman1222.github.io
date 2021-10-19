@@ -119,7 +119,7 @@ class primitive {
  * buffer object representing all data necessary for any output buffer/view
  */
 
- //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
+//TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class buffer {
 	matParams = []
 	matIndicies = []
@@ -171,7 +171,7 @@ class buffer {
 	render() {
 		//("Rendering")
 		//load new buffer data
-		
+
 		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.points), this.gTarget.STATIC_DRAW);
@@ -324,15 +324,19 @@ class camera extends primitive {
 							var m = current.mats[g]
 							var t = current.types[g]
 							this.buf.offsets.push(p.length);
-							if (!this.wireframe){
+							if (!this.wireframe) {
 								this.buf.types.push(t);
-								this.buf.matIndicies.push(m[ii % m.length].index)
 							}
-							else{
+							else {
 								this.buf.types.push(this.buf.gTarget.LINE_LOOP);
-								this.buf.matIndicies.push(-1)
 							}
 							for (var ii = 0; ii < p.length; ii++) {
+								if (!this.wireframe) {
+									this.buf.matIndicies.push(m[ii % m.length].index)
+								}
+								else {
+									this.buf.matIndicies.push(-1)
+								}
 								this.buf.points.push(mult(p[ii], vec3(1, 1, -1)))
 								this.buf.matParams.push(flatten(m[ii % m.length].parameters))
 							}
@@ -376,7 +380,7 @@ class camera extends primitive {
 		}
 	}
 
-	updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000]){
+	updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000]) {
 		this.fov = fov;
 		this.ortho = orthographic;
 		this.range = range;
@@ -414,7 +418,7 @@ class camera extends primitive {
 class object extends primitive {
 
 	/**To be called whenever individual points are adjusted */
-	reevaluateBounds(pointInfo, boundsType){
+	reevaluateBounds(pointInfo, boundsType) {
 		this.bounds = new bounds(pointInfo, boundsType);
 	}
 
@@ -439,7 +443,7 @@ class object extends primitive {
 		objects[this.id] = this
 	}
 
-	
+
 	/**
 	 * Returns points array and bounding box relative to world coordinates
 	 */
