@@ -415,7 +415,7 @@ class object extends primitive {
 
 	/**To be called whenever individual points are adjusted */
 	reevaluateBounds(pointInfo, boundsType){
-		this.bounds = new bounds(drawInfo, pointInfo, boundsType);
+		this.bounds = new bounds(pointInfo, boundsType);
 	}
 
 
