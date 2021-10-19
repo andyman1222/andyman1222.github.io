@@ -1,5 +1,9 @@
 precision lowp float;
 varying vec4 color;
+varying vec4 color;
+varying vec2 texCoord;
+varying vec4 matProperties[8];
+varying int matIndex;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
