@@ -11,3 +11,9 @@ class material{
         this.parameters = parameters
     }
 }
+
+class solidColorNoLighting extends material{
+    constructor(color){
+        super(-1, [color])
+    }
+}

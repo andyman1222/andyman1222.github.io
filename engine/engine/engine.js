@@ -51,10 +51,9 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 	mainCamera = new camera(bData);
 
 	coords = new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, [{
-		points: [
-			vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)/*, vec3(-1, 0, -1), vec3(0, 0, 1)*/
-		], matIndex: [0, 0, 1, 1, 2, 2], type: gl.LINES
-	}], [vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)], "rect", true)
+		pointIndex: [0, 1, 2, 3, 4, 5], matIndex: [0, 0, 1, 1, 2, 2], texCoords: [vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1)], type: gl.LINES}],
+	[vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)],
+	[vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)], [solidColorNoLighting(vec4(1,0,0,1)), solidColorNoLighting(vec4(0,1,0,1)), solidColorNoLighting(vec4(0,0,1,1))], "rect", true)
 }
 
 function engineInit(userInit, userTick, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../default-shaders/fragment.glsl") {

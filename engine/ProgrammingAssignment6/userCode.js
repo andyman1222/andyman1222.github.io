@@ -167,7 +167,7 @@ function init() {
 	generateMaze_()
 	var tmp = getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ pointIndex: tmp.index, matIndex: [0], texCoord: tmp.texCoords, type: gl.TRIANGLES }]
+		{ pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: gl.TRIANGLES }]
 		, tmp.points, [new material()], tmp.normals, "rect")
 }
 

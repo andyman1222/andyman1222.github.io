@@ -1,7 +1,7 @@
 precision lowp float;
 varying vec4 color;
 
-attribute int matIndex; //default = 0, constant values; 1 = texture, constant values
+attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
 struct light
 {
@@ -47,7 +47,10 @@ vec2 parallax(vec2 TexCoord, vec3 V)
 
 void main(void) {
     switch (matIndex){
-        default:
+        case -1:
             gl_FragColor = color;
+            break;
+        default:
+            
     }
 }
