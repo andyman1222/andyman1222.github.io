@@ -374,7 +374,7 @@ class camera extends primitive {
 							var i = current.indexes[g]
 							var m = current.mats[g]
 							var t = current.types[g]
-							this.buf.offsets.push(p.length);
+							this.buf.offsets.push(i.length);
 							if (!this.wireframe) {
 								this.buf.types.push(t);
 							}
