@@ -2,23 +2,23 @@
 
 precision lowp float;
 
-attribute vec4 coordinates;
-attribute vec4 inMatProperties[8];
-attribute int inMatIndex;
-attribute vec2 inTexCoord;
+in vec4 coordinates;
+in vec4 inMatProperties[8];
+in int inMatIndex;
+in vec2 inTexCoord;
 //attribute vec3 inNormal;
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
 
-varying vec4 color;
+out vec4 color;
 //varying vec3 normal;
-varying vec2 texCoord;
+out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
-varying vec4 matProperties[8];
-varying int matIndex;
+out vec4 matProperties[8];
+out int matIndex;
 
 
 void main(void) {
