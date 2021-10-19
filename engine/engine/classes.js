@@ -209,7 +209,7 @@ class bounds {
 
 		//get center of all points rendered
 		this.pos = vec3()
-		if (drawInfo.length > 0) {
+		if (pointInfo.length > 0) {
 			var min = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2]) //POINTERS PLS
 			var max = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2])
 			//get min and max x, y, z values
@@ -226,7 +226,7 @@ class bounds {
 			if (type == "sphere") {
 				//get furthest point from points rendered
 				this.radius = subtract(pointInfo[0], this.pos)
-				for (var i = 1; i < drawInfo[g].points.length; i++) {
+				for (var i = 1; i < pointInfo.length; i++) {
 					var tmp = subtract(pointInfo[i], this.pos)
 					if (length(tmp) > length(this.radius)) this.radius = tmp
 				}
