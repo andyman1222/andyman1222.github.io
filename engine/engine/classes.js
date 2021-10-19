@@ -518,24 +518,25 @@ class object extends primitive {
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
 		var ret = { points: [], indexes: [], types: [], mats: [], texCoords: [], normals: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
 
+		for(var i = 0; i < this.pointInfo.length; i++){
+			var tmp = mult(newMat, vec3to4(this.pointInfo[i]))
+			ret.points.push(vec4to3(tmp));
+			ret.normals.push(this.normalInfo[i])
+		}
+
 		for (var g = 0; g < this.drawInfo.length; g++) {
 
-			ret.points.push(new Array())
 			ret.indexes.push(new Array())
 			ret.mats.push(new Array())
 			ret.types.push(this.drawInfo[g].type)
 			ret.normals.push(new Array())
 			ret.texCoords.push(new Array())
-			for(var i = 0; i < this.drawInfo[g].points.length; i++){
-				var tmp = mult(newMat, vec3to4(this.pointInfo[i]))
-				ret.points[g].push(vec4to3(tmp));
-				
-				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
-			}
+			
 			for (var i = 0; i < this.drawInfo[g].pointIndex.length; i++) {
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.indexes[g].push(this.drawInfo[g].pointIndex[i])
-				ret.normals[g].push(this.normalInfo[this.drawInfo[g].pointIndex[i]])
+				
+				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
 				ret.mats[g].push(this.matInfo[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
 			}
