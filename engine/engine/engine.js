@@ -46,7 +46,7 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 	var program = initShaders(gl, vertexPath, fragmentPath);
 	gl.useProgram(program);
 
-	bData = new buffer(gl, program, "coordinates", "inColor", "projMatrix", "viewMatrix");
+	bData = new buffer(gl, program, "coordinates", "matProperties", "matIndex", "projMatrix", "viewMatrix", "normalMatrix");
 
 	mainCamera = new camera(bData);
 
