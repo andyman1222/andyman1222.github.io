@@ -12,13 +12,13 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
 
-out vec4 color;
+varying vec4 color;
 //varying vec3 normal;
-out vec2 texCoord;
+varying vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
-out vec4 matProperties[8];
-out int matIndex;
+varying vec4 matProperties[8];
+varying int matIndex;
 
 
 void main(void) {
