@@ -127,9 +127,10 @@ class buffer {
 	colorBuffer;
 	projMatrix;
 	viewMatrix;
+	normalMatrix;
 	inPos;
 	inColor;
-	constructor(gTarget, program, coordStr, colorStr, projMatrixStr, viewMatrixStr) {
+	constructor(gTarget, program, coordStr, colorStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
@@ -138,6 +139,7 @@ class buffer {
 		this.inColor = this.gTarget.getAttribLocation(this.program, colorStr);
 		this.projMatrix = this.gTarget.getUniformLocation(this.program, projMatrixStr);
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
+		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
 
 		buffers.push(this);
 	}
@@ -151,7 +153,7 @@ class buffer {
 
 	setViewMatrix(v) {
 		this.gTarget.uniformMatrix4fv(this.viewMatrix, false, flatten(v));
-
+		this.gTarget.uniformMatrix4fv(this.normalMatrix, false, flatten(inverse(transpose(v))))
 	}
 
 	setProjMatrix(p) {
@@ -161,6 +163,7 @@ class buffer {
 	render() {
 		//("Rendering")
 		//load new buffer data
+		
 		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.points), this.gTarget.STATIC_DRAW);

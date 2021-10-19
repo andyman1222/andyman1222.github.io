@@ -1,15 +1,15 @@
 precision lowp float;
 varying vec4 color;
 
-attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
+//attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
 struct light
 {
-    char type; //0=ambient, 1=point, 2=spot
+    int type; //0=ambient, 1=point, 2=spot
     vec4 location, direction; //direction ignored if not spotlight; location ignored if ambient
     float angle; //spotlight only
     float attenuation;
-    char lightmask;
+    //bool lightmask[10];
     vec3 color;
     vec3 diffuseMultiply;
     vec3 specularMultiply;
