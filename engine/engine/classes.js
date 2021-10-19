@@ -367,8 +367,10 @@ class camera extends primitive {
 				if ((this.renderEngine && o.isEngine) || !o.isEngine) {
 					var current = o.localToWorld();
 					if (o.visible) {
-						for (var g = 0; g < current.points.length; g++) {
-							var p = current.points[g]
+						for(var g = 0; g < current.points.length; g++){
+							this.buf.points.push(mult(p[g], vec3(1, 1, -1)))
+						}
+						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
 							var m = current.mats[g]
 							var t = current.types[g]
@@ -379,21 +381,19 @@ class camera extends primitive {
 							else {
 								this.buf.types.push(this.buf.gTarget.LINE_LOOP);
 							}
-							for (var ii = 0; ii < p.length; ii++) {
+							for (var ii = 0; ii < i.length; ii++) {
 								if (!this.wireframe) {
 									this.buf.matIndicies.push(m[ii % m.length].index)
 								}
 								else {
 									this.buf.matIndicies.push(-1)
 								}
-								this.buf.points.push(mult(p[ii], vec3(1, 1, -1)))
+								
 								this.buf.pushMaterial(m[ii % m.length].parameters)
-							}
-							for(var ii = 0; ii < ii.length; ii++){
 								this.buf.indexes.push(base + i[ii])
 							}
-							base += p.length
 						}
+						base += current.points.length
 						if (this.showBounds && !o.isEngine) {
 							//(c)
 							this.buf.types.push(this.buf.gTarget.LINE_LOOP);
