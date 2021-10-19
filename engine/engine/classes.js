@@ -178,6 +178,7 @@ class buffer {
 		this.types = []
 		this.offsets = []
 		this.matIndicies = []
+		this.indexes = []
 	}
 
 	setViewMatrix(v) {
