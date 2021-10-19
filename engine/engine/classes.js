@@ -187,10 +187,10 @@ class buffer {
 	}
 
 	pushMaterial(m){
-		this.matParams1.push(flatten(m[0]))
-		this.matParams2.push(flatten(m[1]))
-		this.matParams3.push(flatten(m[2]))
-		this.matParams4.push(flatten(m[3]))
+		this.matParams1.push(m[0])
+		this.matParams2.push(m[1])
+		this.matParams3.push(m[2])
+		this.matParams4.push(m[3])
 	}
 
 	render() {
