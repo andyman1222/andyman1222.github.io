@@ -4,7 +4,7 @@ precision lowp float;
 in vec4 color;
 in vec2 texCoord;
 in mat4 matProperties;
-in flat int matIndex;
+in int flat matIndex;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 
