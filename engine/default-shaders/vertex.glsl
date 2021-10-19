@@ -1,3 +1,5 @@
+#version 300 es
+
 precision lowp float;
 
 attribute vec4 coordinates;

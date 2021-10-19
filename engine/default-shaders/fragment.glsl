@@ -1,5 +1,6 @@
+#version 300 es
+
 precision lowp float;
-varying vec4 color;
 varying vec4 color;
 varying vec2 texCoord;
 varying vec4 matProperties[8];
