@@ -118,25 +118,32 @@ class primitive {
 /**
  * buffer object representing all data necessary for any output buffer/view
  */
+
+ //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class buffer {
-	colors = []
+	matParams = []
+	matIndicies = []
 	points = []
 	types = []
 	offsets = []
 	posBuffer;
-	colorBuffer;
+	matBuf;
+	matIndBuf;
 	projMatrix;
 	viewMatrix;
 	normalMatrix;
 	inPos;
-	inColor;
-	constructor(gTarget, program, coordStr, colorStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
+	inMat;
+	inMatIndex;
+	constructor(gTarget, program, coordStr, matStr, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
-		this.colorBuffer = this.gTarget.createBuffer();
+		this.matIndBuf = this.gTarget.createBuffer();
+		this.matBuf = this.gTarget.createBuffer();
 		this.inPos = this.gTarget.getAttribLocation(this.program, coordStr);
-		this.inColor = this.gTarget.getAttribLocation(this.program, colorStr);
+		this.inMat = this.gTarget.getAttribLocation(this.program, matStr);
+		this.inMatIndex = this.gTarget.getAttribLocation(this.program, matIndStr);
 		this.projMatrix = this.gTarget.getUniformLocation(this.program, projMatrixStr);
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
@@ -145,10 +152,11 @@ class buffer {
 	}
 
 	clearBuffers() {
-		this.colors = []
+		this.matParams = []
 		this.points = []
 		this.types = []
 		this.offsets = []
+		this.matIndicies = []
 	}
 
 	setViewMatrix(v) {
@@ -170,12 +178,17 @@ class buffer {
 			this.gTarget.vertexAttribPointer(this.inPos, 3, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inPos);
 
-			//load colors
-			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.colorBuffer);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.colors), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribPointer(this.inColor, 4, this.gTarget.FLOAT, false, 0, 0);
-			this.gTarget.enableVertexAttribArray(this.inColor);
+			//load materials
 
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matIndBuf);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matIndicies), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMatIndex, 1, this.gTarget.SHORT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMatIndex);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat);
 		}
 		//draw
 		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
@@ -300,21 +313,28 @@ class camera extends primitive {
 			this.buf.clearBuffers();
 
 			//adding objects
+
+			//TODO: implement texcoord, normal, etc.
 			objects.forEach(function (o) {
 				if ((this.renderEngine && o.isEngine) || !o.isEngine) {
 					var current = o.localToWorld();
 					if (o.visible) {
 						for (var g = 0; g < current.points.length; g++) {
 							var p = current.points[g]
-							var c = current.colors[g]
+							var m = current.mats[g]
 							var t = current.types[g]
 							this.buf.offsets.push(p.length);
-							if (!this.wireframe)
+							if (!this.wireframe){
 								this.buf.types.push(t);
-							else this.buf.types.push(this.buf.gTarget.LINE_LOOP);
+								this.buf.matIndicies.push(m[ii % m.length].index)
+							}
+							else{
+								this.buf.types.push(this.buf.gTarget.LINE_LOOP);
+								this.buf.matIndicies.push(-1)
+							}
 							for (var ii = 0; ii < p.length; ii++) {
 								this.buf.points.push(mult(p[ii], vec3(1, 1, -1)))
-								this.buf.colors.push(c[ii % c.length])
+								this.buf.matParams.push(flatten(m[ii % m.length].parameters))
 							}
 
 						}
@@ -324,7 +344,8 @@ class camera extends primitive {
 							var l = 0
 							for (var i = 0; i < current.bounds.length; i++) {
 								this.buf.points.push(mult(current.bounds[i], vec3(1, 1, -1)))
-								this.buf.colors.push(current.boundColors[i % current.boundColors.length]);
+								this.buf.matIndicies.push(-1)
+								this.buf.matParams.push(flatten(new solidColorNoLighting(current.boundColors[i % current.boundColors.length]).parameters));
 							}
 							this.buf.offsets.push(current.bounds.length)
 						}

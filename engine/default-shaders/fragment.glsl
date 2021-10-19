@@ -4,7 +4,6 @@ precision lowp float;
 in vec4 color;
 in vec2 texCoord;
 in mat4 matProperties;
-in mat4 matProperties2;
 in flat int matIndex;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
@@ -54,7 +53,7 @@ struct light
 void main(void) {
     switch (matIndex){
         case -1:
-            gl_FragColor = color;
+            fColor = matProperties[0];
             break;
         default:
             
