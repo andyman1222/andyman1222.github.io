@@ -15,6 +15,7 @@ class ambientLight extends primitive{
         var i = 0;
         for(i = 0; lights[i] != null; i++){}
         this.id = i
+        lights.push(this)
     }
 
     destroyLight(){
