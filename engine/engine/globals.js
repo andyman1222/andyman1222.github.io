@@ -1,7 +1,7 @@
 ////CONSTANTS
 "use strict";
 var defaultAspect = 16 / 9
-var maxLightCount = 128 //NOTE: THIS VALUE MUST MATCH THE SIZE OF THE LIGHT ARRAYS IN THE SHADERS
+var maxLightCount = 64 //NOTE: THIS VALUE MUST MATCH THE SIZE OF THE LIGHT ARRAYS IN THE SHADERS
 
 
 ////DO-NOT-TOUCH VARIABLES (updated constantly in the engine)

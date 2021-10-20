@@ -24,7 +24,7 @@ struct light
 	float shininess;//ignored on ambient
 };
 
-uniform light lights[128];
+uniform light lights[64];
 uniform int maxLightIndex;
 /*vec2 parallax(vec2 TexCoord, vec3 V)
 {
