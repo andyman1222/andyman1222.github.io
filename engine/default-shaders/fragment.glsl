@@ -74,9 +74,9 @@ void main(void){
 				
 				case 2://directional
 				float NdotL=dot(lights[x].direction,N);
-				sumDiffuse =vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb, (NdotL*lights[x].color).a*sumDiffuse.a);
+				sumDiffuse=vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb,(NdotL*lights[x].color).a*sumDiffuse.a);
 				break;
-
+				
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
@@ -95,12 +95,12 @@ void main(void){
 				sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,tmpSpec.a*sumSpecular.a);
 				
 				default:
-				break
+				break;
 			}
 		}
 		
 		vec4 tmp=(sumAmbient*matProperties[3]*matProperties[0])+(sumDiffuse*matProperties[1]*matProperties[0])+(sumSpecular*matProperties[2]);
-		fColor = vec4(max(tmp.r, 0.), max(tmp.g, 0.), max(tmp.b, 0.), clamp(tmp.a, 0., 1.));
+		fColor=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 		break;
 	}
 }
