@@ -238,7 +238,7 @@ class buffer {
 					case 2:
 						var t = l.getWorldTransform()
 						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(forward(t.rot)))
-						this.gTarget.uniform3fv(this.lightLocArrayLoc[x], flatten(t.loc))
+						this.gTarget.uniform3fv(this.lightLocArrayLoc[x], flatten(t.pos))
 					case 1:
 						this.gTarget.uniform4fv(this.lightColorArrayLoc[x], flatten(l.color));
 						break;
