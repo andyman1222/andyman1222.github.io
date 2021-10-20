@@ -25,7 +25,7 @@ struct light
 };
 
 uniform light lights[128];
-uniform int maxLightIndex=-1;
+uniform int maxLightIndex;
 /*vec2 parallax(vec2 TexCoord, vec3 V)
 {
 	float layer_depth = 1.0/32.0;
