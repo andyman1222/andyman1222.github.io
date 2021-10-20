@@ -244,7 +244,7 @@ class buffer {
 						break;
 
 				}
-			} else {
+			} else if (l != null){
 				bufferedConsoleLog("WARNING: More than " + maxLightCount + " used, light witih ID " + l.id + " will not be visible.")
 			}
 		})
