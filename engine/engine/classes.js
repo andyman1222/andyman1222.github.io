@@ -146,7 +146,17 @@ class buffer {
 	inMat3;
 	inMat4;
 	inMatIndex;
-	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr) {
+	lightTypeArrayLoc = [];
+	lightLocArrayLoc = [];
+	lightDirArrayLoc = [];
+	lightAngleArrayLoc = [];
+	lightColorArrayLoc = [];
+	lightDiffArrayLoc = [];
+	lightSpecArrayLoc = [];
+	lightShinyArrayLoc = [];
+	lightAttenArrayLoc = [];
+	lightIndLoc;
+	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
@@ -165,6 +175,19 @@ class buffer {
 		this.projMatrix = this.gTarget.getUniformLocation(this.program, projMatrixStr);
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
+		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
+		for(var i = 0; i < maxLightCount; i++){
+			this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].type"))
+			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].location"))
+			this.lightDirArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].direction"))
+			this.lightAngleArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].angle"))
+			this.lightAttenArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].attenuation"))
+			this.lightColorArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].color"))
+			this.lightDiffArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].diffuseMultiply"))
+			this.lightSpecArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].specularMultiply"))
+			this.lightShinyArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].shininess"))
+			//this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].lightmask"))
+		}
 
 		buffers.push(this);
 	}
@@ -197,10 +220,42 @@ class buffer {
 		this.matParams4.push(m[3])
 	}
 
+	updateLights(){
+		var x = -1
+		this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
+		lights.forEach((l) => {
+			if(l != null && x < maxLightCount-1){
+				x++;
+				this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
+				this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([l.type]))
+				switch(l.type){
+					case 4:
+						this.gTarget.uniform1fv(this.lightAngleArrayLoc[x], new Int32Array([l.angle]))
+					case 3:
+						this.gTarget.uniform1fv(this.lightAttenArrayLoc[x], new Int32Array([l.attenuation]))
+						this.gTarget.uniform4fv(this.lightDiffArrayLoc[x], flatten(l.diffuseMultiply))
+						this.gTarget.uniform4fv(this.lightSpecArrayLoc[x], flatten(l.specularMultiply))
+					case 2:
+						var t = l.getWorldTransform()
+						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(forward(t.rot)))
+						this.gTarget.uniform3fv(this.lightLocArrayLoc[x], flatten(t.loc))
+					case 1:
+						this.gTarget.uniform4fv(this.lightColorArrayLoc[x], flatten(l.color));
+						break;
+
+				}
+			} else {
+				bufferedConsoleLog("WARNING: More than " + maxLightCount + " used, light witih ID " + l.id + " will not be visible.")
+			}
+		}).bind(this)
+		for(; x < maxLightCount; x++)
+			this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([0]))
+	}
+
 	render() {
 		//("Rendering")
 		//load new buffer data
-
+		this.updateLights();
 		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.points), this.gTarget.STATIC_DRAW);

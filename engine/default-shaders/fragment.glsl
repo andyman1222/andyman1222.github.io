@@ -3,6 +3,8 @@
 precision lowp float;
 in vec2 texCoord;
 in mat4 matProperties;
+in vec3 normal;
+in vec3 position;
 flat in int matIndex;
 
 out vec4 fColor;
@@ -11,53 +13,94 @@ out vec4 fColor;
 
 struct light
 {
-    int type; //0=ambient, 1=point, 2=spot
-    vec4 location, direction; //direction ignored if not spotlight; location ignored if ambient
-    float angle; //spotlight only
-    float attenuation;
-    //bool lightmask[10];
-    vec3 color;
-    vec3 diffuseMultiply;
-    vec3 specularMultiply;
+	int type;//0=empty (default),  1=ambient, 2=directional, 3=point, 4=spot
+	vec3 location,direction;//direction ignored if not spotlight; location ignored if ambient or directional
+	float angle;//spotlight only
+	float attenuation;//ignored on ambient
+	//bool lightmask[10];
+	vec4 color;
+	vec4 diffuseMultiply;//ignored on ambient
+	vec4 specularMultiply;//ignored on ambient
+	float shininess;//ignored on ambient
 };
 
-
-
+uniform light lights[128]
+uniform int maxLightIndex=-1
 /*vec2 parallax(vec2 TexCoord, vec3 V)
 {
-  float layer_depth = 1.0/32.0;
-  float cur_layer_depth = 0.0;
-  vec2 deltaTexCoord = V.xy*0.1/(V.z*32.0);
-  vec2 curTexCoord = TexCoord;
-
-  float depth_from_tex = texture(uDepthMap, curTexCoord).r;
-
-  for (int i=0; i<32; i++) {
-    cur_layer_depth += layer_depth;
-    curTexCoord -= deltaTexCoord;
-    depth_from_tex = texture(uDepthMap, curTexCoord).r;
-    if (depth_from_tex < cur_layer_depth) {
-      break;
-    }
-  }
-
-  vec2 prevTexCoord = curTexCoord + deltaTexCoord;
-  float next = depth_from_tex - cur_layer_depth;
-  float prev = texture(uDepthMap, prevTexCoord).r - cur_layer_depth
-               + layer_depth;
-  float weight = next/(next-prev);
-  return mix(curTexCoord, prevTexCoord, weight);
-  //return curTexCoord;
+	float layer_depth = 1.0/32.0;
+	float cur_layer_depth = 0.0;
+	vec2 deltaTexCoord = V.xy*0.1/(V.z*32.0);
+	vec2 curTexCoord = TexCoord;
+	
+	float depth_from_tex = texture(uDepthMap, curTexCoord).r;
+	
+	for (int i=0; i<32; i++) {
+		cur_layer_depth += layer_depth;
+		curTexCoord -= deltaTexCoord;
+		depth_from_tex = texture(uDepthMap, curTexCoord).r;
+		if (depth_from_tex < cur_layer_depth) {
+			break;
+		}
+	}
+	
+	vec2 prevTexCoord = curTexCoord + deltaTexCoord;
+	float next = depth_from_tex - cur_layer_depth;
+	float prev = texture(uDepthMap, prevTexCoord).r - cur_layer_depth
+	+ layer_depth;
+	float weight = next/(next-prev);
+	return mix(curTexCoord, prevTexCoord, weight);
+	//return curTexCoord;
 }*/
 
+void main(void){
+	switch(matIndex){
+		case-1:
+		fColor=matProperties[0];
+		break;
+		
+		default:
+		vec3 sumAmbient;
+		vec3 sumDiffuse;
+		vec3 sumSpecular;
+		vec3 N=normalize(normal);
+		vec3 V=-normalize(position);
+		
+		for(int x=0;x<=maxLightIndex;x++){
+			switch(lights[x].type){
+				case 1://ambient
+				sumAmbient=vec4(sumAmbient.rgb+lights[x].color.rgb,sumAmbient.a*lights[x].color.a);
+				break;
+				
+				case 2://directional
+				float NdotL=dot(lights[x].direction,N);
+				sumDiffuse =vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb, (NdotL*lights[x].color).a*sumDiffuse.a);
+				break;
 
-void main(void) {
-    switch (matIndex){
-        case -1:
-            fColor = matProperties[0];
-            break;
-        default:
-        fColor = vec4(1,1,1,1); //temp
-            break;
-    }
+				case 4://spot
+				//TODO: implement? For now just use point light implementation
+				case 3://point
+				vec3 L=normalize(lights[x].location-lights[x].attenuation*position);
+				float Kd=dot(L,N);
+				
+				vec3 R=reflect(-L,N);
+				float Ks=pow(dot(V,R),lights[x].shininess);
+				
+				vec4 tmpDiff=(Kd*lights[x].color*lights[x].diffuseMultiply);
+				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply)
+				if(dot(L,N)<0.){
+					tmpSpec=vec4(0.,0.,0.,1);
+				}
+				sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,tmpDiff.a*sumDiffuse.a);
+				sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,tmpSpec.a*sumSpecular.a);
+				
+				default:
+				break
+			}
+		}
+		
+		vec4 tmp=(sumAmbient*matProperties[3]*matProperties[0])+(sumDiffuse*matProperties[1]*matProperties[0])+(sumSpecular*matProperties[2])
+		fColor = vec4(max(tmp.r, 0.), max(tmp.g, 0.), max(tmp.b, 0.), clamp(tmp.a, 0., 1.))
+		break;
+	}
 }

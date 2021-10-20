@@ -1,6 +1,7 @@
 ////CONSTANTS
 "use strict";
 var defaultAspect = 16 / 9
+var maxLightCount = 128 //NOTE: THIS VALUE MUST MATCH THE SIZE OF THE LIGHT ARRAYS IN THE SHADERS
 
 
 ////DO-NOT-TOUCH VARIABLES (updated constantly in the engine)
@@ -13,6 +14,7 @@ var keys = []
 var objects = [];
 var buffers = [];
 var cameras = [];
+var lights = [];
 
 
 ////COLLISION VARIABLES
