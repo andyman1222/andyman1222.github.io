@@ -2,7 +2,10 @@
 
 precision lowp float;
 in vec2 texCoord;
-in mat4 matProperties;
+in vec4 matProp1;
+in vec4 matProp2;
+in vec4 matProp3;
+in vec4 matProp4;
 in vec3 normal;
 in vec3 position;
 flat in int matIndex;
@@ -54,10 +57,10 @@ uniform int maxLightIndex;
 }*/
 
 void main(void){
-	fColor = matProperties[0];
+	fColor = matProp1;
 	/*switch(matIndex){
 		case -1:
-		fColor=matProperties[0];
+		fColor=matProp1;
 		break;
 		
 		default:
@@ -100,7 +103,7 @@ void main(void){
 			}
 		}
 		
-		vec4 tmp=(sumAmbient*matProperties[3]*matProperties[0])+(sumDiffuse*matProperties[1]*matProperties[0])+(sumSpecular*matProperties[2]);
+		vec4 tmp=(sumAmbient*matProp4*matProp1)+(sumDiffuse*matProp2*matProp1)+(sumSpecular*matProp3);
 		fColor=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 		break;
 	}*/

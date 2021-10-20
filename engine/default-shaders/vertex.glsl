@@ -20,7 +20,10 @@ uniform mat4 normalMatrix;
 out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
-out mat4 matProperties;
+out vec4 matProp1;
+out vec4 matProp2;
+out vec4 matProp3;
+out vec4 matProp4;
 flat out int matIndex;
 out vec3 normal;
 out vec3 position;
@@ -40,7 +43,10 @@ void main(void) {
     //normal = tsMatrix*N;
 
     texCoord = inTexCoord;
-    matProperties = mat4(inMatProp1, inMatProp2, inMatProp3, inMatProp4);
+    matProp1 = inMatProp1;
+    matProp2 = inMatProp2;
+    matProp3 = inMatProp3;
+    matProp4 = inMatProp4;
     matIndex = inMatIndex;
     position = (viewMatrix * coordinates).xyz;
     normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
