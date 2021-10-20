@@ -24,8 +24,8 @@ struct light
 	float shininess;//ignored on ambient
 };
 
-uniform light lights[128]
-uniform int maxLightIndex=-1
+uniform light lights[128];
+uniform int maxLightIndex=-1;
 /*vec2 parallax(vec2 TexCoord, vec3 V)
 {
 	float layer_depth = 1.0/32.0;
@@ -87,7 +87,7 @@ void main(void){
 				float Ks=pow(dot(V,R),lights[x].shininess);
 				
 				vec4 tmpDiff=(Kd*lights[x].color*lights[x].diffuseMultiply);
-				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply)
+				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply);
 				if(dot(L,N)<0.){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
@@ -99,8 +99,8 @@ void main(void){
 			}
 		}
 		
-		vec4 tmp=(sumAmbient*matProperties[3]*matProperties[0])+(sumDiffuse*matProperties[1]*matProperties[0])+(sumSpecular*matProperties[2])
-		fColor = vec4(max(tmp.r, 0.), max(tmp.g, 0.), max(tmp.b, 0.), clamp(tmp.a, 0., 1.))
+		vec4 tmp=(sumAmbient*matProperties[3]*matProperties[0])+(sumDiffuse*matProperties[1]*matProperties[0])+(sumSpecular*matProperties[2]);
+		fColor = vec4(max(tmp.r, 0.), max(tmp.g, 0.), max(tmp.b, 0.), clamp(tmp.a, 0., 1.));
 		break;
 	}
 }
