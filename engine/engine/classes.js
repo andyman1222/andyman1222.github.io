@@ -156,6 +156,11 @@ class buffer {
 	lightShinyArrayLoc = [];
 	lightAttenArrayLoc = [];
 	lightIndLoc;
+
+	getUniform(loc){
+		return this.gTarget.getUniform(this.program, loc)
+	}
+
 	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr) {
 		this.gTarget = gTarget;
 		this.program = program;
