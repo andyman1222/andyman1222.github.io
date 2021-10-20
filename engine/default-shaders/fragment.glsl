@@ -60,9 +60,9 @@ void main(void){
 		break;
 		
 		default:
-		vec3 sumAmbient;
-		vec3 sumDiffuse;
-		vec3 sumSpecular;
+		vec4 sumAmbient;
+		vec4 sumDiffuse;
+		vec4 sumSpecular;
 		vec3 N=normalize(normal);
 		vec3 V=-normalize(position);
 		
