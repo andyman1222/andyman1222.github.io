@@ -43,5 +43,5 @@ void main(void) {
     matProperties = mat4(inMatProp1, inMatProp2, inMatProp3, inMatProp4);
     matIndex = inMatIndex;
     position = (viewMatrix * coordinates).xyz;
-    normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz)
+    normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 }
