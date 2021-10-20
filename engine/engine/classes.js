@@ -247,7 +247,7 @@ class buffer {
 			} else {
 				bufferedConsoleLog("WARNING: More than " + maxLightCount + " used, light witih ID " + l.id + " will not be visible.")
 			}
-		}).bind(this)
+		})
 		for(; x < maxLightCount; x++)
 			this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([0]))
 	}
