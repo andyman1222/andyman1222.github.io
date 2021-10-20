@@ -177,7 +177,7 @@ class buffer {
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
 		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
 		for(var i = 0; i < maxLightCount; i++){
-			this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].type"))
+			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].type"))
 			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].location"))
 			this.lightDirArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].direction"))
 			this.lightAngleArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].angle"))
