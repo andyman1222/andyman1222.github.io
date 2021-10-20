@@ -166,7 +166,7 @@ function init() {
 	new ambientLight(vec4(1,1,1,1), null)
 	//new directionalLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(-.5,-.5,-.5),0), scl: vec3(1,1,1)}, vec4(1,1,1,1), null)
 	//mainCamera.renderEngine = true
-	generateMaze_()
+	//generateMaze_()
 	var tmp = getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{ pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: gl.TRIANGLES }]
