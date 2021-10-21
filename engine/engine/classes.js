@@ -159,12 +159,13 @@ class buffer {
 	lightShinyArrayLoc = [];
 	lightAttenArrayLoc = [];
 	lightIndLoc;
+	cameraPosLoc;
 
 	getUniform(loc) {
 		return this.gTarget.getUniform(this.program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr) {
+	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr, cameraPosStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
@@ -188,6 +189,7 @@ class buffer {
 		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
 		this.inNormal = this.gTarget.getAttribLocation(this.program, normalStr);
 		this.inTexCoord = this.gTarget.getAttribLocation(this.program, texCoordStr);
+		this.cameraPosLoc = this.gTarget.getUniformLocation(this.program, cameraPosStr);
 		for (var i = 0; i < maxLightCount; i++) {
 			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].type"))
 			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].location"))
@@ -215,9 +217,10 @@ class buffer {
 		this.matIndicies = []
 	}
 
-	setViewMatrix(v) {
+	setViewMatrix(v, p) {
 		this.gTarget.uniformMatrix4fv(this.viewMatrix, false, flatten(v));
 		this.gTarget.uniformMatrix4fv(this.normalMatrix, false, flatten(inverse(transpose(v))))
+		this.gTarget.uniform3fv(this.cameraPosLoc, flatten(p))
 	}
 
 	setProjMatrix(p) {

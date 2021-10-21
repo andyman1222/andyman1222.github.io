@@ -59,7 +59,8 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 		"lights",
 		"maxLightIndex",
 		"inNormal",
-		"inTexCoord");
+		"inTexCoord",
+		"cameraPos");
 
 	mainCamera = new camera(bData);
 	
