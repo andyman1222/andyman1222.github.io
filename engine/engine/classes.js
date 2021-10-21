@@ -305,13 +305,13 @@ class buffer {
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(normals), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, true, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inNormal);
 
-			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
+			/*this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(texCoords), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inTexCoord, 2, this.gTarget.FLOAT, false, 0, 0);
-			this.gTarget.enableVertexAttribArray(this.inTexCoord);
+			this.gTarget.enableVertexAttribArray(this.inTexCoord);*/
 
 			//draw
 			var offset = 0;
