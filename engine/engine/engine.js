@@ -69,7 +69,7 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 	[vec4(1, 0, 0, 1), vec4(0, 1, 0, 1), vec4(0, 0, 1, 1)], [new solidColorNoLighting(vec4(1,0,0,1)), new solidColorNoLighting(vec4(0,1,0,1)), new solidColorNoLighting(vec4(0,0,1,1))], "rect", true)
 }
 
-function engineInit(userInit, userTick, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../default-shaders/fragment.glsl") {
+function engineInit(userInit, userTick, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {
 	userInitFunction = userInit
 	userTickFunction = userTick;
 	initDefaultGraphics(defaultVertex, defaultFragment);
