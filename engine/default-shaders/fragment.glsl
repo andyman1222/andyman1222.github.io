@@ -66,6 +66,9 @@ void main(void){
 		
 		case 1:
 		fColor = vec4(1,0,0,1);
+
+		default:
+		fColor = vec4(i, i, i, 1);
 		/*vec4 sumAmbient;
 		vec4 sumDiffuse;
 		vec4 sumSpecular;
