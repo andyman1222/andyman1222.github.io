@@ -620,8 +620,8 @@ class object extends primitive {
 
 		//mat4 generates matrix by cols, then rows
 		//equation from Wikipedia
-		var newTrans = this.getWorldTransform()
-		var newMat = mat4ToTransform(newTrans)
+		var newMat = this.getWorldTransformMat()
+		var newTrans = mat4ToTransform(newMat)
 
 		//(newMat)
 		/*var sclMat = mat4(
