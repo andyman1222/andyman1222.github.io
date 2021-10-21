@@ -599,7 +599,7 @@ class object extends primitive {
 	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[], texCoords[], type}]
 	 * @param {enum} drawType 
 	 */
-	constructor(startTransform, drawInfo, pointInfo, matInfo, normalInfo, boundsType, isEngine = false, visible = true) {
+	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, isEngine = false, visible = true) {
 		//if(startTransform.rot.length != 4) throw "Rotations must be quaternions!"
 		super(startTransform)
 		this.id = newID();
