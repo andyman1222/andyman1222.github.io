@@ -85,7 +85,7 @@ void main(void){
 				float Kd=dot(L,N);
 				
 				vec3 R=reflect(-L,N);
-				float Ks=pow(dot(V,R),1);
+				float Ks=dot(V,R);
 				
 				vec4 tmpDiff=(Kd*lights[x].color*lights[x].diffuseMultiply);
 				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply);
