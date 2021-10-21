@@ -251,7 +251,7 @@ class buffer {
 						this.gTarget.uniform4fv(this.lightSpecArrayLoc[x], flatten(l.specularMultiply))
 					case 2:
 						var t = l.getWorldTransform()
-						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(mult(forward(t.rot), vec3(-1,1,-1))))
+						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(forward(t.rot)))
 						this.gTarget.uniform3fv(this.lightLocArrayLoc[x], flatten(t.pos))
 					case 1:
 						this.gTarget.uniform4fv(this.lightColorArrayLoc[x], flatten(l.color));
