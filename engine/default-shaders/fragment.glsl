@@ -29,6 +29,7 @@ struct light
 
 uniform light lights[64];
 uniform int maxLightIndex;
+uniform vec3 cameraPos;
 /*vec2 parallax(vec2 TexCoord, vec3 V)
 {
 	float layer_depth = 1.0/32.0;
@@ -81,15 +82,16 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 L=normalize(lights[x].location-position);
-				float Kd=dot(L,N);
+				vec3 P = normalize(cameraPos-position);
+				vec3 L=lights[x].location-position;
+				float light = dot(normal,L);
 				
-				vec3 R=reflect(-L,N);
-				float Ks=dot(V,R);
+				//vec3 R=reflect(-L,N);
+				float Ks=dot(L,P);
 				
-				vec4 tmpDiff=(Kd*lights[x].color*lights[x].diffuseMultiply);
-				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply);
-				if(dot(L,N)<0.){
+				vec4 tmpDiff=(lights[x].color*lights[x].diffuseMultiply)*(1/(length(L)*lights[x].attenuation));
+				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply)*(1/(length(L)*lights[x].attenuation));
+				if(light<0.){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
 				sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,tmpDiff.a*sumDiffuse.a);
