@@ -1,6 +1,6 @@
 #version 300 es
 
-precision lowp float;
+precision mediump float;
 in vec2 texCoord;
 in vec4 matProp1;
 in vec4 matProp2;

@@ -1,6 +1,6 @@
 #version 300 es
 
-precision lowp float;
+precision mediump float;
 
 in vec4 coordinates;
 in vec4 inMatProp1;
@@ -8,7 +8,7 @@ in vec4 inMatProp2;
 in vec4 inMatProp3;
 in vec4 inMatProp4;
 in vec3 inNormal;
-in float inMatIndex;
+in mediump float inMatIndex;
 in vec2 inTexCoord;
 //attribute vec3 inNormal;
 
