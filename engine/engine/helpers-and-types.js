@@ -276,7 +276,7 @@ function bin2dec(bin) {
 function normalsFromTriangleVerts(v, i){
     var r = []
     for(var x = 0; x < i.length; x += 3){
-        var c = cross(v[i[x+1]]-v[i[x]], v[i[x+2]]-v[i[x]])
+        var c = cross(subtract(v[i[x+1]], v[i[x]]), subtract(v[i[x+2]], v[i[x]]))
         r.push(c, c, c)
     }
     return r
