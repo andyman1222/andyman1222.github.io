@@ -263,7 +263,7 @@ class buffer {
 	}
 
 	renderData(points, matIndicies, matParams1, matParams2, matParams3, matParams4, normals, texCoords, types, offsets) {
-		if (this.points.length > 0) {
+		if (points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(points), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inPos, 4, this.gTarget.FLOAT, false, 0, 0);
@@ -294,14 +294,17 @@ class buffer {
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams4), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
-		}
-		//draw
 
-		var offset = 0;
+			//draw
+			var offset = 0;
 		for (var i = 0; i < types.length; i++) {
 			this.gTarget.drawArrays(types[i], offset, offsets[i]);
 			offset += offsets[i];
 		}
+		}
+		
+
+		
 		/*var tmp = this.gTarget.getError()
 		if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
