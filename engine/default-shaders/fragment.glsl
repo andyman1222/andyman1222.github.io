@@ -75,7 +75,7 @@ void main(void){
 				break;
 				
 				case 2://directional
-				float NdotL=dot(lights[x].direction*-1,N);
+				float NdotL=dot(-1*lights[x].direction,N);
 				sumDiffuse=vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb,(NdotL*lights[x].color).a*sumDiffuse.a);
 				break;
 				
@@ -89,8 +89,8 @@ void main(void){
 				//vec3 R=reflect(-L,N);
 				float Ks=dot(L,P);
 				
-				vec4 tmpDiff=(lights[x].color*lights[x].diffuseMultiply)*(1/(length(L)*lights[x].attenuation));
-				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply)*(1/(length(L)*lights[x].attenuation));
+				vec4 tmpDiff=(1/(length(L)*lights[x].attenuation))*(lights[x].color*lights[x].diffuseMultiply);
+				vec4 tmpSpec=(1/(length(L)*lights[x].attenuation))*(Ks*lights[x].color*lights[x].specularMultiply);
 				if(light<0.){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
