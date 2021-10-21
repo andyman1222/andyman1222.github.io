@@ -241,9 +241,9 @@ class buffer {
 				this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([l.type]))
 				switch (l.type) {
 					case 4:
-						this.gTarget.uniform1fv(this.lightAngleArrayLoc[x], new Int32Array([l.angle]))
+						this.gTarget.uniform1fv(this.lightAngleArrayLoc[x], new Float32Array([l.angle]))
 					case 3:
-						this.gTarget.uniform1fv(this.lightAttenArrayLoc[x], new Int32Array([l.attenuation]))
+						this.gTarget.uniform1fv(this.lightAttenArrayLoc[x], new Float32Array([l.attenuation]))
 						this.gTarget.uniform4fv(this.lightDiffArrayLoc[x], flatten(l.diffuseMultiply))
 						this.gTarget.uniform4fv(this.lightSpecArrayLoc[x], flatten(l.specularMultiply))
 					case 2:
