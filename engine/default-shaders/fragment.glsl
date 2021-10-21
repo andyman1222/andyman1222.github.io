@@ -59,7 +59,7 @@ uniform int maxLightIndex;
 void main(void){
 
 	switch(matIndex){
-		case -1:
+		case 0:
 		fColor = matProp1;
 		break;
 
@@ -68,11 +68,11 @@ void main(void){
 	}
 	
 	/*switch(matIndex){
-		case -1:
+		case 0:
 		fColor=matProp1;
 		break;
 		
-		default:
+		case 1:
 		vec4 sumAmbient;
 		vec4 sumDiffuse;
 		vec4 sumSpecular;

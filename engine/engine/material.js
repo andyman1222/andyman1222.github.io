@@ -6,7 +6,7 @@
 class material{
     index
     parameters
-    constructor(index = 0, parameters = mat4(.5,.5,.5,1, .5,.5,.5,.5, .5,.5,.5,.5, 1,1,1,1)){
+    constructor(index = 1, parameters = mat4(.5,.5,.5,1, .5,.5,.5,.5, .5,.5,.5,.5, 1,1,1,1)){
         this.index = index
         this.parameters = parameters
     }
@@ -14,7 +14,7 @@ class material{
 
 class solidColorNoLighting extends material{
     constructor(color){
-        super(-1, mat4(color[0], color[1], color[2], color[3],
+        super(0, mat4(color[0], color[1], color[2], color[3],
             0, 0, 0, 0,
             0, 0, 0, 0, 
             0, 0, 0, 0))
