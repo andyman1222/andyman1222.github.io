@@ -303,7 +303,7 @@ class buffer {
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
 
-			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
+			/*this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(normals), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inNormal);
@@ -311,7 +311,7 @@ class buffer {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(texCoords), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inTexCoord, 2, this.gTarget.FLOAT, false, 0, 0);
-			this.gTarget.enableVertexAttribArray(this.inTexCoord);
+			this.gTarget.enableVertexAttribArray(this.inTexCoord);*/
 
 			//draw
 			var offset = 0;
