@@ -266,7 +266,7 @@ class buffer {
 		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(points), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribPointer(this.inPos, 3, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.vertexAttribPointer(this.inPos, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inPos);
 			//load materials
 
@@ -367,7 +367,7 @@ class bounds {
 			r.points = getRect(this.pos, this.extent);
 		}
 		for (var i = 0; i < r.points.length; i++)
-			r.points[i] = vec4to3(mult(multMat, vec3to4(r.points[i])))
+			r.points[i] = mult(multMat, vec3to4(r.points[i]))
 		return r
 	}
 }
@@ -463,8 +463,8 @@ class camera extends primitive {
 								m2.push(m[ii % m.length].parameters[1])
 								m3.push(m[ii % m.length].parameters[2])
 								m4.push(m[ii % m.length].parameters[3])
-								p.push(current.points[i[ii]])
-								n.push(current.normals[i[ii]])
+								p.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
+								n.push(mult(current.normals[i[ii]], vec4(1, 1, -1, 1)))
 							}
 						}
 						if (this.showBounds && !o.isEngine) {
@@ -472,7 +472,7 @@ class camera extends primitive {
 							t.push(this.buf.gTarget.LINE_LOOP);
 							var l = 0
 							for (var i = 0; i < current.bounds.length; i++) {
-								p.push(mult(current.bounds[i], vec3(1, 1, -1)))
+								p.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
 								var tmp = new solidColorNoLighting(current.boundColors[i % current.boundColors.length]);
 								mi.push(tmp.index)
 								m1.push(tmp.parameters[0])
@@ -503,7 +503,7 @@ class camera extends primitive {
 				t.push(this.debugTypes[o])
 				f.push(this.debugOffsets[o])
 				for (var i = 0; i < this.debugOffsets[o]; i++) {
-					p.push(mult(this.debugPoints[i + x], vec3(1, 1, -1)))
+					p.push(mult(this.debugPoints[i + x], vec4(1, 1, -1, 1)))
 					var tmp = new solidColorNoLighting(this.debugColors[i % this.debugColors.length]);
 					mi.push(tmp.index)
 					m1.push(tmp.parameters[0])
@@ -609,7 +609,7 @@ class object extends primitive {
 
 		for (var i = 0; i < this.pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this.pointInfo[i]))
-			ret.points.push(vec4to3(tmp));
+			ret.points.push(tmp);
 			ret.normals.push(this.normalInfo[i])
 		}
 
