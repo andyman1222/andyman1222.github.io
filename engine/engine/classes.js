@@ -298,7 +298,7 @@ class buffer {
 		//draw
 
 		var offset = 0;
-		for (var i = 0; i < ypes.length; i++) {
+		for (var i = 0; i < types.length; i++) {
 			this.gTarget.drawArrays(types[i], offset, offsets[i]);
 			offset += offsets[i];
 		}
