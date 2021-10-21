@@ -279,8 +279,8 @@ class buffer {
 			//load materials
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matIndBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matIndicies), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.FLOAT, 0, 0);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, new Int32Array(matIndicies), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.SHORT, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMatIndex);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf1);
@@ -478,7 +478,7 @@ class camera extends primitive {
 									mi.push(m[ii % m.length].index)
 								}
 								else {
-									mi.push(-1)
+									mi.push(0)
 								}
 								m1.push(m[ii % m.length].parameters[0])
 								m2.push(m[ii % m.length].parameters[1])
