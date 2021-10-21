@@ -470,7 +470,7 @@ class camera extends primitive {
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
 							var m = current.mats[g]
-							tx.push(current.texCoords[g])
+							
 							f.push(i.length)
 							t.push(this.wireframe ? this.buf.gTarget.LINE_LOOP : current.types[g])
 							for (var ii = 0; ii < i.length; ii++) {
@@ -486,6 +486,7 @@ class camera extends primitive {
 								m4.push(m[ii % m.length].parameters[3])
 								p.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
 								n.push(mult(current.normals[i[ii]], vec3(1, 1, -1)))
+								tx.push(current.texCoords[g][ii])
 							}
 						}
 						if (this.showBounds && !o.isEngine) {
