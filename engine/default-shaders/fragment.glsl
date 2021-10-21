@@ -8,7 +8,7 @@ in vec4 matProp3;
 in vec4 matProp4;
 in vec3 normal;
 in vec3 position;
-in int matIndex;
+in flat int matIndex;
 
 out vec4 fColor;
 
