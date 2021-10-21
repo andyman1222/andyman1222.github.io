@@ -302,7 +302,7 @@ class buffer {
 			this.gTarget.drawArrays(types[i], offset, offsets[i]);
 			offset += offsets[i];
 		}
-		var tmp = this.gTarget.getError()
+		/*var tmp = this.gTarget.getError()
 		if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
 				case this.gTarget.INVALID_OPERATION:
@@ -312,7 +312,7 @@ class buffer {
 				default:
 					alert("WebGL error " + tmp)
 			}
-		}
+		}*/
 	}
 }
 
