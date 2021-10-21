@@ -604,7 +604,6 @@ class object extends primitive {
 		super(startTransform)
 		this.id = newID();
 		this.drawInfo = drawInfo;
-		this.normalInfo = normalInfo
 		this.pointInfo = pointInfo
 		this.reevaluateBounds(pointInfo, boundsType)
 		this.isEngine = isEngine
