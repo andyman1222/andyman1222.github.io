@@ -303,7 +303,7 @@ class buffer {
 			offset += offsets[i];
 		}
 		var tmp = this.gTarget.getError()
-		if (tmp != this.gTarget.NO_ERROR) {
+		/*if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
 				case this.gTarget.INVALID_OPERATION:
 				case this.gTarget.INVALID_FRAMEBUFFER_OPERATION:
@@ -312,7 +312,7 @@ class buffer {
 				default:
 					alert("WebGL error " + tmp)
 			}
-		}
+		}*/
 	}
 }
 
