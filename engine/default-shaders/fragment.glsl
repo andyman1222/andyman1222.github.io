@@ -24,7 +24,7 @@ struct light
 	vec4 color;
 	vec4 diffuseMultiply;//ignored on ambient
 	vec4 specularMultiply;//ignored on ambient
-	float shininess;//ignored on ambient
+	//float shininess;//ignored on ambient
 };
 
 uniform light lights[64];
@@ -81,11 +81,11 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 L=normalize(lights[x].location-lights[x].attenuation*position);
+				vec3 L=normalize(lights[x].location-1*position);
 				float Kd=dot(L,N);
 				
 				vec3 R=reflect(-L,N);
-				float Ks=pow(dot(V,R),lights[x].shininess);
+				float Ks=pow(dot(V,R),1);
 				
 				vec4 tmpDiff=(Kd*lights[x].color*lights[x].diffuseMultiply);
 				vec4 tmpSpec=(Ks*lights[x].color*lights[x].specularMultiply);
