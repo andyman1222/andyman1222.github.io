@@ -49,5 +49,6 @@ void main(void) {
     matProp4 = inMatProp4;
     matIndex = inMatIndex;
     position = (viewMatrix * coordinates).xyz;
-    normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
+    //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
+    normal = inNormal;
 }
