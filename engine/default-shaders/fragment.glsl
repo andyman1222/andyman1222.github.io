@@ -61,9 +61,9 @@ void main(void){
 	switch(matIndex){
 		
 		case 1:
-		vec4 sumAmbient;
-		vec4 sumDiffuse;
-		vec4 sumSpecular;
+		vec4 sumAmbient = vec4(0,0,0,1);
+		vec4 sumDiffuse = vec4(0,0,0,1);
+		vec4 sumSpecular = vec4(0,0,0,1);
 		vec3 N=normalize(normal);
 		vec3 V=-normalize(position);
 		
