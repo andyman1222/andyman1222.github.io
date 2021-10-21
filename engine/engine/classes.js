@@ -488,7 +488,7 @@ class camera extends primitive {
 								m3.push(m[ii % m.length].parameters[2])
 								m4.push(m[ii % m.length].parameters[3])
 								p.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
-								n.push(mult(current.normals[ii], vec3(1, 1, -1)))
+								n.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 								tx.push(current.texCoords[g][ii])
 							}
 						}
