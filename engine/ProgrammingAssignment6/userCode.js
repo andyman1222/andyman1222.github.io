@@ -12,7 +12,7 @@ var cameraTime = 1000, cameraTargetPos = vec3(0, 50, -50), cameraTargetRot = eul
 
 var altCamera;
 
-
+var directLight;
 
 function switchCamera() {
 	if (mainCamera.enabled) {
@@ -27,7 +27,7 @@ function switchCamera() {
 
 
 function userTick(delta, time) {
-
+	directLight.transform.rot = addRotation(directLight.transform.rot, eulerTOQuat(vec3(0,1,0),delta*.1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (mainCamera.enabled) {
@@ -164,7 +164,7 @@ function init() {
 	altCamera.enabled = false
 	mainCamera.transform.pos = vec3(-20, 2, -20)
 	new ambientLight(vec4(.2,.2,.2,1), null)
-	new directionalLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(-.5,-.5,-.5),0), scl: vec3(1,1,1)}, vec4(1,1,1,1), null)
+	directLight = new directionalLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(-.5,-.5,-.5),0), scl: vec3(1,1,1)}, vec4(1,1,1,1), null)
 	/*var playerLight = new pointLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(1,0,0),0),scl: vec3(1,1,1)}, vec4(.5,.5,0,1), null, 1)
 	mainCamera.attachChildToSelf(playerLight, "relative")*/
 	//mainCamera.renderEngine = true
