@@ -84,7 +84,7 @@ class primitive {
 				break
 		}
 		this.parent = p
-		console.log(p.connectedObjects)
+		//console.log(p.connectedObjects)
 		p.connectedObjects.add(this)
 
 	}

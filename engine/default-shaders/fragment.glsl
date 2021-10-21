@@ -89,8 +89,8 @@ void main(void){
 				//vec3 R=reflect(-L,N);
 				float Ks=dot(L,P);
 				
-				vec4 tmpDiff=(1./(length(L)*lights[x].attenuation))*(lights[x].color*lights[x].diffuseMultiply);
-				vec4 tmpSpec=(1./(length(L)*lights[x].attenuation))*(Ks*lights[x].color*lights[x].specularMultiply);
+				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
+				vec4 tmpSpec=(1./(length(L)*(1./lights[x].attenuation)))*(Ks*lights[x].color*lights[x].specularMultiply);
 				if(light<0.){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
