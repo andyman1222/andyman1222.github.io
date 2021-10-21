@@ -303,7 +303,7 @@ class buffer {
 			offset += offsets[i];
 		}
 		var tmp = this.gTarget.getError()
-		/*if (tmp != this.gTarget.NO_ERROR) {
+		if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
 				case this.gTarget.INVALID_OPERATION:
 				case this.gTarget.INVALID_FRAMEBUFFER_OPERATION:
@@ -312,7 +312,7 @@ class buffer {
 				default:
 					alert("WebGL error " + tmp)
 			}
-		}*/
+		}
 	}
 }
 
@@ -427,6 +427,9 @@ class camera extends primitive {
 	pushToBuffer() {
 		if (this.enabled) {
 			this.buf.clearBuffers();
+			this.buf.setViewMatrix(this.getViewMat())
+			if (this.renderAfter)
+				this.buf.beginRender();
 
 			//adding objects
 
@@ -482,7 +485,8 @@ class camera extends primitive {
 							tx.push(vec2(0, 0)) //bounds have no textures, again just filler
 							f.push(current.bounds.length)
 						}
-						this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
+						if (this.renderAfter)
+							this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 					}
 				}
 			}.bind(this))
@@ -511,18 +515,13 @@ class camera extends primitive {
 				tx.push(vec2(0, 0)) //bounds have no textures, again just filler
 				x += this.debugOffsets[o]
 				base += this.debugOffsets[o].length
-				this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
+				if (this.renderAfter)
+					this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 			}
 
 			//get uniform matrix
 
 			//var rotMat = mult(mult(rotateZ(this.transform.rot[2]), rotateY(-(this.transform.rot[1] - 90))), rotateX(-this.transform.rot[0]))//this may look wrong, and it most definately is, but it works
-
-
-			this.buf.setViewMatrix(this.getViewMat())
-
-			if (this.renderAfter)
-				this.buf.render()
 		}
 	}
 
