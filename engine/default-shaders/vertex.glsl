@@ -24,7 +24,7 @@ out vec4 matProp1;
 out vec4 matProp2;
 out vec4 matProp3;
 out vec4 matProp4;
-out int matIndex;
+out flat int matIndex;
 out vec3 normal;
 out vec3 position;
 
