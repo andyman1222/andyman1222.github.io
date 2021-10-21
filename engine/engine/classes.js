@@ -186,8 +186,8 @@ class buffer {
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
 		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
-		this.inNormal = this.gTarget.getUniformLocation(this.program, normalStr);
-		this.inTexCoord = this.gTarget.getUniformLocation(this.program, texCoordStr);
+		this.inNormal = this.gTarget.getAttribLocation(this.program, normalStr);
+		this.inTexCoord = this.gTarget.getAttribLocation(this.program, texCoordStr);
 		for (var i = 0; i < maxLightCount; i++) {
 			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].type"))
 			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].location"))
@@ -308,10 +308,10 @@ class buffer {
 			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, true, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inNormal);
 
-			/*this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(texCoords), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inTexCoord, 2, this.gTarget.FLOAT, false, 0, 0);
-			this.gTarget.enableVertexAttribArray(this.inTexCoord);*/
+			this.gTarget.enableVertexAttribArray(this.inTexCoord);
 
 			//draw
 			var offset = 0;
