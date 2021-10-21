@@ -57,7 +57,7 @@ uniform int maxLightIndex;
 }*/
 
 void main(void){
-	int i = trunc(matIndex);
+	int i = int(trunc(matIndex));
 
 	switch(i){
 		case 0:
