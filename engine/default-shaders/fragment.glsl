@@ -57,7 +57,7 @@ uniform int maxLightIndex;
 }*/
 
 void main(void){
-	int i = int(matIndex);
+	int i = int(floor(matIndex));
 
 	switch(i){
 		case 0:
