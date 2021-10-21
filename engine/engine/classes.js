@@ -145,6 +145,10 @@ class buffer {
 	inMat3;
 	inMat4;
 	inMatIndex;
+	inTexCoord;
+	inNormal;
+	normBuf;
+	txBuf;
 	lightTypeArrayLoc = [];
 	lightLocArrayLoc = [];
 	lightDirArrayLoc = [];
@@ -160,7 +164,7 @@ class buffer {
 		return this.gTarget.getUniform(this.program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr) {
+	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
@@ -170,6 +174,8 @@ class buffer {
 		this.matBuf2 = this.gTarget.createBuffer();
 		this.matBuf3 = this.gTarget.createBuffer();
 		this.matBuf4 = this.gTarget.createBuffer();
+		this.normBuf = this.gTarget.createBuffer();
+		this.txBuf = this.gTarget.createBuffer();
 		this.inPos = this.gTarget.getAttribLocation(this.program, coordStr);
 		this.inMat1 = this.gTarget.getAttribLocation(this.program, matStr1);
 		this.inMat2 = this.gTarget.getAttribLocation(this.program, matStr2);
@@ -180,6 +186,8 @@ class buffer {
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
 		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
+		this.inNormal = this.gTarget.getUniformLocation(this.program, normalStr);
+		this.inTexCoord = this.gTarget.getUniformLocation(this.program, texCoordStr);
 		for (var i = 0; i < maxLightCount; i++) {
 			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].type"))
 			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].location"))
@@ -295,16 +303,26 @@ class buffer {
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
 
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(normals), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inNormal);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(texCoords), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inTexCoord, 2, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inTexCoord);
+
 			//draw
 			var offset = 0;
-		for (var i = 0; i < types.length; i++) {
-			this.gTarget.drawArrays(types[i], offset, offsets[i]);
-			offset += offsets[i];
+			for (var i = 0; i < types.length; i++) {
+				this.gTarget.drawArrays(types[i], offset, offsets[i]);
+				offset += offsets[i];
+			}
 		}
-		}
-		
 
-		
+
+
 		/*var tmp = this.gTarget.getError()
 		if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
