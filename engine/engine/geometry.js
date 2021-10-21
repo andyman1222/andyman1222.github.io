@@ -81,7 +81,6 @@ function getRect(pos, extent) {
 	
 	var ind = []
 	var tx = []
-	var norm = [normalize(vec3(-1,-1,-1)), normalize(vec3(-1,-1,1)), normalize(vec3(1,-1,1)), normalize(vec3(1,1,1)), normalize(vec3(1,1,-1)), normalize(vec3(-1,1,-1)), normalize(vec3(1,-1,-1)), normalize(vec3(-1,1,1))] //again, lazy normals calculation
 	var p = [blb, flb, frb, frt, brt, blt, brb, flt]
 	ind.push(0, 6, 2,
 		2, 1, 0,
@@ -117,5 +116,6 @@ function getRect(pos, extent) {
 	
 	vec2(0,0), vec2(0, 1), vec2(1,1),
 	vec2(1,1), vec2(1, 0), vec2(0,0))
+	var norm = normalsFromTriangleVerts(p, ind)
 	return{points: p, index: ind, texCoords: tx, normals: norm}
 }
