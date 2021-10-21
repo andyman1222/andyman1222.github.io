@@ -634,7 +634,6 @@ class object extends primitive {
 		for (var i = 0; i < this.pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this.pointInfo[i]))
 			ret.points.push(tmp);
-			ret.normals.push(this.normalInfo[i])
 		}
 
 		for (var g = 0; g < this.drawInfo.length; g++) {
