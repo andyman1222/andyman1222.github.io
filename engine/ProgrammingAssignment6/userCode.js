@@ -27,7 +27,7 @@ function switchCamera() {
 
 
 function userTick(delta, time) {
-	directLight.transform.rot = addRotation(directLight.transform.rot, eulerTOQuat(vec3(0,1,0),delta*.1))
+	directLight.transform.rot = addRotation(directLight.transform.rot, eulerToQuat(vec3(0,1,0),delta*.1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (mainCamera.enabled) {
