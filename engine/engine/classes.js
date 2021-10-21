@@ -649,7 +649,7 @@ class object extends primitive {
 				ret.indexes[g].push(this.drawInfo[g].pointIndex[i])
 				switch(this.drawInfo[g].type){
 					case gl.TRIANGLES:
-						for(var x = 0; x < 3; x++) ret.normals[g].push(this.drawInfo[g].normals[i]) //push 3 for each vert
+						ret.normals[g].push(this.drawInfo[g].normals[Math.floor(i/3)]) //push 3 for each vert
 						break;
 					default:
 						ret.normals[g].push(this.drawInfo[g].normals[i])
