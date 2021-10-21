@@ -643,13 +643,20 @@ class object extends primitive {
 			ret.indexes.push(new Array())
 			ret.mats.push(new Array())
 			ret.types.push(this.drawInfo[g].type)
-			//ret.normals.push(new Array())
+			ret.normals.push(new Array())
 			ret.texCoords.push(new Array())
 
 			for (var i = 0; i < this.drawInfo[g].pointIndex.length; i++) {
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.indexes[g].push(this.drawInfo[g].pointIndex[i])
-
+				switch(this.drawInfo[g].type){
+					case gl.TRIANGLES:
+						for(var x = 0; x < 3; x++) ret.normals[g].push(this.drawInfo[g].normals[i]) //push 3 for each vert
+						break;
+					default:
+						ret.normals[g].push(this.drawInfo[g].normals[i])
+				}
+				
 				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
 				ret.mats[g].push(this.matInfo[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
