@@ -64,7 +64,8 @@ void main(void){
 		break;
 		
 		case 1:
-		vec4 sumAmbient;
+		fColor = vec4(1,0,0,1)
+		/*vec4 sumAmbient;
 		vec4 sumDiffuse;
 		vec4 sumSpecular;
 		vec3 N=normalize(normal);
@@ -100,7 +101,7 @@ void main(void){
 				
 				default:
 				break;
-			}
+			}*/
 		}
 		
 		vec4 tmp=(sumAmbient*matProp4*matProp1)+(sumDiffuse*matProp2*matProp1)+(sumSpecular*matProp3);
