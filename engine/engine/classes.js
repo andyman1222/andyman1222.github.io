@@ -90,7 +90,7 @@ class primitive {
 	}
 
 	attachChildToSelf(child, attachType, newAttachTransform = null) {
-		child.attachSelfToParent(self, attachType, newAttachTransform)
+		child.attachSelfToParent(this, attachType, newAttachTransform)
 	}
 
 	detach(detachType) {
