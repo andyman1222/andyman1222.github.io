@@ -279,8 +279,8 @@ class buffer {
 			//load materials
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matIndBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, new Int32Array(matIndicies), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.FLOAT, 0, 0);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, new Int16Array(matIndicies), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.SHORT, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMatIndex);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf1);
