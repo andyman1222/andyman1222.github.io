@@ -653,7 +653,7 @@ class object extends primitive {
 						ret.normals[g].push(rotateAbout(this.drawInfo[g].normals[Math.floor(i/3)], newTrans.rot)) //push 3 for each vert
 						break;
 					default:
-						ret.normals[g].push(this.drawInfo[g].normals[i])
+						ret.normals[g].push(rotateAbout(this.drawInfo[g].normals[i], newTrans.rot))
 				}
 				
 				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
