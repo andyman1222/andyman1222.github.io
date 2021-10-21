@@ -74,7 +74,7 @@ void main(void){
 				break;
 				
 				case 2://directional
-				float NdotL=dot(lights[x].direction,N);
+				float NdotL=dot(lights[x].direction*-1,N);
 				sumDiffuse=vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb,(NdotL*lights[x].color).a*sumDiffuse.a);
 				break;
 				
