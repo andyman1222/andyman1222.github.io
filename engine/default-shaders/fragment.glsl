@@ -81,7 +81,7 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 L=normalize(lights[x].location-1*position);
+				vec3 L=normalize(lights[x].location-position);
 				float Kd=dot(L,N);
 				
 				vec3 R=reflect(-L,N);
