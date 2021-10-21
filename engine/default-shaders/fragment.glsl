@@ -57,8 +57,9 @@ uniform int maxLightIndex;
 }*/
 
 void main(void){
-	
-	switch(floor(matIndex)){
+	int i = floor(matIndex);
+
+	switch(i){
 		case 0:
 		fColor=matProp1;
 		break;
