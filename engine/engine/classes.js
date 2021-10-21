@@ -127,7 +127,6 @@ class buffer {
 	matParams4 = []
 	matIndicies = []
 	points = []
-	indexes = []
 	types = []
 	offsets = []
 	posBuffer;
@@ -157,7 +156,7 @@ class buffer {
 	lightAttenArrayLoc = [];
 	lightIndLoc;
 
-	getUniform(loc){
+	getUniform(loc) {
 		return this.gTarget.getUniform(this.program, loc)
 	}
 
@@ -181,16 +180,16 @@ class buffer {
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
 		this.normalMatrix = this.gTarget.getUniformLocation(this.program, normalMatrixStr);
 		this.lightIndLoc = this.gTarget.getUniformLocation(this.program, lightsIndexStr);
-		for(var i = 0; i < maxLightCount; i++){
-			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].type"))
-			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].location"))
-			this.lightDirArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].direction"))
-			this.lightAngleArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].angle"))
-			this.lightAttenArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].attenuation"))
-			this.lightColorArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].color"))
-			this.lightDiffArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].diffuseMultiply"))
-			this.lightSpecArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].specularMultiply"))
-			this.lightShinyArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].shininess"))
+		for (var i = 0; i < maxLightCount; i++) {
+			this.lightTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].type"))
+			this.lightLocArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].location"))
+			this.lightDirArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].direction"))
+			this.lightAngleArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].angle"))
+			this.lightAttenArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].attenuation"))
+			this.lightColorArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].color"))
+			this.lightDiffArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].diffuseMultiply"))
+			this.lightSpecArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].specularMultiply"))
+			this.lightShinyArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].shininess"))
 			//this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].lightmask"))
 		}
 
@@ -206,7 +205,6 @@ class buffer {
 		this.types = []
 		this.offsets = []
 		this.matIndicies = []
-		this.indexes = []
 	}
 
 	setViewMatrix(v) {
@@ -218,22 +216,22 @@ class buffer {
 		this.gTarget.uniformMatrix4fv(this.projMatrix, false, flatten(p));
 	}
 
-	pushMaterial(m){
+	pushMaterial(m) {
 		this.matParams1.push(m[0])
 		this.matParams2.push(m[1])
 		this.matParams3.push(m[2])
 		this.matParams4.push(m[3])
 	}
 
-	updateLights(){
+	updateLights() {
 		var x = -1
 		this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
 		lights.forEach((l) => {
-			if(l != null && x < maxLightCount-1){
+			if (l != null && x < maxLightCount - 1) {
 				x++;
 				this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
 				this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([l.type]))
-				switch(l.type){
+				switch (l.type) {
 					case 4:
 						this.gTarget.uniform1fv(this.lightAngleArrayLoc[x], new Int32Array([l.angle]))
 					case 3:
@@ -249,65 +247,64 @@ class buffer {
 						break;
 
 				}
-			} else if (l != null){
+			} else if (l != null) {
 				bufferedConsoleLog("WARNING: More than " + maxLightCount + " used, light witih ID " + l.id + " will not be visible.")
 			}
 		})
-		for(x++; x < maxLightCount; x++)
+		for (x++; x < maxLightCount; x++)
 			this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([0]))
 	}
 
-	render() {
+	beginRender() {
 		//("Rendering")
 		//load new buffer data
 		this.updateLights();
+		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
+	}
+
+	renderData(points, matIndicies, matParams1, matParams2, matParams3, matParams4, normals, texCoords, types, offsets) {
 		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.points), this.gTarget.STATIC_DRAW);
-			
-
-			this.gTarget.bindBuffer(this.gTarget.ELEMENT_ARRAY_BUFFER, this.indBuffer);
-			this.gTarget.bufferData(this.gTarget.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.indexes), this.gTarget.STATIC_DRAW);
-			
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(points), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inPos, 3, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inPos);
 			//load materials
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matIndBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matIndicies), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matIndicies), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.SHORT, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMatIndex);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf1);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams1), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams1), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat1, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat1);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf2);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams2), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams2), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat2, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat2);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf3);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams3), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams3), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat3, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat3);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf4);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams4), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams4), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
 		}
 		//draw
-		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
+
 		var offset = 0;
-		for (var i = 0; i < this.types.length; i++) {
-			this.gTarget.drawElements(this.types[i], offset, this.gTarget.UNSIGNED_SHORT, this.offsets[i]);
-			offset += this.offsets[i];
+		for (var i = 0; i < ypes.length; i++) {
+			this.gTarget.drawArrays(types[i], offset, offsets[i]);
+			offset += offsets[i];
 		}
 		var tmp = this.gTarget.getError()
-		if(tmp != this.gTarget.NO_ERROR){
-			switch (tmp){
+		if (tmp != this.gTarget.NO_ERROR) {
+			switch (tmp) {
 				case this.gTarget.INVALID_OPERATION:
 				case this.gTarget.INVALID_FRAMEBUFFER_OPERATION:
 				case this.gTarget.OUT_OF_MEMORY:
@@ -434,66 +431,87 @@ class camera extends primitive {
 			//adding objects
 
 			//TODO: implement texcoord, normal, etc.
-			var base = 0
 			objects.forEach(function (o) {
 				if ((this.renderEngine && o.isEngine) || !o.isEngine) {
 					if (o.visible) {
 						var current = o.localToWorld();
-						for(var g = 0; g < current.points.length; g++){
-							this.buf.points.push(mult(current.points[g], vec3(1, 1, -1)))
-						}
+
+						var t = []
+						var f = [];
+						var mi = []
+						var m1 = [], m2 = [], m3 = [], m4 = []
+						var p = []
+						var tx = []
+						var n = []
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
 							var m = current.mats[g]
-							var t = current.types[g]
-							this.buf.offsets.push(i.length);
-							if (!this.wireframe) {
-								this.buf.types.push(t);
-							}
-							else {
-								this.buf.types.push(this.buf.gTarget.LINE_LOOP);
-							}
+							tx.push(current.texCoords[g])
+							f.push(i.length)
+							t.push(this.wireframe ? this.buf.gTarget.LINE_LOOP : current.types[g])
 							for (var ii = 0; ii < i.length; ii++) {
 								if (!this.wireframe) {
-									this.buf.matIndicies.push(m[ii % m.length].index)
+									mi.push(m[ii % m.length].index)
 								}
 								else {
-									this.buf.matIndicies.push(-1)
+									mi.push(-1)
 								}
-								
-								this.buf.pushMaterial(m[ii % m.length].parameters)
-								this.buf.indexes.push(base + i[ii])
+								m1.push(m[ii % m.length].parameters[0])
+								m2.push(m[ii % m.length].parameters[1])
+								m3.push(m[ii % m.length].parameters[2])
+								m4.push(m[ii % m.length].parameters[3])
+								p.push(current.points[i[ii]])
+								n.push(current.normals[i[ii]])
 							}
 						}
-						base += current.points.length
 						if (this.showBounds && !o.isEngine) {
 							//(c)
-							this.buf.types.push(this.buf.gTarget.LINE_LOOP);
+							t.push(this.buf.gTarget.LINE_LOOP);
 							var l = 0
 							for (var i = 0; i < current.bounds.length; i++) {
-								this.buf.points.push(mult(current.bounds[i], vec3(1, 1, -1)))
-								this.buf.indexes.push(current.boundsIndex[i])
-								this.buf.matIndicies.push(-1)
-								this.buf.pushMaterial(new solidColorNoLighting(current.boundColors[i % current.boundColors.length]).parameters);
+								p.push(mult(current.bounds[i], vec3(1, 1, -1)))
+								var tmp = new solidColorNoLighting(current.boundColors[i % current.boundColors.length]);
+								mi.push(tmp.index)
+								m1.push(tmp.parameters[0])
+								m2.push(tmp.parameters[1])
+								m3.push(tmp.parameters[2])
+								m4.push(tmp.parameters[3])
+								n.push(vec3(1, 0, 0))//bounds have no normals, this is just filler
+
 							}
-							this.buf.offsets.push(current.bounds.length)
-							base += current.bounds.length
+							tx.push(vec2(0, 0)) //bounds have no textures, again just filler
+							f.push(current.bounds.length)
 						}
+						this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 					}
 				}
 			}.bind(this))
 
 			var x = 0
 			for (var o = 0; o < this.debugOffsets.length; o++) {
-				this.buf.types.push(this.debugTypes[o])
-				this.buf.offsets.push(this.debugOffsets[o])
+				var t = []
+				var f = [];
+				var mi = []
+				var m1 = [], m2 = [], m3 = [], m4 = []
+				var p = []
+				var tx = []
+				var n = []
+				t.push(this.debugTypes[o])
+				f.push(this.debugOffsets[o])
 				for (var i = 0; i < this.debugOffsets[o]; i++) {
-					this.buf.points.push(mult(this.debugPoints[i + x], vec3(1, 1, -1)))
-					this.buf.indexes.push(base + i)
-					this.buf.colors.push(this.debugColors[i % this.debugColors.length])
+					p.push(mult(this.debugPoints[i + x], vec3(1, 1, -1)))
+					var tmp = new solidColorNoLighting(this.debugColors[i % this.debugColors.length]);
+					mi.push(tmp.index)
+					m1.push(tmp.parameters[0])
+					m2.push(tmp.parameters[1])
+					m3.push(tmp.parameters[2])
+					m4.push(tmp.parameters[3])
+					n.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 				}
+				tx.push(vec2(0, 0)) //bounds have no textures, again just filler
 				x += this.debugOffsets[o]
 				base += this.debugOffsets[o].length
+				this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 			}
 
 			//get uniform matrix
@@ -590,7 +608,7 @@ class object extends primitive {
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
 		var ret = { points: [], indexes: [], types: [], mats: [], texCoords: [], normals: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this.bounds.type, visible: this.visible }
 
-		for(var i = 0; i < this.pointInfo.length; i++){
+		for (var i = 0; i < this.pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this.pointInfo[i]))
 			ret.points.push(vec4to3(tmp));
 			ret.normals.push(this.normalInfo[i])
@@ -601,13 +619,13 @@ class object extends primitive {
 			ret.indexes.push(new Array())
 			ret.mats.push(new Array())
 			ret.types.push(this.drawInfo[g].type)
-			ret.normals.push(new Array())
+			//ret.normals.push(new Array())
 			ret.texCoords.push(new Array())
-			
+
 			for (var i = 0; i < this.drawInfo[g].pointIndex.length; i++) {
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.indexes[g].push(this.drawInfo[g].pointIndex[i])
-				
+
 				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
 				ret.mats[g].push(this.matInfo[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
