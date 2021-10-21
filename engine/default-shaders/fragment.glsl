@@ -8,7 +8,7 @@ in vec4 matProp3;
 in vec4 matProp4;
 in vec3 normal;
 in vec3 position;
-in flat int matIndex;
+flat in int matIndex;
 
 out vec4 fColor;
 
@@ -59,7 +59,7 @@ uniform int maxLightIndex;
 void main(void){
 
 	
-	switch(i){
+	switch(matIndex){
 		case 0:
 		fColor=matProp1;
 		break;
