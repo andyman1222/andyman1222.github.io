@@ -58,7 +58,8 @@ uniform int maxLightIndex;
 
 void main(void){
 	int i = int(floor(matIndex));
-
+	fColor = vec4(i, 0, 0, 1);
+	/*
 	switch(i){
 		case 0:
 		fColor=matProp1;
@@ -111,6 +112,6 @@ void main(void){
 		
 		vec4 tmp=(sumAmbient*matProp4*matProp1)+(sumDiffuse*matProp2*matProp1)+(sumSpecular*matProp3);
 		fColor=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
-		break;*/
-	}
+		break;
+	}*/
 }
