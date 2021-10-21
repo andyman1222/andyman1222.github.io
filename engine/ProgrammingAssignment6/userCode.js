@@ -163,7 +163,7 @@ function init() {
 	altCamera = new camera(bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera.enabled = false
 	mainCamera.transform.pos = vec3(-20, 2, -20)
-	new ambientLight(vec4(1,1,1,1), null)
+	new ambientLight(vec4(.1,.1,.1,1), null)
 	new directionalLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(-.5,-.5,-.5),0), scl: vec3(1,1,1)}, vec4(1,1,1,1), null)
 	//mainCamera.renderEngine = true
 	generateMaze_()
