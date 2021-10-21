@@ -57,20 +57,11 @@ uniform int maxLightIndex;
 }*/
 
 void main(void){
-
 	
 	switch(matIndex){
-		case 0:
-		fColor=matProp1;
-		break;
 		
 		case 1:
-		fColor = vec4(1,0,0,1);
-		break;
-
-		default:
-		fColor = vec4(1, 1, 1, 1);
-		/*vec4 sumAmbient;
+		vec4 sumAmbient;
 		vec4 sumDiffuse;
 		vec4 sumSpecular;
 		vec3 N=normalize(normal);
@@ -111,6 +102,10 @@ void main(void){
 		
 		vec4 tmp=(sumAmbient*matProp4*matProp1)+(sumDiffuse*matProp2*matProp1)+(sumSpecular*matProp3);
 		fColor=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
-		break;*/
+		break;
+		
+		case 0:default:
+		fColor=matProp1;
+		break;
 	}
 }
