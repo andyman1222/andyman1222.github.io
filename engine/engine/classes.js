@@ -451,7 +451,7 @@ class camera extends primitive {
 	pushToBuffer() {
 		if (this.enabled) {
 			this.buf.clearBuffers();
-			this.buf.setViewMatrix(this.getViewMat())
+			this.buf.setViewMatrix(this.getViewMat(), this.getWorldTransform().pos)
 			if (this.renderAfter)
 				this.buf.beginRender();
 
