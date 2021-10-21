@@ -8,7 +8,7 @@ in vec4 inMatProp2;
 in vec4 inMatProp3;
 in vec4 inMatProp4;
 in vec3 inNormal;
-flat in int inMatIndex;
+in int inMatIndex;
 in vec2 inTexCoord;
 //attribute vec3 inNormal;
 
