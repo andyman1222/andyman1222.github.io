@@ -348,25 +348,6 @@ class buffer {
 		}*/
 		this.clearBuffers();
 	}
-
-	loadData(points, matIndicies, matParams1, matParams2, matParams3, matParams4, normals, texCoords, types, offsets) {
-		if(points.length > this.bufLimit)
-			console.error("Unable to load data to GPU. Too many points. Length: " + points.length);
-		else {
-			if(points.length + this.points.length > this.bufLimit)
-				this.renderData();
-			this.points.push(points)
-			this.matIndicies.push(matIndicies)
-			this.matParams1.push(matParams1)
-			this.matParams2.push(matParams2)
-			this.matParams3.push(matParams3)
-			this.matParams4.push(matParams4)
-			this.normals.push(normals)
-			this.texCoords.push(texCoords)
-			this.types.push(types)
-			this.offsets.push(offsets)
-		}
-	}
 }
 
 /**
@@ -495,85 +476,74 @@ class camera extends primitive {
 					if (o.visible) {
 						var current = o.localToWorld();
 
-						var t = []
-						var f = [];
-						var mi = []
-						var m1 = [], m2 = [], m3 = [], m4 = []
-						var p = []
-						var tx = []
-						var n = []
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
-							var m = current.mats[g]
 
-							f.push(i.length)
-							t.push(this.wireframe ? this.buf.gTarget.LINE_LOOP : current.types[g])
-							for (var ii = 0; ii < i.length; ii++) {
-								if (!this.wireframe) {
-									mi.push(m[ii % m.length].index)
+							if (i.length > this.buf.bufLimit)
+								console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
+							else {
+								var m = current.mats[g]
+								if (i.length + this.buf.points.length > this.buf.bufLimit)
+									this.buf.renderData();
+
+
+								this.buf.offsets.push(i.length)
+								this.buf.types.push(this.wireframe ? this.buf.gTarget.LINE_LOOP : current.types[g])
+								for (var ii = 0; ii < i.length; ii++) {
+									if (!this.wireframe) {
+										this.buf.matIndicies.push(m[ii % m.length].index)
+									}
+									else {
+										this.buf.matIndicies.push(0)
+									}
+									this.buf.matParams1.push(m[ii % m.length].parameters[0])
+									this.buf.matParams2.push(m[ii % m.length].parameters[1])
+									this.buf.matParams3.push(m[ii % m.length].parameters[2])
+									this.buf.matParams4.push(m[ii % m.length].parameters[3])
+									this.buf.points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
+									this.buf.normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
+									this.buf.texCoords.push(current.texCoords[g][ii])
 								}
-								else {
-									mi.push(0)
-								}
-								m1.push(m[ii % m.length].parameters[0])
-								m2.push(m[ii % m.length].parameters[1])
-								m3.push(m[ii % m.length].parameters[2])
-								m4.push(m[ii % m.length].parameters[3])
-								p.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
-								n.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
-								tx.push(current.texCoords[g][ii])
 							}
 						}
 						if (this.showBounds && !o.isEngine) {
 							//(c)
-							t.push(this.buf.gTarget.LINE_LOOP);
-							var l = 0
+							this.buf.types.push(this.buf.gTarget.LINE_LOOP);
 							for (var i = 0; i < current.bounds.length; i++) {
-								p.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
+								this.buf.points.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
 								var tmp = new solidColorNoLighting(current.boundColors[i % current.boundColors.length]);
-								mi.push(tmp.index)
-								m1.push(tmp.parameters[0])
-								m2.push(tmp.parameters[1])
-								m3.push(tmp.parameters[2])
-								m4.push(tmp.parameters[3])
-								n.push(vec3(1, 0, 0))//bounds have no normals, this is just filler
+								this.buf.matIndicies.push(tmp.index)
+								this.buf.matParams1.push(tmp.parameters[0])
+								this.buf.matParams2.push(tmp.parameters[1])
+								this.buf.matParams3.push(tmp.parameters[2])
+								this.buf.matParams4.push(tmp.parameters[3])
+								this.buf.normals.push(vec3(1, 0, 0))//bounds have no normals, this is just filler
 
 							}
-							tx.push(vec2(0, 0)) //bounds have no textures, again just filler
-							f.push(current.bounds.length)
+							this.buf.texCoords.push(vec2(0, 0)) //bounds have no textures, again just filler
+							this.buf.offsets.push(current.bounds.length)
 						}
-						if (this.renderAfter)
-							this.buf.loadData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 					}
 				}
 			}.bind(this))
 
 			var x = 0
 			for (var o = 0; o < this.debugOffsets.length; o++) {
-				var t = []
-				var f = [];
-				var mi = []
-				var m1 = [], m2 = [], m3 = [], m4 = []
-				var p = []
-				var tx = []
-				var n = []
-				t.push(this.debugTypes[o])
-				f.push(this.debugOffsets[o])
+				this.buf.types.push(this.debugTypes[o])
+				this.buf.offsets.push(this.debugOffsets[o])
 				for (var i = 0; i < this.debugOffsets[o]; i++) {
-					p.push(mult(this.debugPoints[i + x], vec4(1, 1, -1, 1)))
+					this.buf.points.push(mult(this.debugPoints[i + x], vec4(1, 1, -1, 1)))
 					var tmp = new solidColorNoLighting(this.debugColors[i % this.debugColors.length]);
-					mi.push(tmp.index)
-					m1.push(tmp.parameters[0])
-					m2.push(tmp.parameters[1])
-					m3.push(tmp.parameters[2])
-					m4.push(tmp.parameters[3])
-					n.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
+					this.buf.matIndicies.push(tmp.index)
+					this.buf.matParams1.push(tmp.parameters[0])
+					this.buf.matParams2.push(tmp.parameters[1])
+					this.buf.matParams3.push(tmp.parameters[2])
+					this.buf.matParams4.push(tmp.parameters[3])
+					this.buf.normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 				}
-				tx.push(vec2(0, 0)) //bounds have no textures, again just filler
+				this.buf.texCoords.push(vec2(0, 0)) //bounds have no textures, again just filler
 				x += this.debugOffsets[o]
 				base += this.debugOffsets[o].length
-				if (this.renderAfter)
-					this.buf.loadData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 			}
 			//render any remaining data
 			if (this.enabled)
