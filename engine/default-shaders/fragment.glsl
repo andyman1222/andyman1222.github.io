@@ -132,7 +132,7 @@ void main(void){
 				float light = dot(normal,L);
 				
 				vec3 R=reflect(-L,N);
-				float Ks = 0;
+				float Ks = 0.;
 				switch(lights[x].negativeHandler){
 					case 1:
 					Ks=max(dot(P,R), 0.);
@@ -141,10 +141,10 @@ void main(void){
 					Ks = min(dot(P,R), 0.);
 					break;
 					case 3:
-					Ks = abs(dot(P,R), 0.);
+					Ks = abs(dot(P,R));
 					break;
 					case 0: default:
-					Ks = dot(P, R)
+					Ks = dot(P, R);
 				}
 
 				Ks = pow(Ks, lights[x].shininess*matProp5[0]);
