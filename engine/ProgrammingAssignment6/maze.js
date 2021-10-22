@@ -215,7 +215,7 @@ draw_maze()
         var tmp = getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: gl.TRIANGLES, normals: tmp.normals}],
-        tmp.points, [materials[i%materials.length]], "rect"))
+        tmp.points, [materials[i%materials.length]], bounds.RECT))
       }
     }
     /* draw the perimeter edges */
@@ -226,7 +226,7 @@ draw_maze()
         var tmp = getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: gl.TRIANGLES, normals: tmp.normals}],
-        tmp.points, [new material()], "rect"))
+        tmp.points, [new material()], bounds.RECT))
       }
     }
   }

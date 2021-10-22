@@ -158,6 +158,7 @@ class buffer {
 	lightSpecArrayLoc = [];
 	lightShinyArrayLoc = [];
 	lightAttenArrayLoc = [];
+	lightNegativeArrayLoc = [];
 	lightIndLoc;
 	cameraPosLoc;
 
@@ -200,6 +201,7 @@ class buffer {
 			this.lightDiffArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].diffuseMultiply"))
 			this.lightSpecArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].specularMultiply"))
 			this.lightShinyArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].shininess"))
+			this.lightNegativeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].negativeHandler"))
 			//this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].lightmask"))
 		}
 
@@ -238,7 +240,7 @@ class buffer {
 		var x = -1
 		this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
 		lights.forEach((l) => {
-			if (l != null && x < maxLightCount - 1) {
+			if (l != null && x < maxLightCount - 1 && l.enabled) {
 				x++;
 				this.gTarget.uniform1iv(this.lightIndLoc, new Int32Array([x]))
 				this.gTarget.uniform1iv(this.lightTypeArrayLoc[x], new Int32Array([l.type]))
@@ -249,6 +251,7 @@ class buffer {
 						this.gTarget.uniform1fv(this.lightAttenArrayLoc[x], new Float32Array([l.attenuation]))
 						this.gTarget.uniform4fv(this.lightDiffArrayLoc[x], flatten(l.diffuseMultiply))
 						this.gTarget.uniform4fv(this.lightSpecArrayLoc[x], flatten(l.specularMultiply))
+						this.gTarget.uniform1fv(this.lightShinyArrayLoc[x], new Float32Array([l.shininess]))
 					case 2:
 						var t = l.getWorldTransform()
 						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(mult(vec3(1,1,-1),forward(t.rot))))
@@ -258,7 +261,8 @@ class buffer {
 						break;
 
 				}
-			} else if (l != null) {
+				this.gTarget.uniform1iv(this.lightNegativeArrayLoc[x], new Int32Array([l.handleNegative]))
+			} else if (x >= maxLightCount - 1 && l != null && l.enabled) {
 				bufferedConsoleLog("WARNING: More than " + maxLightCount + " used, light witih ID " + l.id + " will not be visible.")
 			}
 		})
@@ -344,6 +348,9 @@ class buffer {
  * extremely rough class representing visibility bounds for an object
  */
 class bounds {
+	static RECT = "rect"
+	static SPHERE = "sphere"
+
 	constructor(pointInfo, type) {
 		this.type = type;
 
@@ -363,20 +370,20 @@ class bounds {
 			this.pos = mult(.5, add(min, max))
 			//(this.pos)
 
-			if (type == "sphere") {
+			if (type == bounds.SPHERE) {
 				//get furthest point from points rendered
 				this.radius = subtract(pointInfo[0], this.pos)
 				for (var i = 1; i < pointInfo.length; i++) {
 					var tmp = subtract(pointInfo[i], this.pos)
 					if (length(tmp) > length(this.radius)) this.radius = tmp
 				}
-			} else if (type == "rect") {
+			} else if (type == bounds.RECT) {
 
 				this.extent = mult(.5, subtract(max, min));
 
 				//set pos to the middle of the min and max points
 
-			} else throw "Only bounds types supported now are 'rect' and 'sphere'"
+			} else throw "Only bounds types supported now are RECT and SPHERE"
 		} else {
 			this.radius = 0
 			this.extent = vec3(0, 0, 0)
@@ -387,7 +394,7 @@ class bounds {
 	getRect(multMat = vec3(1, 1, 1), boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
 		r.colors.push(boundsColor)
-		if (this.type == "rect") { //sphere TBD
+		if (this.type == bounds.RECT) { //sphere TBD
 			r.points = getRect(this.pos, this.extent);
 		}
 		for (var i = 0; i < r.points.length; i++)

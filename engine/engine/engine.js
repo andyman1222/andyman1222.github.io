@@ -67,7 +67,7 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 	coords = new object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, [{
 		pointIndex: [0, 1, 2, 3, 4, 5], matIndex: [0, 0, 1, 1, 2, 2], texCoords: [vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1)], type: gl.LINES, normals: [vec3(-1, 0, 0), vec3(1, 0, 0), vec3(0, -1, 0), vec3(0, 1, 0), vec3(0, 0, -1), vec3(0, 0, 1)]}],
 	[vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)],
-	[new solidColorNoLighting(vec4(1,0,0,1)), new solidColorNoLighting(vec4(0,1,0,1)), new solidColorNoLighting(vec4(0,0,1,1))], "rect", true)
+	[new solidColorNoLighting(vec4(1,0,0,1)), new solidColorNoLighting(vec4(0,1,0,1)), new solidColorNoLighting(vec4(0,0,1,1))], bounds.RECT, true)
 }
 
 function engineInit(userInit, userTick, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {

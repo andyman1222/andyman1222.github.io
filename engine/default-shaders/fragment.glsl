@@ -24,7 +24,8 @@ struct light
 	vec4 color;
 	vec4 diffuseMultiply;//ignored on ambient
 	vec4 specularMultiply;//ignored on ambient
-	//float shininess;//ignored on ambient
+	float shininess;//ignored on ambient
+	int negativeHandler; //0=no change (allow negatives), 1=clamp (min 0), 2=clamp negative (max 0), 3=absolute value
 };
 
 uniform light lights[64];
@@ -71,12 +72,55 @@ void main(void){
 		for(int x=0;x<=maxLightIndex;x++){
 			switch(lights[x].type){
 				case 1://ambient
-				sumAmbient=vec4(sumAmbient.rgb+lights[x].color.rgb,sumAmbient.a*lights[x].color.a);
+				switch(lights[x].negativeHandler){
+					case 1:
+						sumAmbient=vec4(sumAmbient.r+min(0, lights[x].color.r),
+						sumAmbient.g+min(0, lights[x].color.g),
+						sumAmbient.b+min(0, lights[x].color.b),
+						sumAmbient.a*lights[x].color.a);
+						break;
+					case 2:
+						sumAmbient=vec4(sumAmbient.r+min(0, lights[x].color.r),
+						sumAmbient.g+min(0, lights[x].color.g),
+						sumAmbient.b+min(0, lights[x].color.b),
+						sumAmbient.a*lights[x].color.a);
+						break;
+					case 3:
+						sumAmbient=vec4(sumAmbient.r+abs(lights[x].color.r),
+						sumAmbient.g+abs(lights[x].color.g),
+						sumAmbient.b+abs(lights[x].color.b),
+						sumAmbient.a*lights[x].color.a);
+						break;
+					case 0: default:
+						sumAmbient=vec4(sumAmbient.rgb+lights[x].color.rgb,sumAmbient.a*lights[x].color.a);
+				}
 				break;
 				
 				case 2://directional
 				float NdotL=dot(-1.*lights[x].direction,N);
-				sumDiffuse=vec4((NdotL*lights[x].color).rgb+sumDiffuse.rgb,(NdotL*lights[x].color).a*sumDiffuse.a);
+				vec4 c = NdotL*(lights[x].color*lights[x].diffuseMultiply);
+				switch(lights[x].negativeHandler){
+					case 1:
+						sumDiffuse=vec4(sumDiffuse.r+min(0, c.r),
+						sumDiffuse.g+min(0, c.g),
+						sumDiffuse.b+min(0, c.b),
+						sumDiffuse.a*c.a);
+						break;
+					case 2:
+						sumDiffuse=vec4(sumDiffuse.r+min(0, c.r),
+						sumDiffuse.g+min(0, c.g),
+						sumDiffuse.b+min(0, c.b),
+						sumDiffuse.a*c.a);
+						break;
+					case 3:
+						sumDiffuse=vec4(sumDiffuse.r+abs(c.r),
+						sumDiffuse.g+abs(c.g),
+						sumDiffuse.b+abs(c.b),
+						sumDiffuse.a*c.a);
+						break;
+					case 0: default:
+						sumDiffuse=vec4(sumDiffuse.rgb+c.rgb,sumDiffuse.a*c.a);
+				}
 				break;
 				
 				case 4://spot
