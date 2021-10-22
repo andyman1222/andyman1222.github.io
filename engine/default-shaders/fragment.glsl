@@ -98,7 +98,7 @@ void main(void){
 				
 				case 2://directional
 				float NdotL=dot(-1.*lights[x].direction,N);
-				vec4 c = NdotL*(lights[x].color*lights[x].diffuseMultiply);
+				vec4 c = NdotL*(lights[x].color);
 				switch(lights[x].negativeHandler){
 					case 1:
 						sumDiffuse=vec4(sumDiffuse.r+max(0., c.r),
