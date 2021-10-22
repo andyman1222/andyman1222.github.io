@@ -105,22 +105,22 @@ void main(void){
 						sumDiffuse=vec4(sumDiffuse.r+max(0., c.r),
 						sumDiffuse.g+max(0., c.g),
 						sumDiffuse.b+max(0., c.b),
-						sumDiffuse.a*c.a);
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, max(0., NdotL)));
 						break;
 					case 2:
 						sumDiffuse=vec4(sumDiffuse.r+min(0., c.r),
 						sumDiffuse.g+min(0., c.g),
 						sumDiffuse.b+min(0., c.b),
-						sumDiffuse.a*c.a);
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, min(0., NdotL)));
 						break;
 					case 3:
 						sumDiffuse=vec4(sumDiffuse.r+abs(c.r),
 						sumDiffuse.g+abs(c.g),
 						sumDiffuse.b+abs(c.b),
-						sumDiffuse.a*c.a);
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, abs(NdotL)));
 						break;
 					case 0: default:
-						sumDiffuse=vec4(sumDiffuse.rgb+c.rgb,sumDiffuse.a*c.a);
+						sumDiffuse=vec4(sumDiffuse.rgb+c.rgb,mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, NdotL));
 				}
 				break;
 				
@@ -132,63 +132,65 @@ void main(void){
 				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
   				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-				float specular = dot(N, surfaceToLightDirection);
 				float diffuse = dot(N, surfaceToLightDirection);
-				switch(lights[x].negativeHandler){
+				float specular = 0.;
+				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
+					
+					switch(lights[x].negativeHandler){
 					case 1:
-					diffuse=max(dot(N,halfVector), 0.);
+					specular=max(dot(N,halfVector), 0.);
 					break;
 					case 2:
-					diffuse = min(dot(N,halfVector), 0.);
+					specular = min(dot(N,halfVector), 0.);
 					break;
 					case 3:
-					diffuse = abs(dot(N,halfVector));
+					specular = abs(dot(N,halfVector));
 					break;
 					case 0: default:
-					diffuse = dot(N,halfVector);
+					specular = dot(N,halfVector);
+					}
+				specular=pow(specular, lights[x].shininess*matProp5.r);
 				}
 
-				diffuse = pow(diffuse, lights[x].shininess*matProp5.r);
 				
-				vec4 tmpDiff=(lights[x].color*lights[x].diffuseMultiply*diffuse);
-				vec4 tmpSpec=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(specular*lights[x].color*lights[x].specularMultiply);
+				
+				vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpSpec=(specular*lights[x].color*lights[x].specularMultiply);
 
-				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
-					tmpSpec=vec4(0.,0.,0.,1);
-				}
+				
 				switch(lights[x].negativeHandler){
 					case 1:
 					sumDiffuse=vec4(max(0.,tmpDiff.r)+sumDiffuse.r,
 						max(0.,tmpDiff.g)+sumDiffuse.g,
 						max(0.,tmpDiff.b)+sumDiffuse.b,
-						tmpDiff.a*sumDiffuse.a);
+						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, max(0., diffuse)));
 					sumSpecular=vec4(max(0.,tmpSpec.r)+sumSpecular.r,
 						max(0.,tmpSpec.g)+sumSpecular.g,
 						max(0.,tmpSpec.b)+sumSpecular.b,
-						tmpSpec.a*sumSpecular.a);
+						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, max(0., specular)));
 					break;
 					case 2:
 					sumDiffuse=vec4(min(0.,tmpDiff.r)+sumDiffuse.r,
 						min(0.,tmpDiff.g)+sumDiffuse.g,
 						min(0.,tmpDiff.b)+sumDiffuse.b,
-						tmpDiff.a*sumDiffuse.a);
+						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, min(0., diffuse)));
 					sumSpecular=vec4(min(0.,tmpSpec.r)+sumSpecular.r,
 						min(0.,tmpSpec.g)+sumSpecular.g,
 						min(0.,tmpSpec.b)+sumSpecular.b,
-						tmpSpec.a*sumSpecular.a);
+						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, min(0., specular)));
 					break;
 					case 3:
 					sumDiffuse=vec4(abs(tmpDiff.r)+sumDiffuse.r,
 						abs(tmpDiff.g)+sumDiffuse.g,
 						abs(tmpDiff.b)+sumDiffuse.b,
-						tmpDiff.a*sumDiffuse.a);
+						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, abs(diffuse)));
 					sumSpecular=vec4(abs(tmpSpec.r)+sumSpecular.r,
 						abs(tmpSpec.g)+sumSpecular.g,
 						abs(tmpSpec.b)+sumSpecular.b,
-						tmpSpec.a*sumSpecular.a);
+						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, abs(specular)));
 					case 0: default:
-					sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,tmpDiff.a*sumDiffuse.a);
-					sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,tmpSpec.a*sumSpecular.a);
+					sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, diffuse));
+					sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, specular));
 				}
 				
 				default:
