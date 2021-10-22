@@ -147,7 +147,7 @@ void main(void){
 					Ks = dot(P, R);
 				}
 
-				Ks = pow(Ks, lights[x].shininess*matProp5[0]);
+				Ks = pow(Ks, lights[x].shininess*matProp5.r);
 				
 				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
 				vec4 tmpSpec=Ks*lights[x].color*lights[x].specularMultiply;
