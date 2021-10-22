@@ -150,7 +150,7 @@ void main(void){
 				
 				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
 				vec4 tmpSpec=Ks*lights[x].color*lights[x].specularMultiply;
-				if((dot(L,N)<0. && lights[x].negativeHandler == 1) || (dot(L,N)>0. && lights[x].negativeHandler == 2)) ){
+				if((dot(L,N)<0. && lights[x].negativeHandler == 1) || (dot(L,N)>0. && lights[x].negativeHandler == 2)){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
 				switch(lights[x].negativeHandler){
