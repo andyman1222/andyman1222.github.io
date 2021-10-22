@@ -224,6 +224,7 @@ class buffer {
 		this.matParams2 = []
 		this.matParams3 = []
 		this.matParams4 = []
+		this.matParams5 = []
 		this.points = []
 		this.types = []
 		this.offsets = []
