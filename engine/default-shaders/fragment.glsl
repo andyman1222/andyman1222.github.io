@@ -150,7 +150,7 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 
 				
 				
-				vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
 				vec4 tmpSpec=(specular*lights[x].color*lights[x].specularMultiply);
 
 				
@@ -195,7 +195,7 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 		}
 		
 		vec4 tmp=vec4(((sumAmbient*mp4*mp1)+(sumDiffuse*mp2*mp1)+(sumSpecular*mp3)).rgb, (sumAmbient*mp4*mp1).a*(sumDiffuse*mp2*mp1).a*(sumSpecular*mp3).a);
-		return=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
+		return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
 void main(void){
