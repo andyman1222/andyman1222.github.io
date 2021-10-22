@@ -127,7 +127,7 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 v_surfaceToLight = lights[x].location - position;
+				vec3 v_surfaceToLight = (vec3(1.,1.,-1.)*lights[x].location) - position;
 				vec3 v_surfaceToView = cameraPos - position;
 				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
