@@ -48,7 +48,7 @@ void main(void) {
     matProp3 = inMatProp3;
     matProp4 = inMatProp4;
     matIndex = inMatIndex;
-    position = mult(vec3(1,1,-1),coordinates.xyz);
+    position = mult(vec3(1.,1.,-1.),coordinates.xyz);
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = inNormal;
 }
