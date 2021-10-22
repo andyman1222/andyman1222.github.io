@@ -125,6 +125,7 @@ class buffer {
 	matParams2 = []
 	matParams3 = []
 	matParams4 = []
+	matParams5 = []
 	matIndicies = []
 	points = []
 	types = []
@@ -137,6 +138,7 @@ class buffer {
 	matBuf2;
 	matBuf3;
 	matBuf4;
+	matBuf5;
 	matIndBuf;
 	projMatrix;
 	viewMatrix;
@@ -146,6 +148,7 @@ class buffer {
 	inMat2;
 	inMat3;
 	inMat4;
+	inMat5;
 	inMatIndex;
 	inTexCoord;
 	inNormal;
@@ -313,6 +316,11 @@ class buffer {
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams4), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
+
+			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf5);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams5), this.gTarget.STATIC_DRAW);
+			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.enableVertexAttribArray(this.inMat5);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.normals), this.gTarget.STATIC_DRAW);
