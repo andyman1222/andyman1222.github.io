@@ -1,13 +1,3 @@
-
-/**
- * dummy class for convienence
- */
-class light extends ambientLight{
-    constructor(c, m, n=ambientLight.NOCHANGE, e = true){
-        super(c, m, n, e)
-    }
-}
-
 class ambientLight extends primitive{
     color;
     lightmask;
@@ -41,6 +31,15 @@ class ambientLight extends primitive{
     destroyLight(){
         lights[this.id] = null;
         delete this;
+    }
+}
+
+/**
+ * dummy class for convienence
+ */
+class light extends ambientLight{
+    constructor(c, m, n=ambientLight.NOCHANGE, e = true){
+        super(c, m, n, e)
     }
 }
 
