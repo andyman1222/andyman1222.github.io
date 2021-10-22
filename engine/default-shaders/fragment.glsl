@@ -105,22 +105,22 @@ void main(void){
 						sumDiffuse=vec4(sumDiffuse.r+max(0., c.r),
 						sumDiffuse.g+max(0., c.g),
 						sumDiffuse.b+max(0., c.b),
-						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, max(0., NdotL)));
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].color.a, max(0., NdotL)));
 						break;
 					case 2:
 						sumDiffuse=vec4(sumDiffuse.r+min(0., c.r),
 						sumDiffuse.g+min(0., c.g),
 						sumDiffuse.b+min(0., c.b),
-						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, min(0., NdotL)));
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].color.a, min(0., NdotL)));
 						break;
 					case 3:
 						sumDiffuse=vec4(sumDiffuse.r+abs(c.r),
 						sumDiffuse.g+abs(c.g),
 						sumDiffuse.b+abs(c.b),
-						mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, abs(NdotL)));
+						mix(sumDiffuse.a, sumDiffuse.a*lights[x].color.a, abs(NdotL)));
 						break;
 					case 0: default:
-						sumDiffuse=vec4(sumDiffuse.rgb+c.rgb,mix(sumDiffuse.a, sumDiffuse.a*lights[x].a, NdotL));
+						sumDiffuse=vec4(sumDiffuse.rgb+c.rgb,mix(sumDiffuse.a, sumDiffuse.a*lights[x].color.a, NdotL));
 				}
 				break;
 				
@@ -163,34 +163,34 @@ void main(void){
 					sumDiffuse=vec4(max(0.,tmpDiff.r)+sumDiffuse.r,
 						max(0.,tmpDiff.g)+sumDiffuse.g,
 						max(0.,tmpDiff.b)+sumDiffuse.b,
-						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, max(0., diffuse)));
+						mix(sumDiffuse.a, lights[x].color.a*lights[x].diffuseMultiply.a*sumDiffuse.a, max(0., diffuse)));
 					sumSpecular=vec4(max(0.,tmpSpec.r)+sumSpecular.r,
 						max(0.,tmpSpec.g)+sumSpecular.g,
 						max(0.,tmpSpec.b)+sumSpecular.b,
-						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, max(0., specular)));
+						mix(sumSpecular.a, lights[x].color.a*lights[x].specularMultiply.a*sumSpecular.a, max(0., specular)));
 					break;
 					case 2:
 					sumDiffuse=vec4(min(0.,tmpDiff.r)+sumDiffuse.r,
 						min(0.,tmpDiff.g)+sumDiffuse.g,
 						min(0.,tmpDiff.b)+sumDiffuse.b,
-						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, min(0., diffuse)));
+						mix(sumDiffuse.a, lights[x].color.a*lights[x].diffuseMultiply.a*sumDiffuse.a, min(0., diffuse)));
 					sumSpecular=vec4(min(0.,tmpSpec.r)+sumSpecular.r,
 						min(0.,tmpSpec.g)+sumSpecular.g,
 						min(0.,tmpSpec.b)+sumSpecular.b,
-						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, min(0., specular)));
+						mix(sumSpecular.a, lights[x].color.a*lights[x].specularMultiply.a*sumSpecular.a, min(0., specular)));
 					break;
 					case 3:
 					sumDiffuse=vec4(abs(tmpDiff.r)+sumDiffuse.r,
 						abs(tmpDiff.g)+sumDiffuse.g,
 						abs(tmpDiff.b)+sumDiffuse.b,
-						mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, abs(diffuse)));
+						mix(sumDiffuse.a, lights[x].color.a*lights[x].diffuseMultiply.a*sumDiffuse.a, abs(diffuse)));
 					sumSpecular=vec4(abs(tmpSpec.r)+sumSpecular.r,
 						abs(tmpSpec.g)+sumSpecular.g,
 						abs(tmpSpec.b)+sumSpecular.b,
-						mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, abs(specular)));
+						mix(sumSpecular.a, lights[x].color.a*lights[x].specularMultiply.a*sumSpecular.a, abs(specular)));
 					case 0: default:
-					sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,mix(sumDiffuse.a, tmpDiff.a*sumDiffuse.a, diffuse));
-					sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,mix(sumSpecular.a, tmpSpec.a*sumSpecular.a, specular));
+					sumDiffuse=vec4(tmpDiff.rgb+sumDiffuse.rgb,mix(sumDiffuse.a, lights[x].color.a*lights[x].diffuseMultiply.a*sumDiffuse.a, diffuse));
+					sumSpecular=vec4(tmpSpec.rgb+sumSpecular.rgb,mix(sumSpecular.a, lights[x].color.a*lights[x].specularMultiply.a*sumSpecular.a, specular));
 				}
 				
 				default:
