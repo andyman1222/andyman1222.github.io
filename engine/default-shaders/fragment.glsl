@@ -74,15 +74,15 @@ void main(void){
 				case 1://ambient
 				switch(lights[x].negativeHandler){
 					case 1:
-						sumAmbient=vec4(sumAmbient.r+min(0, lights[x].color.r),
-						sumAmbient.g+min(0, lights[x].color.g),
-						sumAmbient.b+min(0, lights[x].color.b),
+						sumAmbient=vec4(sumAmbient.r+max(0., lights[x].color.r),
+						sumAmbient.g+max(0., lights[x].color.g),
+						sumAmbient.b+max(0., lights[x].color.b),
 						sumAmbient.a*lights[x].color.a);
 						break;
 					case 2:
-						sumAmbient=vec4(sumAmbient.r+min(0, lights[x].color.r),
-						sumAmbient.g+min(0, lights[x].color.g),
-						sumAmbient.b+min(0, lights[x].color.b),
+						sumAmbient=vec4(sumAmbient.r+min(0., lights[x].color.r),
+						sumAmbient.g+min(0., lights[x].color.g),
+						sumAmbient.b+min(0., lights[x].color.b),
 						sumAmbient.a*lights[x].color.a);
 						break;
 					case 3:
@@ -101,15 +101,15 @@ void main(void){
 				vec4 c = NdotL*(lights[x].color*lights[x].diffuseMultiply);
 				switch(lights[x].negativeHandler){
 					case 1:
-						sumDiffuse=vec4(sumDiffuse.r+min(0, c.r),
-						sumDiffuse.g+min(0, c.g),
-						sumDiffuse.b+min(0, c.b),
+						sumDiffuse=vec4(sumDiffuse.r+max(0., c.r),
+						sumDiffuse.g+max(0., c.g),
+						sumDiffuse.b+max(0., c.b),
 						sumDiffuse.a*c.a);
 						break;
 					case 2:
-						sumDiffuse=vec4(sumDiffuse.r+min(0, c.r),
-						sumDiffuse.g+min(0, c.g),
-						sumDiffuse.b+min(0, c.b),
+						sumDiffuse=vec4(sumDiffuse.r+min(0., c.r),
+						sumDiffuse.g+min(0., c.g),
+						sumDiffuse.b+min(0., c.b),
 						sumDiffuse.a*c.a);
 						break;
 					case 3:
