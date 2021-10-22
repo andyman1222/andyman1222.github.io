@@ -282,7 +282,7 @@ class buffer {
 		//("Rendering")
 		//load new buffer data
 		this.updateLights();
-		//this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT | this.gTarget.GL_DEPTH_BUFFER_BIT | this.gTarget.GL_STENCIL_BUFFER_BIT);
+		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
 	}
 
 	renderData() {
