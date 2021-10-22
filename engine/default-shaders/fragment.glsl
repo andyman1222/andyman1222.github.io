@@ -130,7 +130,7 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 				float diffuse = dot(N, surfaceToLightDirection);
 				float specular = 0.;
 
-				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2) || (lights[x].negativeHandler != 2 && lights[x].negativeHandler != 1)){
+				if((diffuse>0. && lights[x].negativeHandler == 1) || (diffuse<0. && lights[x].negativeHandler == 2) || (lights[x].negativeHandler != 2 && lights[x].negativeHandler != 1)){
 					
 					switch(lights[x].negativeHandler){
 						case 1:
