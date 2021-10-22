@@ -150,8 +150,8 @@ void main(void){
 
 				diffuse = pow(diffuse, lights[x].shininess*matProp5.r);
 				
-				vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
-				vec4 tmpSpec=specular*lights[x].color*lights[x].specularMultiply;
+				vec4 tmpDiff=(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpSpec=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(specular*lights[x].color*lights[x].specularMultiply);
 				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
