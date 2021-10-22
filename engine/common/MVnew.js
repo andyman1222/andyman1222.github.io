@@ -391,7 +391,7 @@ function mult(u, v) {
     if (isVector(v)) {
       result = new Array(v.length);
       result.type = v.type;
-      switch(u.type){
+      switch(v.type){
         case "vec4":
           result[3] = u * v[3];
         case "vec3":
