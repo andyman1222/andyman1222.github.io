@@ -333,12 +333,18 @@ function add(u, v) {
   if (isVector(u)) {
     var result = new Array(u.length);
     result.type = u.type;
-    for (var i = 0; i < u.length; i++) {
-      result[i] = u[i] + v[i];
+    switch(u.type){
+      case "vec4":
+        result[3] = u[3] + v[3];
+      case "vec3":
+        result[2] = u[2] + v[2];
+      case "vec2":
+        result[1] = u[1] + v[1];
+        result[0] = u[0] + v[0];
     }
     return result;
   }
-  if (isMatrix(u)) {
+  else if (isMatrix(u)) {
     if (u.type == 'mat2') var result = mat2();
     if (u.type == 'mat3') var result = mat3();
     if (u.type == 'mat4') var result = mat4();
@@ -346,7 +352,7 @@ function add(u, v) {
       result[i][j] = u[i][j] + v[i][j];
     }
     return result;
-  }
+  } else throw "add(): trying to add incompatible types " + u + " and " + v;
 }
 
 //----------------------------------------------------------------------------
@@ -385,8 +391,14 @@ function mult(u, v) {
     if (isVector(v)) {
       result = new Array(v.length);
       result.type = v.type;
-      for (var i = 0; i < v.length; i++) {
-        result[i] = u * v[i];
+      switch(u.type){
+        case "vec4":
+          result[3] = u * v[3];
+        case "vec3":
+          result[2] = u * v[2];
+        case "vec2":
+          result[1] = u * v[1];
+          result[0] = u * v[0];
       }
       return result;
     }
