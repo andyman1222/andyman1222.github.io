@@ -208,7 +208,7 @@ class buffer {
 			this.lightNegativeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].negativeHandler"))
 			//this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].lightmask"))
 		}
-		bufLimit = (this.gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this.gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
+		this.bufLimit = (this.gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this.gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
 			this.gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
 			this.gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
 		buffers.push(this);
