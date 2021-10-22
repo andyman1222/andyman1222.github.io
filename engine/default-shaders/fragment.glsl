@@ -59,16 +59,11 @@ uniform vec3 cameraPos;
 	//return curTexCoord;
 }*/
 
-void main(void){
-	
-	switch(matIndex){
-		
-		case 1:
-		vec4 sumAmbient = vec4(0,0,0,1);
+vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 norm, vec3 pos){
+	vec4 sumAmbient = vec4(0,0,0,1);
 		vec4 sumDiffuse = vec4(0,0,0,1);
 		vec4 sumSpecular = vec4(0,0,0,1);
-		vec3 N=normalize(normal);
-		vec3 V=-normalize(position);
+		vec3 N=normalize(norm);
 		
 		for(int x=0;x<=maxLightIndex;x++){
 			switch(lights[x].type){
@@ -127,29 +122,30 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 v_surfaceToLight = (lights[x].location*vec3(1,1,-1) - position);
-				vec3 v_surfaceToView = (cameraPos*vec3(1,1,-1) - position);
-				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
-  				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
-  				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+				vec3 L = (lights[x].location*vec3(1,1,-1) - pos);
+				vec3 surfaceToLightDirection = normalize(L);
+				vec3 V=-normalize(pos);
+				vec3 R = reflect(-L, N)
+				
 				float diffuse = dot(N, surfaceToLightDirection);
 				float specular = 0.;
-				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
+
+				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2) || (lights[x].negativeHandler != 2 && lights[x].negativeHandler != 1)){
 					
 					switch(lights[x].negativeHandler){
-					case 1:
-					specular=max(dot(N,halfVector), 0.);
-					break;
-					case 2:
-					specular = min(dot(N,halfVector), 0.);
-					break;
-					case 3:
-					specular = abs(dot(N,halfVector));
-					break;
-					case 0: default:
-					specular = dot(N,halfVector);
+						case 1:
+						specular=max(dot(V,R), 0.);
+						break;
+						case 2:
+						specular = min(dot(V,R), 0.);
+						break;
+						case 3:
+						specular = abs(dot(V,R));
+						break;
+						case 0: default:
+						specular = dot(V,R);
 					}
-				specular=pow(specular, lights[x].shininess*matProp5.r);
+					specular=pow(specular, lights[x].shininess*mp5.r);
 				}
 
 				
@@ -198,8 +194,16 @@ void main(void){
 			}
 		}
 		
-		vec4 tmp=(sumAmbient*matProp4*matProp1)+(sumDiffuse*matProp2*matProp1)+(sumSpecular*matProp3);
-		fColor=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
+		vec4 tmp=vec4(((sumAmbient*mp4*mp1)+(sumDiffuse*mp2*mp1)+(sumSpecular*mp3)).rgb, (sumAmbient*mp4*mp1).a*(sumDiffuse*mp2*mp1).a*(sumSpecular*mp3).a);
+		return=vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
+}
+
+void main(void){
+	
+	switch(matIndex){
+		
+		case 1:
+		fColor = standardMaterial(matProp1, matProp2, matProp3, matProp4, matProp5, normal, position);
 		break;
 		
 		case 0:default:
