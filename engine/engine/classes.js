@@ -170,7 +170,7 @@ class buffer {
 		return this.gTarget.getUniform(this.program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr, cameraPosStr) {
+	constructor(gTarget, program, coordStr, matStr1, matStr2, matStr3, matStr4, matStr5, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr, cameraPosStr) {
 		this.gTarget = gTarget;
 		this.program = program;
 		this.posBuffer = this.gTarget.createBuffer();
@@ -180,6 +180,7 @@ class buffer {
 		this.matBuf2 = this.gTarget.createBuffer();
 		this.matBuf3 = this.gTarget.createBuffer();
 		this.matBuf4 = this.gTarget.createBuffer();
+		this.matBuf5 = this.gTarget.createBuffer();
 		this.normBuf = this.gTarget.createBuffer();
 		this.txBuf = this.gTarget.createBuffer();
 		this.inPos = this.gTarget.getAttribLocation(this.program, coordStr);
@@ -187,6 +188,7 @@ class buffer {
 		this.inMat2 = this.gTarget.getAttribLocation(this.program, matStr2);
 		this.inMat3 = this.gTarget.getAttribLocation(this.program, matStr3);
 		this.inMat4 = this.gTarget.getAttribLocation(this.program, matStr4);
+		this.inMat5 = this.gTarget.getAttribLocation(this.program, matStr5);
 		this.inMatIndex = this.gTarget.getAttribLocation(this.program, matIndStr);
 		this.projMatrix = this.gTarget.getUniformLocation(this.program, projMatrixStr);
 		this.viewMatrix = this.gTarget.getUniformLocation(this.program, viewMatrixStr);
@@ -235,13 +237,6 @@ class buffer {
 
 	setProjMatrix(p) {
 		this.gTarget.uniformMatrix4fv(this.projMatrix, false, flatten(p));
-	}
-
-	pushMaterial(m) {
-		this.matParams1.push(m[0])
-		this.matParams2.push(m[1])
-		this.matParams3.push(m[2])
-		this.matParams4.push(m[3])
 	}
 
 	updateLights() {
@@ -499,6 +494,7 @@ class camera extends primitive {
 									this.buf.matParams2.push(m[ii % m.length].parameters[1])
 									this.buf.matParams3.push(m[ii % m.length].parameters[2])
 									this.buf.matParams4.push(m[ii % m.length].parameters[3])
+									this.buf.matParams5.push(m[ii % m.length].parameters[4])
 									this.buf.points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
 									this.buf.normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 									this.buf.texCoords.push(current.texCoords[g][ii])
@@ -516,6 +512,7 @@ class camera extends primitive {
 								this.buf.matParams2.push(tmp.parameters[1])
 								this.buf.matParams3.push(tmp.parameters[2])
 								this.buf.matParams4.push(tmp.parameters[3])
+								this.buf.matParams5.push(tmp.parameters[4])
 								this.buf.normals.push(vec3(1, 0, 0))//bounds have no normals, this is just filler
 
 							}
@@ -538,6 +535,7 @@ class camera extends primitive {
 					this.buf.matParams2.push(tmp.parameters[1])
 					this.buf.matParams3.push(tmp.parameters[2])
 					this.buf.matParams4.push(tmp.parameters[3])
+					this.buf.matParams5.push(tmp.parameters[4])
 					this.buf.normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 				}
 				this.buf.texCoords.push(vec2(0, 0)) //bounds have no textures, again just filler

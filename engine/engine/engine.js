@@ -54,6 +54,7 @@ function initDefaultGraphics(vertexPath, fragmentPath) {
 		"inMatProp2",
 		"inMatProp3",
 		"inMatProp4",
+		"inMatProp5",
 		"inMatIndex",
 		"projMatrix",
 		"viewMatrix",

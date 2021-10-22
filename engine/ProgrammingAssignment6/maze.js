@@ -192,12 +192,12 @@ step_maze()
   }
 }
 
-var materials = [new material(1, mat4(vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1))),
-  new material(1, mat4(vec4(0,1,0,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1,1,1,1))),
-  new material(1, mat4(vec4(0,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1))),
-  new material(1, mat4(vec4(1,1,0,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1))),
-  new material(1, mat4(vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1))),
-  new material(1, mat4(vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1)))]
+var materials = [new material(1, mat4(vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1))),
+  new material(1, mat4(vec4(0,1,0,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,0,0,1))),
+  new material(1, mat4(vec4(0,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(2,0,0,1))),
+  new material(1, mat4(vec4(1,1,0,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,0,0,1))),
+  new material(1, mat4(vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(3,0,0,1))),
+  new material(1, mat4(vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,0,0,1)))]
 
 function
 draw_maze()

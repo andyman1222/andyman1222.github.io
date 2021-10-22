@@ -6,6 +6,7 @@ in vec4 matProp1;
 in vec4 matProp2;
 in vec4 matProp3;
 in vec4 matProp4;
+in vec4 matProp5;
 in vec3 normal;
 in vec3 position;
 flat in int matIndex;
@@ -130,11 +131,26 @@ void main(void){
 				vec3 L=lights[x].location-position;
 				float light = dot(normal,L);
 				
-				//vec3 R=reflect(-L,N);
-				float Ks=dot(L,P);
+				vec3 R=reflect(-L,N);
+				float Ks = 0;
+				switch(lights[x].negativeHandler){
+					case 1:
+					Ks=max(dot(P,R), 0.);
+					break;
+					case 2:
+					Ks = min(dot(P,R), 0.);
+					break;
+					case 3:
+					Ks = abs(dot(P,R), 0.);
+					break;
+					case 0: default:
+					Ks = dot(P, R)
+				}
+
+				Ks = pow(Ks, lights[x].shininess*matProp5[0]);
 				
 				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
-				vec4 tmpSpec=(1./(length(L)*(1./lights[x].attenuation)))*(Ks*lights[x].color*lights[x].specularMultiply);
+				vec4 tmpSpec=Ks*lights[x].color*lights[x].specularMultiply;
 				if(light<0.){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
