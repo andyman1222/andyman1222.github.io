@@ -74,7 +74,7 @@ class pointLight extends ambientLight{
      * @param {*} m bitwise mask indicating how many channels the light casts onto (up to 256)
      * @param {*} a linear attenuation of light
      */
-    constructor(t, c, m, a, s, n=light.CLAMP, e = true){
+    constructor(t, c, m, a, s = 1, n=light.CLAMP, e = true){
         super(c, m, n, e)
         this.transform = t
         this.attenuation = a
@@ -93,7 +93,7 @@ class spotLight extends pointLight{
      * @param {*} a linear attenuation of light. If zero, has infinite attenuation
      * @param {*} h angle of spread of the spotlight
      */
-    constructor(t, c, m, a, s, h, n=light.CLAMP, e = true){
+    constructor(t, c, m, a, s = 1, h = 90, n=light.CLAMP, e = true){
         super(t, c, m, a, s, n, e)
         this.angle = h
         this.type = 4
