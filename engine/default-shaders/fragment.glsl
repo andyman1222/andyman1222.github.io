@@ -152,7 +152,7 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 				
 				
 				vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
-				vec4 tmpSpec=(specular*lights[x].color*lights[x].specularMultiply);
+				vec4 tmpSpec=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(specular*lights[x].color*lights[x].specularMultiply);
 
 				
 				switch(lights[x].negativeHandler){
