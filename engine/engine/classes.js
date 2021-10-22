@@ -330,9 +330,9 @@ class buffer {
 
 			//draw
 			var offset = 0;
-			for (var i = 0; i < types.length; i++) {
-				this.gTarget.drawArrays(types[i], offset, offsets[i]);
-				offset += offsets[i];
+			for (var i = 0; i < this.types.length; i++) {
+				this.gTarget.drawArrays(this.types[i], offset, this.offsets[i]);
+				offset += this.offsets[i];
 			}
 		}
 		var tmp = this.gTarget.getError()
