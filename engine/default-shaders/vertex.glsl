@@ -51,7 +51,7 @@ void main(void) {
     matProp4 = inMatProp4;
     matProp5 = inMatProp5;
     matIndex = inMatIndex;
-    position = (vec4(1.,1.,-1., 1.)*coordinates).xyz;
+    position = coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = inNormal;
 }
