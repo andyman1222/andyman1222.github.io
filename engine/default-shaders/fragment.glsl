@@ -125,7 +125,7 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 				vec3 L = (lights[x].location*vec3(1,1,-1) - pos);
 				vec3 surfaceToLightDirection = normalize(L);
 				vec3 V=normalize(pos);
-				vec3 R = reflect(-L, N);
+				vec3 R = reflect(L, N);
 				
 				float diffuse = dot(N, surfaceToLightDirection);
 				float specular = 0.;
