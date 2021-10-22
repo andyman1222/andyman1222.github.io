@@ -283,6 +283,7 @@ class buffer {
 		//load new buffer data
 		this.updateLights();
 		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
+		this.clearBuffers();
 	}
 
 	renderData() {
@@ -465,8 +466,6 @@ class camera extends primitive {
 		if (this.enabled) {
 			this.buf.clearBuffers();
 			this.buf.setViewMatrix(this.getViewMat(), this.getWorldTransform().pos)
-			if (this.renderAfter)
-				this.buf.beginRender();
 
 			//adding objects
 

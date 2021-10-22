@@ -1,4 +1,6 @@
 function render(time) {
+	for(var i = 0; i < buffers.length; i++)
+		buffers[i].beginRender();
 	for (var i = 0; i < cameras.length; i++)
 		cameras[i].pushToBuffer();
 
