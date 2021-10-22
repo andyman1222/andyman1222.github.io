@@ -129,7 +129,6 @@ void main(void){
 				case 3://point
 				vec3 P = normalize(cameraPos-position);
 				vec3 L=lights[x].location-position;
-				float light = dot(normal,L);
 				
 				vec3 R=reflect(-L,N);
 				float Ks = 0.;
@@ -151,7 +150,7 @@ void main(void){
 				
 				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
 				vec4 tmpSpec=Ks*lights[x].color*lights[x].specularMultiply;
-				if(light<0.){
+				if((dot(L,N)<0. && lights[x].negativeHandler == 1) || (dot(L,N)>0. && lights[x].negativeHandler == 2)) ){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
 				switch(lights[x].negativeHandler){
