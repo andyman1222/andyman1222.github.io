@@ -320,7 +320,7 @@ class buffer {
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf5);
 			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams5), this.gTarget.STATIC_DRAW);
-			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
+			this.gTarget.vertexAttribPointer(this.inMat5, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat5);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
