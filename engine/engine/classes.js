@@ -129,6 +129,8 @@ class buffer {
 	points = []
 	types = []
 	offsets = []
+	texCoords = []
+	normals = []
 	posBuffer;
 	indBuffer;
 	matBuf1;
@@ -161,6 +163,8 @@ class buffer {
 	lightNegativeArrayLoc = [];
 	lightIndLoc;
 	cameraPosLoc;
+
+	bufLimit;
 
 	getUniform(loc) {
 		return this.gTarget.getUniform(this.program, loc)
@@ -204,7 +208,9 @@ class buffer {
 			this.lightNegativeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr + "[" + i + "].negativeHandler"))
 			//this.lightsTypeArrayLoc.push(this.gTarget.getUniformLocation(this.program, lightsArrayStr+"["+i+"].lightmask"))
 		}
-
+		bufLimit = (this.gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this.gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
+			this.gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
+			this.gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
 		buffers.push(this);
 	}
 
@@ -217,6 +223,8 @@ class buffer {
 		this.types = []
 		this.offsets = []
 		this.matIndicies = []
+		this.texCoords = []
+		this.normals = []
 	}
 
 	setViewMatrix(v, p) {
@@ -254,7 +262,7 @@ class buffer {
 						this.gTarget.uniform1fv(this.lightShinyArrayLoc[x], new Float32Array([l.shininess]))
 					case 2:
 						var t = l.getWorldTransform()
-						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(mult(vec3(1,1,-1),forward(t.rot))))
+						this.gTarget.uniform3fv(this.lightDirArrayLoc[x], flatten(mult(vec3(1, 1, -1), forward(t.rot))))
 						this.gTarget.uniform3fv(this.lightLocArrayLoc[x], flatten(t.pos))
 					case 1:
 						this.gTarget.uniform4fv(this.lightColorArrayLoc[x], flatten(l.color));
@@ -277,46 +285,46 @@ class buffer {
 		this.gTarget.clear(this.gTarget.COLOR_BUFFER_BIT);
 	}
 
-	renderData(points, matIndicies, matParams1, matParams2, matParams3, matParams4, normals, texCoords, types, offsets) {
-		if (points.length > 0) {
+	renderData() {
+		if (this.points.length > 0) {
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.posBuffer);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(points), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.points), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inPos, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inPos);
 			//load materials
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matIndBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, new Int16Array(matIndicies), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, new Int16Array(this.matIndicies), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribIPointer(this.inMatIndex, 1, this.gTarget.SHORT, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMatIndex);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf1);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams1), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams1), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat1, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat1);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf2);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams2), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams2), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat2, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat2);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf3);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams3), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams3), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat3, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat3);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.matBuf4);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(matParams4), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.matParams4), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inMat4, 4, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inMat4);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.normBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(normals), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.normals), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inNormal, 3, this.gTarget.FLOAT, true, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inNormal);
 
 			this.gTarget.bindBuffer(this.gTarget.ARRAY_BUFFER, this.txBuf);
-			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(texCoords), this.gTarget.STATIC_DRAW);
+			this.gTarget.bufferData(this.gTarget.ARRAY_BUFFER, flatten(this.texCoords), this.gTarget.STATIC_DRAW);
 			this.gTarget.vertexAttribPointer(this.inTexCoord, 2, this.gTarget.FLOAT, false, 0, 0);
 			this.gTarget.enableVertexAttribArray(this.inTexCoord);
 
@@ -327,10 +335,7 @@ class buffer {
 				offset += offsets[i];
 			}
 		}
-
-
-
-		/*var tmp = this.gTarget.getError()
+		var tmp = this.gTarget.getError()
 		if (tmp != this.gTarget.NO_ERROR) {
 			switch (tmp) {
 				case this.gTarget.INVALID_OPERATION:
@@ -340,7 +345,27 @@ class buffer {
 				default:
 					alert("WebGL error " + tmp)
 			}
-		}*/
+		}
+		this.clearBuffers();
+	}
+
+	loadData(points, matIndicies, matParams1, matParams2, matParams3, matParams4, normals, texCoords, types, offsets) {
+		if(points.length > this.bufLimit)
+			console.error("Unable to load data to GPU. Too many points. Length: " + points.length);
+		else {
+			if(points.length + this.points.length > this.bufLimit)
+				this.renderData();
+			this.points.push(points)
+			this.matIndicies.push(matIndicies)
+			this.matParams1.push(matParams1)
+			this.matParams2.push(matParams2)
+			this.matParams3.push(matParams3)
+			this.matParams4.push(matParams4)
+			this.normals.push(normals)
+			this.texCoords.push(texCoords)
+			this.types.push(types)
+			this.offsets.push(offsets)
+		}
 	}
 }
 
@@ -480,7 +505,7 @@ class camera extends primitive {
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
 							var m = current.mats[g]
-							
+
 							f.push(i.length)
 							t.push(this.wireframe ? this.buf.gTarget.LINE_LOOP : current.types[g])
 							for (var ii = 0; ii < i.length; ii++) {
@@ -518,7 +543,7 @@ class camera extends primitive {
 							f.push(current.bounds.length)
 						}
 						if (this.renderAfter)
-							this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
+							this.buf.loadData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 					}
 				}
 			}.bind(this))
@@ -548,9 +573,11 @@ class camera extends primitive {
 				x += this.debugOffsets[o]
 				base += this.debugOffsets[o].length
 				if (this.renderAfter)
-					this.buf.renderData(p, mi, m1, m2, m3, m4, n, tx, t, f)
+					this.buf.loadData(p, mi, m1, m2, m3, m4, n, tx, t, f)
 			}
-
+			//render any remaining data
+			if (this.enabled)
+				this.buf.renderData()
 			//get uniform matrix
 
 			//var rotMat = mult(mult(rotateZ(this.transform.rot[2]), rotateY(-(this.transform.rot[1] - 90))), rotateX(-this.transform.rot[0]))//this may look wrong, and it most definately is, but it works
@@ -655,14 +682,14 @@ class object extends primitive {
 			for (var i = 0; i < this.drawInfo[g].pointIndex.length; i++) {
 				//if(i == 0) bufferedConsoleLog(newMat)
 				ret.indexes[g].push(this.drawInfo[g].pointIndex[i])
-				switch(this.drawInfo[g].type){
+				switch (this.drawInfo[g].type) {
 					case gl.TRIANGLES:
-						ret.normals[g].push(rotateAbout(this.drawInfo[g].normals[Math.floor(i/3)], newTrans.rot)) //push 3 for each vert
+						ret.normals[g].push(rotateAbout(this.drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
 						break;
 					default:
 						ret.normals[g].push(rotateAbout(this.drawInfo[g].normals[i], newTrans.rot))
 				}
-				
+
 				ret.texCoords[g].push(this.drawInfo[g].texCoords[i])
 				//(this.drawInfo[g].colors[i % this.drawInfo[g].colors.length])
 				ret.mats[g].push(this.matInfo[this.drawInfo[g].matIndex[i % this.drawInfo[g].matIndex.length]])
