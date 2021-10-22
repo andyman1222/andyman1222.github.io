@@ -165,7 +165,7 @@ function init() {
 	mainCamera.transform.pos = vec3(-20, 5, -20)
 	new ambientLight(vec4(.2,.2,.2,1), null)
 	directLight = new directionalLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(.5,.5,.5),90), scl: vec3(1,1,1)}, vec4(1,1,1,1), null)
-	var playerLight = new pointLight({pos: vec3(0,5,0), rot: eulerToQuat(vec3(1,0,0),0),scl: vec3(1,1,1)}, vec4(.5,.5,0,1), null, 1)
+	var playerLight = new pointLight({pos: vec3(0,0,0), rot: eulerToQuat(vec3(1,0,0),0),scl: vec3(1,1,1)}, vec4(.5,.5,0,1), null, 1)
 	mainCamera.attachChildToSelf(playerLight, "relative")
 	altCamera.renderEngine = false
 	generateMaze_()

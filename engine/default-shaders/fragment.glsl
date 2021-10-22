@@ -122,10 +122,11 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 L = (lights[x].location*vec3(1,1,-1) - pos);
-				vec3 surfaceToLightDirection = normalize(L);
-				vec3 V=-normalize(pos);
-				vec3 R = reflect(-L, N);
+				vec3 v_surfaceToLight = (lights[x].location*vec3(1,1,-1) - position);
+				vec3 v_surfaceToView = (cameraPos*vec3(1,1,-1) - position);
+				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+  				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+  				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 				
 				float diffuse = dot(N, surfaceToLightDirection);
 				float specular = 0.;
@@ -134,23 +135,23 @@ vec4 standardMaterial(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 nor
 					
 					switch(lights[x].negativeHandler){
 						case 1:
-						specular=max(dot(V,R), 0.);
+						specular=max(dot(N,halfVector), 0.);
 						break;
 						case 2:
-						specular = min(dot(V,R), 0.);
+						specular = min(dot(N,halfVector), 0.);
 						break;
 						case 3:
-						specular = abs(dot(V,R));
+						specular = abs(dot(N,halfVector));
 						break;
 						case 0: default:
-						specular = dot(V,R);
+						specular = dot(N,halfVector);
 					}
 					specular=pow(specular, lights[x].shininess*mp5.r);
 				}
 
 				
 				
-				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
 				vec4 tmpSpec=(specular*lights[x].color*lights[x].specularMultiply);
 
 				
