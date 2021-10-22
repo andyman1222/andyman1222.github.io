@@ -132,26 +132,27 @@ void main(void){
 				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
   				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
   				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
-				float specular = dot(normal, surfaceToLightDirection);
-				float diffuse = dot(normal, surfaceToLightDirection);
+				float specular = dot(N, surfaceToLightDirection);
+				float diffuse = dot(N, surfaceToLightDirection);
 				switch(lights[x].negativeHandler){
 					case 1:
-					diffuse=max(dot(normal,halfVector), 0.);
+					diffuse=max(dot(N,halfVector), 0.);
 					break;
 					case 2:
-					diffuse = min(dot(normal,halfVector), 0.);
+					diffuse = min(dot(N,halfVector), 0.);
 					break;
 					case 3:
-					diffuse = abs(dot(normal,halfVector));
+					diffuse = abs(dot(N,halfVector));
 					break;
 					case 0: default:
-					diffuse = dot(normal,halfVector);
+					diffuse = dot(N,halfVector);
 				}
 
 				diffuse = pow(diffuse, lights[x].shininess*matProp5.r);
 				
 				vec4 tmpDiff=(lights[x].color*lights[x].diffuseMultiply*diffuse);
 				vec4 tmpSpec=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(specular*lights[x].color*lights[x].specularMultiply);
+
 				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
