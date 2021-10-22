@@ -127,30 +127,32 @@ void main(void){
 				case 4://spot
 				//TODO: implement? For now just use point light implementation
 				case 3://point
-				vec3 P = normalize(cameraPos-position);
-				vec3 L=lights[x].location-position;
-				
-				vec3 R=reflect(-L,N);
-				float Ks = 0.;
+				vec3 v_surfaceToLight = lights[x].location - position;
+				vec3 v_surfaceToView = cameraPos - position;
+				vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+  				vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+  				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+				float specular = dot(normal, surfaceToLightDirection);
+				float diffuse = dot(normal, surfaceToLightDirection);
 				switch(lights[x].negativeHandler){
 					case 1:
-					Ks=max(dot(P,R), 0.);
+					diffuse=max(dot(normal,halfVector), 0.);
 					break;
 					case 2:
-					Ks = min(dot(P,R), 0.);
+					diffuse = min(dot(normal,halfVector), 0.);
 					break;
 					case 3:
-					Ks = abs(dot(P,R));
+					diffuse = abs(dot(normal,halfVector));
 					break;
 					case 0: default:
-					Ks = dot(P, R);
+					diffuse = dot(normal,halfVector);
 				}
 
-				Ks = pow(Ks, lights[x].shininess*matProp5.r);
+				diffuse = pow(Ks, lights[x].shininess*matProp5.r);
 				
-				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply);
-				vec4 tmpSpec=Ks*lights[x].color*lights[x].specularMultiply;
-				if((dot(L,N)<0. && lights[x].negativeHandler == 1) || (dot(L,N)>0. && lights[x].negativeHandler == 2)){
+				vec4 tmpDiff=(1./(length(L)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpSpec=specular*lights[x].color*lights[x].specularMultiply;
+				if((diffuse<0. && lights[x].negativeHandler == 1) || (diffuse>0. && lights[x].negativeHandler == 2)){
 					tmpSpec=vec4(0.,0.,0.,1);
 				}
 				switch(lights[x].negativeHandler){
