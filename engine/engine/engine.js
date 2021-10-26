@@ -2,9 +2,9 @@
 
 function _render(time) {
 	for(var i = 0; i < _buffers.length; i++)
-		_buffers[i].beginRender();
+		_buffers[i]._beginRender();
 	for (var i = 0; i < _cameras.length; i++)
-		_cameras[i].pushToBuffer();
+		_cameras[i]._pushToBuffer();
 
 	requestAnimationFrame(_render);
 }

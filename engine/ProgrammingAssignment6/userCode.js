@@ -96,10 +96,10 @@ function userMouseEvent(e) {
 
 
 function userTick(delta, time) {
-	directLight.transform.rot = addRotation(directLight.transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
+	directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
-			if (_mainCamera.enabled) {
+			if (_mainCamera._enabled) {
 				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
 				if ((i == 87) || (i == 119)) {//w
 					var n = add(_mainCamera._transform.pos, mult(.01 * delta, vec3(f[0], 0, f[2])))
