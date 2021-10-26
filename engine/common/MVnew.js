@@ -450,22 +450,21 @@ function mult(u, v) {
   }
   if (u.type == 'mat2' && v.type == 'mat2') {
     result = mat2();
-    for (i = 0; i < 2; i++) for (j = 0; j < 2; j++) {
+    for (var i = 0; i < 2; i++) for (var j = 0; j < 2; j++) {
       result[i][j] = (u[i][0] * v[0][j]) + (u[i][1] * v[1][j]);
     }
     return result;
   }
   if (u.type == 'mat3' && v.type == 'mat3') {
     result = mat3();
-    for (i = 0; i < 3; i++) for (j = 0; j < 3; j++) {
+    for (var i = 0; i < 3; i++) for (var j = 0; j < 3; j++) {
       result[i][j] = (u[i][0] * v[0][j]) + (u[i][1] * v[1][j]) + (u[i][2] * v[2][j]);
     }
     return result;
   }
   else if (u.type == 'mat4' && v.type == 'mat4') {
     result = mat4();
-    for (i = 0; i < 4; i++) for (j = 0; j < 4; j++) {
-      result[i][j] = 0.0;
+    for (var i = 0; i < 4; i++) for (var j = 0; j < 4; j++) {
       result[i][j] = (u[i][0] * v[0][j]) + (u[i][1] * v[1][j]) + (u[i][2] * v[2][j]) + (u[i][3] * v[3][j]);
     }
 
