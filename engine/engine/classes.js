@@ -216,7 +216,7 @@ class _Buffer {
 		this._inTexCoord = this._gTarget.getAttribLocation(this._program, texCoordStr);
 		this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
 
-		for (var i = 0; i < maxLightCount; i++) {
+		for (var i = 0; i < _maxLightCount; i++) {
 			this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
 			this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].location"))
 			this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].direction"))
