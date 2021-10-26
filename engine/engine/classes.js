@@ -449,14 +449,15 @@ class _Bounds {
 	}
 
 	//defines points to draw _Bounds, manually
-	_getRect(multMat = vec3(1, 1, 1), boundsColor = vec4(1, 1, 0, 1)) {
+	_getDrawBounds(multMat = vec3(1, 1, 1), boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
+		var tmp;
 		r.colors.push(boundsColor)
 		if (this._type == _Bounds._RECT) { //sphere TBD
-			r.points = getRect(this._pos, this._extent);
+			tmp = _getRect(this._pos, this._extent);
 		}
-		for (var i = 0; i < r.points.length; i++)
-			r.points[i] = mult(multMat, vec3to4(r.points[i]))
+		for (var i = 0; i < tmp.index.length; i++)
+			r.points.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
 		return r
 	}
 }
@@ -726,7 +727,7 @@ class _Object extends _Primitive {
 			}
 		}
 
-		var c = this._bounds._getRect(newMat)
+		var c = this._bounds._getDrawBounds(newMat)
 		for (var i = 0; i < c.points.length; i++) {
 			ret.bounds.push(c.points[i])
 			ret.boundsIndex.push(i)
