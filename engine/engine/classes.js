@@ -428,14 +428,14 @@ class _Bounds {
 			this._pos = mult(.5, add(min, max))
 			//(this._pos)
 
-			if (type == _Bounds.SPHERE) {
+			if (type == _Bounds._SPHERE) {
 				//get furthest point from points rendered
 				this._radius = subtract(pointInfo[0], this._pos)
 				for (var i = 1; i < pointInfo.length; i++) {
 					var tmp = subtract(pointInfo[i], this._pos)
 					if (length(tmp) > length(this._radius)) this._radius = tmp
 				}
-			} else if (type == _Bounds.RECT) {
+			} else if (type == _Bounds._RECT) {
 
 				this._extent = mult(.5, subtract(max, min));
 
@@ -452,7 +452,7 @@ class _Bounds {
 	_getRect(multMat = vec3(1, 1, 1), boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
 		r.colors.push(boundsColor)
-		if (this._type == _Bounds.RECT) { //sphere TBD
+		if (this._type == _Bounds._RECT) { //sphere TBD
 			r.points = getRect(this._pos, this._extent);
 		}
 		for (var i = 0; i < r.points.length; i++)
