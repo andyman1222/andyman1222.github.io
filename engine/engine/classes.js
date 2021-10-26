@@ -4,7 +4,7 @@
  * something in 3D space that can be attached to other primitives
  */
 class _Primitive {
-	_transform = { pos: vec3(), rot: vec4(), scl: vec3() };
+	_transform = { pos: vec3(), rot: Quaternion(0, 1, 0, 0), scl: vec3() };
 	_connectedObjects = new Set()
 	_prevParent
 	_addRemoveObjects = []
@@ -14,7 +14,6 @@ class _Primitive {
 
 	constructor(transform) {
 		this._transform = transform
-		this._prevTransform = transform;
 
 	}
 
@@ -27,7 +26,7 @@ class _Primitive {
 			mult(translate(this._transform.pos[0], this._transform.pos[1], this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
 			quatToMat4(this._transform.rot))
-		if (this._parent != null) return mult(this._parent.getWorldTransformMat(), newMat)
+		if (this._parent != null) return mult(this._parent._getWorldTransformMat(), newMat)
 		else return newMat
 	}
 
