@@ -1,4 +1,6 @@
-function getCylinder(pos, radius, height, numFaces, addDeg = 0, type = gl.TRIANGLES) {
+"use strict";
+
+function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIANGLES) {
 	var facePoints = []
 	for (var i = 0; i < numFaces; i++) {
 		var tmp = ((i / numFaces) * 360) + addDeg
@@ -48,10 +50,14 @@ function getCylinder(pos, radius, height, numFaces, addDeg = 0, type = gl.TRIANG
 			i4, i3, i2,
 			i2, m, i4,
 			i3, t, i1)
-		tx.push(vec2(0, 1), vec2(0, 0), vec2(1, 1),
-			vec2(1, 0), vec2(1, 1), vec2(0, 0),
-			facePoints[i], vec2(0, 0), facePoints[(i + 1) % facePoints.length],
-			facePoints[(i + 1) % facePoints.length], vec2(0, 0), facePoints[i])//facePoints points already normalized
+
+		var c = Math.PI*2*radius;
+		var d = (c / numFaces)/2;
+
+		tx.push(vec2(-d, height/2), vec2(-d, -(height/2)), vec2(d, height/2),
+			vec2(d, -(height/2)), vec2(d, height/2), vec2(-d, -(height/2)),
+			facePoints[i]*radius, vec2(0, 0), facePoints[(i + 1) % facePoints.length]*radius,
+			facePoints[(i + 1) % facePoints.length]*radius, vec2(0, 0), facePoints[i]*radius)
 	}
 	return { points: r, index: ind, texCoords: tx, normals: norm };
 }
@@ -61,7 +67,7 @@ function getCylinder(pos, radius, height, numFaces, addDeg = 0, type = gl.TRIANG
  * @param {vec3} pos center of the rectangle
  * @param {vec3} extent size of the rectangle from center to edge
  */
-function getRect(pos, extent) {
+function _getRect(pos, extent) {
 	//1
 	var blb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] - extent[2])
 	//2
@@ -83,39 +89,40 @@ function getRect(pos, extent) {
 	var tx = []
 	var p = [blb, flb, frb, frt, brt, blt, brb, flt]
 	ind.push(0, 6, 2,
-		2, 1, 0,
+		2, 1, 0, //bottom face (-y)
 		
 		4, 5, 3,
-		7, 3, 5,
+		7, 3, 5, //top face (+y)
 
 		6, 0, 4,
-		5, 4, 0,
+		5, 4, 0, //back face (-z)
 
 		1, 2, 3,
-		3, 7, 1,
+		3, 7, 1, //front face (+z)
 
 		5, 0, 7,
-		1, 7, 0,
+		1, 7, 0, //left face (-x)
 
 		6, 4, 3,
-		3, 2, 6) //intended for TRIANGLES. I'm no longer supporting LINE_LOOP or anything else fancy like that
-	tx.push(vec2(1,1), vec2(0, 1), vec2(0,0),
-	vec2(0,0), vec2(1, 0), vec2(1,1),
+		3, 2, 6) //right face (+x)
 
-	vec2(1,0), vec2(0, 0), vec2(1,1),
-	vec2(0,1), vec2(1, 1), vec2(0,0),
+	tx.push(vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
+	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	
+	vec2(extent[0],-extent[2]), vec2(-extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	vec2(-extent[0],extent[2]), vec2(extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 
-	vec2(1,0), vec2(0, 0), vec2(1,1),
-	vec2(0,1), vec2(1, 1), vec2(0,0),
+	vec2(extent[0],-extent[1]), vec2(-extent[0], -extent[1]), vec2(extent[0], extent[1]),
+	vec2(-extent[0], extent[1]), vec2(extent[0], extent[1]), vec2(-extent[0], -extent[1]),
 	
-	vec2(1,0), vec2(0, 0), vec2(0,1),
-	vec2(0,1), vec2(1, 1), vec2(1,0),
+	vec2(extent[0],-extent[1]), vec2(-extent[0],-extent[1]), vec2(-extent[0],extent[1]),
+	vec2(-extent[0],extent[1]), vec2(extent[0],extent[1]), vec2(extent[0],-extent[1]),
 	
-	vec2(1,1), vec2(1, 0), vec2(0,1),
-	vec2(0,0), vec2(0, 1), vec2(1,0),
+	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],extent[1]),
+	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],-extent[1]),
 	
-	vec2(0,0), vec2(0, 1), vec2(1,1),
-	vec2(1,1), vec2(1, 0), vec2(0,0))
+	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]),
+	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]))
 	var norm = normalsFromTriangleVerts(p, ind)
 	return{points: p, index: ind, texCoords: tx, normals: norm}
 }

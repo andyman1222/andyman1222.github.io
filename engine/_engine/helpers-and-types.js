@@ -1,3 +1,5 @@
+"use strict";
+
 function clamp(num, min, max) {
     if (num > max) return max;
     if (num < min) return min;
@@ -31,6 +33,10 @@ function quatNorm(q) {
 
 function Quaternion(w, x, y, z) {
     return { w: w, x: x, y: y, z: z }
+}
+
+function quatEqual(q1, q2) {
+    return q1.w == q2.w && q1.x == q2.x && q1.y == q2.y && q1.z == q2.z
 }
 
 /**
@@ -248,27 +254,6 @@ function vec3to4(v3) {
     return vec4(v3[0], v3[1], v3[2], 1)
 }
 
-/**
- * 
- * @param {*} camera 
- * @param {*} pos vec2 from -1 to 1
- */
-function getScreenPosInWorldSpace(camera, pos) {
-    var M = inverse(mult(camera.getProjMat(), camera.getViewMat()))
-
-    var v = mult(M, vec4(
-        pos[0],
-        pos[1],
-        1,
-        1
-    ));
-
-    return vec3(v[0] / v[3], v[1] / v[3], -v[2] / v[3])
-
-}
-
-function newID() { return id++ }
-
 function bin2dec(bin) {
     return parseInt(bin, 2).toString(10);
 }
@@ -281,3 +266,7 @@ function normalsFromTriangleVerts(v, i){
     }
     return r
 }
+
+///////////////////////////////////////////////////
+
+function _newID() { return _id++ }

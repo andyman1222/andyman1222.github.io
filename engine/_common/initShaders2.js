@@ -1,3 +1,4 @@
+"use strict";
 
     // Get a file as a string using  AJAX
     function loadFileAJAX(name) {
