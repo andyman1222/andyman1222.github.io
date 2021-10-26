@@ -63,12 +63,12 @@ vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, flo
 	vec2 deltaTexCoord=P/nl;
 	vec2 currentTexCoords=TexCoord;
 	
-	float currentDepthMapValue=texture(depthMap,curTexCoord).r;
+	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 	
 	while(currentLayerDepth<currentDepthMapValue)
 	{
 		// shift texture coordinates along direction of P
-		currentTexCoords-=deltaTexCoords;
+		currentTexCoords-=deltaTexCoord;
 		// get depthmap value at current texture coordinates
 		currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 		// get depth of next layer
@@ -245,7 +245,7 @@ vec4 standardMaterial(vec4 mp1,vec4 mp2,vec4 mp3,vec4 mp4,vec4 mp5,vec3 norm,vec
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
-vec4 standardImage(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 pos){
+vec4 standardImage(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 norm, vec3 pos){
 	sMat mat = getStandardMaterial(mp5, norm, pos);
 	vec4 tmp=vec4(((mat.ambient*mp4*mp1)+(mat.diffuse*mp2*mp1)+(mat.specular*mp3)).rgb,mat.ambient.a*mp4.a*mp1.a*mat.diffuse.a*mp2.a*mp1.a*mat.specular.a*mp3.a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
