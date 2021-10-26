@@ -50,12 +50,12 @@ uniform sampler2D specularMap;//light multiplier
 vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, float heightScale)
 {
 	float minl=8.;
-	if(minLayers>0) minl=minLayers;
+	if(minLayers>0.) minl=minLayers;
 
 	float maxl = 32.;
-	if(maxLayers>0) malx=maxLayers;
+	if(maxLayers>0.) maxl=maxLayers;
 
-	mix(maxl, minl, max(dot(vec3(0.0, 0.0, 1.0), viewDir), 0.0));
+	float nl = mix(maxl, minl, max(dot(vec3(0.0, 0.0, 1.0), viewDir), 0.0));
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
@@ -246,8 +246,9 @@ vec4 standardMaterial(vec4 mp1,vec4 mp2,vec4 mp3,vec4 mp4,vec4 mp5,vec3 norm,vec
 }
 
 vec4 standardImage(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 pos){
-	sMat base = getStandardMaterial(mp5, norm, pos);
-	
+	sMat mat = getStandardMaterial(mp5, norm, pos);
+	vec4 tmp=vec4(((mat.ambient*mp4*mp1)+(mat.diffuse*mp2*mp1)+(mat.specular*mp3)).rgb,mat.ambient.a*mp4.a*mp1.a*mat.diffuse.a*mp2.a*mp1.a*mat.specular.a*mp3.a);
+	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
 void main(void){
