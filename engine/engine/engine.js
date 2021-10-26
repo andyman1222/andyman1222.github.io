@@ -85,7 +85,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 	[new _SolidColorNoLighting(vec4(1,0,0,1)), new _SolidColorNoLighting(vec4(0,1,0,1)), new _SolidColorNoLighting(vec4(0,0,1,1))], _Bounds.RECT, true)
 }
 
-function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/_default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/_default-shaders/fragment.glsl") {
+function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {
 	_userInitFunction = userInit
 	_userTickFunction = userTick;
 	_userKeyFunction = userKey;
