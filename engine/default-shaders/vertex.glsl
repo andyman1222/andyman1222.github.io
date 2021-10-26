@@ -8,6 +8,12 @@ in vec2 inTexCoord;
 in vec3 inTangent;
 in vec3 inBiTangent;
 //attribute vec3 inNormal;
+in int inMatIndex;
+in vec4 inMatProp1;
+in vec4 inMatProp2;
+in vec4 inMatProp3;
+in vec4 inMatProp4;
+in vec4 inMatProp5;
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
@@ -23,6 +29,12 @@ out vec3 normal;
 out vec3 position;
 out vec3 t;
 out vec3 bt;
+flat out int matIndex;
+out vec4 matProp1;
+out vec4 matProp2;
+out vec4 matProp3;
+out vec4 matProp4;
+out vec4 matProp5;
 
 
 void main(void) {
@@ -41,4 +53,11 @@ void main(void) {
     position = coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = inNormal;
+
+    matProp1 = inMatProp1;
+    matProp2 = inMatProp2;
+    matProp3 = inMatProp3;
+    matProp4 = inMatProp4;
+    matProp5 = inMatProp5;
+    matIndex = inMatIndex;
 }

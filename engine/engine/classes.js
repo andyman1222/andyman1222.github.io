@@ -146,10 +146,10 @@ class _Primitive {
 //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class _Buffer {
 	_matParams = []
-	_matIndex;
+	_matIndex = []
 	_points = []
-	_type;
-	_offset;
+	_types = [];
+	_offsets = [];
 	_texCoords = []
 	_normals = []
 
@@ -158,12 +158,14 @@ class _Buffer {
 	_txBuf;
 	_tanBuf;
 	_bitanBuf;
+	_matParamsBufs;
 
 	_inPos;
 	_inTexCoord;
 	_inNormal;
 	_inBitan;
 	_inTan;
+	_inMatParams = [];
 
 	_projMatrix;
 	_viewMatrix;
@@ -182,7 +184,7 @@ class _Buffer {
 	_lightIndLoc;
 	_cameraPosLoc;
 	_matIndLoc;
-	_matParamsLoc = [];
+	
 
 	_bufLimit;
 	_matParamCount;
@@ -203,7 +205,8 @@ class _Buffer {
 
 		this._matParamCount = matParamCount;
 		for (var i = 0; i < matParamCount; i++) {
-			this._matParamsLoc.push(this._gTarget.getUniformLocation(this._program, matStr + "" + i));
+			this._matParamsBufs.push(this._gTarget.createBuffer())
+			this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
 		}
 
 		this._inMatIndex = this._gTarget.getUniformLocation(this._program, matIndStr);
@@ -237,11 +240,11 @@ class _Buffer {
 
 	_clearBuffers() {
 		for (var i = 0; i < this._matParamCount; i++)
-			this._matParams[i] = vec4(0, 0, 0, 0)
+			this._matParams[i] = []
 		this._points = []
-		this._type = null
-		this._offset = 0
-		this._matIndex = -1
+		this._types = []
+		this._offsets = []
+		this._matIndex = []
 		this._texCoords = []
 		this._normals = []
 	}
@@ -284,15 +287,11 @@ class _Buffer {
 				}
 				this._gTarget.uniform1iv(this._lightNegativeArrayLoc[x], new Int32Array([l._handleNegative]))
 			} else if (x >= maxLightCount - 1 && l != null && l._enabled) {
-				_bufferedConsoleLog("WARNING: More than " + _maxLightCount + " used, light witih ID " + l._id + " will not be visible.")
+				_bufferedConsoleLog("WARNING: More than " + _maxLightCount + " used, light with ID " + l._id + " will not be visible.")
 			}
 		})
 		for (x++; x < _maxLightCount; x++)
 			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
-	}
-
-	_setMaterial(m){
-
 	}
 
 	_beginRender() {
@@ -334,37 +333,19 @@ class _Buffer {
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._points), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribPointer(this._inPos, 4, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._inPos);
-			//load materials
 
-			/*this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
+			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Int16Array(this._matIndicies), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribIPointer(this._inMatIndex, 1, this._gTarget.SHORT, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._inMatIndex);
-	
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matBuf1);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams1), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inMat1, 4, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMat1);
-	
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matBuf2);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams2), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inMat2, 4, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMat2);
-	
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matBuf3);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams3), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inMat3, 4, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMat3);
-	
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matBuf4);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams4), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inMat4, 4, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMat4);
-	
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matBuf5);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams5), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inMat5, 4, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMat5);*/
+
+			//load materials
+			for(var i = 0; i < this._matParamCount; i++){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matParamsBufs[i]);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams[i]), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inMatParams[i], 4, this._gTarget.FLOAT, false, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inMatParams[i]);
+			}
 
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._normBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._normals), this._gTarget.STATIC_DRAW);

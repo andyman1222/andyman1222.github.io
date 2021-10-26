@@ -8,7 +8,12 @@ in vec3 position;
 in vec3 t;
 in vec3 bt;
 
-uniform int matIndex;
+flat in int matIndex;
+in vec4 matProp1;
+in vec4 matProp2;
+in vec4 matProp3;
+in vec4 matProp4;
+in vec4 matProp5;
 
 out vec4 fColor;
 
@@ -32,12 +37,6 @@ struct light
 uniform light lights[64];
 uniform int maxLightIndex;
 uniform vec3 cameraPos;
-
-uniform vec4 matProp1;
-uniform vec4 matProp2;
-uniform vec4 matProp3;
-uniform vec4 matProp4;
-uniform vec4 matProp5;
 
 uniform sampler2D baseImage;
 uniform sampler2D normalMap;
