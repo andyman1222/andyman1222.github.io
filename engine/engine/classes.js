@@ -145,7 +145,7 @@ class _Primitive {
  */
 
 //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
-class buffer {
+class _Buffer {
 	_matParams = []
 	_matIndex;
 	_points = []
