@@ -93,7 +93,7 @@ function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}
 	_userPostTickFunction = userPostTick;
 	_initDefaultGraphics(defaultCanvas, defaultVertex, defaultFragment);
 	_userInitFunction();
-	_queueNewTick(tick);
+	_queueNewTick(_userTickFunction);
 	_render();
 }
 
