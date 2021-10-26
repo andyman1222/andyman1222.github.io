@@ -204,7 +204,7 @@ class _Buffer {
 
 		this._matParamCount = matParamCount;
 		for (var i = 0; i < matParamCount; i++) {
-			this._inMat.push(this._gTarget.getUniformLocation(this._program, matStr + "" + i));
+			this._matParamsLoc.push(this._gTarget.getUniformLocation(this._program, matStr + "" + i));
 		}
 
 		this._inMatIndex = this._gTarget.getUniformLocation(this._program, matIndStr);
