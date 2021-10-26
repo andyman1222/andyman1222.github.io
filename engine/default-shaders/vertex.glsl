@@ -27,8 +27,8 @@ out vec3 bt;
 
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
-    vec3 T = normalize((normalMatrix*vec4(aTangent, 0.0)).xyz);
-    vec3 B = normalize((normalMatrix*vec4(aBitangent, 0.0)).xyz);
+    vec3 T = normalize((normalMatrix*vec4(inTangent, 0.0)).xyz);
+    vec3 B = normalize((normalMatrix*vec4(inBiTangent, 0.0)).xyz);
     // aNormal can be calculated from aTangent and a Bitangent
     vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 

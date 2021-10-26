@@ -49,17 +49,17 @@ uniform sampler2D specularMap;//light multiplier
 
 vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, float heightScale)
 {
-	float minl=8.
-	if(minLayers>0)minl=minLayers
+	float minl=8.;
+	if(minLayers>0) minl=minLayers;
 
-	float maxl = 32.
-	if(maxLayers>0)malx=maxLayers
+	float maxl = 32.;
+	if(maxLayers>0) malx=maxLayers;
 
 	mix(maxl, minl, max(dot(vec3(0.0, 0.0, 1.0), viewDir), 0.0));
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
-	vec2 P=viewDir.xy*heightScale
+	vec2 P=viewDir.xy*heightScale;
 	vec2 deltaTexCoord=P/nl;
 	vec2 currentTexCoords=TexCoord;
 	
