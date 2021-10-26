@@ -521,9 +521,9 @@ class _Camera extends _Primitive {
 			//adding objects
 
 			//TODO: implement texcoord, normal, etc.
-			objects.forEach((o) => {
-				if ((this._renderEngine && o.isEngine) || !o.isEngine) {
-					if (o.visible) {
+			_objects.forEach((o) => {
+				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
+					if (o._visible) {
 						var current = o._localToWorld();
 
 						for (var g = 0; g < current.indexes.length; g++) {
@@ -559,7 +559,7 @@ class _Camera extends _Primitive {
 								this.buf.renderData();
 							}
 						}
-						if (this._showBounds && !o.isEngine) {
+						if (this._showBounds && !o._isEngine) {
 							//(c)
 							this._buf._types.push(this._buf._gTarget.LINE_LOOP);
 							for (var i = 0; i < current.bounds.length; i++) {
