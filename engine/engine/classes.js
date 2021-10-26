@@ -89,7 +89,7 @@ class _Primitive {
 		}
 		this._parent = p
 		//console.log(p.connectedObjects)
-		this._parent.addRemoveObjects.push(this)
+		this._parent._addRemoveObjects.push(this)
 		p._connectedObjects.add(this)
 		this._updated = true
 		p._updated = true
