@@ -61,7 +61,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
-	_gl.useProgram(program);
+	_gl.useProgram(_program);
 
 	_bData = new _Buffer(_gl, _program, 
 		"coordinates",
@@ -77,7 +77,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 		"inTexCoord",
 		"cameraPos");
 
-	_mainCamera = new _Camera(bData);
+	_mainCamera = new _Camera(_bData);
 	
 	_coords = new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, [{
 		pointIndex: [0, 1, 2, 3, 4, 5], matIndex: [0, 0, 1, 1, 2, 2], texCoords: [vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1)], type: _gl.LINES, normals: [vec3(-1, 0, 0), vec3(1, 0, 0), vec3(0, -1, 0), vec3(0, 1, 0), vec3(0, 0, -1), vec3(0, 0, 1)]}],
