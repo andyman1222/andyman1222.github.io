@@ -360,7 +360,7 @@ function add(u, v) {
 //----------------------------------------------------------------------------
 
 function subtract(u, v) {
-
+  var result;
   if (u.type != v.type) {
     throw "add(): trying to add different types";
   }
@@ -487,6 +487,7 @@ function mult(u, v) {
 //
 
 function translate(x, y, z) {
+  var result;
   if (arguments.length != 2 && arguments.length != 3) {
     throw "translate(): not a mat3 or mat4";
   }
@@ -569,7 +570,7 @@ function rotateZ(theta) {
 function scale() {
   // legacy code
   // should use mult
-
+  var result;
   if (arguments.length == 2 && isVector(arguments[1])) {
     result = new Array(arguments[1].length);
     result.type = arguments[1].type;

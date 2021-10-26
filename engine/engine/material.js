@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Material points to index that defines its functionality in the shader, as well as any necessary arguments, such as specular, diffuse, etc.
  * Default: index 0, parameters=[baseColor=(.5,.5,.5,1), diffuse = (.5,.5,.5,1), specular = (.5,.5,.5,1), ambient = (1,1,1,1), misc = (shininess=1,unused,unused,unused)]

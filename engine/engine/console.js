@@ -1,3 +1,5 @@
+"use strict";
+
 /**DO NOT USE console.log() OR THERE WILL BE POTENTIAL LOCKUP!
  * Instead use this function
  */

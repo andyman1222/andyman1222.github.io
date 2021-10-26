@@ -1,3 +1,5 @@
+"use strict";
+
 var keys = []
 var pointerLocked = false;
 var mouseMove = false

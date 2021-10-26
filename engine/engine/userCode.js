@@ -1,3 +1,5 @@
+"use strict";
+
 //default template for user code
 
 function userTick(delta, time) {

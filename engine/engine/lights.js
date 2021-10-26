@@ -1,3 +1,5 @@
+"use strict";
+
 class _AmbientLight extends _Primitive{
     _color;
     _lightmask;
