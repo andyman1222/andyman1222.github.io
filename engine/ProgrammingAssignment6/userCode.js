@@ -18,11 +18,11 @@ var altCamera;
 var directLight;
 
 function switchCamera() {
-	if (_mainCamera.enabled) {
-		_mainCamera.enabled = false
+	if (_mainCamera._enabled) {
+		_mainCamera._enabled = false
 		altCamera._enabled = true
 	} else {
-		_mainCamera.enabled = true
+		_mainCamera._enabled = true
 		altCamera._enabled = false
 	}
 }

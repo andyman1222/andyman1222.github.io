@@ -321,7 +321,7 @@ class _Buffer {
 
 				}
 				this._gTarget.uniform1iv(this._lightNegativeArrayLoc[x], new Int32Array([l._handleNegative]))
-			} else if (x >= maxLightCount - 1 && l != null && l._enabled) {
+			} else if (x >= _maxLightCount - 1 && l != null && l._enabled) {
 				_bufferedConsoleLog("WARNING: More than " + _maxLightCount + " used, light with ID " + l._id + " will not be visible.")
 			}
 		})
