@@ -35,10 +35,10 @@ out vec4 matProp[6];
 
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
-    vec3 T = normalize((viewMatrix*vec4(inTangent, 0.0)).xyz);
-    vec3 B = normalize((viewMatrix*vec4(cross(inNormal, inTangent), 0.0)).xyz);
+    vec3 T = normalize((normalMatrix*vec4(inTangent, 0.0)).xyz);
+    vec3 B = normalize((normalMatrix*vec4(cross(inNormal, inTangent), 0.0)).xyz);
     // aNormal can be calculated from aTangent and a Bitangent
-    vec3 N = normalize((viewMatrix*vec4(inNormal, 0.0)).xyz);
+    vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 
     TBN = transpose(mat3(T, B, N));
 
