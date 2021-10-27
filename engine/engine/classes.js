@@ -282,14 +282,14 @@ class _Buffer {
 	_clearBuffers() {
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i] = []
-		_matIndicies = []
-		_points = []
-		_types = [];
-		_offsets = [];
-		_texCoords = []
-		_normals = []
-		_bitangents = []
-		_tangents = []
+		this._matIndicies = []
+		this._points = []
+		this._types = [];
+		this._offsets = [];
+		this._texCoords = []
+		this._normals = []
+		this._bitangents = []
+		this._tangents = []
 	}
 
 	_setViewMatrix(v, p) {
@@ -360,31 +360,6 @@ class _Buffer {
 		this._updateLights();
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT);
 		this._clearBuffers();
-	}
-
-	_setBuffers(indArr, g, wireframe, current) {
-		if (indArr.length + points.length > bufLimit)
-			this._renderData();
-
-
-		//this._buf._offsets.push(i.length)
-		types.push(wireframe ? this._gTarget.LINE_LOOP : current.types[g])
-		for (var ii = 0; ii < indArr.length; ii++) {
-			/*if (!wireframe) {
-				matIndicies.push(m[ii % m.length].index)
-			}
-			else {
-				matIndicies.push(0)
-			}
-			this._buf._matParams1.push(m[ii % m.length].parameters[0])
-			this._buf._matParams2.push(m[ii % m.length].parameters[1])
-			this._buf._matParams3.push(m[ii % m.length].parameters[2])
-			this._buf._matParams4.push(m[ii % m.length].parameters[3])
-			this._buf._matParams5.push(m[ii % m.length].parameters[4])*/
-			points.push(mult(current.points[indArr[ii]], vec4(1, 1, -1, 1)))
-			normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
-			texCoords.push(current.texCoords[g][ii])
-		}
 	}
 
 	_renderData() {
