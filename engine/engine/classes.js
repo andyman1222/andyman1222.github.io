@@ -209,58 +209,58 @@ class _Buffer {
 		this._bitanBuf = this._gTarget.createBuffer();
 		this._matIndBuf = this._gTarget.createBuffer();
 		this._inPos = this._gTarget.getAttribLocation(this._program, coordStr);
-		if(this._inPos == -1) alert(coordStr + ": unknown/invalid shader location");
+		if (this._inPos == -1) alert(coordStr + ": unknown/invalid shader location");
 
 		this._matParamCount = matParamCount;
 		for (var i = 0; i < matParamCount; i++) {
 			this._matParamsBufs.push(this._gTarget.createBuffer())
-			if (!(matStr instanceof Array)){
+			if (!(matStr instanceof Array)) {
 				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
-				if(this._inMatParams[this._inMatParams.length-1] == -1) alert(matStr + "" + i + ": unknown/invalid shader location");
+				if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr + "" + i + ": unknown/invalid shader location");
 			}
-			else{
+			else {
 				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
-				if(this._inMatParams[this._inMatParams.length-1] == -1) alert(matStr[i] + ": unknown/invalid shader location");
+				if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr[i] + ": unknown/invalid shader location");
 			}
-			
+
 		}
 
 		this._texCount = texCount;
 		for (var i = 0; i < texCount; i++) {
-			if (!(texStr instanceof Array)){
-					this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "[" + i + "]"));
-					if(this._textureLoc[this._textureLoc.length-1] == -1) alert(texStr + "[" + i + "]" + ": unknown/invalid shader location");
-				}
+			if (!(texStr instanceof Array)) {
+				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "[" + i + "]"));
+				if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr + "[" + i + "]" + ": unknown/invalid shader location");
+			}
 			else {
 				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
-				if(this._textureLoc[this._textureLoc.length-1] == -1) alert(texStr[i] + ": unknown/invalid shader location");
+				if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr[i] + ": unknown/invalid shader location");
 			}
 		}
 
 		this._inMatIndex = this._gTarget.getAttribLocation(this._program, matIndStr);
-		if(this._inMatIndex == -1) alert(matIndStr + ": unknown/invalid shader location");
+		if (this._inMatIndex == -1) alert(matIndStr + ": unknown/invalid shader location");
 		this._projMatrix = this._gTarget.getUniformLocation(this._program, projMatrixStr);
-		if(this._projMatrix == -1) alert(projMatrixStr + ": unknown/invalid shader location");
+		if (this._projMatrix == -1) alert(projMatrixStr + ": unknown/invalid shader location");
 		this._viewMatrix = this._gTarget.getUniformLocation(this._program, viewMatrixStr);
-		if(this._viewMatrix == -1) alert(viewMatrixStr + ": unknown/invalid shader location");
+		if (this._viewMatrix == -1) alert(viewMatrixStr + ": unknown/invalid shader location");
 		this._normalMatrix = this._gTarget.getUniformLocation(this._program, normalMatrixStr);
-		if(this._normalMatrix == -1) alert(normalMatrixStr + ": unknown/invalid shader location");
+		if (this._normalMatrix == -1) alert(normalMatrixStr + ": unknown/invalid shader location");
 		this._lightIndLoc = this._gTarget.getUniformLocation(this._program, lightsIndexStr);
-		if(this._lightIndLoc == -1) alert(lightsIndexStr + ": unknown/invalid shader location");
+		if (this._lightIndLoc == -1) alert(lightsIndexStr + ": unknown/invalid shader location");
 		this._inNormal = this._gTarget.getAttribLocation(this._program, normalStr);
-		if(this._inNormal == -1) alert(normalStr + ": unknown/invalid shader location");
+		if (this._inNormal == -1) alert(normalStr + ": unknown/invalid shader location");
 		this._inTan = this._gTarget.getAttribLocation(this._program, tanStr);
-		if(this._inTan == -1) alert(tanStr + ": unknown/invalid shader location");
+		if (this._inTan == -1) alert(tanStr + ": unknown/invalid shader location");
 		this._inBitan = this._gTarget.getAttribLocation(this._program, biTanStr);
-		if(this._inBitan == -1) alert(biTanStr + ": unknown/invalid shader location");
+		if (this._inBitan == -1) alert(biTanStr + ": unknown/invalid shader location");
 		this._inTexCoord = this._gTarget.getAttribLocation(this._program, texCoordStr);
-		if(this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
+		if (this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
 		this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
-		if(this._cameraPosLoc == -1) alert(cameraPosStr + ": unknown/invalid shader location");
+		if (this._cameraPosLoc == -1) alert(cameraPosStr + ": unknown/invalid shader location");
 
 		for (var i = 0; i < _maxLightCount; i++) {
 			this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
-			if(this._lightTypeArrayLoc == -1) alert(lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
+			if (this._lightTypeArrayLoc == -1) alert(lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
 			this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].location"))
 			this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].direction"))
 			this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].angle"))
@@ -282,12 +282,14 @@ class _Buffer {
 	_clearBuffers() {
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i] = []
-		this._points = []
-		this._types = []
-		this._offsets = []
-		this._matIndicies = []
-		this._texCoords = []
-		this._normals = []
+		_matIndicies = []
+		_points = []
+		_types = [];
+		_offsets = [];
+		_texCoords = []
+		_normals = []
+		_bitangents = []
+		_tangents = []
 	}
 
 	_setViewMatrix(v, p) {
@@ -340,7 +342,7 @@ class _Buffer {
 			this._matIndicies.push(m._index)
 		}
 		else {
-			if(!hasTexture)
+			if (!hasTexture)
 				this._matIndicies.push(0)
 			else this._matIndicies.push(3)
 		}
@@ -584,17 +586,17 @@ class _Camera extends _Primitive {
 							if (i.length > this._buf._bufLimit)
 								console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
 							else {
-								
+
 								if (((i.length + this._buf._points.length > this._buf._bufLimit) || current.textureIndexes[g] != -1) && this._render)
 									this._buf._renderData();
 
 
 								this._buf._offsets.push(i.length)
 								this._buf._types.push(this.wireframe ? this._buf._gTarget.LINE_LOOP : current.types[g])
-								
+
 								if (current.textureIndexes[g] != -1)
 									this._buf._loadTexture(current.textures[current.textureIndexes[g]])
-								
+
 								for (var ii = 0; ii < i.length; ii++) {
 									var m = current.mats[current.matIndexes[g][ii]]
 									this._buf._loadMaterial(m, current.textureIndexes[g] != -1, this._wireframe || this._noLighting)
@@ -620,8 +622,8 @@ class _Camera extends _Primitive {
 								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
 								this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
-								this._buf_tangents.push(vec3(0,1,0))
-								this._buf_bitangents.push(vec3(0,0,1))
+								this._buf_tangents.push(vec3(0, 1, 0))
+								this._buf_bitangents.push(vec3(0, 0, 1))
 							}
 							this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 							this._buf._offsets.push(current.bounds.length)
@@ -642,8 +644,8 @@ class _Camera extends _Primitive {
 					var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
 					this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
-					this._buf_tangents.push(vec3(0,1,0))
-					this._buf_bitangents.push(vec3(0,0,1))
+					this._buf_tangents.push(vec3(0, 1, 0))
+					this._buf_bitangents.push(vec3(0, 0, 1))
 				}
 				this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 				x += this._debugOffsets[o]
