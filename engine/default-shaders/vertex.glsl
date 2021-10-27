@@ -28,7 +28,7 @@ out vec2 texCoord;
 //varying vec3 position;
 out vec3 normal;
 out vec3 position;
-//out mat3 TBN;
+out mat3 TBN;
 flat out int matIndex;
 out vec4 matProp[6];
 
