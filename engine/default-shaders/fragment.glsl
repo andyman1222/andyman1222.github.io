@@ -247,7 +247,7 @@ vec4 standardMaterial(vec4 mp[5], vec3 norm, vec3 pos){
 /*
 vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, float max, float scale){
 	vec2 txp = parallax(tx, viewdir, min, max, scale);
-	vec3 norm = normalize(texture(normalMap, txp).rgb*2.-1.);
+	vec3 norm = TBN * normalize(texture(normalMap, txp).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, txp);
 	vec4 txRough = texture(roughnessMap, txp);
@@ -260,7 +260,7 @@ vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 
 //no parallax
 vec4 standardImage(vec4 mp[5], vec3 pos, vec2 tx){
-	vec3 norm = normalize(texture(normalMap, tx).rgb*2.-1.);
+	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx);
 	vec4 txRough = texture(roughnessMap, tx);
