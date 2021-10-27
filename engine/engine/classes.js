@@ -330,7 +330,7 @@ class _Buffer {
 	}
 
 	_loadMaterial(m, noLighting = false) {
-		if (noLighting) {
+		if (!noLighting) {
 			this._matIndicies.push(m._index)
 		}
 		else {
