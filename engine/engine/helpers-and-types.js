@@ -328,3 +328,12 @@ function normalsFromTriangleVerts(v, i, normFunction = normalize) {
 ///////////////////////////////////////////////////
 
 function _newID() { return _id++ }
+
+
+function _DrawInfo(pointIndex, matIndex, texCoords, normals, textureIndex = -1, type=_gl.TRIANGLES){
+	return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, textureIndex: textureIndex, type: type}
+}
+
+function _Transform(pos=vec3(0,0,0), rot=Quaternion(1,0,0,0), scl=vec3(1,1,1)){
+    return {pos: pos, rot: rot, scl: scl}
+}

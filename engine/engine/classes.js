@@ -146,7 +146,7 @@ class _Primitive {
 //TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class _Buffer {
 	_matParams = []
-	_matIndex = []
+	_matIndicies = []
 	_points = []
 	_types = [];
 	_offsets = [];
@@ -184,16 +184,18 @@ class _Buffer {
 	_lightIndLoc;
 	_cameraPosLoc;
 	_matIndLoc;
-	
+	_textureLoc = []
+
 
 	_bufLimit;
 	_matParamCount;
+	_texCount;
 
 	_getUniform(loc) {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr, cameraPosStr) {
+	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, texCoordStr, cameraPosStr) {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._posBuffer = this._gTarget.createBuffer();
@@ -206,7 +208,16 @@ class _Buffer {
 		this._matParamCount = matParamCount;
 		for (var i = 0; i < matParamCount; i++) {
 			this._matParamsBufs.push(this._gTarget.createBuffer())
-			this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
+			if (typeof (matStr) != Array)
+				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
+			else this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
+		}
+
+		this._texCount = texCount;
+		for (var i = 0; i < texCount; i++) {
+			if (typeof (texStr) != Array)
+				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "" + i));
+			else this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
 		}
 
 		this._inMatIndex = this._gTarget.getUniformLocation(this._program, matIndStr);
@@ -244,7 +255,7 @@ class _Buffer {
 		this._points = []
 		this._types = []
 		this._offsets = []
-		this._matIndex = []
+		this._matIndicies = []
 		this._texCoords = []
 		this._normals = []
 	}
@@ -294,6 +305,17 @@ class _Buffer {
 			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
 	}
 
+	_loadMaterial(m) {
+		this._matIndicies.push(m._index)
+		for (var i = 0; i < this._matParamCount; i++)
+			this._matParams[i].push(m._parameters[i % m._parameters.length])
+	}
+
+	_loadTexture(t) {
+		for (var i = 0; i < this._texCount; i++)
+			this._gTarget.uniform4fv(this._textureLoc[i], flatten(t._images[i % t._images.length]))
+	}
+
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
@@ -340,7 +362,7 @@ class _Buffer {
 			this._gTarget.enableVertexAttribArray(this._inMatIndex);
 
 			//load materials
-			for(var i = 0; i < this._matParamCount; i++){
+			for (var i = 0; i < this._matParamCount; i++) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matParamsBufs[i]);
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams[i]), this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inMatParams[i], 4, this._gTarget.FLOAT, false, 0, 0);
@@ -455,7 +477,7 @@ class _Camera extends _Primitive {
 	_wireframe = false
 	_showBounds = false
 	_renderEngine = false
-	_renderAfter = true
+	_render = true
 	_enabled = true
 	_clearDebug() {
 		this._debugPoints = []
@@ -514,18 +536,16 @@ class _Camera extends _Primitive {
 							if (i.length > this._buf._bufLimit)
 								console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
 							else {
-								var m = current.mats[g]
-								if (i.length + this._buf._points.length > this._buf._bufLimit)
-									this.buf.renderData();
+								var m = current.mats[current.matIndexes[g]]
+								if (((i.length + this._buf._points.length > this._buf._bufLimit) || current.textureIndexes[g] != -1) && this._render)
+									this._buf._renderData();
 
 
 								this._buf._offsets.push(i.length)
 								this._buf._types.push(this.wireframe ? this._buf._gTarget.LINE_LOOP : current.types[g])
-								this._buf._matParams1.push(m[ii % m.length].parameters[0])
-								this._buf._matParams2.push(m[ii % m.length].parameters[1])
-								this._buf._matParams3.push(m[ii % m.length].parameters[2])
-								this._buf._matParams4.push(m[ii % m.length].parameters[3])
-								this._buf._matParams5.push(m[ii % m.length].parameters[4])
+								this._buf._loadMaterial(m)
+								if (current.textureIndexes[g] != -1)
+									this._buf._loadTexture(current.textures[current.textureIndexes[g]])
 								if (!this._wireframe) {
 									this._buf._matIndicies.push(m[ii % m.length].index)
 								}
@@ -537,55 +557,54 @@ class _Camera extends _Primitive {
 									this._buf._normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
 								}
-
-								this.buf.renderData();
+								if (current.textureIndexes[g] != -1 && this._render)
+									this._buf._renderData();
 							}
 						}
+						if (this._render)
+							this._buf._renderData();
 						if (this._showBounds && !o._isEngine) {
 							//(c)
 							this._buf._types.push(this._buf._gTarget.LINE_LOOP);
 							for (var i = 0; i < current.bounds.length; i++) {
+								if (i.length + this._buf._points.length > this._buf._bufLimit)
+									this._buf._renderData();
 								this._buf._points.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
 								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
-								this._buf._matIndicies.push(tmp._index)
-								this._buf._matParams1.push(tmp._parameters[0])
-								this._buf._matParams2.push(tmp._parameters[1])
-								this._buf._matParams3.push(tmp._parameters[2])
-								this._buf._matParams4.push(tmp._parameters[3])
-								this._buf._matParams5.push(tmp._parameters[4])
+								this._buf._loadMaterial(tmp)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
 
 							}
 							this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 							this._buf._offsets.push(current.bounds.length)
+							if (this._render)
+								this._buf._renderData();
 						}
 					}
 				}
 			});
+			var x = 0
+			for (var o = 0; o < this._debugOffsets.length; o++) {
+				this._buf._types.push(this._debugTypes[o])
+				this._buf._offsets.push(this._debugOffsets[o])
+				for (var i = 0; i < this._debugOffsets[o]; i++) {
+					if (i.length + this._buf._points.length > this._buf._bufLimit)
+						this._buf._renderData();
+					this._buf._points.push(mult(this._debugPoints[i + x], vec4(1, 1, -1, 1)))
+					var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
+					this._buf._loadMaterial(tmp)
+					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
+				}
+				this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
+				x += this._debugOffsets[o]
+				base += this._debugOffsets[o].length
+			}
+			//render any remaining data
+			if (this._render)
+				this._buf._renderData()
 		}
 
-		var x = 0
-		for (var o = 0; o < this._debugOffsets.length; o++) {
-			this._buf._types.push(this._debugTypes[o])
-			this._buf._offsets.push(this._debugOffsets[o])
-			for (var i = 0; i < this._debugOffsets[o]; i++) {
-				this._buf._points.push(mult(this._debugPoints[i + x], vec4(1, 1, -1, 1)))
-				var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
-				this._buf._matIndicies.push(tmp._index)
-				this._buf._matParams1.push(tmp._parameters[0])
-				this._buf._matParams2.push(tmp._parameters[1])
-				this._buf._matParams3.push(tmp._parameters[2])
-				this._buf._matParams4.push(tmp._parameters[3])
-				this._buf._matParams5.push(tmp._parameters[4])
-				this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
-			}
-			this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
-			x += this._debugOffsets[o]
-			base += this._debugOffsets[o].length
-		}
-		//render any remaining data
-		if (this._enabled)
-			this._buf._renderData()
+
 		//get uniform matrix
 
 		//var rotMat = mult(mult(rotateZ(this._transform.rot[2]), rotateY(-(this._transform.rot[1] - 90))), rotateX(-this._transform.rot[0]))//this may look wrong, and it most definately is, but it works
@@ -627,6 +646,12 @@ class _Camera extends _Primitive {
  * Note: For attached primitives to _Object, if you want to attach a _Primitive to a point, you must set the _Primitive's transform to the point location manually.
  */
 class _Object extends _Primitive {
+	_drawInfo = []
+	_pointInfo = []
+	_isEngine = false
+	_matInfo = []
+	_textureInfo = []
+	_visible = []
 
 	/**To be called whenever individual points are adjusted */
 	_reevaluateBounds(pointInfo, boundsType) {
@@ -640,7 +665,7 @@ class _Object extends _Primitive {
 	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[], texCoords[], type}]
 	 * @param {enum} drawType 
 	 */
-	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, isEngine = false, visible = true) {
+	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, textureInfo = [], isEngine = false, visible = true) {
 		//if(startTransform.rot.length != 4) throw "Rotations must be quaternions!"
 		super(startTransform)
 		this._id = _newID();
@@ -649,6 +674,7 @@ class _Object extends _Primitive {
 		this._reevaluateBounds(pointInfo, boundsType)
 		this._isEngine = isEngine
 		this._matInfo = matInfo
+		this._textureInfo = textureInfo
 		this._visible = visible
 		_objects[this._id] = this
 	}
@@ -671,40 +697,35 @@ class _Object extends _Primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], indexes: [], types: [], mats: [], texCoords: [], normals: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible }
+		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible }
 
 		for (var i = 0; i < this._pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this._pointInfo[i]))
 			ret.points.push(tmp);
 		}
-		var rind = -1;
+
+		ret.mats = this._matInfo;
+		ret.textures = this._textureInfo;
 		for (var g = 0; g < this._drawInfo.length; g++) {
-
-
-			var prevMatIndex = null
+			ret.indexes.push(new Array())
+			ret.matIndexes.push(new Array())
+			ret.types.push(this._drawInfo[g].type)
+			ret.normals.push(new Array())
+			ret.texCoords.push(new Array())
+			ret.textureIndexes.push(this._drawInfo[g].textureIndex)
 			for (var i = 0; i < this._drawInfo[g].pointIndex.length; i++) {
-				//if(i == 0) bufferedConsoleLog(newMat)
-				if (this._drawInfo[g].matIndex[i % this._drawInfo[g].matIndex.length] != prevMatIndex) {
-					ret.indexes.push(new Array())
-					ret.mats.push(new Array())
-					ret.types.push(this._drawInfo[g].type)
-					ret.normals.push(new Array())
-					ret.texCoords.push(new Array())
-					rind++;
-					prevMatIndex = this._drawInfo[g].matIndex[i % this._drawInfo[g].matIndex.length]
-				}
-				ret.indexes[rind].push(this._drawInfo[g].pointIndex[i])
+				ret.indexes[g].push(this._drawInfo[g].pointIndex[i])
 				switch (this._drawInfo[g].type) {
 					case _gl.TRIANGLES:
-						ret.normals[rind].push(rotateAbout(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
+						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
 						break;
 					default:
-						ret.normals[rind].push(rotateAbout(this._drawInfo[g].normals[i], newTrans.rot))
+						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[i], newTrans.rot))
 				}
 
-				ret.texCoords[rind].push(this._drawInfo[g].texCoords[i])
+				ret.texCoords[g].push(this._drawInfo[g].texCoords[i])
 				//(this._drawInfo[g].colors[i % this._drawInfo[g].colors.length])
-				ret.mats[rind].push(this._matInfo[this._drawInfo[g].matIndex[i % this._drawInfo[g].matIndex.length]])
+				ret.matIndexes[g].push(this._drawInfo[g].matIndex[i % this._drawInfo[g].matIndex.length])
 			}
 		}
 
