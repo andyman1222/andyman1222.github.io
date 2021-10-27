@@ -260,6 +260,7 @@ vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 
 //no parallax
 vec4 standardImage(vec4 mp[5], vec3 pos, vec2 tx){
+	vec2 txCoords = tx*vec2(mp[4][1], mp[4][2]);
 	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx);
