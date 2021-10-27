@@ -95,7 +95,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 
 function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 	_canvas = document.getElementById(defaultCanvas);
-	_canvas.addEventListener("webglcontextlost", function(event) {
+	/*_canvas.addEventListener("webglcontextlost", function(event) {
 		event.preventDefault();
 		cancelAnimationFrame(_requestId);
 	}, false);
@@ -105,7 +105,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 			o._init();
 		})
 		_render();
-	}, false);
+	}, false);*/
 	_gl = _canvas.getContext('webgl2');
 	if (!_gl) { alert("WebGL 2.0 isn't available"); }
 
