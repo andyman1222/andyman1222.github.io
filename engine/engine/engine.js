@@ -23,6 +23,12 @@ function _postTickFunction(delta, time){
 function _tick(prevTime) {
 	var delta = Date.now() - prevTime;
 	time += delta;
+	var l = _keyBuffer.length
+	for(var x = 0; x < l; x++)
+		_userKeyFunction(_keyBuffer.shift())
+	l = _mouseBuffer.length
+	for(var x = 0; x < l; x++)
+		_userMouseFunction(_mouseBuffer.shift())
 	_userTickFunction(delta, time)
 	_lights.forEach((o) => (o._onTick(delta, time)))
 	_objects.forEach((o) => (o._onTick(delta, time)))
