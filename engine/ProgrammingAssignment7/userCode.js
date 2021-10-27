@@ -60,7 +60,7 @@ function userMouseEvent(e) {
 			break;
 		case "mousedown":
 			if (e.button == 0) {
-				var pos = _getMousePos(e, canvas)
+				var pos = _getMousePos(e, _canvas)
 				if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 					mouseReleased = false
 					mouseInRect = true
@@ -75,12 +75,12 @@ function userMouseEvent(e) {
 				pointerLocked = false;
 				if (!mouseMove) {
 
-					var pos = _getMousePos(e, canvas)
+					var pos = _getMousePos(e, _canvas)
 					if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
 						_mainCamera._clearDebug()
 						var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
-						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera.getWorldTransform().pos])
+						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera._getWorldTransform().pos])
 					}
 					rClick = 1;
 				}
