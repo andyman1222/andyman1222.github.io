@@ -55,12 +55,12 @@ class _ComplexTexture {
     _generateMip;
 
     constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null) {
-        this.sw = sWrap
-        if (sWrap == null) this.sw = gl.REPEAT;
-        this.tw = tWrap
-        if (tWrap == null) this.tw = gl.REPEAT;
-        this.fm = filterMode
-        if (filterMode == null) this.fm = gl.NEAREST_MIPMAP_LINEAR;
+        this._sw = sWrap
+        if (sWrap == null) this._sw = gl.REPEAT;
+        this._tw = tWrap
+        if (tWrap == null) this._tw = gl.REPEAT;
+        this._fm = filterMode
+        if (filterMode == null) this._fm = gl.NEAREST_MIPMAP_LINEAR;
         this._generateMip = generateMip;
         this._gl = gl;
 
@@ -76,9 +76,9 @@ class _ComplexTexture {
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
                     this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[a]);
                 if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, sw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, tw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, fm);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
             };
             this._images[a].src = urls[x];
         }
