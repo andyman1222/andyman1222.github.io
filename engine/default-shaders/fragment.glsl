@@ -37,7 +37,7 @@ uniform sampler2D baseImage;
 uniform sampler2D normalMap;
 uniform sampler2D depthMap;
 uniform sampler2D diffuseMap;//light multiplier
-uniform sampler2D specularMap;//light multiplier
+uniform sampler2D roughnessMap;//light multiplier
 
 //uniform sampler2D miscTextures[11];
 
@@ -250,7 +250,8 @@ vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 	vec3 norm = normalize(texture(normalMap, txp).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, txp);
-	vec4 txSpec = texture(specularMap, txp);
+	vec4 txRough = texture(roughnessMap, txp);
+	vec4 txSpec = vec4(vec3(1,1,1)-txRough.rgb,txRough.a);
 	vec4 txBase = texture(baseImage, txp);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
@@ -262,7 +263,8 @@ vec4 standardImage(vec4 mp[5], vec3 pos, vec2 tx){
 	vec3 norm = normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx);
-	vec4 txSpec = texture(specularMap, tx);
+	vec4 txRough = texture(roughnessMap, txp);
+	vec4 txSpec = vec4(vec3(1,1,1)-txRough.rgb,txRough.a);
 	vec4 txBase = texture(baseImage, tx);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
