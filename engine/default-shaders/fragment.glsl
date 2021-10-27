@@ -272,6 +272,7 @@ switch(matIndex){
 
 	case 3: //unlit texture, no parallax
 	fColor = texture(baseImage, texCoord) * matProp[0];
+	break;
 
 	case 0: default: //solid color
 	fColor=matProp[0];
