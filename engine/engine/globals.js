@@ -6,7 +6,8 @@ var _fisqrt = {y: new Float32Array( 1 ), i: null}
 _fisqrt.i = new Int32Array( _fisqrt.y.buffer )
 ////DO-NOT-TOUCH VARIABLES (updated constantly in the engine)
 var _time = 0;
-var _id = 0
+var _id = 0;
+var _requestId = 0;
 
 
 ////USER INPUT
@@ -19,6 +20,7 @@ var _objects = [];
 var _buffers = [];
 var _cameras = [];
 var _lights = [];
+var _complexTextures = [];
 
 
 ////COLLISION VARIABLES

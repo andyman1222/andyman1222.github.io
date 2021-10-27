@@ -48,6 +48,8 @@ class _ComplexTexture {
 
     _texs = []
 
+    _urls = []
+
     _imgTexMap = new Map()
 
     _imgChange = new Map()
@@ -57,8 +59,10 @@ class _ComplexTexture {
     _tw;
     _fm;
     _generateMip;
+    _id = null;
 
     constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null) {
+        this._urls = urls
         this._sw = sWrap
         if (sWrap == null) this._sw = gl.REPEAT;
         this._tw = tWrap
@@ -67,28 +71,56 @@ class _ComplexTexture {
         if (filterMode == null) this._fm = gl.NEAREST_MIPMAP_LINEAR;
         this._generateMip = generateMip;
         this._gl = gl;
+        this._init();
 
-        for(var x = 0; x < urls.length; x++){
-            var i = this._texs.push(_gl.createTexture())-1;
-            this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[i]);
-            this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
-                1, 1, 0, this._gl.RGBA, this._gl.UNSIGNED_BYTE,
-                new Uint8Array([255, 255, 255, 255]));
-            var a = this._images.push(new Image())-1
-            this._images[a].onload = function (e) {
-                var image = e.target
-                this._imgChange.set(image, true)
-                
-            }.bind(this);
-            this._imgTexMap.set(this._images[a], this._texs[i])
-            this._imgChange.set(this._images[a], false)
-            this._images[a].src = urls[x];
-        }
+
     }
 
-    _applyTexture(locations){
-        for(var x = 0; x < this._texs.length; x++){
-            if(this._imgChange.get(this._images[x]) == true){
+    _init() {
+        this._texs = []
+        for (var x = 0; x < this._urls.length; x++) {
+            var i = this._texs.push(_gl.createTexture()) - 1;
+            this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[i]);
+            if (this._images[x] == null || this._images[a].src == null) {
+                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
+                    1, 1, 0, this._gl.RGBA, this._gl.UNSIGNED_BYTE,
+                    new Uint8Array([255, 255, 255, 255]));
+                if (this._images[x] == null) var a = this._images.push(new Image()) - 1
+                else var a = x
+                this._images[a].onload = function (e) {
+                    var image = e.target
+                    this._imgChange.set(image, true)
+
+                }.bind(this);
+                this._imgTexMap.set(this._images[a], this._texs[i])
+                this._imgChange.set(this._images[a], false)
+                this._images[a].src = this._urls[x];
+            } else {
+                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
+                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
+                if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
+                this._imgChange.set(this._images[x], false)
+                this._imgTexMap.set(this._images[a], this._texs[i])
+            }
+        }
+        if (this.id == null) {
+            var i = 0;
+            for (i = 0; _complexTextures[i] != null; i++) { }
+            _complexTextures[i] = this
+            this._id = i
+        }
+    }
+    _destroyTexture() {
+        _complexTextures[this._id] = null
+        delete this;
+    }
+
+    _applyTexture(locations) {
+        for (var x = 0; x < this._texs.length; x++) {
+            if (this._imgChange.get(this._images[x]) == true) {
                 this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
                     this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
@@ -98,7 +130,7 @@ class _ComplexTexture {
                 this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
                 this._imgChange.set(this._images[x], false)
             }
-            this._gl.activeTexture(this._gl.TEXTURE0+x);
+            this._gl.activeTexture(this._gl.TEXTURE0 + x);
             this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
             this._gl.uniform1i(locations[x], x);
         }

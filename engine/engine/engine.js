@@ -6,7 +6,7 @@ function _render(time) {
 	for (var i = 0; i < _cameras.length; i++)
 		_cameras[i]._pushToBuffer();
 
-	requestAnimationFrame(_render);
+		_requestId = requestAnimationFrame(_render);
 }
 
 function _queueNewTick(f) {
@@ -49,12 +49,7 @@ function _tick(prevTime) {
 	_queueNewTick(_tick);
 }
 
-function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
-	_canvas = document.getElementById(defaultCanvas);
-
-	_gl = _canvas.getContext('webgl2');
-	if (!_gl) { alert("WebGL 2.0 isn't available"); }
-
+function _setDefaultGraphics(vertexPath, fragmentPath){
 	//  Configure WebGL
 	_gl.viewport(0, 0, _canvas.width, _canvas.height);
 	_gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -96,6 +91,25 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 		bitangents: [vec3(0, 0, 1), vec3(0, 0, -1), vec3(1, 0, 0), vec3(-1, 0, 0), vec3(0, 1, 0), vec3(0, -1, 0)], textureIndex: -1}],
 	[vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)],
 	[new _SolidColorNoLighting(vec4(1,0,0,1)), new _SolidColorNoLighting(vec4(0,1,0,1)), new _SolidColorNoLighting(vec4(0,0,1,1))], _Bounds._RECT, [], true)
+}
+
+function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
+	_canvas = document.getElementById(defaultCanvas);
+	_canvas.addEventListener("webglcontextlost", function(event) {
+		event.preventDefault();
+		cancelAnimationFrame(_requestId);
+	}, false);
+	_canvas.addEventListener("webglcontextrestored", function(event) {
+		_setDefaultGraphics();
+		_complexTextures.forEach((o) => {
+			o._init();
+		})
+		_render();
+	}, false);
+	_gl = _canvas.getContext('webgl2');
+	if (!_gl) { alert("WebGL 2.0 isn't available"); }
+
+	_setDefaultGraphics(vertexPath, fragmentPath);
 }
 
 function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {

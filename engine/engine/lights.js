@@ -24,9 +24,10 @@ class _AmbientLight extends _Primitive{
         this._lightmask = m
         var i = 0;
         for(i = 0; _lights[i] != null; i++){}
+        _lights[i] = this
         this._id = i
         this._enabled = e
-        _lights[this._id] = this
+        
         
     }
 
