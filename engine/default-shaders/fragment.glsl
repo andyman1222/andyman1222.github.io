@@ -252,7 +252,8 @@ vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 	vec4 txSpec = texture(specularMap, txp);
 	vec4 txBase = texture(baseImage, txp);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
-	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
+	//return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
+	return tmp;
 }
 
 void main(void){
