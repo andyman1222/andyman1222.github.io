@@ -50,6 +50,8 @@ class _ComplexTexture {
 
     _imgTexMap = new Map()
 
+    _imgChange = new Map()
+
     _gl;
     _sw;
     _tw;
@@ -75,21 +77,27 @@ class _ComplexTexture {
             var a = this._images.push(new Image())-1
             this._images[a].onload = function (e) {
                 var image = e.target
-                this._gl.bindTexture(this._gl.TEXTURE_2D, this._imgTexMap.get(image));
-                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
-                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, image);
-                if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
+                this._imgChange.set(image, true)
+                
             }.bind(this);
             this._imgTexMap.set(this._images[a], this._texs[i])
+            this._imgChange.set(this._images[a], false)
             this._images[a].src = urls[x];
         }
     }
 
     _applyTexture(locations){
         for(var x = 0; x < this._texs.length; x++){
+            if(_imgChange.get(this._images[x]) == true){
+                this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
+                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
+                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
+                if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
+                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
+                this._imgChange.set(this._images[x], false)
+            }
             this._gl.activeTexture(this._gl.TEXTURE0+x);
             this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
             this._gl.uniform1i(locations[x], x);
