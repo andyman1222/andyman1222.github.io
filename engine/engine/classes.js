@@ -159,12 +159,14 @@ class _Buffer {
 	_tanBuf;
 	_bitanBuf;
 	_matParamsBufs = [];
+	_matIndBuf;
 
 	_inPos;
 	_inTexCoord;
 	_inNormal;
 	_inBitan;
 	_inTan;
+	_inMatIndex
 	_inMatParams = [];
 
 	_projMatrix;
@@ -203,6 +205,7 @@ class _Buffer {
 		this._txBuf = this._gTarget.createBuffer();
 		this._tanBuf = this._gTarget.createBuffer();
 		this._bitanBuf = this._gTarget.createBuffer();
+		this._matIndBuf = this._gTarget.createBuffer();
 		this._inPos = this._gTarget.getAttribLocation(this._program, coordStr);
 
 		this._matParamCount = matParamCount;
@@ -220,7 +223,7 @@ class _Buffer {
 			else this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
 		}
 
-		this._inMatIndex = this._gTarget.getUniformLocation(this._program, matIndStr);
+		this._inMatIndex = this._gTarget.getAttribLocation(this._program, matIndStr);
 		this._projMatrix = this._gTarget.getUniformLocation(this._program, projMatrixStr);
 		this._viewMatrix = this._gTarget.getUniformLocation(this._program, viewMatrixStr);
 		this._normalMatrix = this._gTarget.getUniformLocation(this._program, normalMatrixStr);
