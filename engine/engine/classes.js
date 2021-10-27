@@ -536,14 +536,14 @@ class _Camera extends _Primitive {
 							if (i.length > this._buf._bufLimit)
 								console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
 							else {
-								var m = current.mats[current.matIndexes[g]]
+								
 								if (((i.length + this._buf._points.length > this._buf._bufLimit) || current.textureIndexes[g] != -1) && this._render)
 									this._buf._renderData();
 
 
 								this._buf._offsets.push(i.length)
 								this._buf._types.push(this.wireframe ? this._buf._gTarget.LINE_LOOP : current.types[g])
-								this._buf._loadMaterial(m)
+								
 								if (current.textureIndexes[g] != -1)
 									this._buf._loadTexture(current.textures[current.textureIndexes[g]])
 								if (!this._wireframe) {
@@ -553,6 +553,8 @@ class _Camera extends _Primitive {
 									this._buf._matIndicies.push(0)
 								}
 								for (var ii = 0; ii < i.length; ii++) {
+									var m = current.mats[current.matIndexes[g][ii]]
+									this._buf._loadMaterial(m)
 									this._buf._points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
 									this._buf._normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
