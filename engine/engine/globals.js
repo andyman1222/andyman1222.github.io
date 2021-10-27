@@ -43,5 +43,5 @@ var _consoleBufferLock = false
 var _removedMessages = 0, _maxConsoleBuffer = 1000
 
 
-////USER-DEFINED REQUIRED FUNCTIONS
+////USER-DEFINED FUNCTIONS
 var _userTickFunction, _userInitFunction, _userPostTickFunction, _userKeyFunction, _userMouseFunction
