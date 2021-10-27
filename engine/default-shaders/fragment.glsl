@@ -242,7 +242,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos){
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
 	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)).rgb,
-	mix(1, amb.a, length(amb))*mix(1, dif.a, length(dif))*mix(spe.a, length(spe))*mp[0].a);
+	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*mp[0].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
@@ -277,7 +277,7 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*txSpec;
 	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)).rgb,
-	mix(1, amb.a, length(amb))*mix(1, dif.a, length(dif))*mix(spe.a, length(spe))*txBase.a);
+	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
