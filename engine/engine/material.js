@@ -88,7 +88,7 @@ class _ComplexTexture {
 
     _applyTexture(locations){
         for(var x = 0; x < this._texs.length; x++){
-            if(_imgChange.get(this._images[x]) == true){
+            if(this._imgChange.get(this._images[x]) == true){
                 this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
                     this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
