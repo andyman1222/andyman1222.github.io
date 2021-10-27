@@ -152,21 +152,21 @@ class _Buffer {
 	_offsets = [];
 	_texCoords = []
 	_normals = []
-	_bitangents = []
+	//_bitangents = []
 	_tangents = []
 
 	_posBuffer;
 	_normBuf;
 	_txBuf;
 	_tanBuf;
-	_bitanBuf;
+	//_bitanBuf;
 	_matParamsBufs = [];
 	_matIndBuf;
 
 	_inPos;
 	_inTexCoord;
 	_inNormal;
-	_inBitan;
+	//_inBitan;
 	_inTan;
 	_inMatIndex
 	_inMatParams = [];
@@ -199,14 +199,14 @@ class _Buffer {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, biTanStr, texCoordStr, cameraPosStr) {
+	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr) {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._posBuffer = this._gTarget.createBuffer();
 		this._normBuf = this._gTarget.createBuffer();
 		this._txBuf = this._gTarget.createBuffer();
 		this._tanBuf = this._gTarget.createBuffer();
-		this._bitanBuf = this._gTarget.createBuffer();
+		//this._bitanBuf = this._gTarget.createBuffer();
 		this._matIndBuf = this._gTarget.createBuffer();
 		this._inPos = this._gTarget.getAttribLocation(this._program, coordStr);
 		if (this._inPos == -1) alert(coordStr + ": unknown/invalid shader location");
@@ -251,8 +251,8 @@ class _Buffer {
 		if (this._inNormal == -1) alert(normalStr + ": unknown/invalid shader location");
 		this._inTan = this._gTarget.getAttribLocation(this._program, tanStr);
 		if (this._inTan == -1) alert(tanStr + ": unknown/invalid shader location");
-		this._inBitan = this._gTarget.getAttribLocation(this._program, biTanStr);
-		if (this._inBitan == -1) alert(biTanStr + ": unknown/invalid shader location");
+		//this._inBitan = this._gTarget.getAttribLocation(this._program, biTanStr);
+		//if (this._inBitan == -1) alert(biTanStr + ": unknown/invalid shader location");
 		this._inTexCoord = this._gTarget.getAttribLocation(this._program, texCoordStr);
 		if (this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
 		this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
@@ -288,7 +288,7 @@ class _Buffer {
 		this._offsets = [];
 		this._texCoords = []
 		this._normals = []
-		this._bitangents = []
+		//this._bitangents = []
 		this._tangents = []
 	}
 
@@ -392,10 +392,11 @@ class _Buffer {
 			this._gTarget.vertexAttribPointer(this._inTan, 3, this._gTarget.FLOAT, true, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._inTan);
 
+			/*
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._bitanBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._bitangents), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribPointer(this._inBitan, 3, this._gTarget.FLOAT, true, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inBitan);
+			this._gTarget.enableVertexAttribArray(this._inBitan);*/
 
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._txBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._texCoords), this._gTarget.STATIC_DRAW);
@@ -577,7 +578,7 @@ class _Camera extends _Primitive {
 									this._buf._points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
 									this._buf._normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 									this._buf._tangents.push(mult(current.tangents[g][ii], vec3(1, 1, -1)))
-									this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
+									//this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
 								}
 								if (current.textureIndexes[g] != -1 && this._render)
@@ -597,7 +598,7 @@ class _Camera extends _Primitive {
 								this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
 								this._buf_tangents.push(vec3(0, 1, 0))
-								this._buf_bitangents.push(vec3(0, 0, 1))
+								//this._buf_bitangents.push(vec3(0, 0, 1))
 							}
 							this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 							this._buf._offsets.push(current.bounds.length)
@@ -619,7 +620,7 @@ class _Camera extends _Primitive {
 					this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 					this._buf_tangents.push(vec3(0, 1, 0))
-					this._buf_bitangents.push(vec3(0, 0, 1))
+					//this._buf_bitangents.push(vec3(0, 0, 1))
 				}
 				this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 				x += this._debugOffsets[o]
@@ -723,7 +724,7 @@ class _Object extends _Primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], bitangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible }
+		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible }
 
 		for (var i = 0; i < this._pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this._pointInfo[i]))
@@ -738,7 +739,7 @@ class _Object extends _Primitive {
 			ret.types.push(this._drawInfo[g].type)
 			ret.normals.push(new Array())
 			ret.tangents.push(new Array())
-			ret.bitangents.push(new Array())
+			//ret.bitangents.push(new Array())
 			ret.texCoords.push(new Array())
 			ret.textureIndexes.push(this._drawInfo[g].textureIndex)
 			for (var i = 0; i < this._drawInfo[g].pointIndex.length; i++) {
@@ -747,12 +748,12 @@ class _Object extends _Primitive {
 					case _gl.TRIANGLES:
 						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
 						ret.tangents[g].push(rotateAbout(this._drawInfo[g].tangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
-						ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
+						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
 						break;
 					default:
 						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[i], newTrans.rot))
 						ret.tangents[g].push(rotateAbout(this._drawInfo[g].tangents[i], newTrans.rot))
-						ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[i], newTrans.rot))
+						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[i], newTrans.rot))
 				}
 
 				ret.texCoords[g].push(this._drawInfo[g].texCoords[i])

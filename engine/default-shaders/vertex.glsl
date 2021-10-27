@@ -6,7 +6,7 @@ in vec4 coordinates;
 in vec3 inNormal;
 in vec2 inTexCoord;
 in vec3 inTangent;
-in vec3 inBiTangent;
+//in vec3 inBiTangent;
 //attribute vec3 inNormal;
 in int inMatIndex;
 in vec4 inMatProp0;
@@ -35,7 +35,7 @@ out vec4 matProp[5];
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
     vec3 T = normalize((viewMatrix*vec4(inTangent, 0.0)).xyz);
-    vec3 B = normalize((viewMatrix*vec4(inBiTangent, 0.0)).xyz);
+    vec3 B = normalize((viewMatrix*vec4(cross(inNormal, inTangent), 0.0)).xyz);
     // aNormal can be calculated from aTangent and a Bitangent
     vec3 N = normalize((viewMatrix*vec4(inNormal, 0.0)).xyz);
 

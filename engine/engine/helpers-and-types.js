@@ -324,18 +324,15 @@ function normalsFromTriangleVerts(v, i, normFunction = normalize) {
     return r
 }
 
-function tanBitanFromTriangleVerts(v, i, t, normFunction = normalize) {
-    var r = {tan: [], bitan: []}
+function tanFromTriangleVerts(v, i, t, normFunction = normalize) {
+    var r = []
     for (var x = 0; x < i.length; x += 3) {
         var e1 = subtract(v[i[x + 1]], v[i[x]]), e2 = subtract(v[i[x + 2]], v[i[x]])
         var t1 = subtract(t[x+1], t[x]), t2 = subtract(t[x+2], t[x])
         var f = 1.0 / ((t1[0]* t2[1])-(t2[0]*t1[1]))
-        r.tan.push(normFunction(vec3(f * ((t2[1] * e1[0]) - (t1[1] * e2[0])),
+        r.push(normFunction(vec3(f * ((t2[1] * e1[0]) - (t1[1] * e2[0])),
         f * ((t2[1] * e1[1]) - (t1[1] * e2[1])),
         f * ((t2[1] * e1[2]) - (t1[1] * e2[2])))))
-        r.bitan.push(normFunction(vec3(f * ((-t2[0] * e1[0]) + (t1[0] * e2[0])),
-        f * ((-t2[0] * e1[1]) + (t1[0] * e2[1])),
-        f * ((-t2[0] * e1[2]) + (t1[0] * e2[2])))))
         
     }
     return r
@@ -347,8 +344,8 @@ function tanBitanFromTriangleVerts(v, i, t, normFunction = normalize) {
 function _newID() { return _id++ }
 
 
-function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, bitangents, textureIndex = -1, type=_gl.TRIANGLES){
-	return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, bitangents: bitangents, textureIndex: textureIndex, type: type}
+function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, textureIndex = -1, type=_gl.TRIANGLES){
+	return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, textureIndex: textureIndex, type: type}
 }
 
 function _Transform(pos=vec3(0,0,0), rot=Quaternion(1,0,0,0), scl=vec3(1,1,1)){

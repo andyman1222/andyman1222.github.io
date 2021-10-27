@@ -60,8 +60,8 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
 	}
 
 	var norm = normalsFromTriangleVerts(r, ind, normFunction)
-	var t = tanBitanFromTriangleVerts(r, ind, tx, normFunction)
-	return { points: r, index: ind, texCoords: tx, normals: norm, tangents: t.tan, bitangents: t.bitan};
+	var t = tanFromTriangleVerts(r, ind, tx, normFunction)
+	return { points: r, index: ind, texCoords: tx, normals: norm, tangents: t};
 }
 
 /**
@@ -126,6 +126,6 @@ function _getRect(pos, extent, normFunction = normalize) {
 	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]),
 	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]))
 	var norm = normalsFromTriangleVerts(p, ind, normFunction)
-	var t = tanBitanFromTriangleVerts(p, ind, tx, normFunction)
-	return{points: p, index: ind, texCoords: tx, normals: norm, tangents: t.tan, bitangents: t.bitan}
+	var t = tanFromTriangleVerts(p, ind, tx, normFunction)
+	return{points: p, index: ind, texCoords: tx, normals: norm, tangents: t}
 }
