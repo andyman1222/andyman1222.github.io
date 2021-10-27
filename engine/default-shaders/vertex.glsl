@@ -40,7 +40,7 @@ void main(void) {
     vec3 N = normalize((viewMatrix*vec4(inNormal, 0.0)).xyz);
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
-    vec3 B = cross(N, T);
+    vec3 B = vec3(1,1,-1)*cross(N, T);
 
     TBN = mat3(T, B, N);
 
