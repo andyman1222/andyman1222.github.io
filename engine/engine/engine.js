@@ -68,6 +68,8 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 		"inMatProp",
 		5,
 		"inMatIndex",
+		["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"],
+		5,
 		"projMatrix",
 		"viewMatrix",
 		"normalMatrix",
