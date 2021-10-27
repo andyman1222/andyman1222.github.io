@@ -158,7 +158,7 @@ class _Buffer {
 	_txBuf;
 	_tanBuf;
 	_bitanBuf;
-	_matParamsBufs;
+	_matParamsBufs = [];
 
 	_inPos;
 	_inTexCoord;

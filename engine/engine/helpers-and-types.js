@@ -1,5 +1,62 @@
 "use strict";
 
+
+//from https://gist.github.com/jhermsmeier/2269511
+//Note: use 0x5fe6eb50c7aa19f9 as magic number if going to use 64 bit arrays in globals.js _fisqrt
+function _qSqrt(n, p=1) {
+
+    p = p || 1
+
+    _fisqrt.y[0] = n
+    _fisqrt.i[0] = 0x5f375a86 - (_fisqrt.i[0] >> 1)
+
+    while (p--) {
+        _fisqrt.y[0] = _fisqrt.y[0] * (1.5 * ((n * 0.5) * _fisqrt.y[0] * _fisqrt.y[0]))
+    }
+
+    return _fisqrt.y[0]
+}
+
+function fastNorm(u, excludeLastComponent) {
+    if (u.type != 'vec3' && u.type != 'vec4') {
+  
+      throw "normalize: not a vector type";
+    }
+    switch (u.type) {
+      case 'vec2':
+        var len = _qSqrt(u[0] * u[0] + u[1] * u[1]);
+        var result = vec2(u[0] * len, u[1] * len);
+        return result;
+        break;
+      case 'vec3':
+        if (excludeLastComponent) {
+          var len = _qSqrt(u[0] * u[0] + u[1] * u[1]);
+          var result = vec3(u[0] * len, u[1] * len, u[2]);
+          return result;
+          break;
+        }
+        else {
+          var len = _qSqrt(u[0] * u[0] + u[1] * u[1] + u[2] * u[2]);
+          var result = vec3(u[0] * len, u[1] * len, u[2] * len);
+          return result;
+          break;
+        }
+      case 'vec4':
+        if (excludeLastComponent) {
+          var len = _qSqrt(u[0] * u[0] + u[1] * u[1] + u[2] * u[2]);
+          var result = vec4(u[0] * len, u[1] * len, u[2] * len, u[3]);
+          return result;
+          break;
+        }
+        else {
+          var len = _qSqrt(u[0] * u[0] + u[1] * u[1] + u[2] * u[2] + u[3] * u[3]);
+          var result = vec4(u[0] * len, u[1] * len, u[2] * len, u[3] * len);
+          return result;
+          break;
+        }
+    }
+  }
+
 function clamp(num, min, max) {
     if (num > max) return max;
     if (num < min) return min;
@@ -44,12 +101,12 @@ function quatEqual(q1, q2) {
  * @param {*} rot 
  * @return {Quaternion} (w, x, y, z)
  */
-function eulerToQuat(axis, angle) {
+function eulerToQuat(axis, angle, normFunction = fastNorm) {
     if (length(axis) == 0) throw "Undefined axis (0,0,0)"
     var a = mult(axis, vec3(1, -1, 1))
     var c = Math.cos(radians(angle % 360) / 2)
     var s = Math.sin(radians(angle % 360) / 2)
-    var n = normalize(a)
+    var n = normFunction(a)
     return Quaternion(c, n[0] * s, n[1] * s, n[2] * s)
 }
 
@@ -212,11 +269,11 @@ function getMidpoint(points) {
  * Returns a 4-vector representation of a plane- (x, y, z, b)
  * @param {*} points 3 points
  */
-function getPlane(points) {
+function getPlane(points, normFunction = fastNorm) {
     if (arguments.length == 3) {
         var cp = cross(subtract(arguments[2], arguments[0]), subtract(arguments[1], arguments[0]))
         var d = dot(cp, arguments[2])
-        return normalize(vec4(cp[0], cp[1], cp[2], d))
+        return normFunction(vec4(cp[0], cp[1], cp[2], d))
     }
     throw "Can only get plane intersecting 3 points."
 }
@@ -258,14 +315,15 @@ function bin2dec(bin) {
     return parseInt(bin, 2).toString(10);
 }
 
-function normalsFromTriangleVerts(v, i){
+function normalsFromTriangleVerts(v, i, normFunction = normalize) {
     var r = []
-    for(var x = 0; x < i.length; x += 3){
-        var c = normalize(cross(subtract(v[i[x+1]], v[i[x]]), subtract(v[i[x+2]], v[i[x]])))
+    for (var x = 0; x < i.length; x += 3) {
+        var c = normFunction(cross(subtract(v[i[x + 1]], v[i[x]]), subtract(v[i[x + 2]], v[i[x]])))
         r.push(c)
     }
     return r
 }
+
 
 ///////////////////////////////////////////////////
 

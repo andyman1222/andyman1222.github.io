@@ -1,6 +1,6 @@
 "use strict";
 
-function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIANGLES) {
+function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIANGLES, normFunction = normalize) {
 	var facePoints = []
 	for (var i = 0; i < numFaces; i++) {
 		var tmp = ((i / numFaces) * 360) + addDeg
@@ -22,13 +22,13 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
 		//note: this lazily calculates the normals, in that it doesn't actually get them based on the edges to the point
 		if (i == 0) {
 			i1 = r.push(add(vec3(facePoints[i][0] * radius, height, facePoints[i][1] * radius), pos));
-			norm.push(normalize(vec3(facePoints[i][0], .5, facePoints[i][1])))
+			norm.push(normFunction(vec3(facePoints[i][0], .5, facePoints[i][1])))
 			i2 = r.push(add(vec3(facePoints[i][0] * radius, 0, facePoints[i][1] * radius), pos));
-			norm.push(normalize(vec3(facePoints[i][0], -.5, facePoints[i][1])))
+			norm.push(normFunction(vec3(facePoints[i][0], -.5, facePoints[i][1])))
 			i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
-			norm.push(normalize(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
+			norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
 			i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
-			norm.push(normalize(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
+			norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
 			oi1 = i1
 			oi2 = i2
 		}
@@ -40,9 +40,9 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
 				i4 = oi2
 			} else {
 				i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
-				norm.push(normalize(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
+				norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
 				i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
-				norm.push(normalize(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
+				norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
 			}
 
 		}
@@ -67,7 +67,7 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
  * @param {vec3} pos center of the rectangle
  * @param {vec3} extent size of the rectangle from center to edge
  */
-function _getRect(pos, extent) {
+function _getRect(pos, extent, normFunction = normalize) {
 	//1
 	var blb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] - extent[2])
 	//2
@@ -123,6 +123,6 @@ function _getRect(pos, extent) {
 	
 	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]),
 	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]))
-	var norm = normalsFromTriangleVerts(p, ind)
+	var norm = normalsFromTriangleVerts(p, ind, normFunction)
 	return{points: p, index: ind, texCoords: tx, normals: norm}
 }

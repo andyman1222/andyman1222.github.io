@@ -2,7 +2,7 @@
 "use strict";
 var _defaultAspect = 16 / 9
 var _maxLightCount = 64 //NOTE: THIS VALUE MUST MATCH THE SIZE OF THE LIGHT ARRAYS IN THE SHADERS
-
+var _fisqrt = {y: new Float32Array( 1 ), i: new Int32Array( fisqrt.y.buffer )}
 
 ////DO-NOT-TOUCH VARIABLES (updated constantly in the engine)
 var _time = 0;
@@ -41,7 +41,6 @@ var _coords;
 var _consoleBuffer = []
 var _consoleBufferLock = false
 var _removedMessages = 0, _maxConsoleBuffer = 1000
-
 
 
 ////USER-DEFINED REQUIRED FUNCTIONS
