@@ -34,7 +34,7 @@ class _SolidColorNoLighting extends _Material {
 }
 
 class _ScaledTexMat extends _Material {
-    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 0, 0)]){
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 0, 0)]){
         super(0, [parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], vec4(uScale, vScale, uDisp, vDisp)])
         if(parallax) this._index = 2;
         else this._index = 3;
