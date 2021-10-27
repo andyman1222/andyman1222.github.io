@@ -199,13 +199,12 @@ var materials = [new _Material(3, [vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), 
   new _Material(3, [vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(100,1,1,1), vec4(1,1,0,0)]),
   new _Material(3, [vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,0,0)])]
 
-var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
-
 function
 draw_maze()
 {
   var p1 = vec2(), p2 = vec2()
   var i;
+  var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
 
   /* draw the edges as lines */
   {
