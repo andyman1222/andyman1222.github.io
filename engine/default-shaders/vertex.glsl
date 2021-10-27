@@ -40,7 +40,7 @@ void main(void) {
     // aNormal can be calculated from aTangent and a Bitangent
     vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 
-    T=normalize(T - dot(T, N) * N)
+    T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
 
     TBN = mat3(T, B, N);
