@@ -9,7 +9,11 @@ in vec3 inTangent;
 in vec3 inBiTangent;
 //attribute vec3 inNormal;
 in int inMatIndex;
-in vec4 inMatProp[5];
+in vec4 inMatProp0;
+in vec4 inMatProp1;
+in vec4 inMatProp2;
+in vec4 inMatProp3;
+in vec4 inMatProp4;
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
@@ -46,8 +50,11 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = inNormal;
 
-    for(int x = 0; x < inMatProp.length; x++){
-        matProp[x] = inMatProp[x];
-    }
+    matProp[0] = inMatProp0;
+    matProp[1] = inMatProp1;
+    matProp[2] = inMatProp2;
+    matProp[3] = inMatProp3;
+    matProp[4] = inMatProp4;
+
     matIndex = inMatIndex;
 }

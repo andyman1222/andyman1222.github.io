@@ -212,7 +212,7 @@ class _Buffer {
 		for (var i = 0; i < matParamCount; i++) {
 			this._matParamsBufs.push(this._gTarget.createBuffer())
 			if (!(matStr instanceof Array))
-				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "[" + i + "]"));
+				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
 			else this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
 		}
 

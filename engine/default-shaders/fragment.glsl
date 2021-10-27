@@ -253,11 +253,11 @@ switch(matIndex){
 	return;
 
 	case 1:
-	fColor=standardMaterial(matProp1,matProp2,matProp3,matProp4,matProp5,normal,position);
+	fColor=standardMaterial(matProp,normal,position);
 	break;
 
 	case 2:
-	fColor = standardImage(matProp1,matProp2,matProp3,matProp4,matProp5,normal,position);
+	fColor = standardImage(matProp,normal,position);
 	break;
 
 	case 0: default:
