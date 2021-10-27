@@ -351,7 +351,7 @@ class _Buffer {
 	}
 
 	_loadTexture(t) {
-		t._applyTexture(_textureLoc)
+		t._applyTexture(this._textureLoc)
 	}
 
 	_beginRender() {
