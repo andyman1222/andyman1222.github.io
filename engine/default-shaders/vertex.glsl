@@ -36,11 +36,14 @@ out vec4 matProp[6];
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
     vec3 T = normalize((normalMatrix*vec4(inTangent, 0.0)).xyz);
-    vec3 B = normalize((normalMatrix*vec4(cross(inNormal, inTangent), 0.0)).xyz);
+    
     // aNormal can be calculated from aTangent and a Bitangent
     vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 
-    TBN = transpose(mat3(T, B, N));
+    T=normalize(T - dot(T, N) * N)
+    vec3 B = cross(N, T);
+
+    TBN = mat3(T, B, N);
 
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
