@@ -14,6 +14,7 @@ in vec4 inMatProp1;
 in vec4 inMatProp2;
 in vec4 inMatProp3;
 in vec4 inMatProp4;
+in vec4 inMatProp5;
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
@@ -29,7 +30,7 @@ out vec3 normal;
 out vec3 position;
 out mat3 TBN;
 flat out int matIndex;
-out vec4 matProp[5];
+out vec4 matProp[6];
 
 
 void main(void) {
@@ -54,6 +55,7 @@ void main(void) {
     matProp[2] = inMatProp2;
     matProp[3] = inMatProp3;
     matProp[4] = inMatProp4;
+    matProp[5] = inMatProp5;
 
     matIndex = inMatIndex;
 

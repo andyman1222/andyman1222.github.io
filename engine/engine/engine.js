@@ -67,7 +67,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_bData = new _Buffer(_gl, _program, 
 		"coordinates",
 		"inMatProp",
-		5,
+		6,
 		"inMatIndex",
 		["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"],
 		5,
