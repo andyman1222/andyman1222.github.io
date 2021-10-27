@@ -57,4 +57,6 @@ void main(void) {
     matProp[4] = inMatProp4;
 
     matIndex = inMatIndex;
+
+    texCoord = inTexCoord;
 }
