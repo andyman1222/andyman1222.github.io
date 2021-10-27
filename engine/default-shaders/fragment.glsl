@@ -5,8 +5,7 @@ in vec2 texCoord;
 
 in vec3 normal;
 in vec3 position;
-in vec3 t;
-in vec3 bt;
+in mat3 TBN;
 
 flat in int matIndex;
 in vec4 matProp[5];
@@ -50,11 +49,14 @@ vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, flo
 	float maxl = 32.;
 	if(maxLayers>0.) maxl=maxLayers;
 
+	float hs = 1.
+	if(heightScale>0.) hs=heightScale;
+
 	float nl = mix(maxl, minl, max(dot(vec3(0.0, 0.0, 1.0), viewDir), 0.0));
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
-	vec2 P=viewDir.xy*heightScale;
+	vec2 P=viewDir.xy*hs;
 	vec2 deltaTexCoord=P/nl;
 	vec2 currentTexCoords=TexCoord;
 	
@@ -240,9 +242,16 @@ vec4 standardMaterial(vec4 mp[5], vec3 norm, vec3 pos){
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
-vec4 standardImage(vec4 mp[5], vec3 norm, vec3 pos){
+//with parallax
+vec4 standardImageFull(vec4 mp[5], vec3 pos, vec2 tx, vec3 viewdir, float min, float max, float scale){
+	
+	vec2 txp = parallax(tx, viewdir, min, max, scale);
+	vec3 norm = normalize(texture(normalMap, txp).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
-	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0])+(mat.diffuse*mp[1]*mp[0])+(mat.specular*mp[2])).rgb,mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
+	vec4 txDiff = texture(diffuseMap, txp);
+	vec4 txSpec = texture(specularMap, txp);
+	vec4 txBase = texture(baseImage, txp);
+	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
@@ -257,7 +266,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	fColor = standardImage(matProp,normal,position);
+	fColor = standardImageFull(matProp,normal,position);
 	break;
 
 	case 3: //unlit texture, no parallax

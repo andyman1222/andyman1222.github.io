@@ -27,8 +27,7 @@ out vec2 texCoord;
 //varying vec3 position;
 out vec3 normal;
 out vec3 position;
-out vec3 t;
-out vec3 bt;
+out mat3 TBN;
 flat out int matIndex;
 out vec4 matProp[5];
 
@@ -40,7 +39,7 @@ void main(void) {
     // aNormal can be calculated from aTangent and a Bitangent
     vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
 
-    mat3 tsMatrix = transpose(mat3(T, B, N));
+    TBN = transpose(mat3(T, B, N));
 
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);

@@ -351,8 +351,7 @@ class _Buffer {
 	}
 
 	_loadTexture(t) {
-		for (var i = 0; i < this._texCount; i++)
-			this._gTarget.uniform4fv(this._textureLoc[i], flatten(t._images[i % t._images.length]))
+		t._applyTexture(_textureLoc)
 	}
 
 	_beginRender() {
