@@ -261,7 +261,7 @@ switch(matIndex){
 	break;
 
 	case 0: default:
-	fColor=matProp1;
+	fColor=matProp[0];
 	break;
 	}
 }
