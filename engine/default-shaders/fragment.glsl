@@ -261,12 +261,12 @@ vec4 standardImageFull(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 	vec2 txCoords = (tx*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
-	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
+	vec3 norm = TBN * normalize(texture(normalMap, txCoords).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
-	vec4 txDiff = texture(diffuseMap, tx);
-	vec4 txSpec = texture(roughnessMap, tx);
+	vec4 txDiff = texture(diffuseMap, txCoords);
+	vec4 txSpec = texture(roughnessMap, txCoords);
 	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
-	vec4 txBase = texture(baseImage, tx);
+	vec4 txBase = texture(baseImage, txCoords);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
@@ -290,7 +290,7 @@ switch(matIndex){
 	break;
 
 	case 4: //unlit texture, no parallax
-	fColor = texture(baseImage, texCoord) * matProp[0];
+	fColor = texture(baseImage, (texCoord*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3])) * matProp[0];
 	break;
 
 	case 0: default: //solid color
