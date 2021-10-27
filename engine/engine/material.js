@@ -48,6 +48,8 @@ class _ComplexTexture {
 
     _texs = []
 
+    _imgTexMap = new Map()
+
     _gl;
     _sw;
     _tw;
@@ -71,15 +73,17 @@ class _ComplexTexture {
                 1, 1, 0, this._gl.RGBA, this._gl.UNSIGNED_BYTE,
                 new Uint8Array([255, 255, 255, 255]));
             var a = this._images.push(new Image())-1
-            this._images[a].onload = () => {
-                this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[i]);
+            this._images[a].onload = function (e) {
+                var image = e.target
+                this._gl.bindTexture(this._gl.TEXTURE_2D, this._imgTexMap.get(image));
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
-                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[a]);
+                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, image);
                 if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
                 this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
                 this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
                 this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
-            };
+            }.bind(this);
+            this._imgTexMap.set(this._images[a], this._texs[i])
             this._images[a].src = urls[x];
         }
     }
