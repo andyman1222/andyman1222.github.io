@@ -211,14 +211,14 @@ class _Buffer {
 		this._matParamCount = matParamCount;
 		for (var i = 0; i < matParamCount; i++) {
 			this._matParamsBufs.push(this._gTarget.createBuffer())
-			if (typeof (matStr) != Array)
+			if (!(matStr instanceof Array))
 				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
 			else this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
 		}
 
 		this._texCount = texCount;
 		for (var i = 0; i < texCount; i++) {
-			if (typeof (texStr) != Array)
+			if (!(texStr instanceof Array))
 				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "" + i));
 			else this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
 		}

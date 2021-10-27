@@ -9,11 +9,11 @@ in vec3 t;
 in vec3 bt;
 
 flat in int matIndex;
+in vec4 matProp0;
 in vec4 matProp1;
 in vec4 matProp2;
 in vec4 matProp3;
 in vec4 matProp4;
-in vec4 matProp5;
 
 out vec4 fColor;
 
