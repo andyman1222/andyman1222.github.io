@@ -82,6 +82,8 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 		"lights",
 		"maxLightIndex",
 		"inNormal",
+		"inTangent",
+		"inBiTangent",
 		"inTexCoord",
 		"cameraPos");
 
