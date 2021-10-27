@@ -263,7 +263,7 @@ vec4 standardImage(vec4 mp[5], vec3 pos, vec2 tx){
 	vec3 norm = normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx);
-	vec4 txRough = texture(roughnessMap, txp);
+	vec4 txRough = texture(roughnessMap, tx);
 	vec4 txSpec = vec4(vec3(1,1,1)-txRough.rgb,txRough.a);
 	vec4 txBase = texture(baseImage, tx);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
