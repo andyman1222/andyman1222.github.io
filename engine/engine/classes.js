@@ -305,8 +305,13 @@ class _Buffer {
 			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
 	}
 
-	_loadMaterial(m) {
-		this._matIndicies.push(m._index)
+	_loadMaterial(m, noLighting = false) {
+		if (noLighting) {
+			this._matIndicies.push(m._index)
+		}
+		else {
+			this._matIndicies.push(0)
+		}
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i].push(m._parameters[i % m._parameters.length])
 	}
@@ -475,6 +480,7 @@ class _Camera extends _Primitive {
 	_debugTypes = []
 	_debugOffsets = []
 	_wireframe = false
+	_noLighting = false
 	_showBounds = false
 	_renderEngine = false
 	_render = true
@@ -546,15 +552,10 @@ class _Camera extends _Primitive {
 								
 								if (current.textureIndexes[g] != -1)
 									this._buf._loadTexture(current.textures[current.textureIndexes[g]])
-								if (!this._wireframe) {
-									this._buf._matIndicies.push(m[ii % m.length].index)
-								}
-								else {
-									this._buf._matIndicies.push(0)
-								}
+								
 								for (var ii = 0; ii < i.length; ii++) {
 									var m = current.mats[current.matIndexes[g][ii]]
-									this._buf._loadMaterial(m)
+									this._buf._loadMaterial(m, this._wireframe || this._noLighting)
 									this._buf._points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
 									this._buf._normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
@@ -573,7 +574,7 @@ class _Camera extends _Primitive {
 									this._buf._renderData();
 								this._buf._points.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
 								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
-								this._buf._loadMaterial(tmp)
+								this._buf._loadMaterial(tmp, this._wireframe || this._noLighting)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
 
 							}
@@ -594,7 +595,7 @@ class _Camera extends _Primitive {
 						this._buf._renderData();
 					this._buf._points.push(mult(this._debugPoints[i + x], vec4(1, 1, -1, 1)))
 					var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
-					this._buf._loadMaterial(tmp)
+					this._buf._loadMaterial(tmp, this._wireframe || this._noLighting)
 					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 				}
 				this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
