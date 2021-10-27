@@ -266,7 +266,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	fColor = standardImageFull(matProp,normal,position);
+	fColor = standardImageFull(matProp,position,(cameraPos*vec3(1,1,-1)-position),-1,-1,-1);
 	break;
 
 	case 3: //unlit texture, no parallax
