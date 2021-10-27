@@ -22,17 +22,17 @@ function _postTickFunction(delta, time){
 
 function _tick(prevTime) {
 	var delta = Date.now() - prevTime;
-	time += delta;
+	_time += delta;
 	var l = _keyBuffer.length
 	for(var x = 0; x < l; x++)
 		_userKeyFunction(_keyBuffer.shift())
 	l = _mouseBuffer.length
 	for(var x = 0; x < l; x++)
 		_userMouseFunction(_mouseBuffer.shift())
-	_userTickFunction(delta, time)
-	_lights.forEach((o) => (o._onTick(delta, time)))
-	_objects.forEach((o) => (o._onTick(delta, time)))
-	_cameras.forEach((o) => (o._onTick(delta, time)))
+	_userTickFunction(delta, _time)
+	_lights.forEach((o) => (o._onTick(delta, _time)))
+	_objects.forEach((o) => (o._onTick(delta, _time)))
+	_cameras.forEach((o) => (o._onTick(delta, _time)))
 	
 	_consoleBufferLock = true
 	var tmp = [..._consoleBuffer]
@@ -45,7 +45,7 @@ function _tick(prevTime) {
 	})
 	if (r > 0) console.log(r + " messages removed.\n")
 
-	postTickFunction(delta, time)
+	postTickFunction(delta, _time)
 	queueNewTick(_tick);
 }
 
