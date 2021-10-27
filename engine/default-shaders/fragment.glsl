@@ -5,7 +5,7 @@ in vec2 texCoord;
 
 in vec3 normal;
 in vec3 position;
-in mat3 TBN;
+//in mat3 TBN;
 
 flat in int matIndex;
 in vec4 matProp[6];
@@ -261,7 +261,7 @@ vec4 standardImageFull(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 	vec2 txCoords = (tx*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
-	vec3 norm = TBN * normalize(texture(normalMap, txCoords).rgb*2.-1.);
+	vec3 norm = normal * normalize(texture(normalMap, txCoords).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, txCoords);
 	vec4 txSpec = texture(roughnessMap, txCoords);
