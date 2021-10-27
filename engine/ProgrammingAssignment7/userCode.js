@@ -54,7 +54,7 @@ function userMouseEvent(e) {
 					altCamera._transform.rot = addRotation(altCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
 					altCamera._transform.rot = addRotation(altCamera._transform.rot, eulerToQuat(right(altCamera._transform.rot), ySpeed))
 				}
-				canvas.requestPointerLock();
+				_canvas.requestPointerLock();
 				pointerLocked = true;
 			}
 			break;
