@@ -9,11 +9,7 @@ in vec3 t;
 in vec3 bt;
 
 flat in int matIndex;
-in vec4 matProp0;
-in vec4 matProp1;
-in vec4 matProp2;
-in vec4 matProp3;
-in vec4 matProp4;
+in vec4 matProp[5];
 
 out vec4 fColor;
 
@@ -238,15 +234,15 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 	return r;
 }
 
-vec4 standardMaterial(vec4 mp1,vec4 mp2,vec4 mp3,vec4 mp4,vec4 mp5,vec3 norm,vec3 pos){
-	sMat mat = getStandardMaterial(mp5, norm, pos);
-	vec4 tmp=vec4(((mat.ambient*mp4*mp1)+(mat.diffuse*mp2*mp1)+(mat.specular*mp3)).rgb,mat.ambient.a*mp4.a*mp1.a*mat.diffuse.a*mp2.a*mp1.a*mat.specular.a*mp3.a);
+vec4 standardMaterial(vec4 mp[5], vec3 norm, vec3 pos){
+	sMat mat = getStandardMaterial(mp[4], norm, pos);
+	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0])+(mat.diffuse*mp[1]*mp[0])+(mat.specular*mp[2])).rgb,mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
-vec4 standardImage(vec4 mp1, vec4 mp2, vec4 mp3, vec4 mp4, vec4 mp5, vec3 norm, vec3 pos){
-	sMat mat = getStandardMaterial(mp5, norm, pos);
-	vec4 tmp=vec4(((mat.ambient*mp4*mp1)+(mat.diffuse*mp2*mp1)+(mat.specular*mp3)).rgb,mat.ambient.a*mp4.a*mp1.a*mat.diffuse.a*mp2.a*mp1.a*mat.specular.a*mp3.a);
+vec4 standardImage(vec4 mp[5], vec3 norm, vec3 pos){
+	sMat mat = getStandardMaterial(mp[4], norm, pos);
+	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0])+(mat.diffuse*mp[1]*mp[0])+(mat.specular*mp[2])).rgb,mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
