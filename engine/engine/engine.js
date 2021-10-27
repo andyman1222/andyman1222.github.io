@@ -45,8 +45,8 @@ function _tick(prevTime) {
 	})
 	if (r > 0) console.log(r + " messages removed.\n")
 
-	postTickFunction(delta, _time)
-	queueNewTick(_tick);
+	_postTickFunction(delta, _time)
+	_queueNewTick(_tick);
 }
 
 function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
