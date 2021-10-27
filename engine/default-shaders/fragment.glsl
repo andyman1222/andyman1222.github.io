@@ -252,15 +252,18 @@ switch(matIndex){
 	case -1: //nodraw
 	return;
 
-	case 1:
+	case 1: //no texture
 	fColor=standardMaterial(matProp,normal,position);
 	break;
 
-	case 2:
+	case 2: //parallaxed texture
 	fColor = standardImage(matProp,normal,position);
 	break;
 
-	case 0: default:
+	case 3: //unlit texture, no parallax
+	fColor = texture2D(baseImage, texCoord) * matProp[0];
+
+	case 0: default: //solid color
 	fColor=matProp[0];
 	break;
 	}
