@@ -87,9 +87,9 @@ struct sMat{
 
 sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 	sMat r;
-	r.ambient=vec4(0,0,0,1);
-	r.diffuse=vec4(0,0,0,1);
-	r.specular=vec4(0,0,0,1);
+	r.ambient=vec4(0.,0.,0.,1.);
+	r.diffuse=vec4(0.,0.,0.,1.);
+	r.specular=vec4(0.,0.,0.,1.);
 	vec3 N=normalize(norm);
 	
 	for(int x=0;x<=maxLightIndex;x++){
@@ -149,8 +149,8 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(lights[x].location*vec3(1,1,-1)-position);
-			vec3 v_surfaceToView=(cameraPos*vec3(1,1,-1)-position);
+			vec3 v_surfaceToLight=(lights[x].location*vec3(1.,1.,-1.)-position);
+			vec3 v_surfaceToView=(cameraPos*vec3(1.,1.,-1.)-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 halfVector=normalize(surfaceToLightDirection+surfaceToViewDirection);
@@ -251,7 +251,7 @@ vec4 standardImageFull(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewdir, float min, f
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, txp);
 	vec4 txSpec = texture(roughnessMap, txp);
-	//vec4 txSpec = vec4(vec3(1,1,1)-txRough.rgb,txRough.a);
+	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
 	vec4 txBase = texture(baseImage, txp);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
@@ -265,7 +265,7 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx);
 	vec4 txSpec = texture(roughnessMap, tx);
-	//vec4 txSpec = vec4(vec3(1,1,1)-txRough.rgb,txRough.a);
+	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
 	vec4 txBase = texture(baseImage, tx);
 	vec4 tmp=vec4(((mat.ambient*mp[3]*mp[0]*txBase)+(mat.diffuse*mp[1]*mp[0]*txDiff*txBase)+(mat.specular*mp[2]*txSpec)).rgb,txBase.a*mat.ambient.a*mp[3].a*mp[0].a*mat.diffuse.a*mp[1].a*mp[0].a*mat.specular.a*mp[2].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
@@ -282,7 +282,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture (temp: unparallaxed texture)
-	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1,1,-1)-position),-1.,-1.,-1.);
+	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
 	//break;
 
 	case 3: //texture, no parallax
