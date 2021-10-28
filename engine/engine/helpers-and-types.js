@@ -335,7 +335,7 @@ function tanFromTriangleVerts(v, i, t, normFunction = normalize) {
         f * ((t2[1] * e1[2]) - (t1[1] * e2[2])))))
         
     }
-    return r
+    return mult(r, vec3(-1,-1,1))
 }
 
 
