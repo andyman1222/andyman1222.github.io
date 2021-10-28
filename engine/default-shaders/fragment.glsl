@@ -149,7 +149,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=((TBN*lights[x].location)-position);
+			vec3 v_surfaceToLight=((TBN*(lights[x].location*vec3(1.,1.,-1.)))-position);
 			vec3 v_surfaceToView=(viewPos-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
@@ -248,7 +248,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
 
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewPos){
-	vec3 norm = TBN*(texture(normalMap, tx).rgb*2.-1.);
+	vec3 norm = (texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
