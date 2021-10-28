@@ -294,7 +294,7 @@ class _Buffer {
 
 	_setViewMatrix(v, p) {
 		this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
-		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(mult(p, vec3(1,1,-1))))
+		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
 	}
 
 	_setNormalMatrix(m) {
@@ -325,7 +325,7 @@ class _Buffer {
 					case 2:
 						var t = l._getWorldTransform()
 						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(mult(vec3(1, 1, -1), forward(t.rot))))
-						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(mult(vec3(1,1,-1), t.pos)))
+						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos))
 					case 1:
 						this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
 						break;
@@ -520,7 +520,7 @@ class _Camera extends _Primitive {
 
 	_getViewMat() {
 		var rotMat = null
-		var t = this._getWorldTransform()
+		var t = this._getWorldTransform(true)
 		//bufferedConsoleLog(t)
 		var rotQuat = Quaternion(t.rot.w, t.rot.x, t.rot.y, -t.rot.z)
 		rotMat = quatToMat4(rotQuat);
@@ -717,7 +717,7 @@ class _Object extends _Primitive {
 
 		//mat4 generates matrix by cols, then rows
 		//equation from Wikipedia
-		var newMat = this._getModelMat(true)
+		var newMat = this._getModelMat()
 		var newTrans = mat4ToTransform(newMat)
 
 		//(newMat)
