@@ -1,20 +1,40 @@
 #version 300 es
 
 precision mediump float;
+
+const int LIGHT_COUNT=64;
+const int MAT_PROP_COUNT=6;
 in vec2 texCoord;
 
 in vec3 normal;
 in vec3 position;
 in mat3 TBN;
 in vec3 adjCameraPos;
+in vec3 lightPosAdj[LIGHT_COUNT];
 
 flat in int matIndex;
-in vec4 matProp[6];
+in vec4 matProp[MAT_PROP_COUNT];
 
 out vec4 fColor;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
+struct light
+{
+	int type;//0=empty (default),  1=ambient, 2=directional, 3=point, 4=spot
+	vec3 location,direction;//direction ignored if not spotlight; location ignored if ambient or directional
+	float angle;//spotlight only
+	float attenuation;//ignored on ambient
+	//bool lightmask[10];
+	vec4 color;
+	vec4 diffuseMultiply;//ignored on ambient
+	vec4 specularMultiply;//ignored on ambient
+	float shininess;//ignored on ambient
+	int negativeHandler; //0=no change (allow negatives), 1=clamp (min 0), 2=clamp negative (max 0), 3=absolute value
+	int negativeHandlerAlt; //same as negative handler but applies to specular only
+};
 
+uniform light lights[LIGHT_COUNT];
+uniform int maxLightIndex;
 
 uniform sampler2D baseImage;
 uniform sampler2D normalMap;
@@ -219,7 +239,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 	return r;
 }
 
-vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
+vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos){
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
@@ -230,7 +250,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
 }
 
 //no parallax
-vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewPos){
+vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos){
 	vec3 norm = (texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map

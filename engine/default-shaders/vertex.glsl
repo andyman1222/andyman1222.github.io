@@ -2,6 +2,9 @@
 
 precision mediump float;
 
+const int LIGHT_COUNT=64;
+const int MAT_PROP_COUNT=6;
+
 in vec4 coordinates;
 in vec3 inNormal;
 in vec2 inTexCoord;
@@ -9,12 +12,7 @@ in vec3 inTangent;
 //in vec3 inBiTangent;
 //attribute vec3 inNormal;
 in int inMatIndex;
-in vec4 inMatProp0;
-in vec4 inMatProp1;
-in vec4 inMatProp2;
-in vec4 inMatProp3;
-in vec4 inMatProp4;
-in vec4 inMatProp5;
+in vec4 inMatProp[MAT_PROP_COUNT];
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
@@ -29,9 +27,9 @@ out vec3 normal;
 out vec3 position;
 out mat3 TBN;
 flat out int matIndex;
-out vec4 matProp[6];
+out vec4 matProp[MAT_PROP_COUNT];
 out vec3 adjCameraPos;
-
+out vec3 lightPosAdj[LIGHT_COUNT];
 
 struct light
 {
@@ -70,12 +68,11 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = N;
 
-    matProp[0] = inMatProp0;
-    matProp[1] = inMatProp1;
-    matProp[2] = inMatProp2;
-    matProp[3] = inMatProp3;
-    matProp[4] = inMatProp4;
-    matProp[5] = inMatProp5;
+    for(int i = 0; i < MAT_PROP_COUNT; i++)
+        matProp[i] = inMatProp[i];
+
+    for(int i = 0; i < LIGHT_COUNT; i++)
+        lightPosAdj[i] = TBN*lights[i].location;
 
     matIndex = inMatIndex;
 
