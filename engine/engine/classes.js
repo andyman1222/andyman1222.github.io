@@ -295,7 +295,7 @@ class _Buffer {
 	_setViewMatrix(v, p) {
 		this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
 		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(inverse(transpose(v))))
-		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
+		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(mult(p, vec3(1,1,-1))))
 	}
 
 	_setProjMatrix(p) {
