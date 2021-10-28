@@ -717,7 +717,7 @@ class _Object extends _Primitive {
 
 		//mat4 generates matrix by cols, then rows
 		//equation from Wikipedia
-		var newMat = this._getModelMat()
+		var newMat = this._getModelMat(true)
 		var newTrans = mat4ToTransform(newMat)
 
 		//(newMat)
