@@ -85,7 +85,7 @@ struct sMat{
 	vec4 specular;
 };
 
-sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
+sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 	sMat r;
 	r.ambient=vec4(0.,0.,0.,1.);
 	r.diffuse=vec4(0.,0.,0.,1.);
@@ -149,8 +149,8 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(lights[x].location-position);
-			vec3 v_surfaceToView=(cameraPos-position);
+			vec3 v_surfaceToLight=((TBN*lights[x].location)-position);
+			vec3 v_surfaceToView=(viewPOs-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 halfVector=normalize(surfaceToLightDirection+surfaceToViewDirection);
@@ -248,7 +248,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos){
 
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
-	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
+	vec3 norm = normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
@@ -266,17 +266,17 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 
 void main(void){
 vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
+vec3 cp = TBN * cameraPos;
 switch(matIndex){
 	case -1: //nodraw
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp,normal,position);
+	fColor=standardMaterial(matProp,normal,position, cp);
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(TBN*(cameraPos)-TBN*(position)), TBN*normal, matProp[4][1], matProp[4][2], matProp[4][3]);
-	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
+	txc = parallax(txc, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
