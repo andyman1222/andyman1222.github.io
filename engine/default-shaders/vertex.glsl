@@ -45,9 +45,9 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
 
-    position = TBN*(viewMatrix*coordinates.xyz);
+    position = TBN*(viewMatrix*coordinates).xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
-    normal = TBN*inNormal;
+    normal = TBN*N;
 
     matProp[0] = inMatProp0;
     matProp[1] = inMatProp1;
