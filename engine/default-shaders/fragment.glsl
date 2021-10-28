@@ -150,7 +150,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			//TODO: implement? For now just use point light implementation
 			case 3://point
 			vec3 v_surfaceToLight=(lights[x].location-position);
-			vec3 v_surfaceToView=(cameraPos*vec3(1.,1.,-1.)-position);
+			vec3 v_surfaceToView=(cameraPos-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 halfVector=normalize(surfaceToLightDirection+surfaceToViewDirection);
