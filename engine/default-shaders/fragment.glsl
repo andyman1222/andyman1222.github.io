@@ -246,40 +246,16 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos){
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
-//with parallax
-//There's some sort of error I have no idea about so for now it's disabled
-
-vec4 standardImageFull(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewdir, float min, float max, float scale){
-	vec2 txp = (tx*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
-	vec2 txCoords = parallax(txp, viewdir, min, max, scale);
-	vec3 norm = TBN * normalize(texture(normalMap, txCoords).rgb*2.-1.);
-	sMat mat = getStandardMaterial(mp[4], norm, pos);
-	vec4 txDiff = texture(diffuseMap, txCoords); //AO map
-	//vec4 txDiff = vec4(1.,1.,1.,1.);
-	vec4 txSpec = texture(roughnessMap, txCoords)*mp[2];
-	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
-	//vec4 txSpec = vec4(1.,1.,1.,1.);
-	vec4 txBase = texture(baseImage, txCoords)*mp[0];
-	vec4 amb = mat.ambient*mp[3]*txDiff;
-	vec4 dif = mat.diffuse*mp[1];
-	vec4 spe = mat.specular*txSpec;
-	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)).rgb,
-	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
-	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
-	//return tmp;
-}
-
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
-	vec2 txCoords = (tx*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
-	vec3 norm = TBN * normalize(texture(normalMap, txCoords).rgb*2.-1.);
+	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
-	vec4 txDiff = texture(diffuseMap, txCoords); //AO map
+	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
-	vec4 txSpec = texture(roughnessMap, txCoords)*mp[2];
+	vec4 txSpec = texture(roughnessMap, tx)*mp[2];
 	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
 	//vec4 txSpec = vec4(1.,1.,1.,1.);
-	vec4 txBase = texture(baseImage, txCoords)*mp[0];
+	vec4 txBase = texture(baseImage, tx)*mp[0];
 	vec4 amb = mat.ambient*mp[3]*txDiff;
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*txSpec;
@@ -289,7 +265,7 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 }
 
 void main(void){
-
+vec2 txCoords = (texCoord*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
 switch(matIndex){
 	case -1: //nodraw
 	return;
@@ -299,15 +275,16 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture (temp: unparallaxed texture)
+	txCoords = parallax(txCoords, (cameraPos*vec3(1.,1.,-1.)-position), -1., -1., -1.);
 	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, position, texCoord);
+	fColor = standardImage(matProp, position, txCoords);
 	break;
 
 	case 4: //unlit texture, no parallax
-	fColor = texture(baseImage, (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3])) * matProp[0];
+	fColor = texture(baseImage, txCoords) * matProp[0];
 	break;
 
 	case 0: default: //solid color
