@@ -46,7 +46,7 @@ void main(void) {
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
-
+    
     position = TBN*coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
@@ -62,5 +62,5 @@ void main(void) {
 
     texCoord = inTexCoord;
 
-    adjCameraPos = (normalMatrix * vec4(cameraPos, 1.)).xyz;
+    adjCameraPos = TBN*(normalMatrix * vec4(cameraPos, 1.)).xyz;
 }

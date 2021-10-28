@@ -266,7 +266,7 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewPos){
 
 void main(void){
 vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
-vec3 cp = TBN * adjCameraPos;
+vec3 cp = adjCameraPos;
 switch(matIndex){
 	case -1: //nodraw
 	return;
