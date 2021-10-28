@@ -41,7 +41,7 @@ uniform sampler2D roughnessMap;//light multiplier
 
 //uniform sampler2D miscTextures[11];
 
-vec2 parallax(vec2 tx, vec3 viewDir, float minLayers, float maxLayers, float heightScale)
+vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers, float heightScale)
 {
 	float minl=8.;
 	if(minLayers>0.) minl=minLayers;
@@ -52,7 +52,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, float minLayers, float maxLayers, float hei
 	float hs = 1.;
 	if(heightScale>0.) hs=heightScale;
 
-	float nl = mix(maxl, minl, max(dot(vec3(0.0, 0.0, 1.0), viewDir), 0.0));
+	float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
@@ -277,7 +277,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture (temp: unparallaxed texture)
-	txCoords = parallax(txCoords, (TBN*cameraPos*vec3(1.,1.,-1.)-TBN*position), -1., -1., -1.);
+	txCoords = parallax(txCoords, (TBN*cameraPos*vec3(1.,1.,-1.)-TBN*position), normal, -1., -1., -1.);
 	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
 	//break;
 
