@@ -12,7 +12,12 @@ in vec3 inTangent;
 //in vec3 inBiTangent;
 //attribute vec3 inNormal;
 in int inMatIndex;
-in vec4 inMatProp[MAT_PROP_COUNT];
+in vec4 inMatProp0;//screw GLSL ES not supporting in attribute arrays
+in vec4 inMatProp1;
+in vec4 inMatProp2;
+in vec4 inMatProp3;
+in vec4 inMatProp4;
+in vec4 inMatProp5;
 
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
@@ -46,7 +51,7 @@ struct light
 	int negativeHandlerAlt; //same as negative handler but applies to specular only
 };
 
-uniform light lights[64];
+uniform light lights[LIGHT_COUNT];
 uniform int maxLightIndex;
 
 void main(void) {
@@ -64,15 +69,19 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     
-    position = viewMatrix * coordinates.xyz;
+    position = (viewMatrix * coordinates).xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = N;
 
-    for(int i = 0; i < MAT_PROP_COUNT; i++)
-        matProp[i] = inMatProp[i];
+        matProp0 = inMatProp[0];
+        matProp1 = inMatProp[1];
+        matProp2 = inMatProp[2];
+        matProp3 = inMatProp[3];
+        matProp4 = inMatProp[4];
+        matProp5 = inMatProp[5];
 
     for(int i = 0; i < LIGHT_COUNT; i++)
-        lightPosAdj[i] = TBN*lights[i].location;
+        lightPosAdj[i] = TBN*(lights[i].location*vec3(1.,1.,-1.));
 
     matIndex = inMatIndex;
 

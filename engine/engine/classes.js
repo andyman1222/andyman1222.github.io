@@ -215,7 +215,7 @@ class _Buffer {
 		for (var i = 0; i < matParamCount; i++) {
 			this._matParamsBufs.push(this._gTarget.createBuffer())
 			if (!(matStr instanceof Array)) {
-				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "[" + i + "]"));
+				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
 				if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr + "" + i + ": unknown/invalid shader location");
 			}
 			else {

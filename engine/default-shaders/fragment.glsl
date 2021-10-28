@@ -152,7 +152,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=((TBN*(lights[x].location*vec3(1.,1.,-1.)))-position);
+			vec3 v_surfaceToLight=(lightPosAdj[x]-position);
 			vec3 v_surfaceToView=(viewPos-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
