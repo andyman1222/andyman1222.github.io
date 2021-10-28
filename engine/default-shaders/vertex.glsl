@@ -50,7 +50,7 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     
-    position = (viewMatrix * coordinates).xyz;
+    position = coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = N;
 
