@@ -236,8 +236,8 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 	return r;
 }
 
-vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos){
-	sMat mat = getStandardMaterial(mp[4], norm, pos);
+vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
+	sMat mat = getStandardMaterial(mp[4], norm, pos, viewPos);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
