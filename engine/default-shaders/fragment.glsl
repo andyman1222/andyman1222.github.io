@@ -91,7 +91,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 	r.diffuse=vec4(0.,0.,0.,1.);
 	r.specular=vec4(0.,0.,0.,1.);
 	vec3 N=normalize(norm);
-	vec3 C = TBN*cameraPos*vec3(1.,1.,-1.);
+	vec3 C = TBN*cameraPos;
 	for(int x=0;x<=maxLightIndex;x++){
 		switch(lights[x].type){
 			case 1://ambient
@@ -149,7 +149,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=((TBN*lights[x].location)-position);
+			vec3 v_surfaceToLight=((TBN*lights[x].location*vec3(1.,1.,-1.))-position);
 			vec3 v_surfaceToView=(C-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
