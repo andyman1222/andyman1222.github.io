@@ -43,6 +43,7 @@ uniform sampler2D roughnessMap;//light multiplier
 
 vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers, float heightScale)
 {
+
 	float minl=8.;
 	if(minLayers>0.) minl=minLayers;
 
@@ -60,14 +61,14 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	vec2 deltaTexCoord=P/nl;
 	vec2 currentTexCoords=tx;
 	
-	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
+	float currentDepthMapValue=1-texture(depthMap,currentTexCoords).r;
 	
 	for(float i = 0.; i < nl; i++)
 	{
 		// shift texture coordinates along direction of P
 		currentTexCoords-=deltaTexCoord;
 		// get depthmap value at current texture coordinates
-		currentDepthMapValue=texture(depthMap,currentTexCoords).r;
+		currentDepthMapValue=1-texture(depthMap,currentTexCoords).r;
 		// get depth of next layer
 		currentLayerDepth+=layerDepth;
 		if(currentLayerDepth>currentDepthMapValue)
@@ -76,7 +77,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	
 	vec2 prevTexCoord=currentTexCoords+deltaTexCoord;
 	float next=currentDepthMapValue-currentLayerDepth;
-	float prev=texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
+	float prev=1-texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
 	float weight=next/(next-prev);
 	return mix(currentTexCoords,prevTexCoord,weight);
 }
