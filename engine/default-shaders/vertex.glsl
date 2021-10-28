@@ -73,12 +73,12 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = N;
 
-        matProp0 = inMatProp[0];
-        matProp1 = inMatProp[1];
-        matProp2 = inMatProp[2];
-        matProp3 = inMatProp[3];
-        matProp4 = inMatProp[4];
-        matProp5 = inMatProp[5];
+        matProp[0] = inMatProp0;
+        matProp[1] = inMatProp1;
+        matProp[2] = inMatProp2;
+        matProp[3] = inMatProp3;
+        matProp[4] = inMatProp4;
+        matProp[5] = inMatProp5;
 
     for(int i = 0; i < LIGHT_COUNT; i++)
         lightPosAdj[i] = TBN*(lights[i].location*vec3(1.,1.,-1.));
