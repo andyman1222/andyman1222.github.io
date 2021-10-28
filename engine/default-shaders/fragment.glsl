@@ -50,7 +50,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	float maxl = 32.;
 	if(maxLayers>0.) maxl=maxLayers;
 
-	float hs = 1;
+	float hs = 1.;
 	if(heightScale>0.) hs=heightScale;
 
 	float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
