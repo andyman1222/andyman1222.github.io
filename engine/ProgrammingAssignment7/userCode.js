@@ -80,7 +80,7 @@ function userMouseEvent(e) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
 						_mainCamera._clearDebug()
 						var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
-						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera._getWorldTransform().pos])
+						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1), fastNorm), [mousePos, _mainCamera._getWorldTransform().pos])
 					}
 					rClick = 1;
 				}
