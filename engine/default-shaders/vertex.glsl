@@ -34,9 +34,9 @@ out vec3 adjCameraPos;
 
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
-    vec3 T = normalize(vec4(inTangent, 0.0).xyz);
+    vec3 T = normalize(inTangent);
     //vec3 T = normalize(inTangent);
-    vec3 N = normalize(vec4(inNormal, 0.0).xyz);
+    vec3 N = normalize(inNormal);
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
