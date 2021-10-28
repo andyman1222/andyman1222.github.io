@@ -32,11 +32,30 @@ flat out int matIndex;
 out vec4 matProp[6];
 out vec3 adjCameraPos;
 
+
+struct light
+{
+	int type;//0=empty (default),  1=ambient, 2=directional, 3=point, 4=spot
+	vec3 location,direction;//direction ignored if not spotlight; location ignored if ambient or directional
+	float angle;//spotlight only
+	float attenuation;//ignored on ambient
+	//bool lightmask[10];
+	vec4 color;
+	vec4 diffuseMultiply;//ignored on ambient
+	vec4 specularMultiply;//ignored on ambient
+	float shininess;//ignored on ambient
+	int negativeHandler; //0=no change (allow negatives), 1=clamp (min 0), 2=clamp negative (max 0), 3=absolute value
+	int negativeHandlerAlt; //same as negative handler but applies to specular only
+};
+
+uniform light lights[64];
+uniform int maxLightIndex;
+
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
-    vec3 T = normalize(normalMatrix*vec4(inTangent, 1.)).xyz;
+    vec3 T = normalize(inTangent);
     //vec3 T = normalize(inTangent);
-    vec3 N = normalize(normalMatrix*vec4(inNormal, 1.)).xyz;
+    vec3 N = normalize(inNormal);
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
@@ -47,7 +66,7 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     
-    position = TBN*coordinates.xyz;
+    position = viewMatrix * coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = N;
 
