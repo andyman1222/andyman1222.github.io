@@ -600,7 +600,7 @@ class _Camera extends _Primitive {
 								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
 								this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
-								this._buf_tangents.push(vec3(0, 1, 0))
+								this._buf._tangents.push(vec3(0, 1, 0))
 								//this._buf_bitangents.push(vec3(0, 0, 1))
 							}
 							this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
