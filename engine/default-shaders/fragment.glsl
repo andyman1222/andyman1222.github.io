@@ -277,8 +277,8 @@ switch(matIndex){
 	fColor=standardMaterial(matProp,normal,position);
 	break;
 
-	case 2: //parallaxed texture (temp: unparallaxed texture)
-	txCoords = parallax(txCoords, cameraPos-position, -normal, -1., -1., -1.);
+	case 2: //parallaxed texture
+	txCoords = parallax(txCoords, cameraPos-position, normal, -1., -1., -1.);
 	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
 	//break;
 
