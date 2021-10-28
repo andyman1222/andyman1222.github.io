@@ -62,5 +62,5 @@ void main(void) {
 
     texCoord = inTexCoord;
 
-    adjCameraPos = normalMatrix * cameraPos;
+    adjCameraPos = (normalMatrix * vec4(cameraPos, 1.)).xyz;
 }
