@@ -55,7 +55,6 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	_gl.enable(_gl.DEPTH_TEST);
 	_gl.enable(_gl.CULL_FACE);
-	_gl.frontFace(_gl.CW)
 	_gl.colorMask(true, true, true, true);
 	_gl.enable(_gl.BLEND)
 	_gl.blendFunc(_gl.SRC_ALPHA, _gl.ONE_MINUS_SRC_ALPHA);
