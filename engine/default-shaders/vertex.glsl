@@ -49,7 +49,7 @@ void main(void) {
     
     position = TBN*coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
-    normal = N;
+    normal = TBN*N;
 
     matProp[0] = inMatProp0;
     matProp[1] = inMatProp1;
