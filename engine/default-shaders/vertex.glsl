@@ -41,7 +41,7 @@ void main(void) {
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
 
-    TBN = transpose(mat3(T, B, N));
+    TBN = mat3(T, B, N);
 
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
