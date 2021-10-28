@@ -41,7 +41,7 @@ uniform sampler2D roughnessMap;//light multiplier
 
 //uniform sampler2D miscTextures[11];
 
-vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, float heightScale)
+vec2 parallax(vec2 tx, vec3 viewDir, float minLayers, float maxLayers, float heightScale)
 {
 	float minl=8.;
 	if(minLayers>0.) minl=minLayers;
@@ -58,7 +58,7 @@ vec2 parallax(vec2 TexCoord, vec3 viewDir, float minLayers, float maxLayers, flo
 	float currentLayerDepth=0.;
 	vec2 P=viewDir.xy*hs;
 	vec2 deltaTexCoord=P/nl;
-	vec2 currentTexCoords=TexCoord;
+	vec2 currentTexCoords=tx;
 	
 	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 	
