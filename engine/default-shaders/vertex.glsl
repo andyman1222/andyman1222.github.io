@@ -19,6 +19,7 @@ in vec4 inMatProp5;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
+uniform vec3 cameraPos;
 
 //varying vec3 normal;
 out vec2 texCoord;
@@ -29,12 +30,13 @@ out vec3 position;
 out mat3 TBN;
 flat out int matIndex;
 out vec4 matProp[6];
+out vec3 adjCameraPos;
 
 void main(void) {
     gl_Position = projMatrix * viewMatrix * coordinates;
-    vec3 T = normalize((normalMatrix*vec4(inTangent, 0.0)).xyz);
+    vec3 T = normalize(vec4(inTangent, 0.0).xyz);
     //vec3 T = normalize(inTangent);
-    vec3 N = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
+    vec3 N = normalize(vec4(inNormal, 0.0).xyz);
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
@@ -45,7 +47,7 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
 
-    position = TBN*(viewMatrix*coordinates).xyz;
+    position = TBN*coordinates.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
 
@@ -59,4 +61,6 @@ void main(void) {
     matIndex = inMatIndex;
 
     texCoord = inTexCoord;
+
+    adjCameraPos = normalMatrix * cameraPos;
 }
