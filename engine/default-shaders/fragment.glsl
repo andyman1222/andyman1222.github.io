@@ -85,7 +85,7 @@ struct sMat{
 	vec4 specular;
 };
 
-sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
+sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 	sMat r;
 	r.ambient=vec4(0.,0.,0.,1.);
 	r.diffuse=vec4(0.,0.,0.,1.);
@@ -237,7 +237,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 }
 
 vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
-	sMat mat = getStandardMaterial(mp[4], norm, pos, viewPos);
+	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
@@ -249,7 +249,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos, vec3 viewPos){
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx, vec3 viewPos){
 	vec3 norm = normalize(TBN*(texture(normalMap, tx).rgb*2.-1.));
-	sMat mat = getStandardMaterial(mp[4], norm, pos, viewPos);
+	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
 	vec4 txSpec = texture(roughnessMap, tx)*mp[2];
