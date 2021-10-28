@@ -20,18 +20,18 @@ class _Primitive {
 	/**
 	 * gets transform adjusted by all parents
 	 */
-	_getWorldTransformMat() {
+	_getModelMat(flipZ=false) {
 
 		var newMat = mult(
-			mult(translate(this._transform.pos[0], this._transform.pos[1], this._transform.pos[2]),
+			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ?-1:1)*this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
 			quatToMat4(this._transform.rot))
-		if (this._parent != null) return mult(this._parent._getWorldTransformMat(), newMat)
+		if (this._parent != null) return mult(this._parent._getModelMat(), newMat)
 		else return newMat
 	}
 
-	_getWorldTransform() {
-		return mat4ToTransform(this._getWorldTransformMat())
+	_getWorldTransform(flipZ=false) {
+		return mat4ToTransform(this._getModelMat(flipZ))
 	}
 
 	/**
@@ -44,7 +44,7 @@ class _Primitive {
 		this._detach("keepWorld")
 		var wt = this._getWorldTransform()
 		var pt = p._getWorldTransform()
-		var it = mat4ToTransform(inverse4(p._getWorldTransformMat()))
+		var it = mat4ToTransform(inverse4(p._getModelMat()))
 		switch (attachType.pos) {
 			case "keepWorld":
 				this._transform.pos = rotateAbout(subtract(wt.pos, pt.pos), it.rot)
@@ -294,8 +294,11 @@ class _Buffer {
 
 	_setViewMatrix(v, p) {
 		this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
-		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(inverse(transpose(v))))
 		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(mult(p, vec3(1,1,-1))))
+	}
+
+	_setModelMatrix(m) {
+		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(inverse(transpose(m))))
 	}
 
 	_setProjMatrix(p) {
@@ -575,9 +578,9 @@ class _Camera extends _Primitive {
 								for (var ii = 0; ii < i.length; ii++) {
 									var m = current.mats[current.matIndexes[g][ii]]
 									this._buf._loadMaterial(m, current.textureIndexes[g] != -1, this._wireframe || this._noLighting)
-									this._buf._points.push(mult(current.points[i[ii]], vec4(1, 1, -1, 1)))
-									this._buf._normals.push(mult(current.normals[g][ii], vec3(1, 1, -1)))
-									this._buf._tangents.push(mult(current.tangents[g][ii], vec3(1, 1, -1)))
+									this._buf._points.push(current.points[i[ii]])
+									this._buf._normals.push(current.normals[g][ii])
+									this._buf._tangents.push(current.tangents[g][ii])
 									//this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
 								}
@@ -593,7 +596,7 @@ class _Camera extends _Primitive {
 							for (var i = 0; i < current.bounds.length; i++) {
 								if (i.length + this._buf._points.length > this._buf._bufLimit)
 									this._buf._renderData();
-								this._buf._points.push(mult(current.bounds[i], vec4(1, 1, -1, 1)))
+								this._buf._points.push(current.bounds[i])
 								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
 								this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
@@ -714,7 +717,7 @@ class _Object extends _Primitive {
 
 		//mat4 generates matrix by cols, then rows
 		//equation from Wikipedia
-		var newMat = this._getWorldTransformMat()
+		var newMat = this._getModelMat(true)
 		var newTrans = mat4ToTransform(newMat)
 
 		//(newMat)
