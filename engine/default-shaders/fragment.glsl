@@ -265,7 +265,7 @@ vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
 }
 
 void main(void){
-vec2 txCoords = (texCoord*vec2(mp[5][0], mp[5][1]))+vec2(mp[5][2], mp[5][3]);
+vec2 txCoords = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
 switch(matIndex){
 	case -1: //nodraw
 	return;
