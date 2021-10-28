@@ -91,7 +91,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 	r.diffuse=vec4(0.,0.,0.,1.);
 	r.specular=vec4(0.,0.,0.,1.);
 	vec3 N=normalize(norm);
-	
+	vec3 C = TBN*cameraPos*vec3(1.,1.,-1.);
 	for(int x=0;x<=maxLightIndex;x++){
 		switch(lights[x].type){
 			case 1://ambient
@@ -120,7 +120,7 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			break;
 
 			case 2://directional
-			float NdotL=dot(-1.*lights[x].direction,N);
+			float NdotL=dot(-1.*(TBN*lights[x].direction),N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -149,8 +149,8 @@ sMat getStandardMaterial(vec4 mp5, vec3 norm, vec3 pos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(lights[x].location*vec3(1.,1.,-1.)-position);
-			vec3 v_surfaceToView=(cameraPos*vec3(1.,1.,-1.)-position);
+			vec3 v_surfaceToLight=((TBN*lights[x].location*vec3(1.,1.,-1.))-position);
+			vec3 v_surfaceToView=(C-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 halfVector=normalize(surfaceToLightDirection+surfaceToViewDirection);
@@ -248,7 +248,7 @@ vec4 standardMaterial(vec4 mp[6], vec3 norm, vec3 pos){
 
 //no parallax
 vec4 standardImage(vec4 mp[6], vec3 pos, vec2 tx){
-	vec3 norm = TBN * normalize(texture(normalMap, tx).rgb*2.-1.);
+	vec3 norm = normalize(texture(normalMap, tx).rgb*2.-1.);
 	sMat mat = getStandardMaterial(mp[4], norm, pos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
@@ -275,7 +275,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(TBN*(cameraPos*vec3(1.,1.,-1.))-TBN*(position)), TBN*normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize((cameraPos*vec3(1.,1.,-1.))-(position)), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//fColor = standardImageFull(matProp,position,texCoord,(cameraPos*vec3(1.,1.,-1.)-position),-1.,-1.,-1.);
 	//break;
 
