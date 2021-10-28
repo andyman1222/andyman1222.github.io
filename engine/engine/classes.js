@@ -297,8 +297,8 @@ class _Buffer {
 		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(mult(p, vec3(1,1,-1))))
 	}
 
-	_setModelMatrix(m) {
-		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(inverse(transpose(m))))
+	_setNormalMatrix(m) {
+		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(m))
 	}
 
 	_setProjMatrix(p) {
@@ -557,7 +557,7 @@ class _Camera extends _Primitive {
 				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
 					if (o._visible) {
 						var current = o._localToWorld();
-
+						this._buf._setNormalMatrix(inverse(transpose(current.matrix)))
 						for (var g = 0; g < current.indexes.length; g++) {
 							var i = current.indexes[g]
 
@@ -727,7 +727,7 @@ class _Object extends _Primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible }
+		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible, matrix: newMat}
 
 		for (var i = 0; i < this._pointInfo.length; i++) {
 			var tmp = mult(newMat, vec3to4(this._pointInfo[i]))
