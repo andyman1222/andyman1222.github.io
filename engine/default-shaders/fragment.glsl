@@ -248,8 +248,8 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 	return r;
 }
 
-vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos){
-	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
+vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
+	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
@@ -259,9 +259,9 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 }
 
 //no parallax
-vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos){
+vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
 	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.);
-	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
+	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
 	vec4 txSpec = texture(roughnessMap, tx)*mp[2];
@@ -284,7 +284,7 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp, normalT, positionT, cameraPosT);
+	fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
 	break;
 
 	case 2: //parallaxed texture
@@ -292,7 +292,7 @@ switch(matIndex){
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionT, txc, cameraPosT);
+	fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
 	break;
 
 	case 4: //unlit texture, parallax
