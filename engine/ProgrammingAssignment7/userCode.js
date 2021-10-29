@@ -127,20 +127,20 @@ function userTick(delta, time) {
 			}
 			else {
 				if ((i == 87) || (i == 119)) //w
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, forward(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 65) || (i == 97))//a
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, right(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 83) || (i == 115))//s
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, forward(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 68) || (i == 100))//d
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, right(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 81))//q
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, up(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, up(altCamera._transform.rot)))
 
 				if ((i == 69))//e
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, up(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, up(altCamera._transform.rot)))
 			}
 
 
