@@ -156,7 +156,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			vec3 v_surfaceToLight=(TBN*lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
 			vec3 v_surfaceToView=viewPos-position;
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
-			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
+			vec3 surfaceToViewDirection=-normalize(v_surfaceToView);
 			vec3 refV = reflect(-surfaceToLightDirection, N);
 
 			float diffuse=dot(N,surfaceToLightDirection);
