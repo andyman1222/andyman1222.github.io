@@ -548,7 +548,7 @@ class _Camera extends _Primitive {
 	_pushToBuffer() {
 		if (this._enabled) {
 			this._buf._clearBuffers();
-			this._buf._setViewMatrix(this._getViewMat(), this._getWorldTransform().pos)
+			this._buf._setViewMatrix(this._getViewMat(), this._getWorldTransform(true).pos)
 
 			//adding objects
 
