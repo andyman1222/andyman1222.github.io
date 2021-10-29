@@ -64,7 +64,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_gl.useProgram(_program);
 
 	_bData = new _Buffer(_gl, _program, 
-		"coordinates",
+		"inPointsL",
 		"inMatProp",
 		6,
 		"inMatIndex",
@@ -76,10 +76,10 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 		"modelMatrix",
 		"lights",
 		"maxLightIndex",
-		"inNormal",
-		"inTangent",
+		"inNormalL",
+		"inTangentL",
 		"inTexCoord",
-		"inCameraPos");
+		"inCameraPosW");
 
 	_mainCamera = new _Camera(_bData);
 	

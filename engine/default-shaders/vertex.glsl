@@ -5,10 +5,10 @@ precision mediump float;
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;
 
-in vec3 coordinates;
-in vec3 inNormal;
+in vec3 inPointsL;
+in vec3 inNormalL;
 in vec2 inTexCoord;
-in vec3 inTangent;
+in vec3 inTangentL;
 //in vec3 inBiTangent;
 //attribute vec3 inNormal;
 in int inMatIndex;
@@ -23,21 +23,26 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
 uniform mat4 modelMatrix;
-uniform vec3 inCameraPos;
+uniform vec3 inCameraPosW;
 
 //varying vec3 normal;
 out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
-out vec3 normal;
-out vec3 position;
+out vec3 positionT;
+out vec3 positionW;
+out vec3 cameraPosT;
+out vec3 cameraPosW;
+out vec3 normalT;
+out vec3 normalW;
+
 out mat3 TBN;
 flat out int matIndex;
 out vec4 matProp[MAT_PROP_COUNT];
-out vec3 cameraPos;
+
 
 void main(void) {
-    vec4 coords = modelMatrix * vec4(coordinates, 1.);
+    vec4 coordsW = modelMatrix * vec4(inPointsL, 1.);
     gl_Position = projMatrix * viewMatrix * coords;
     vec3 T = normalize((normalMatrix*vec4(inTangent, 0.)).xyz);
     //vec3 T = normalize(inTangent);
@@ -51,12 +56,14 @@ void main(void) {
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
-    
-    position = TBN*coords.xyz;
-    //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
-    normal = TBN*N;
+    positionT = TBN*coordsW.xyz;
+    positionW = coordsW.xyz;
+    cameraPosT = TBN*inCameraPosW;
+    cameraPosW=inCameraPosW;
+    normalT = TBN*N;
+    normalW = N;
 
-    cameraPos = TBN*cameraPos;
+    
 
     matProp[0] = inMatProp0;
     matProp[1] = inMatProp1;

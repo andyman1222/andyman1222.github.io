@@ -264,8 +264,8 @@ class _Buffer {
 		for (var i = 0; i < _maxLightCount; i++) {
 			this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
 			if (this._lightTypeArrayLoc == -1) alert(lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
-			this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].location"))
-			this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].direction"))
+			this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].locationW"))
+			this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].directionW"))
 			this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].angle"))
 			this._lightAttenArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].attenuation"))
 			this._lightColorArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].color"))

@@ -5,12 +5,14 @@ precision mediump float;
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;
 in vec2 texCoord;
-
-in vec3 normal;
-in vec3 position;
 in mat3 TBN;
-in vec3 cameraPos;
-in vec3 worldNormal;
+
+in vec3 positionT;
+in vec3 positionW;
+in vec3 cameraPosT;
+in vec3 cameraPosW;
+in vec3 normalT;
+in vec3 normalW;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
@@ -21,7 +23,7 @@ out vec4 fColor;
 struct light
 {
 	lowp int type;//0=empty (default),  1=ambient, 2=directional, 3=point, 4=spot
-	vec3 location,direction;//direction ignored if not spotlight; location ignored if ambient or directional
+	vec3 locationW, directionW;//direction ignored if not spotlight; location ignored if ambient or directional
 	float angle;//spotlight only
 	float attenuation;//ignored on ambient
 	//bool lightmask[10];
@@ -124,7 +126,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			break;
 
 			case 2://directional
-			float NdotL=dot(TBN*(vec3(-1,-1,1)*lights[x].direction),N);
+			float NdotL=dot((vec3(-1,-1,1)*lights[x].directionW),N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -153,7 +155,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(TBN*lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
+			vec3 v_surfaceToLight=(lights[x].locationW)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
 			vec3 v_surfaceToView=viewPos-position;
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=-normalize(v_surfaceToView);
@@ -276,19 +278,19 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp,normal,position, cameraPos);
+	fColor=standardMaterial(matProp, normalW, , cameraPos);
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, -normalize(cameraPos-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosW-positionW), normalW, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, position, txc, cameraPos);
+	fColor = standardImage(matProp, positionW, txc, cameraPos);
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(txc, -normalize(cameraPos-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosW-positionW), normalW, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
