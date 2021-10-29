@@ -302,8 +302,7 @@ class _Buffer {
 
 	_setModelMatrix(m) {
 		this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
-		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(inverse(transpose(m))))
-	}
+		this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))	}
 
 	_setProjMatrix(p) {
 		this._gTarget.uniformMatrix4fv(this._projMatrix, false, flatten(p));
