@@ -271,25 +271,24 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos){
 void main(void){
 vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
 //vec2 txc = texCoord;
-vec3 cp = adjCameraPos;
 switch(matIndex){
 	case -1: //nodraw
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp,normal,position, cp);
+	fColor=standardMaterial(matProp,normal,position, adjCameraPos);
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(texCoord, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, normalize(-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, position, txc, cp);
+	fColor = standardImage(matProp, position, txc, adjCameraPos);
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(texCoord, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, normalize(-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
