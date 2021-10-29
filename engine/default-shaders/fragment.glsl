@@ -157,7 +157,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			vec3 v_surfaceToView=-normalize(position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
-			vec3 refV = reflect(-surfaceToLightDirection, N)
+			vec3 refV = reflect(-surfaceToLightDirection, N);
 
 			float diffuse=dot(N,surfaceToLightDirection);
 			float specular=0.;
