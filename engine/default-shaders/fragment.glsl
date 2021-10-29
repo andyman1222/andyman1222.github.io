@@ -10,6 +10,7 @@ in vec3 normal;
 in vec3 position;
 in mat3 TBN;
 in vec3 adjCameraPos;
+in vec3 worldNormal;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
@@ -280,7 +281,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(TBN*(cp-position)), normal*vec3(1,1,-1), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(TBN*(cp-position)), TBN*(normal*vec3(1,1,-1)), matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
