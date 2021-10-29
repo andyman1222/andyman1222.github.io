@@ -23,7 +23,7 @@ uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
 uniform mat4 modelMatrix;
-uniform vec3 cameraPos;
+uniform vec3 inCameraPos;
 
 //varying vec3 normal;
 out vec2 texCoord;
@@ -34,7 +34,7 @@ out vec3 position;
 out mat3 TBN;
 flat out int matIndex;
 out vec4 matProp[MAT_PROP_COUNT];
-out vec3 adjCameraPos;
+out vec3 cameraPos;
 
 void main(void) {
     vec4 coords = modelMatrix * vec4(coordinates, 1.);
