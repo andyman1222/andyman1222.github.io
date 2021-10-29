@@ -340,14 +340,15 @@ class _Buffer {
 			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
 	}
 
-	_loadMaterial(m, hasTexture = false, noLighting = false) {
+	_loadMaterial(m, hasTexture = false, noLighting = false, parallax = false) {
 		if (!noLighting) {
 			this._matIndicies.push(m._index)
 		}
 		else {
-			if (!hasTexture)
-				this._matIndicies.push(0)
-			else this._matIndicies.push(3)
+			if (hasTexture)
+				if(m._index == 2) this._matIndicies.push(4)
+				else this._matIndicies.push(5)
+			else this._matIndicies.push(0)
 		}
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i].push(m._parameters[i % m._parameters.length])
