@@ -709,7 +709,7 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex])
 
 				for (var ii = 0; ii < i.length; ii++) {
-					buf._loadMaterial(this._matInfo[d.matIndex[ii]%this._matInfo.length], d.textureIndex != -1, camera._wireframe || camera._noLighting)
+					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1, camera._wireframe || camera._noLighting)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
 						case _gl.TRIANGLES:
