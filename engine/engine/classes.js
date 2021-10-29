@@ -574,7 +574,7 @@ class _Camera extends _Primitive {
 				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
 					if (o._visible) {
 						o._setGraphicsData(this._buf, this);
-						if(this._render) buf._renderData();
+						if(this._render) this._buf._renderData();
 					}
 				}
 			});
