@@ -344,7 +344,7 @@ class _Buffer {
 			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
 	}
 
-	_loadMaterial(m, hasTexture = false, noLighting = false, parallax = false) {
+	_loadMaterial(m, hasTexture = false, noLighting = false) {
 		if (!noLighting) {
 			this._matIndicies.push(m._index)
 		}
@@ -569,7 +569,6 @@ class _Camera extends _Primitive {
 
 			//adding objects
 
-			//TODO: implement texcoord, normal, etc.
 			_objects.forEach((o) => {
 				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
 					if (o._visible) {
