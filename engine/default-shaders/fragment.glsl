@@ -56,7 +56,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	if(heightScale>0.) hs=heightScale;
 
 	//float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
-	float nl=32; //TEST
+	float nl=32.; //TEST
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
@@ -280,7 +280,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
