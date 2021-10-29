@@ -182,7 +182,8 @@ function init() {
 	generateMaze_()
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ pointIndex: tmp.index, matIndex: [1, 1, 1, 1, 1, 1, //bottom
+		{ pointIndex: tmp.index, matIndex: 
+			[1, 1, 1, 1, 1, 1, //bottom
 			0, 0, 0, 0, 0, 0, //top
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1,
