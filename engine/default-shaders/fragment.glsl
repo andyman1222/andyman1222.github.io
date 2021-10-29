@@ -280,7 +280,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(TBN*(cp-position)), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(TBN*(cp-position)), normal*vec3(1,1,-1), matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
