@@ -157,7 +157,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			vec3 v_surfaceToView=viewPos-position;
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=-normalize(v_surfaceToView);
-			vec3 refV = reflect(-surfaceToLightDirection, N);
+			vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
 			float diffuse=dot(N,surfaceToLightDirection);
 			float specular=0.;
@@ -166,16 +166,16 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 				
 				switch(lights[x].negativeHandlerAlt){
 					case 1:
-					specular=max(dot(surfaceToViewDirection, refV),0.);
+					specular=max(dot(N, halfVector),0.);
 					break;
 					case 2:
-					specular=min(dot(surfaceToViewDirection, refV),0.);
+					specular=min(dot(N, halfVector),0.);
 					break;
 					case 3:
-					specular=abs(dot(surfaceToViewDirection, refV));
+					specular=abs(dot(N, halfVector));
 					break;
 					case 0:default:
-					specular=dot(surfaceToViewDirection, refV);
+					specular=dot(N, halfVector);
 				}
 				specular=pow(specular,lights[x].shininess*mp5.r);
 			}
