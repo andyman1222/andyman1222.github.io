@@ -64,21 +64,21 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	vec2 deltaTexCoord=viewDir.xy * hs / (viewDir.z * nl);
 	vec2 currentTexCoords=tx;
 	
-	float currentDepthMapValue=1.-texture(depthMap,currentTexCoords).r;
+	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 	
 	while(currentDepthMapValue > currentLayerDepth)
     {
 		// shift texture coordinates along direction of P
 		currentTexCoords-=deltaTexCoord;
 		// get depthmap value at current texture coordinates
-		currentDepthMapValue=1.-texture(depthMap,currentTexCoords).r;
+		currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 		// get depth of next layer
 		currentLayerDepth+=layerDepth;
 	}
 	
 	vec2 prevTexCoord=currentTexCoords+deltaTexCoord;
 	float next=currentDepthMapValue-currentLayerDepth;
-	float prev=1.-texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
+	float prev=texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
 	float weight=next/(next-prev);
 	return mix(currentTexCoords,prevTexCoord,weight);
 }
@@ -153,7 +153,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
+			vec3 v_surfaceToLight=(TBN*lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
 			vec3 v_surfaceToView=(viewPos-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
@@ -252,7 +252,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos){
-	vec3 norm = TBN*((texture(normalMap, tx).rgb)*2.-1.);
+	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.);
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
@@ -281,7 +281,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(texCoord, normalize(((TBN*cp))), TBN*(normal), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
@@ -289,7 +289,7 @@ switch(matIndex){
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(texCoord, normalize(((TBN*cp))), TBN*(normal), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
