@@ -37,8 +37,8 @@ out vec4 matProp[MAT_PROP_COUNT];
 out vec3 adjCameraPos;
 
 void main(void) {
-    vec4 coords = viewMatrix * modelMatrix * vec4(coordinates, 1.);
-    gl_Position = projMatrix * coords;
+    vec4 coords = modelMatrix * vec4(coordinates, 1.);
+    gl_Position = projMatrix * viewMatrix * coords;
     vec3 T = normalize((normalMatrix*vec4(inTangent, 0.)).xyz);
     //vec3 T = normalize(inTangent);
     vec3 N = normalize((normalMatrix*vec4(inNormal, 0.)).xyz);
@@ -56,8 +56,7 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
 
-    adjCameraPos = TBN*cameraPos;
-    //adjCameraPos = vec3(0.,0.,0.);
+    cameraPos = TBN*cameraPos;
 
     matProp[0] = inMatProp0;
     matProp[1] = inMatProp1;

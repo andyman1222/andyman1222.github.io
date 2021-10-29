@@ -9,7 +9,7 @@ in vec2 texCoord;
 in vec3 normal;
 in vec3 position;
 in mat3 TBN;
-in vec3 adjCameraPos;
+in vec3 cameraPos;
 in vec3 worldNormal;
 
 flat in int matIndex;
@@ -124,7 +124,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			break;
 
 			case 2://directional
-			float NdotL=dot(TBN*lights[x].direction,N);
+			float NdotL=dot(TBN*(vec3(-1,-1,1)*lights[x].direction),N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -154,7 +154,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			//TODO: implement? For now just use point light implementation
 			case 3://point
 			vec3 v_surfaceToLight=(TBN*lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
-			vec3 v_surfaceToView=-normalize(position);
+			vec3 v_surfaceToView=-normalize(viewPos-position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 refV = reflect(-surfaceToLightDirection, N);
@@ -276,7 +276,7 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp,normal,position, adjCameraPos);
+	fColor=standardMaterial(matProp,normal,position, cameraPos);
 	break;
 
 	case 2: //parallaxed texture
@@ -284,7 +284,7 @@ switch(matIndex){
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, position, txc, adjCameraPos);
+	fColor = standardImage(matProp, position, txc, cameraPos);
 	break;
 
 	case 4: //unlit texture, parallax
