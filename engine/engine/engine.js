@@ -73,6 +73,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 		"projMatrix",
 		"viewMatrix",
 		"normalMatrix",
+		"modelMatrix",
 		"lights",
 		"maxLightIndex",
 		"inNormal",

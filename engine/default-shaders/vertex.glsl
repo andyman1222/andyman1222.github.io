@@ -22,6 +22,7 @@ in vec4 inMatProp5;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
+uniform mat4 modelMatrix;
 uniform vec3 cameraPos;
 
 //varying vec3 normal;
@@ -36,7 +37,7 @@ out vec4 matProp[MAT_PROP_COUNT];
 out vec3 adjCameraPos;
 
 void main(void) {
-    gl_Position = projMatrix * viewMatrix * coordinates;
+    gl_Position = projMatrix * viewMatrix * modelMatrix *  coordinates;
     vec3 T = normalize(inTangent);
     //vec3 T = normalize(inTangent);
     vec3 N = normalize(inNormal);

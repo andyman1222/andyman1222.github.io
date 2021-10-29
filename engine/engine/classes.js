@@ -20,17 +20,17 @@ class _Primitive {
 	/**
 	 * gets transform adjusted by all parents
 	 */
-	_getModelMat(flipZ=false) {
+	_getModelMat(flipZ = false) {
 
 		var newMat = mult(
-			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ?-1:1)*this._transform.pos[2]),
+			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ ? -1 : 1) * this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
 			quatToMat4(this._transform.rot))
 		if (this._parent != null) return mult(this._parent._getModelMat(flipZ), newMat)
 		else return newMat
 	}
 
-	_getWorldTransform(flipZ=false) {
+	_getWorldTransform(flipZ = false) {
 		return mat4ToTransform(this._getModelMat(flipZ))
 	}
 
@@ -174,6 +174,7 @@ class _Buffer {
 	_projMatrix;
 	_viewMatrix;
 	_normalMatrix;
+	_modelMatrix;
 	_lightTypeArrayLoc = [];
 	_lightLocArrayLoc = [];
 	_lightDirArrayLoc = [];
@@ -199,7 +200,7 @@ class _Buffer {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr) {
+	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, modelMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr) {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._posBuffer = this._gTarget.createBuffer();
@@ -245,6 +246,8 @@ class _Buffer {
 		if (this._viewMatrix == -1) alert(viewMatrixStr + ": unknown/invalid shader location");
 		this._normalMatrix = this._gTarget.getUniformLocation(this._program, normalMatrixStr);
 		if (this._normalMatrix == -1) alert(normalMatrixStr + ": unknown/invalid shader location");
+		this._modelMatrix = this._gTarget.getUniformLocation(this._program, modelMatrixStr);
+		if (this._modelMatrix == -1) alert(modelMatrixStr + ": unknown/invalid shader location");
 		this._lightIndLoc = this._gTarget.getUniformLocation(this._program, lightsIndexStr);
 		if (this._lightIndLoc == -1) alert(lightsIndexStr + ": unknown/invalid shader location");
 		this._inNormal = this._gTarget.getAttribLocation(this._program, normalStr);
@@ -297,8 +300,9 @@ class _Buffer {
 		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
 	}
 
-	_setNormalMatrix(m) {
-		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, flatten(m))
+	_setModelMatrix(m) {
+		this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
+		this._gTarget.uniformMatrix4fv(this._normalMatrix, false, inverse(transpose(flatten(m))))
 	}
 
 	_setProjMatrix(p) {
@@ -324,8 +328,8 @@ class _Buffer {
 						this._gTarget.uniform1iv(this._lightAltNegativeArrayLoc[x], new Int32Array([l._handleNegativeAlt]))
 					case 2:
 						var t = l._getWorldTransform()
-						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(mult(vec3(1,1,-1), forward(t.rot))))
-						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(mult(vec3(1,1,-1), t.pos)))
+						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(mult(vec3(1, 1, -1), forward(t.rot))))
+						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(mult(vec3(1, 1, -1), t.pos)))
 					case 1:
 						this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
 						break;
@@ -346,7 +350,7 @@ class _Buffer {
 		}
 		else {
 			if (hasTexture)
-				if(m._index == 2) this._matIndicies.push(4)
+				if (m._index == 2) this._matIndicies.push(4)
 				else this._matIndicies.push(5)
 			else this._matIndicies.push(0)
 		}
@@ -480,7 +484,19 @@ class _Bounds {
 	}
 
 	//defines points to draw _Bounds, manually
-	_getDrawBounds(multMat = vec3(1, 1, 1), boundsColor = vec4(1, 1, 0, 1)) {
+	_getDrawBounds(multMat = vec3(1, 1, 1)) {
+		var r = []
+		var tmp;
+		if (this._type == _Bounds._RECT) { //sphere TBD
+			tmp = _getRect(this._pos, this._extent);
+		}
+		for (var i = 0; i < tmp.index.length; i++)
+			r.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
+		return r
+	}
+
+	//defines points to draw _Bounds, manually
+	_getGraphicsDrawBounds(boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
 		var tmp;
 		r.colors.push(boundsColor)
@@ -488,7 +504,7 @@ class _Bounds {
 			tmp = _getRect(this._pos, this._extent);
 		}
 		for (var i = 0; i < tmp.index.length; i++)
-			r.points.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
+			r.points.push(vec3to4(tmp.points[tmp.index[i]]))
 		return r
 	}
 }
@@ -557,59 +573,8 @@ class _Camera extends _Primitive {
 			_objects.forEach((o) => {
 				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
 					if (o._visible) {
-						var current = o._localToWorld();
-						this._buf._setNormalMatrix(inverse(transpose(current.matrix)))
-						for (var g = 0; g < current.indexes.length; g++) {
-							var i = current.indexes[g]
-
-							if (i.length > this._buf._bufLimit)
-								console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
-							else {
-
-								if (((i.length + this._buf._points.length > this._buf._bufLimit) || current.textureIndexes[g] != -1) && this._render)
-									this._buf._renderData();
-
-
-								this._buf._offsets.push(i.length)
-								this._buf._types.push(this.wireframe ? this._buf._gTarget.LINE_LOOP : current.types[g])
-
-								if (current.textureIndexes[g] != -1)
-									this._buf._loadTexture(current.textures[current.textureIndexes[g]])
-
-								for (var ii = 0; ii < i.length; ii++) {
-									var m = current.mats[current.matIndexes[g][ii]]
-									this._buf._loadMaterial(m, current.textureIndexes[g] != -1, this._wireframe || this._noLighting)
-									this._buf._points.push(current.points[i[ii]])
-									this._buf._normals.push(current.normals[g][ii])
-									this._buf._tangents.push(current.tangents[g][ii])
-									this._buf._texCoords.push(current.texCoords[g][ii])
-									//this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
-								}
-								
-								if ((current.textureIndexes[g] != -1 || this._showNormalTangents) && this._render)
-									this._buf._renderData();
-							}
-						}
-						if (this._render)
-							this._buf._renderData();
-						if (this._showBounds && !o._isEngine) {
-							//(c)
-							this._buf._types.push(this._buf._gTarget.LINE_LOOP);
-							for (var i = 0; i < current.bounds.length; i++) {
-								if (i.length + this._buf._points.length > this._buf._bufLimit)
-									this._buf._renderData();
-								this._buf._points.push(current.bounds[i])
-								var tmp = new _SolidColorNoLighting(current.boundColors[i % current.boundColors.length]);
-								this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
-								this._buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
-								this._buf._tangents.push(vec3(0, 1, 0))
-								//this._buf_bitangents.push(vec3(0, 0, 1))
-							}
-							this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
-							this._buf._offsets.push(current.bounds.length)
-							if (this._render)
-								this._buf._renderData();
-						}
+						o._setGraphicsData(this._buf, this);
+						if(this._render) buf._renderData();
 					}
 				}
 			});
@@ -715,12 +680,13 @@ class _Object extends _Primitive {
 	/**
 	 * Returns points array and bounding box relative to world coordinates
 	 */
-	_localToWorld() {
+	_setGraphicsData(buf, camera) {
 
 		//mat4 generates matrix by cols, then rows
 		//equation from Wikipedia
 		var newMat = this._getModelMat(true)
-		var newTrans = mat4ToTransform(newMat)
+		//var newTrans = mat4ToTransform(newMat)
+		var b = this._bounds._getGraphicsDrawBounds()
 
 		//(newMat)
 		/*var sclMat = mat4(
@@ -729,11 +695,10 @@ class _Object extends _Primitive {
 			0, 0, obj.transform.scl.z
 		)
 		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible, matrix: newMat}
+		/*var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible, matrix: newMat}
 
 		for (var i = 0; i < this._pointInfo.length; i++) {
-			var tmp = mult(newMat, vec3to4(this._pointInfo[i]))
-			ret.points.push(tmp);
+			ret.points.push(vec3to4(this._pointInfo[i]));
 		}
 
 		ret.mats = this._matInfo;
@@ -751,13 +716,13 @@ class _Object extends _Primitive {
 				ret.indexes[g].push(this._drawInfo[g].pointIndex[i])
 				switch (this._drawInfo[g].type) {
 					case _gl.TRIANGLES:
-						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
-						ret.tangents[g].push(rotateAbout(this._drawInfo[g].tangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
+						ret.normals[g].push(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot) //push 3 for each vert
+						ret.tangents[g].push(this._drawInfo[g].tangents[Math.floor(i / 3)], newTrans.rot) //push 3 for each vert
 						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
 						break;
 					default:
-						ret.normals[g].push(rotateAbout(this._drawInfo[g].normals[i], newTrans.rot))
-						ret.tangents[g].push(rotateAbout(this._drawInfo[g].tangents[i], newTrans.rot))
+						ret.normals[g].push(this._drawInfo[g].normals[i])
+						ret.tangents[g].push(this._drawInfo[g].tangents[i])
 						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[i], newTrans.rot))
 				}
 
@@ -767,7 +732,7 @@ class _Object extends _Primitive {
 			}
 		}
 
-		var c = this._bounds._getDrawBounds(newMat)
+		var c = this._bounds._getGraphicsDrawBounds()
 		for (var i = 0; i < c.points.length; i++) {
 			ret.bounds.push(c.points[i])
 			ret.boundsIndex.push(i)
@@ -775,7 +740,64 @@ class _Object extends _Primitive {
 		for (var i = 0; i < c.colors.length; i++) {
 			ret.boundColors.push(c.colors[i])
 		}
-		return ret;
+		return ret;*/
+
+		buf._setModelMatrix(newMat)
+		
+		for (var g = 0; g < this._drawInfo.length; g++) {
+			var d = this._drawInfo[g]
+			var i = d.pointIndex
+
+			if (i.length > buf._bufLimit)
+				console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
+			else {
+
+				if (((i.length + buf._points.length > buf._bufLimit) || d.textureIndex != -1) && camera._render)
+					buf._renderData();
+
+
+				buf._offsets.push(i.length)
+				buf._types.push(camera.wireframe ? buf._gTarget.LINE_LOOP : d.type)
+
+				if (d.textureIndex != -1)
+					buf._loadTexture(this._textureInfo[d.textureIndex])
+
+				for (var ii = 0; ii < i.length; ii++) {
+					buf._loadMaterial(this._matInfo[d.matIndex], d.textureIndex != -1, camera._wireframe || camera._noLighting)
+					buf._points.push(this._pointInfo[i[ii]])
+					switch (d.type) {
+						case _gl.TRIANGLES:
+						buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
+						buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
+						break;
+					default:
+						buf._normals.push(d.normals[i])
+						buf._tangents.push(d.tangents[i])
+						
+					}
+					buf._texCoords.push(d.texCoords[ii])
+				}
+
+				if ((d.textureIndex != -1 || camera._showNormalTangents) && camera._render)
+					buf._renderData();
+			}
+		}
+		if (camera._showBounds && !o._isEngine) {
+			if (camera._render)
+				buf._renderData();
+			buf._types.push(buf._gTarget.LINE_LOOP);
+			
+			buf._offsets.push(current.bounds.length)
+			for (var i = 0; i < b.points.length; i++) {
+				buf._points.push(b.points[i])
+				var tmp = new _SolidColorNoLighting(b.colors[i % b.colors.length]);
+				buf._loadMaterial(tmp, false, camera._wireframe || camera._noLighting)
+				buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
+				buf._tangents.push(vec3(0, 1, 0))
+				buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
+				//buf_bitangents.push(vec3(0, 0, 1))
+			}
+		} //camera will take care of final _renderData for this object
 	}
 
 	/*TODO
