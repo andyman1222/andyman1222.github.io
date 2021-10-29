@@ -281,7 +281,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(-((TBN*cp)-(TBN*position))), TBN*(normal*vec3(1,1,-1)), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(-((TBN*position))), TBN*(normal*vec3(1,1,-1)), matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
@@ -289,7 +289,7 @@ switch(matIndex){
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(txc, normalize(-((TBN*cp)-(TBN*position))), TBN*(normal*vec3(1,1,-1)), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(-((TBN*position))), TBN*(normal*vec3(1,1,-1)), matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
