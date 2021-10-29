@@ -688,60 +688,6 @@ class _Object extends _Primitive {
 		//var newTrans = mat4ToTransform(newMat)
 		var b = this._bounds._getGraphicsDrawBounds()
 
-		//(newMat)
-		/*var sclMat = mat4(
-			obj.transform.scl.x, 0, 0,
-			0, obj.transform,scl.y, 0,
-			0, 0, obj.transform.scl.z
-		)
-		var transMat = vec4(obj.transform.pos.x + obj.transform.pos.y + obj.transform.pos.z)*/
-		/*var ret = { points: [], indexes: [], types: [], mats: [], matIndexes: [], texCoords: [], normals: [], tangents: [], textures: [], textureIndexes: [], bounds: [], boundsIndex: [], boundColors: [], boundsType: this._bounds.type, visible: this._visible, matrix: newMat}
-
-		for (var i = 0; i < this._pointInfo.length; i++) {
-			ret.points.push(vec3to4(this._pointInfo[i]));
-		}
-
-		ret.mats = this._matInfo;
-		ret.textures = this._textureInfo;
-		for (var g = 0; g < this._drawInfo.length; g++) {
-			ret.indexes.push(new Array())
-			ret.matIndexes.push(new Array())
-			ret.types.push(this._drawInfo[g].type)
-			ret.normals.push(new Array())
-			ret.tangents.push(new Array())
-			//ret.bitangents.push(new Array())
-			ret.texCoords.push(new Array())
-			ret.textureIndexes.push(this._drawInfo[g].textureIndex)
-			for (var i = 0; i < this._drawInfo[g].pointIndex.length; i++) {
-				ret.indexes[g].push(this._drawInfo[g].pointIndex[i])
-				switch (this._drawInfo[g].type) {
-					case _gl.TRIANGLES:
-						ret.normals[g].push(this._drawInfo[g].normals[Math.floor(i / 3)], newTrans.rot) //push 3 for each vert
-						ret.tangents[g].push(this._drawInfo[g].tangents[Math.floor(i / 3)], newTrans.rot) //push 3 for each vert
-						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[Math.floor(i / 3)], newTrans.rot)) //push 3 for each vert
-						break;
-					default:
-						ret.normals[g].push(this._drawInfo[g].normals[i])
-						ret.tangents[g].push(this._drawInfo[g].tangents[i])
-						//ret.bitangents[g].push(rotateAbout(this._drawInfo[g].bitangents[i], newTrans.rot))
-				}
-
-				ret.texCoords[g].push(this._drawInfo[g].texCoords[i])
-				//(this._drawInfo[g].colors[i % this._drawInfo[g].colors.length])
-				ret.matIndexes[g].push(this._drawInfo[g].matIndex[i % this._drawInfo[g].matIndex.length])
-			}
-		}
-
-		var c = this._bounds._getGraphicsDrawBounds()
-		for (var i = 0; i < c.points.length; i++) {
-			ret.bounds.push(c.points[i])
-			ret.boundsIndex.push(i)
-		}
-		for (var i = 0; i < c.colors.length; i++) {
-			ret.boundColors.push(c.colors[i])
-		}
-		return ret;*/
-
 		buf._setModelMatrix(newMat)
 		
 		for (var g = 0; g < this._drawInfo.length; g++) {
@@ -763,7 +709,7 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex])
 
 				for (var ii = 0; ii < i.length; ii++) {
-					buf._loadMaterial(this._matInfo[d.matIndex], d.textureIndex != -1, camera._wireframe || camera._noLighting)
+					buf._loadMaterial(this._matInfo[d.matIndex%this._matInfo.length], d.textureIndex != -1, camera._wireframe || camera._noLighting)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
 						case _gl.TRIANGLES:
