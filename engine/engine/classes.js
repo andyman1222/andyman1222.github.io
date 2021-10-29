@@ -581,10 +581,11 @@ class _Camera extends _Primitive {
 									this._buf._points.push(current.points[i[ii]])
 									this._buf._normals.push(current.normals[g][ii])
 									this._buf._tangents.push(current.tangents[g][ii])
-									//this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
 									this._buf._texCoords.push(current.texCoords[g][ii])
+									//this._buf._bitangents.push(mult(current.bitangents[g][ii], vec3(1, 1, -1)))
 								}
-								if (current.textureIndexes[g] != -1 && this._render)
+								
+								if ((current.textureIndexes[g] != -1 || this._showNormalTangents) && this._render)
 									this._buf._renderData();
 							}
 						}

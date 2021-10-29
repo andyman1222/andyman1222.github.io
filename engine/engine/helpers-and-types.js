@@ -327,12 +327,10 @@ function normalsFromTriangleVerts(v, i, normFunction = normalize) {
 function tanFromTriangleVerts(v, i, t, normFunction = normalize) {
     var r = []
     for (var x = 0; x < i.length; x += 3) {
-        var e1 = subtract(v[i[x + 1]], v[i[x]]), e2 = subtract(v[i[x + 2]], v[i[x]])
-        var t1 = subtract(t[x+1], t[x]), t2 = subtract(t[x+2], t[x])
+        var e1 = subtract(v[i[x + 1]], v[i[x]]), e2 = subtract(v[i[x + 2]], v[i[x]]) //vec3
+        var t1 = subtract(t[x+1], t[x]), t2 = subtract(t[x+2], t[x]) //vec2
         var f = 1.0 / ((t1[0]* t2[1])-(t2[0]*t1[1]))
-        r.push(normFunction(vec3(f * ((t2[1] * e1[0]) - (t1[1] * e2[0])),
-        f * ((t2[1] * e1[1]) - (t1[1] * e2[1])),
-        f * ((t2[1] * e1[2]) - (t1[1] * e2[2])))))
+        r.push(normFunction(mult(subtract(mult(e1, t2[1]), mult(e2, t1[1])), f)))
         
     }
     return r
