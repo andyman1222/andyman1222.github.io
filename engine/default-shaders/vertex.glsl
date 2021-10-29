@@ -52,11 +52,11 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     
-    position = coords.xyz;
+    position = TBN*coords.xyz;
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
 
-    cameraPos = cameraPos;
+    cameraPos = TBN*cameraPos;
 
     matProp[0] = inMatProp0;
     matProp[1] = inMatProp1;
