@@ -179,7 +179,7 @@ function init() {
 	var playerLight = new _PointLight({ pos: vec3(0, -4, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(.5, .5, 0, 1), null, 10)
 	_mainCamera._attachChildToSelf(playerLight, "relative")
 	altCamera._renderEngine = false
-	generateMaze_()
+	//generateMaze_()
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{ pointIndex: tmp.index, matIndex: 
