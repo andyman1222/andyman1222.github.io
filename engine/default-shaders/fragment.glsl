@@ -188,8 +188,8 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 				specular=pow(specular,lights[x].shininess*mp5.r);
 			}
 
-			vec4 tmpDiff=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
-			vec4 tmpSpec=(1./(length(v_surfaceToLight)*(1./lights[x].attenuation)))*(specular*lights[x].color*lights[x].specularMultiply);
+			vec4 tmpDiff=(1./(1+(lights[x].attenuation*length(v_surfaceToLight))))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+			vec4 tmpSpec=(1./(1+(lights[x].attenuation*length(v_surfaceToLight))))*(specular*lights[x].color*lights[x].specularMultiply);
 
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -292,7 +292,7 @@ switch(matIndex){
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
+	fColor = standardImage(matProp, positionT, txc, cameraPosT, trueeç);
 	break;
 
 	case 4: //unlit texture, parallax
