@@ -164,7 +164,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 			else v_surfaceToLight=(lights[x].locationW)-pos;
 			vec3 v_surfaceToView=viewPos-pos;
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
-			vec3 surfaceToViewDirection=-normalize(v_surfaceToView);
+			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
 			vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
 			float diffuse=dot(N,surfaceToLightDirection);
