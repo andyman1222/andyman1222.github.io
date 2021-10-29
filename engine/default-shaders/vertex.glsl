@@ -56,7 +56,7 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
 
-    adjCameraPos = TBN*cameraPos;
+    adjCameraPos = cameraPos;
     //adjCameraPos = vec3(0.,0.,0.);
 
     matProp[0] = inMatProp0;
