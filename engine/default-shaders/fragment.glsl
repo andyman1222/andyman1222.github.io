@@ -65,7 +65,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	
 	float currentDepthMapValue=1.-texture(depthMap,currentTexCoords).r;
 	
-	while(currentLayerDepth < currentDepthMapValue)
+	for(float i = 0.; i < maxl && currentDepthMapValue > currentLayerDepth; i++)
     {
 		// shift texture coordinates along direction of P
 		currentTexCoords-=deltaTexCoord;
@@ -280,7 +280,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(cp-position), normal*vec3(1,1,-1), matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(TBN*(cp-position)), normal*vec3(1,1,-1), matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
