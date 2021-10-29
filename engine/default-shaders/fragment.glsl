@@ -187,9 +187,9 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 				}
 				specular=pow(specular,lights[x].shininess*mp5.r);
 			}
-
-			vec4 tmpDiff=(1./(1+(lights[x].attenuation*length(v_surfaceToLight))))*(lights[x].color*lights[x].diffuseMultiply*diffuse);
-			vec4 tmpSpec=(1./(1+(lights[x].attenuation*length(v_surfaceToLight))))*(specular*lights[x].color*lights[x].specularMultiply);
+			float a = 1./(1.+(lights[x].attenuation*length(v_surfaceToLight)))
+			vec4 tmpDiff=a*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+			vec4 tmpSpec=a*(specular*lights[x].color*lights[x].specularMultiply);
 
 			switch(lights[x].negativeHandler){
 				case 1:
