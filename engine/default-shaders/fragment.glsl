@@ -155,8 +155,8 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=(lights[x].locationW)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
-			vec3 v_surfaceToView=viewPos-position;
+			vec3 v_surfaceToLight=(lights[x].locationW)-positionW; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
+			vec3 v_surfaceToView=viewPos-positionW;
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=-normalize(v_surfaceToView);
 			vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
@@ -278,7 +278,7 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp, normalW, , cameraPos);
+	fColor=standardMaterial(matProp, normalW, positionW, cameraPosW);
 	break;
 
 	case 2: //parallaxed texture
@@ -286,7 +286,7 @@ switch(matIndex){
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionW, txc, cameraPos);
+	fColor = standardImage(matProp, positionW, txc, cameraPosW);
 	break;
 
 	case 4: //unlit texture, parallax
