@@ -62,7 +62,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	float currentLayerDepth=0.;
 	vec2 deltaTexCoord=viewDir.xy * hs / (viewDir.z * nl);
 	vec2 currentTexCoords=tx;
-	vec3 dMap = 1.-texture(depthMap,currentTexCoords).r
+	float dMap = 1.-(texture(depthMap,currentTexCoords).r)
 	float currentDepthMapValue=dMap;
 	
 	while(currentLayerDepth < currentDepthMapValue)
