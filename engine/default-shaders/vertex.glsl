@@ -5,7 +5,7 @@ precision mediump float;
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;
 
-in vec4 coordinates;
+in vec3 coordinates;
 in vec3 inNormal;
 in vec2 inTexCoord;
 in vec3 inTangent;
@@ -37,7 +37,7 @@ out vec4 matProp[MAT_PROP_COUNT];
 out vec3 adjCameraPos;
 
 void main(void) {
-    gl_Position = projMatrix * viewMatrix * modelMatrix *  coordinates;
+    gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(coordinates, 1.);
     vec3 T = normalize(inTangent);
     //vec3 T = normalize(inTangent);
     vec3 N = normalize(inNormal);
