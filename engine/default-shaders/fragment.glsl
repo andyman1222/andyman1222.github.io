@@ -267,8 +267,8 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos){
 }
 
 void main(void){
-//vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
-vec2 txc = texCoord;
+vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
+//vec2 txc = texCoord;
 vec3 cp = adjCameraPos;
 switch(matIndex){
 	case -1: //nodraw
@@ -279,7 +279,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, normalize(TBN*(cp-position)), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, normalize(cp-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
