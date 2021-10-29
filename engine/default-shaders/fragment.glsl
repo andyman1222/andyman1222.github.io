@@ -124,7 +124,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			break;
 
 			case 2://directional
-			float NdotL=dot(-1.*lights[x].direction,N);
+			float NdotL=dot(lights[x].direction,N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -153,11 +153,11 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
-			vec3 v_surfaceToLight=((lights[x].location-adjCameraPos))-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
-			vec3 v_surfaceToView=(-position);
+			vec3 v_surfaceToLight=(TBN*lights[x].location)-position; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
+			vec3 v_surfaceToView=-normalize(position);
 			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
 			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
-			vec3 halfVector=normalize(surfaceToLightDirection+surfaceToViewDirection);
+			vec3 refV = reflect(-surfaceToLightDirection, N)
 
 			float diffuse=dot(N,surfaceToLightDirection);
 			float specular=0.;
@@ -166,16 +166,16 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 				
 				switch(lights[x].negativeHandlerAlt){
 					case 1:
-					specular=max(dot(N,halfVector),0.);
+					specular=max(dot(surfaceToViewDirection, refV),0.);
 					break;
 					case 2:
-					specular=min(dot(N,halfVector),0.);
+					specular=min(dot(surfaceToViewDirection, refV),0.);
 					break;
 					case 3:
-					specular=abs(dot(N,halfVector));
+					specular=abs(dot(surfaceToViewDirection, refV));
 					break;
 					case 0:default:
-					specular=dot(N,halfVector);
+					specular=dot(surfaceToViewDirection, refV);
 				}
 				specular=pow(specular,lights[x].shininess*mp5.r);
 			}
@@ -280,7 +280,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(texCoord, normalize(-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, -normalize(position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
@@ -288,7 +288,7 @@ switch(matIndex){
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(texCoord, normalize(-position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(texCoord, -normalize(position), normal, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];

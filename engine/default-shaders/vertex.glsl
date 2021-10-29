@@ -46,7 +46,7 @@ void main(void) {
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
 
-    TBN = mat3(T, B, N);
+    TBN = transpose(mat3(T, B, N));
 
     //position = tsMatrix*(uModelViewMatrix*aPosition).xyz;
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
@@ -56,7 +56,7 @@ void main(void) {
     //normal = normalize((normalMatrix*vec4(inNormal, 0.0)).xyz);
     normal = TBN*N;
 
-    adjCameraPos = cameraPos;
+    adjCameraPos = TBN*cameraPos;
     //adjCameraPos = vec3(0.,0.,0.);
 
     matProp[0] = inMatProp0;
