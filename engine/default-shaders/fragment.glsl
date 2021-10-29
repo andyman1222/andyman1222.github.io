@@ -292,7 +292,7 @@ switch(matIndex){
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionT, txc, cameraPosT, trueeç);
+	fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
 	break;
 
 	case 4: //unlit texture, parallax
