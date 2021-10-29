@@ -65,5 +65,5 @@ void main(void) {
 
     texCoord = inTexCoord;
 
-    adjCameraPos = TBN*(vec4(cameraPos, 1.)).xyz;
+    adjCameraPos = cameraPos;
 }
