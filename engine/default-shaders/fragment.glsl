@@ -124,7 +124,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos){
 			break;
 
 			case 2://directional
-			float NdotL=dot(lights[x].direction,N);
+			float NdotL=dot(TBN*lights[x].direction,N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
