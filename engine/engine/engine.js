@@ -58,7 +58,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_gl.colorMask(true, true, true, true);
 	_gl.enable(_gl.BLEND)
 	_gl.blendFunc(_gl.SRC_ALPHA, _gl.ONE_MINUS_SRC_ALPHA);
-
+	_gl.frontFace(_gl.CW);
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
 	_gl.useProgram(_program);
