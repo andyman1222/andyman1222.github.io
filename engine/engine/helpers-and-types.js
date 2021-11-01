@@ -224,18 +224,18 @@ function rotateAbout(vec, quat) {
 
 function lookAtQuat(dir, up){
 
-    var dot = Vector3.Dot(vec3(0,0,1), dir);
+    var d = dot(vec3(0,0,1), dir);
 
-    if (Math.Abs(dot + 1) < 0)
+    if (Math.Abs(d + 1) < 0)
     {
         return new Quaternion(Math.PI, up[0], up[1], up[2]);
     }
-    if (Math.Abs(dot - 1) < 0)
+    if (Math.Abs(d - 1) < 0)
     {
         return Quaternion(1,0,0,0);
     }
 
-    var rotAngle = Math.acos(dot);
+    var rotAngle = Math.acos(d);
     var rotAxis = cross(vec3(0,0,1), dir);
     rotAxis = normalize(rotAxis);
     return eulerToQuat(rotAxis, rotAngle);
