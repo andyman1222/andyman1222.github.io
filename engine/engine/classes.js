@@ -20,18 +20,24 @@ class _Primitive {
 	/**
 	 * gets transform adjusted by all parents
 	 */
-	_getModelMat(flipZ = false) {
-		var tmpf = mult(forward(this._transform.rot),vec3(1,1,flipZ?-1:1)), tmpu = mult(up(this._transform.rot), vec3(1,1,flipZ?-1:1))
-		var newMat = mult(
-			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ ? -1 : 1) * this._transform.pos[2]),
-				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
-				lookAt(vec3(0,0,0), tmpf, tmpu))
-		if (this._parent != null) return mult(this._parent._getModelMat(flipZ), newMat)
-		else return newMat
-	}
 
 	_getWorldTransform(flipZ = false) {
-		return mat4ToTransform(this._getModelMat(flipZ))
+		if(this._parent != null){
+			var p = this._parent._getWorldTransform(flipZ)
+			return {pos: add(mult(this._transform.pos, vec3(1,1,flipZ?-1:1)), p._transform.pos),
+				rot: addRotation(p.rot, this._transform.rot),
+				scl: mult(p.scl, this._transform.scl)}
+		}
+		return {pos: mult(this._transform.pos, vec3(1,1,flipZ?-1:1)), rot: this._transform.rot, scl: this._transform.scl}
+	}
+
+	_getModelMat(flipZ = false) {
+		var t = this._getWorldTransform(flipZ);
+		//var tmpf = mult(forward(this._transform.rot),vec3(1,1,flipZ?-1:1)), tmpu = mult(up(this._transform.rot), vec3(1,1,flipZ?-1:1))
+		return mult(
+			mult(translate(t.pos[0], t.pos[1], t.pos[2]),
+				scale(t.scl[0], t.scl[1], t.scl[2])),
+				quatToMat4(t.rot))
 	}
 
 	/**
