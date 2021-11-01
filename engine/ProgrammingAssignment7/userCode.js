@@ -189,7 +189,7 @@ function init() {
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
-		, tmp.points, [new _Material(), new _Material()], _Bounds._RECT)
+		, tmp.points, [new _Material(), new _Material(-1)], _Bounds._RECT)
 }
 
 window.onload = function () {
