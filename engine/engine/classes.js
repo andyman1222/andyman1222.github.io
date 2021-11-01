@@ -326,9 +326,9 @@ class _Buffer {
 						this._gTarget.uniform1fv(this._lightShinyArrayLoc[x], new Float32Array([l._shininess]))
 						this._gTarget.uniform1iv(this._lightAltNegativeArrayLoc[x], new Int32Array([l._handleNegativeAlt]))
 					case 2:
-						var t = l._getWorldTransform(true)
+						var t = l._getWorldTransform(false) //cannot be true, otherwise conflicts with viewmat in fragment
 						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(forward(t.rot)))
-						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos))
+						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos*vec3(1,1,-1)))
 					case 1:
 						this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
 						break;
