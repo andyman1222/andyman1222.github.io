@@ -21,11 +21,11 @@ class _Primitive {
 	 * gets transform adjusted by all parents
 	 */
 	_getModelMat(flipZ = false) {
-		var tmp = this._transform.rot
+		var tmpf = mult(forward(this._transform.rot),vec3(1,1,flipZ?-1:1)), tmpu = mult(up(this._transform.rot), vec3(1,1,flipZ?-1:1))
 		var newMat = mult(
 			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ ? -1 : 1) * this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
-				quatToMat4(Quaternion(tmp.w, tmp.x, tmp.y, tmp.z)))
+				quatToMat4(lookAtQuat(tmpf, tmpu)))
 		if (this._parent != null) return mult(this._parent._getModelMat(flipZ), newMat)
 		else return newMat
 	}

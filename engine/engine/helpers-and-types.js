@@ -110,6 +110,11 @@ function eulerToQuat(axis, angle, normFunction = fastNorm) {
     return Quaternion(c, n[0] * s, n[1] * s, n[2] * s)
 }
 
+function quatLookAt(forward, up){
+    var t = lookAt(vec3(0,0,0), forward, up);
+    return matToQuat(t);
+}
+
 /**
  * converts Quaternion (w, x, y, z) to mat4 for rotation
  * @param {*} rot 
@@ -215,6 +220,25 @@ function rotateAbout(vec, quat) {
     var e = quatMult(quatMult(quat, p), rp)
     //(e)
     return vec3(e.x, e.y, e.z)
+}
+
+function lookAtQuat(dir, up){
+
+    var dot = Vector3.Dot(vec3(0,0,1), dir);
+
+    if (Math.Abs(dot + 1) < 0)
+    {
+        return new Quaternion(Math.PI, up[0], up[1], up[2]);
+    }
+    if (Math.Abs(dot - 1) < 0)
+    {
+        return Quaternion(1,0,0,0);
+    }
+
+    var rotAngle = Math.acos(dot);
+    var rotAxis = cross(vec3(0,0,1), dir);
+    rotAxis = normalize(rotAxis);
+    return eulerToQuat(rotAxis, rotAngle);
 }
 
 /**
