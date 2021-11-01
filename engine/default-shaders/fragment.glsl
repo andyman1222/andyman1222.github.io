@@ -128,8 +128,8 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 			case 2://directional
 			float NdotL = 0.;
 			if(tangentSpace)
-				NdotL=dot(TBN*(vec3(-1,-1,1)*lights[x].directionW),N);
-			else NdotL=dot((vec3(-1,-1,1)*lights[x].directionW),N);
+				NdotL=dot(TBN*(vec3(-1,-1,-1)*lights[x].directionW),N);
+			else NdotL=dot((vec3(-1,-1,-1)*lights[x].directionW),N);
 			vec4 c=NdotL*(lights[x].color);
 			switch(lights[x].negativeHandler){
 				case 1:
@@ -284,19 +284,19 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+	fColor=standardMaterial(matProp, normalW, positionW, cameraPosW, false);
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, -normalize(cameraPosT-positionT), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosW-positionW), normalW, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
+	fColor = standardImage(matProp, positionW, txc, cameraPosW, false);
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(txc, -normalize(cameraPosT-positionT), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosW-positionW), normalW, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
