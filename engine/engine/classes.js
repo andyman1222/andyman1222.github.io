@@ -552,7 +552,7 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		return inverse(t)
+		return t
 	}
 
 	/**
