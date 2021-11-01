@@ -26,7 +26,7 @@ class _Primitive {
 			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ ? -1 : 1) * this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
 			quatToMat4(this._transform.rot))
-		if (this._parent != null) return mult(this._parent._getModelMat(flipZ), newMat)
+		if (this._parent != null) return mult(this._parent._getModelMat(false), newMat)
 		else return newMat
 	}
 
@@ -326,9 +326,9 @@ class _Buffer {
 						this._gTarget.uniform1fv(this._lightShinyArrayLoc[x], new Float32Array([l._shininess]))
 						this._gTarget.uniform1iv(this._lightAltNegativeArrayLoc[x], new Int32Array([l._handleNegativeAlt]))
 					case 2:
-						var t = l._getWorldTransform(false) //cannot be true, otherwise conflicts with viewmat in fragment
+						var t = l._getWorldTransform(true)
 						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(forward(t.rot)))
-						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos*vec3(1,1,-1)))
+						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos))
 					case 1:
 						this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
 						break;
