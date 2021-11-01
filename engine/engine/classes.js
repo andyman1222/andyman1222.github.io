@@ -542,7 +542,7 @@ class _Camera extends _Primitive {
 
 	_getViewMat() {
 		var rotMat = null
-		var t = this._getWorldTransform(true)
+		var t = this._getModelMat(true)
 		/*//bufferedConsoleLog(t)
 		var rotQuat = Quaternion(t.rot.w, t.rot.x, t.rot.y, -t.rot.z)
 		rotMat = quatToMat4(rotQuat);
