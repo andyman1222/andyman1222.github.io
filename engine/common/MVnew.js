@@ -599,7 +599,7 @@ function scale() {
 //  ModelView Matrix Generators
 //
 
-function lookAt(eye, at, up, normFunc=normalize) {
+function lookAt(eye, at, up, flipV = false, normFunc=fastNorm) {
   if (eye.type != 'vec3') {
     throw "lookAt(): first parameter [eye] must be an a vec3";
   }
@@ -619,6 +619,8 @@ function lookAt(eye, at, up, normFunc=normalize) {
   var v = normFunc(subtract(at, eye));  // view direction vector
   var n = normFunc(cross(up, v)); // perpendicular vector
   var u = normFunc(cross(v, n));        // "new" up vector
+  if(flipV)
+    v = negate(v)
 
   /*return mat4(
     n[0], u[0], v[0], 0,
