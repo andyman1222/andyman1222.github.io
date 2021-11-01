@@ -620,14 +620,17 @@ function lookAt(eye, at, up, normFunc=fastNorm) {
   var n = normFunc(cross(up, v)); // perpendicular vector
   var u = normFunc(cross(v, n));        // "new" up vector
 
-  var result = mat4(
+  /*return mat4(
     n[0], u[0], v[0], 0,
     n[1], u[1], v[1], 0,
     n[2], u[2], v[2], 0,
     -dot(n, eye), -dot(u, eye), -dot(v, eye), 1.0
-  );
+  );*/
 
-  return result;
+  return mat4(n[0], u[0], v[0], 0,
+    n[1], u[1], v[1], 0,
+    n[2], u[2], v[2], 0,
+    -dot(n, eye), -dot(u, eye), -dot(v, eye), 1.0);
 }
 
 //----------------------------------------------------------------------------
