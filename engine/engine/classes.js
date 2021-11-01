@@ -25,7 +25,7 @@ class _Primitive {
 		var newMat = mult(
 			mult(translate(this._transform.pos[0], this._transform.pos[1], (flipZ ? -1 : 1) * this._transform.pos[2]),
 				scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2])),
-				quatToMat4(lookAtQuat(tmpf, tmpu)))
+				lookAt(vec3(0,0,0), tmpf, tmpu))
 		if (this._parent != null) return mult(this._parent._getModelMat(flipZ), newMat)
 		else return newMat
 	}

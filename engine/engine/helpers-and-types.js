@@ -218,25 +218,6 @@ function rotateAbout(vec, quat) {
     return vec3(e.x, e.y, e.z)
 }
 
-function lookAtQuat(dir, up){
-
-    var d = dot(vec3(0,0,1), dir);
-
-    if (Math.abs(d + 1) < 0)
-    {
-        return Quaternion(Math.PI, up[0], up[1], up[2]);
-    }
-    if (Math.abs(d - 1) < 0)
-    {
-        return Quaternion(1,0,0,0);
-    }
-
-    var rotAngle = Math.acos(d);
-    var rotAxis = cross(vec3(0,0,1), dir);
-    rotAxis = normalize(rotAxis);
-    return eulerToQuat(rotAxis, rotAngle);
-}
-
 /**
  * return forward vector of a quaternion (w, x, y, z)
  * This is just the 3rd column of the rotation matrix, but I am not using that to avoid using a loop
