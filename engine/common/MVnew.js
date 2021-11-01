@@ -627,10 +627,10 @@ function lookAt(eye, at, up, normFunc=fastNorm) {
     -dot(n, eye), -dot(u, eye), -dot(v, eye), 1.0
   );*/
 
-  return mat4(n[0], u[0], v[0], 0,
-    n[1], u[1], v[1], 0,
-    n[2], u[2], v[2], 0,
-    -dot(n, eye), -dot(u, eye), -dot(v, eye), 1.0);
+  return mat4( n[0], n[1], n[2], -dot(n, eye),
+                u[0], u[1], u[2], -dot(u, eye),
+                v[0], v[1], v[2], -dot(v, eye),
+                0.0, 0.0, 0.0, 1.0);
 }
 
 //----------------------------------------------------------------------------
