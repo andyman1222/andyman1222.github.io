@@ -591,7 +591,7 @@ class _Camera extends _Primitive {
 				for (var i = 0; i < this._debugOffsets[o]; i++) {
 					if (i.length + this._buf._points.length > this._buf._bufLimit)
 						this._buf._renderData();
-					this._buf._points.push(mult(this._debugPoints[i + x], vec4(1, 1, -1, 1)))
+					this._buf._points.push(this._debugPoints[i + x])
 					var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
 					this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
