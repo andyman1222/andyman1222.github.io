@@ -64,7 +64,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
-	vec2 deltaTexCoord=viewDir.xy * hs / (viewDir.z * nl);
+	vec2 deltaTexCoord=viewDir.xy / (viewDir.z * nl * hs );
 	vec2 currentTexCoords=tx;
 	
 	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
@@ -83,7 +83,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	float next=currentDepthMapValue-currentLayerDepth;
 	float prev=texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
 	float weight=next/(next-prev);
-	return mix(currentTexCoords,prevTexCoord,weight);
+	return mix(prevTexCoord,currentTexCoords,weight);
 }
 
 struct sMat{
