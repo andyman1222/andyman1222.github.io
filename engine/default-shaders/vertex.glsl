@@ -59,7 +59,7 @@ void main(void) {
     //normal = tsMatrix*N;
     positionT = TBN*coordsW.xyz;
     positionW = coordsW.xyz;
-    positionVT = TBN * viewMatrix * coordsW.xyz;
+    positionVT = TBN * (viewMatrix * coordsW).xyz;
     cameraPosT = TBN*inCameraPosW;
     cameraPosW=inCameraPosW;
     normalT = TBN*N;
