@@ -547,8 +547,9 @@ class _Camera extends _Primitive {
 		var rotQuat = Quaternion(t.rot.w, t.rot.x, t.rot.y, -t.rot.z)
 		rotMat = quatToMat4(rotQuat);
 		//(eulerToQuat(vec3(this._transform.rot[0]+90, -(this._transform.rot[1]-90), this._transform.rot[2])));
-		rotMat = mult(rotMat, translate(-t.pos[0], -t.pos[1], -t.pos[2]))
 		rotMat = mult(rotMat, scale(1 / t.scl[0], 1 / t.scl[1], 1 / t.scl[2]))
+		rotMat = mult(rotMat, translate(-t.pos[0], -t.pos[1], -t.pos[2]))
+		
 
 		return rotMat
 	}
