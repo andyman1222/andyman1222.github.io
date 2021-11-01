@@ -226,11 +226,11 @@ function lookAtQuat(dir, up){
 
     var d = dot(vec3(0,0,1), dir);
 
-    if (Math.Abs(d + 1) < 0)
+    if (Math.abs(d + 1) < 0)
     {
         return new Quaternion(Math.PI, up[0], up[1], up[2]);
     }
-    if (Math.Abs(d - 1) < 0)
+    if (Math.abs(d - 1) < 0)
     {
         return Quaternion(1,0,0,0);
     }
