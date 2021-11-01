@@ -42,7 +42,7 @@ out vec4 matProp[MAT_PROP_COUNT];
 
 
 void main(void) {
-    vec4 coordsW = modelMatrix * vec4(inPointsL, 1.) * vec3(1.,1.,-1.);
+    vec4 coordsW = modelMatrix * vec4(inPointsL, 1.) * vec4(1.,1.,-1.,1.);
     gl_Position = projMatrix * viewMatrix * coordsW;
     vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz * vec3(1.,1.,-1.));
     //vec3 T = normalize(inTangent);
