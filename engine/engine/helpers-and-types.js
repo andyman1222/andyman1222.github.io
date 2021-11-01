@@ -110,10 +110,6 @@ function eulerToQuat(axis, angle, normFunction = fastNorm) {
     return Quaternion(c, n[0] * s, n[1] * s, n[2] * s)
 }
 
-function quatLookAt(forward, up){
-    var t = lookAt(vec3(0,0,0), forward, up);
-    return matToQuat(t);
-}
 
 /**
  * converts Quaternion (w, x, y, z) to mat4 for rotation
@@ -228,7 +224,7 @@ function lookAtQuat(dir, up){
 
     if (Math.abs(d + 1) < 0)
     {
-        return new Quaternion(Math.PI, up[0], up[1], up[2]);
+        return Quaternion(Math.PI, up[0], up[1], up[2]);
     }
     if (Math.abs(d - 1) < 0)
     {
