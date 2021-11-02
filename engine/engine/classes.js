@@ -553,7 +553,7 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		return lookAt(this._transform.pos, add(this._transform.pos,forward(this._transform.rot)), up(this._transform.rot), true)
+		return mult(scale(this._transform.scl[0], this._transform.scl[1], this._transform.scl[2]), lookAt(this._transform.pos, add(this._transform.pos,forward(this._transform.rot)), up(this._transform.rot), true))
 	}
 
 	/**
