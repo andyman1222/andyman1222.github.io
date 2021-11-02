@@ -47,18 +47,8 @@ uniform sampler2D roughnessMap;//light multiplier
 
 //uniform sampler2D miscTextures[11];
 
-vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers, float heightScale)
+vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minl, float maxl, float hs)
 {
-
-	float minl=8.;
-	if(minLayers>0.) minl=minLayers;
-
-	float maxl = 32.;
-	if(maxLayers>0.) maxl=maxLayers;
-
-	float hs = 10.;
-	if(heightScale>0.) hs=heightScale;
-
 	float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
 	//float nl=maxl; //TEST
 

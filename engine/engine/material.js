@@ -11,7 +11,7 @@ class _Material {
     _prevIndex
     _prevParameters
     _updated
-    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 0, 0, 0), vec4(1, 1, 0, 0)]) {
+    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, 1), vec4(1, 1, 0, 0)]) {
         this._index = index
         this._parameters = parameters
     }
@@ -28,13 +28,13 @@ class _SolidColorNoLighting extends _Material {
         super(0, [vec4(color[0], color[1], color[2], color[3]),
         vec4(0, 0, 0, 1),
         vec4(0, 0, 0, 1),
-        vec4(1, 10, 32, 1),
+        vec4(1, 8, 32, 1),
         vec4(1, 1, 0, 0)])
     }
 }
 
 class _ScaledTexMat extends _Material {
-    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=0, maxLayers=0, heightScale=0, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 0, 0, 0), vec4(1, 1, 0, 0)]){
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, 1), vec4(1, 1, 0, 0)]){
         super(0, [parameters[0], parameters[1], parameters[2], parameters[3], vec4(parameters[0], minLayers, maxLayers, heightScale), vec4(uScale, vScale, uDisp, vDisp)])
         if(parallax) this._index = 2;
         else this._index = 3;
@@ -42,7 +42,7 @@ class _ScaledTexMat extends _Material {
 }
 
 class _ScaledTexMatNoLight extends _ScaledTexMat {
-    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=0, maxLayers=0, heightScale=0, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 0, 0, 0), vec4(1, 1, 0, 0)]){
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, 1), vec4(1, 1, 0, 0)]){
         super(parallax, uScale, vScale, uDisp, vDisp, minLayers, maxLayers, heightScale, parameters)
         if(parallax) this._index = 4;
         else this._index = 5;
