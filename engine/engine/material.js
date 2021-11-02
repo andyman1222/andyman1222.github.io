@@ -28,7 +28,7 @@ class _SolidColorNoLighting extends _Material {
         super(0, [vec4(color[0], color[1], color[2], color[3]),
         vec4(0, 0, 0, 1),
         vec4(0, 0, 0, 1),
-        vec4(1, 8, 32, 1),
+        vec4(1, 8, 32, 10),
         vec4(1, 1, 0, 0)])
     }
 }
