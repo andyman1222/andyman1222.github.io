@@ -79,7 +79,8 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 		"inNormalL",
 		"inTangentL",
 		"inTexCoord",
-		"inCameraPosW");
+		"inCameraPosW",
+		"inCameraScale");
 
 	_mainCamera = new _Camera(_bData);
 	
