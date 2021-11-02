@@ -69,7 +69,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	
 	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 	
-	for(int i = 0; currentDepthMapValue > currentLayerDepth && i < maxLayers; i++)
+	for(float i = 0.; currentDepthMapValue > currentLayerDepth && i < maxLayers; i++)
     {
 		// shift texture coordinates along direction of P
 		currentLayerDepth+=layerDepth;
