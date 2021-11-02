@@ -57,7 +57,7 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minl, float maxl, float hs
 	vec2 deltaTexCoord=viewDir.xy * hs / (viewDir.z * nl);
 	vec2 currentTexCoords=tx;
 	
-	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
+	float currentDepthMapValue=1.-texture(depthMap,currentTexCoords).r;
 	
 	while(currentDepthMapValue > currentLayerDepth)
     {
@@ -65,14 +65,14 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minl, float maxl, float hs
 		currentLayerDepth+=layerDepth;
 		currentTexCoords-=deltaTexCoord;
 		// get depthmap value at current texture coordinates
-		currentDepthMapValue=texture(depthMap,currentTexCoords).r;
+		currentDepthMapValue=1.-texture(depthMap,currentTexCoords).r;
 		// get depth of next layer
 		
 	}
 	
 	vec2 prevTexCoord=currentTexCoords+deltaTexCoord;
 	float next=currentDepthMapValue-currentLayerDepth;
-	float prev=texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
+	float prev=1.-texture(depthMap,prevTexCoord).r-currentLayerDepth+layerDepth;
 	float weight=next/(next-prev);
 	return mix(prevTexCoord,currentTexCoords,weight);
 }
@@ -252,7 +252,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
-	vec3 norm = -((texture(normalMap, tx).rgb)*2.-1.);
+	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.);
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
