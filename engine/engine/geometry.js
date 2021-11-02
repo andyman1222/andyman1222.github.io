@@ -71,7 +71,7 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
  */
 function _getRect(pos, extent, normFunction = normalize) {
 	//0
-	var blb = vec3(pos[0] - extent[0], pos[1], pos[2] - extent[2])
+	var blb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] - extent[2])
 	//1
 	var flb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] + extent[2])
 	//2
@@ -90,11 +90,11 @@ function _getRect(pos, extent, normFunction = normalize) {
 	var ind = []
 	var tx = []
 	var p = [blb, flb, frb, frt, brt, blt, brb, flt]
-	ind.push(4, 5, 3,
-		7, 3, 5, //top face (+y)
-
-		0, 6, 2,
+	ind.push(0, 6, 2,
 		2, 1, 0, //bottom face (-y)
+		
+		4, 5, 3,
+		7, 3, 5, //top face (+y)
 
 		6, 0, 4,
 		5, 4, 0, //back face (-z)
@@ -108,8 +108,8 @@ function _getRect(pos, extent, normFunction = normalize) {
 		6, 4, 3,
 		3, 2, 6) //right face (+x)
 
-	tx.push(vec2(extent[0],-extent[2]), vec2(-extent[0], -extent[2]), vec2(extent[0],extent[2]),
-	vec2(-extent[0],extent[2]), vec2(extent[0], extent[2]), vec2(-extent[0],-extent[2]),
+	tx.push(vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 	
 	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(extent[0],-extent[2]),
 	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(-extent[0],extent[2]),
