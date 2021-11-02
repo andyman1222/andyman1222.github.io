@@ -111,20 +111,20 @@ function _getRect(pos, extent, normFunction = normalize) {
 	tx.push(vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
 	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 	
-	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(extent[0],-extent[2]),
-	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(-extent[0],extent[2]),
+	vec2(extent[0],-extent[2]), vec2(-extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	vec2(-extent[0],extent[2]), vec2(extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 
-	vec2(-extent[0],extent[1]), vec2(extent[0], extent[1]), vec2(-extent[0], -extent[1]),
-	vec2(extent[0], -extent[1]), vec2(-extent[0], -extent[1]), vec2(extent[0], extent[1]),
+	vec2(extent[0],-extent[1]), vec2(-extent[0], -extent[1]), vec2(extent[0], extent[1]),
+	vec2(-extent[0], extent[1]), vec2(extent[0], extent[1]), vec2(-extent[0], -extent[1]),
 	
-	vec2(-extent[0],extent[1]), vec2(extent[0],extent[1]), vec2(extent[0],-extent[1]),
 	vec2(extent[0],-extent[1]), vec2(-extent[0],-extent[1]), vec2(-extent[0],extent[1]),
+	vec2(-extent[0],extent[1]), vec2(extent[0],extent[1]), vec2(extent[0],-extent[1]),
 	
-	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],-extent[1]),
 	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],extent[1]),
+	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],-extent[1]),
 	
-	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]),
-	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]))
+	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]),
+	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]))
 	var norm = normalsFromTriangleVerts(p, ind, normFunction)
 	var t = tanFromTriangleVerts(p, ind, tx, normFunction)
 	return{points: p, index: ind, texCoords: tx, normals: norm, tangents: t}
