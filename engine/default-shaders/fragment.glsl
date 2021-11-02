@@ -59,8 +59,8 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 	float hs = .1;
 	if(heightScale>0.) hs=heightScale;
 
-	//float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
-	float nl=maxl; //TEST
+	float nl = mix(maxl, minl, max(dot(norm, viewDir), 0.0));
+	//float nl=maxl; //TEST
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
