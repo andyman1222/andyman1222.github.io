@@ -272,6 +272,9 @@ void main(void){
 vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
 //vec2 txc = texCoord;
 switch(matIndex){
+	case -2: //debug- draw texcoord
+	fColor = vec3(txc, 0.);
+
 	case -1: //nodraw
 	return;
 

@@ -192,12 +192,12 @@ step_maze()
   }
 }
 
-var materials = [new _Material(3, [vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)]),
-  new _Material(3, [vec4(0,1,0,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)]),
-  new _Material(3, [vec4(0,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1, 8, 32, 10), vec4(1,.1,0,0)]),
-  new _Material(3, [vec4(1,1,0,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(10, 8, 32, 10), vec4(1,1,0,0)]),
-  new _Material(3, [vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(.1, 8, 32, 10), vec4(10,1,0,0)]),
-  new _Material(3, [vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)])]
+var materials = [new _Material(-2, [vec4(1,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)]),
+  new _Material(-2, [vec4(0,1,0,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)]),
+  new _Material(-2, [vec4(0,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(0,0,0,1), vec4(1, 8, 32, 10), vec4(1,.1,0,0)]),
+  new _Material(-2, [vec4(1,1,0,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(10, 8, 32, 10), vec4(1,1,0,0)]),
+  new _Material(-2, [vec4(1,0,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(.1, 8, 32, 10), vec4(10,1,0,0)]),
+  new _Material(-2, [vec4(0,1,1,1), vec4(0,0,0,1), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1, 8, 32, 10), vec4(1,1,0,0)])]
 
 function
 draw_maze()
@@ -227,7 +227,7 @@ draw_maze()
         var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
-        tmp.points, [new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1)], _Bounds._RECT, txArr))
+        tmp.points, [new _Material(-2), new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1)], _Bounds._RECT, txArr))
       }
     }
   }
