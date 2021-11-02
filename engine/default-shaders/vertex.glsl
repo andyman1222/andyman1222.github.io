@@ -58,7 +58,6 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     positionT = TBN*coordsW.xyz;
-    positionW = coordsW.xyz;
     positionVT = TBN * (viewMatrix * coordsW).xyz;
     cameraPosT = TBN*inCameraPosW;
     cameraPosW=inCameraPosW;
