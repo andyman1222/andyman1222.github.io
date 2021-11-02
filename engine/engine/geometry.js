@@ -111,8 +111,8 @@ function _getRect(pos, extent, normFunction = normalize) {
 	tx.push(vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
 	
-	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(extent[0],-extent[2]),
-	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(-extent[0],extent[2]),
+	vec2(extent[0],-extent[2]), vec2(-extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	vec2(-extent[0],extent[2]), vec2(extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 
 	vec2(extent[0],-extent[1]), vec2(-extent[0], -extent[1]), vec2(extent[0], extent[1]),
 	vec2(-extent[0], extent[1]), vec2(extent[0], extent[1]), vec2(-extent[0], -extent[1]),
