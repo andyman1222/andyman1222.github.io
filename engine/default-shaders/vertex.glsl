@@ -60,8 +60,8 @@ void main(void) {
     positionT = TBN*coordsW.xyz;
     positionW = coordsW.xyz;
     positionVT = TBN * (viewMatrix * coordsW).xyz;
-    cameraPosT = TBN*(inCameraPosW*vec3(1,1,-1));
-    cameraPosW=inCameraPosW*vec3(1,1,-1);
+    cameraPosT = TBN*inCameraPosW;
+    cameraPosW=inCameraPosW;
     normalT = TBN*N;
     normalW = N;
 
