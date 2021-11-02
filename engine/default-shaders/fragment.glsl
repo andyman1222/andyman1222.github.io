@@ -64,19 +64,20 @@ vec2 parallax(vec2 tx, vec3 viewDir, vec3 norm, float minLayers, float maxLayers
 
 	float layerDepth=1./nl;
 	float currentLayerDepth=0.;
-	vec2 deltaTexCoord=(viewDir.xy * hs) / (viewDir.z * nl);
+	vec2 deltaTexCoord=viewDir.xy * hs / (viewDir.z * nl);
 	vec2 currentTexCoords=tx;
 	
 	float currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 	
-	while(currentDepthMapValue > currentLayerDepth)
+	for(int i = 0; currentDepthMapValue > currentLayerDepth && i < maxLayers; i++)
     {
 		// shift texture coordinates along direction of P
+		currentLayerDepth+=layerDepth;
 		currentTexCoords-=deltaTexCoord;
 		// get depthmap value at current texture coordinates
 		currentDepthMapValue=texture(depthMap,currentTexCoords).r;
 		// get depth of next layer
-		currentLayerDepth+=layerDepth;
+		
 	}
 	
 	vec2 prevTexCoord=currentTexCoords+deltaTexCoord;
@@ -289,7 +290,7 @@ switch(matIndex){
 	break;
 
 	case 2: //parallaxed texture
-	txc = parallax(txc, -normalize(cameraPosT-positionT), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosT-positionW), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
 	//break;
 
 	case 3: //texture, no parallax
@@ -297,7 +298,7 @@ switch(matIndex){
 	break;
 
 	case 4: //unlit texture, parallax
-	txc = parallax(txc, -normalize(cameraPosT-positionT), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+	txc = parallax(txc, -normalize(cameraPosT-positionW), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
 
 	case 5: //unlit texture, no parallax
 	fColor = texture(baseImage, txc) * matProp[0];
