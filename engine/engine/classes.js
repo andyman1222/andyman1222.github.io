@@ -34,8 +34,9 @@ class _Primitive {
 	_getModelMat(flipZ = false) {
 		var t = this._getWorldTransform(flipZ);
 		//var tmpf = mult(forward(this._transform.rot),vec3(1,1,flipZ?-1:1)), tmpu = mult(up(this._transform.rot), vec3(1,1,flipZ?-1:1))
+		
 		return mult(
-			mult(translate(t.pos[0], t.pos[1], t.pos[2]),
+			mult(translate(t.pos[0], -t.pos[1], -t.pos[2]),
 				scale(t.scl[0], t.scl[1], t.scl[2])),
 				quatToMat4(t.rot))
 	}
