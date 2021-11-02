@@ -19,6 +19,7 @@ in vec4 inMatProp3;
 in vec4 inMatProp4;
 in vec4 inMatProp5;
 
+uniform vec3 inCameraScale;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;
 uniform mat4 normalMatrix;
@@ -30,7 +31,6 @@ out vec2 texCoord;
 //varying vec3 view;
 //varying vec3 position;
 out vec3 positionT;
-out vec3 positionW;
 out vec3 positionVT;
 out vec3 cameraPosT;
 out vec3 cameraPosW;
@@ -43,7 +43,7 @@ out vec4 matProp[MAT_PROP_COUNT];
 
 
 void main(void) {
-    vec4 coordsW = modelMatrix * vec4(inPointsL, 1.) * vec4(1, -1, -1, 1);
+    vec4 coordsW = modelMatrix * vec4(inPointsL, 1.) * vec4(inCameraScale, 1.) * vec4(1, -1, -1, 1);
     gl_Position = projMatrix * viewMatrix * coordsW;
     vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(-1,1,1));
     //vec3 T = normalize(inTangent);

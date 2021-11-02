@@ -197,7 +197,7 @@ class _Buffer {
 	_cameraPosLoc;
 	_matIndLoc;
 	_textureLoc = []
-
+	_cameraSclLoc;
 
 	_bufLimit;
 	_matParamCount;
@@ -207,7 +207,7 @@ class _Buffer {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, modelMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr) {
+	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, modelMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr, cameraScaleStr) {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._posBuffer = this._gTarget.createBuffer();
@@ -267,6 +267,8 @@ class _Buffer {
 		if (this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
 		this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
 		if (this._cameraPosLoc == -1) alert(cameraPosStr + ": unknown/invalid shader location");
+		this._cameraSclLoc = this._gTarget.getUniformLocation(this._program, cameraScaleStr);
+		if (this._cameraSclLoc == -1) alert(cameraScaleStr + ": unknown/invalid shader location");
 
 		for (var i = 0; i < _maxLightCount; i++) {
 			this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
@@ -302,9 +304,10 @@ class _Buffer {
 		this._tangents = []
 	}
 
-	_setViewMatrix(v, p) {
+	_setViewMatrix(v, p, s) {
 		this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
 		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
+		this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
 	}
 
 	_setModelMatrix(m) {
@@ -553,9 +556,7 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		var p = this._getWorldTransform();
-		return mult(lookAt(vec3(0,0,0), forward(p.rot), up(p.rot), true),
-		mult(scale(p.scl[0], p.scl[1], p.scl[2]), translate(p.pos[0], p.pos[1], p.pos[2])))
+		return lookAt(this._transform.pos, add(this._transform.pos,forward(this._transform.rot)), up(this._transform.rot), true)
 	}
 
 	/**
@@ -575,7 +576,8 @@ class _Camera extends _Primitive {
 	_pushToBuffer() {
 		if (this._enabled) {
 			this._buf._clearBuffers();
-			this._buf._setViewMatrix(this._getViewMat(), this._getWorldTransform(true).pos)
+			var p = this._getWorldTransform(true);
+			this._buf._setViewMatrix(this._getViewMat(), p.pos, p.scl)
 
 			//adding objects
 

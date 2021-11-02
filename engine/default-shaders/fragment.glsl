@@ -8,7 +8,6 @@ in vec2 texCoord;
 in mat3 TBN;
 
 in vec3 positionT;
-in vec3 positionW;
 in vec3 positionVT;
 in vec3 cameraPosT;
 in vec3 cameraPosW;
