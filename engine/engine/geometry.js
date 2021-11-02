@@ -70,21 +70,21 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
  * @param {vec3} extent size of the rectangle from center to edge
  */
 function _getRect(pos, extent, normFunction = normalize) {
-	//1
+	//0
 	var blb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] - extent[2])
-	//2
+	//1
 	var flb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] + extent[2])
-	//3
+	//2
 	var frb = vec3(pos[0] + extent[0], pos[1] - extent[1], pos[2] + extent[2])
-	//4
+	//3
 	var frt = vec3(pos[0] + extent[0], pos[1] + extent[1], pos[2] + extent[2])
-	//5
+	//4
 	var brt = vec3(pos[0] + extent[0], pos[1] + extent[1], pos[2] - extent[2])
-	//6
+	//5
 	var blt = vec3(pos[0] - extent[0], pos[1] + extent[1], pos[2] - extent[2])
-	//7
+	//6
 	var brb = vec3(pos[0] + extent[0], pos[1] - extent[1], pos[2] - extent[2])
-	//8
+	//7
 	var flt = vec3(pos[0] - extent[0], pos[1] + extent[1], pos[2] + extent[2])
 	
 	var ind = []
@@ -108,23 +108,23 @@ function _getRect(pos, extent, normFunction = normalize) {
 		6, 4, 3,
 		3, 2, 6) //right face (+x)
 
-	tx.push(vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
-	vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	tx.push(vec2(-extent[0],-extent[2]), vec2(extent[0], -extent[2]), vec2(extent[0],extent[2]),
+	vec2(extent[0],extent[2]), vec2(-extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 	
 	vec2(extent[0],-extent[2]), vec2(-extent[0], -extent[2]), vec2(extent[0],extent[2]),
 	vec2(-extent[0],extent[2]), vec2(extent[0], extent[2]), vec2(-extent[0],-extent[2]),
 
-	vec2(extent[0],-extent[1]), vec2(-extent[0], -extent[1]), vec2(extent[0], extent[1]),
-	vec2(-extent[0], extent[1]), vec2(extent[0], extent[1]), vec2(-extent[0], -extent[1]),
+	vec2(extent[0],extent[1]), vec2(-extent[0], extent[1]), vec2(extent[0], -extent[1]),
+	vec2(-extent[0], -extent[1]), vec2(extent[0], -extent[1]), vec2(-extent[0], extent[1]),
 	
-	vec2(extent[0],-extent[1]), vec2(-extent[0],-extent[1]), vec2(-extent[0],extent[1]),
-	vec2(-extent[0],extent[1]), vec2(extent[0],extent[1]), vec2(extent[0],-extent[1]),
+	vec2(extent[0],extent[1]), vec2(-extent[0],extent[1]), vec2(-extent[0],-extent[1]),
+	vec2(-extent[0],-extent[1]), vec2(extent[0],-extent[1]), vec2(extent[0],extent[1]),
 	
-	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],extent[1]),
-	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],-extent[1]),
+	vec2(extent[2],-extent[1]), vec2(extent[2], extent[1]), vec2(-extent[2],-extent[1]),
+	vec2(-extent[2],extent[1]), vec2(-extent[2], -extent[1]), vec2(extent[2],extent[1]),
 	
-	vec2(-extent[2],-extent[1]), vec2(-extent[2], extent[1]), vec2(extent[2],extent[1]),
-	vec2(extent[2],extent[1]), vec2(extent[2], -extent[1]), vec2(-extent[2],-extent[1]))
+	vec2(-extent[2],extent[1]), vec2(-extent[2], -extent[1]), vec2(extent[2],-extent[1]),
+	vec2(extent[2],-extent[1]), vec2(extent[2], extent[1]), vec2(-extent[2],extent[1]))
 	var norm = normalsFromTriangleVerts(p, ind, normFunction)
 	var t = tanFromTriangleVerts(p, ind, tx, normFunction)
 	return{points: p, index: ind, texCoords: tx, normals: norm, tangents: t}
