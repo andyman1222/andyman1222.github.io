@@ -90,11 +90,11 @@ function _getRect(pos, extent, normFunction = normalize) {
 	var ind = []
 	var tx = []
 	var p = [blb, flb, frb, frt, brt, blt, brb, flt]
-	ind.push(0, 6, 2,
-		2, 1, 0, //bottom face (-y)
-		
-		4, 5, 3,
+	ind.push(4, 5, 3,
 		7, 3, 5, //top face (+y)
+
+		0, 6, 2,
+		2, 1, 0, //bottom face (-y)
 
 		6, 0, 4,
 		5, 4, 0, //back face (-z)
