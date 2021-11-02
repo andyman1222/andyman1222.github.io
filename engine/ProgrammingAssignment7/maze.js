@@ -204,7 +204,7 @@ draw_maze()
 {
   var p1 = vec2(), p2 = vec2()
   var i;
-  var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/bump_normal2.jpg", "images/bump_depth.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
+  var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "Brick_Wall_015_NORM.jpg", "Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
 
   /* draw the edges as lines */
   {
