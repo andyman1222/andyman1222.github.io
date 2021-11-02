@@ -553,7 +553,7 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		var p = inverse(this._getModelMat(true));
+		var p = inverse(this._getModelMat());
 		return p
 	}
 
