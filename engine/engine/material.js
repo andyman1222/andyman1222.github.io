@@ -41,6 +41,14 @@ class _ScaledTexMat extends _Material {
     }
 }
 
+class _ScaledTexMatNoLight extends _ScaledTexMat {
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=10, maxLayers=32, heightScale=1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 10, 32, 1), vec4(1, 1, 0, 0)]){
+        super(parallax, uScale, vScale, uDisp, vDisp, minLayers, maxLayers, heightScale, parameters)
+        if(parallax) this._index = 4;
+        else this._index = 5;
+    }
+}
+
 /**
  * Representation of a texture with a base color, normal, displacement, AO (diffuse) and roughness (specular) images
  */

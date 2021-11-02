@@ -204,7 +204,7 @@ draw_maze()
 {
   var p1 = vec2(), p2 = vec2()
   var i;
-  var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
+  var txArr = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"])]
 
   /* draw the edges as lines */
   {
@@ -227,7 +227,7 @@ draw_maze()
         var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
         walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
-        tmp.points, [new _ScaledTexMat(true, 1, 1)], _Bounds._RECT, txArr))
+        tmp.points, [new _ScaledTexMatNoLight(true, 1, 1)], _Bounds._RECT, txArr))
       }
     }
   }
