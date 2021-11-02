@@ -553,8 +553,9 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		var p = this._getModelMat();
-		return p
+		var p = this._getWorldTransform();
+		return mult(lookAt(vec3(0,0,0), forward(p.rot), up(p.rot), true),
+		mult(scale(p.scl[0], p.scl[1], p.scl[2]), translate(p.pos[0], p.pos[1], p.pos[2])))
 	}
 
 	/**
