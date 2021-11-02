@@ -71,7 +71,7 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
  */
 function _getRect(pos, extent, normFunction = normalize) {
 	//0
-	var blb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] - extent[2])
+	var blb = vec3(pos[0] - extent[0], pos[1], pos[2] - extent[2])
 	//1
 	var flb = vec3(pos[0] - extent[0], pos[1] - extent[1], pos[2] + extent[2])
 	//2
