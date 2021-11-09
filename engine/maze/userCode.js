@@ -103,7 +103,7 @@ var current = 0
 var walls = []
 
 function userTick(delta, time) {
-	current = clamp((current + delta) * .01, 0, target)
+	current = clamp((current + (delta * .001)), 0, target)
 	switch(state){
 		case "wallGrow":
 			
