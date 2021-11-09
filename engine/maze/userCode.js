@@ -129,7 +129,7 @@ function userTick(delta, time) {
 		switch (state) {
 			case "wallGrow":
 				x = _mainCamera._transform.pos
-				f = add(x, mult(forward(_mainCamera._transform.pos), vec3(15, 0, 15)))
+				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(15, 0, 15)))
 				state = "forward"
 				break
 			case "forward":
@@ -144,19 +144,19 @@ function userTick(delta, time) {
 				break
 			case "turn1":
 				x = _mainCamera._transform.pos
-				f = add(x, mult(forward(_mainCamera._transform.pos), vec3(30, 0, 30)))
+				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(30, 0, 30)))
 				state = "forward2"
 				break
 			case "turn2":
 				x = _mainCamera._transform.pos
-				f = add(x, mult(forward(_mainCamera._transform.pos), vec3(15, 0, 15)))
+				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(15, 0, 15)))
 				state = "forward3"
 				break
 			case "forward3":
 				_mainCamera._transform.pos = vec3(0, 5, 0)
 				_mainCamera._transform.rot = eulerToQuat(vec3(0, 1, 0), 0)
 				x = _mainCamera._transform.pos
-				f = add(x, mult(forward(_mainCamera._transform.pos), vec3(15, 0, 15)))
+				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(15, 0, 15)))
 				state = "forward"
 
 		}
