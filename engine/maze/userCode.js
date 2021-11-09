@@ -180,7 +180,7 @@ function init() {
 	new _ComplexTexture(_gl, ["images/Wood_Floor_010_basecolor.jpg", "images/Wood_Floor_010_normal.jpg", "images/Wood_Floor_010_height.png", "images/Wood_Floor_010_ambientOcclusion.jpg", "images/Wood_Floor_010_roughness.jpg"])]
 
 	mat = new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1, [vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(10, 8, 32, .001), vec4(1, 1, 0, 0)])
-	mat2 = new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1, [vec4(2, 1, 1, 1), vec4(.5, 1, 1, 1), vec4(.5, 1, 1, 1), vec4(1, 1, 1, 1), vec4(10, 8, 32, .001), vec4(1, 1, 0, 0)])
+	mat2 = new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1, [vec4(2, 1, 1, 1), vec4(1, 2, 2, 1), vec4(1, 2, 2, 1), vec4(1, 1, 1, 1), vec4(10, 8, 32, .001), vec4(1, 1, 0, 0)])
 
 	altCamera = new _Camera(_bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera._enabled = false
@@ -220,8 +220,16 @@ function init() {
 
 	//walls
 
-	tmp = _getRect(vec3(0,0,0), vec3(0, 10, 10))
+	tmp = _getRect(vec3(0,0,0), vec3(0, 5, 5))
 	new _Object({pos: vec3(-10, 0, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
+	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
+
+	new _Object({pos: vec3(10, 0, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
+	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
+
+	new _Object({pos: vec3(0, 0, 20), rot: eulerToQuat(vec3(0,1,0), 90), scl: vec3(1, 1, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 }
