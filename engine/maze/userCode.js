@@ -219,9 +219,9 @@ function init() {
 
 	//walls
 
-	tmp = _getRect(vec3(0,0,0), vec3(1, 10, 10))
+	tmp = _getRect(vec3(0,0,0), vec3(0, 10, 10))
 	new _Object({pos: vec3(-10, 0, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
-	{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0},
+	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat], _Bounds._RECT, [txes[1]])
 }
 
