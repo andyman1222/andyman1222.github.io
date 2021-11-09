@@ -99,7 +99,7 @@ function userMouseEvent(e) {
 
 
 function userTick(delta, time) {
-	directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
+	//directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (_mainCamera._enabled) {
@@ -186,7 +186,7 @@ function init() {
 	altCamera._enabled = false
 	_mainCamera._transform.pos = vec3(0, 5, 0)
 	new _AmbientLight(vec4(.2, .2, .2, 1), null)
-	directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(.5, .5, .5, 1), null)
+	directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 90), scl: vec3(1, 1, 1) }, vec4(.5, .5, .5, 1), null)
 	var playerLight = new _PointLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(.5, .5, .5, 1), null, 10)
 	_mainCamera._attachChildToSelf(playerLight, "relative")
 	altCamera._renderEngine = false
@@ -246,6 +246,14 @@ function init() {
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 
 	new _Object({pos: vec3(-15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
+	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
+
+	new _Object({pos: vec3(-30, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
+	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
+
+	new _Object({pos: vec3(30, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 }
