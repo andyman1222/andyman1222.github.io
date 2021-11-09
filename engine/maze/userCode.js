@@ -202,6 +202,18 @@ function init() {
 					1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0
 		}]
 		, tmp.points, [mat, new _Material(-1)], _Bounds._RECT, [txes[2]])
+
+		new _Object({ pos: vec3(0, 10, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
+			{
+				pointIndex: tmp.index, matIndex:
+					[1, 1, 1, 1, 1, 1, //bottom
+						0, 0, 0, 0, 0, 0, //top
+						1, 1, 1, 1, 1, 1,
+						1, 1, 1, 1, 1, 1,
+						1, 1, 1, 1, 1, 1,
+						1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0
+			}]
+			, tmp.points, [mat, new _Material(-1)], _Bounds._RECT, [txes[0]])
 }
 
 window.onload = function () {
