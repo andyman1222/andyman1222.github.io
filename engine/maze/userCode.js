@@ -211,7 +211,7 @@ function init() {
 						1, 1, 1, 1, 1, 1,
 						1, 1, 1, 1, 1, 1,
 						1, 1, 1, 1, 1, 1,
-						1, 1, 1, 1, 1, 1], texCoords: _flipTexCoords(tmp.texCoords), type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0
+						1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0
 			}]
 			, tmp.points, [mat, new _Material(-1)], _Bounds._RECT, [txes[0]])
 }
