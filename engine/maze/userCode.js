@@ -41,7 +41,7 @@ function userKeyEvent(e) {
 }
 
 function userMouseEvent(e) {
-	switch (e.type) {
+	/*switch (e.type) {
 		case "mousemove":
 			if (mouseInRect && !mouseReleased) {
 				mouseMove = true
@@ -93,81 +93,27 @@ function userMouseEvent(e) {
 				mouseReleased = true
 			}
 			break;
-	}
+	}*/
 }
 
+var state="wallGrow"
 
+var target = 1
+var current = 0
+var walls = []
 
 function userTick(delta, time) {
-	//directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
-	for (var i = 0; i < keys.length; i++)
-		if (keys[i]) {
-			if (_mainCamera._enabled) {
-				var d = vec3(0, 0, 0)
-				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
-				if ((i == 87) || (i == 119)) {//w
-					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-					_mainCamera._transform.pos = n
-				}
-
-				if ((i == 65) || (i == 97)) {//a
-					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-					_mainCamera._transform.pos = n
-				}
-
-				if ((i == 83) || (i == 115)) {//s
-					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-					_mainCamera._transform.pos = n
-				}
-
-				if ((i == 68) || (i == 100)) {//d
-					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-					_mainCamera._transform.pos = n
-				}
+	current = clamp(current + delta * .1, 0, target)
+	switch(state){
+		case "wallGrow":
+			
+			for(var i = 0; i < walls.length; i++){
+				walls[i]._transform.scl = vec3(1, current, 1);
 			}
-			else {
-				if ((i == 87) || (i == 119)) //w
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, forward(altCamera._transform.rot)))
-
-				if ((i == 65) || (i == 97))//a
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, right(altCamera._transform.rot)))
-				if ((i == 83) || (i == 115))//s
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, forward(altCamera._transform.rot)))
-
-				if ((i == 68) || (i == 100))//d
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, right(altCamera._transform.rot)))
-				if ((i == 81))//q
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, up(altCamera._transform.rot)))
-
-				if ((i == 69))//e
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, up(altCamera._transform.rot)))
-			}
-
-
-
-			if (i == 27) {//escape
-				document.exitPointerLock();
-				pointerLocked = false;
-				mouseReleased = true
-				mouseMove = false
-			}
-		}
-
-	/*if(!pointerLocked){
-		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(right(_mainCamera._transform.rot), ySpeed))
-		if(Math.abs(xSpeed) > .1)
-			xSpeed -= Math.sign(xSpeed)*delta*(maxSpeed*.001)
-		else xSpeed = 0
-
-		if(Math.abs(ySpeed) > .1)
-			ySpeed -= Math.sign(ySpeed)*delta*(maxSpeed*.001)
-		else ySpeed = 0
-	}*/
+			break
+		//case "forward":
+			//_mainCamera._transform.pos=add(_mainCamera._transform.pos, forward(_mainCamera._transform.pos)*delta)
+	}
 }
 
 var prevPos = 0
@@ -224,69 +170,69 @@ function init() {
 	var longWall = _getRect(vec3(0,0,0), vec3(0,5,25))
 
 	//start left and right
-	new _Object({pos: vec3(-5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	walls = [new _Object({pos: vec3(-5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 	//across hallway
-	new _Object({pos: vec3(0, 5, 20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(0, 5, 20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 
 	//across across left
-	new _Object({pos: vec3(-35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 	//across across right
-	new _Object({pos: vec3(35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
-	shortWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
-	longWall.points, [mat2], _Bounds._RECT, [txes[1]])
+	longWall.points, [mat2], _Bounds._RECT, [txes[1]])]
 }
 
 window.onload = function () {
