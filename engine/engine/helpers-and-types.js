@@ -337,6 +337,16 @@ function tanFromTriangleVerts(v, i, t, normFunction = normalize) {
     return r
 }
 
+/**
+ * Flips the u and v values of an array of texcoords
+ */
+function _flipTexCoords(r){
+    var e = []
+    for(var i = 0; i < r.length; i++){
+        e.push(vec2(r[i][1], r[i][0]))
+    }
+    return e
+}
 
 ///////////////////////////////////////////////////
 

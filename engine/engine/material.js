@@ -2,7 +2,7 @@
 
 /**
  * Material points to index that defines its functionality in the shader, as well as any necessary arguments, such as specular, diffuse, etc.
- * Default: index 0, parameters=[baseColor=(.5,.5,.5,1), diffuse = (.5,.5,.5,1), specular = (.5,.5,.5,1), ambient = (1,1,1,1), misc = (shininess=1,parallax min=0 (default 8),parallax max=0 (default 32),parallax scale=0 (default 1)), texCoord=(uScale=1, vScale=1, uAdd=0, vAdd=0)]
+ * Default: index 0, parameters=[baseColor=(.5,.5,.5,1), diffuse = (.5,.5,.5,1), specular = (.5,.5,.5,1), ambient = (1,1,1,1), misc = (shininess=1,parallax min=0 (default 8),parallax max=0 (default 32),parallax scale=0 (default .1)), texCoord=(uScale=1, vScale=1, uAdd=0, vAdd=0)]
  */
 
 class _Material {
@@ -11,7 +11,7 @@ class _Material {
     _prevIndex
     _prevParameters
     _updated
-    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, 1), vec4(1, 1, 0, 0)]) {
+    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]) {
         this._index = index
         this._parameters = parameters
     }
