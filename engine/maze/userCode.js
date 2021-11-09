@@ -140,11 +140,13 @@ function userTick(delta, time) {
 			case "forward2":
 				x = _mainCamera._transform.rot
 				f = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), 90 * (Math.random() > .5 ? -1 : 1), normalize))
+				rate = .001
 				state = "turn2"
 				break
 			case "turn1":
 				x = _mainCamera._transform.pos
 				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(30, 0, 30)))
+				rate = .0005
 				state = "forward2"
 				break
 			case "turn2":
