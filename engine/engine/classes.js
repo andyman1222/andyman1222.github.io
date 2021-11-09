@@ -452,9 +452,12 @@ class _Bounds {
 	_pos;
 	_extent;
 	_radius;
+	_parentObject;
 
-	constructor(pointInfo, type) {
+
+	constructor(pointInfo, type, parentObject) {
 		this._type = type;
+		this._parentObject = parentObject;
 
 		//get center of all points rendered
 		this._pos = vec3()
@@ -660,6 +663,7 @@ class _Object extends _Primitive {
 	_matInfo = []
 	_textureInfo = []
 	_visible = []
+	_id = -1
 
 	/**To be called whenever individual points are adjusted */
 	_reevaluateBounds(pointInfo, boundsType) {
@@ -684,7 +688,7 @@ class _Object extends _Primitive {
 		this._matInfo = matInfo
 		this._textureInfo = textureInfo
 		this._visible = visible
-		_objects[this._id] = this
+		_objects.set(this._id, this)
 	}
 
 

@@ -16,11 +16,12 @@ var _mouseBuffer = []
 
 
 ////ENGINE ELEMENTS
-var _objects = [];
+var _objects = new Map();
 var _buffers = [];
 var _cameras = [];
 var _lights = [];
 var _complexTextures = [];
+var _bounds = []
 
 
 ////COLLISION VARIABLES

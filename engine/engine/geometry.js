@@ -1,5 +1,17 @@
 "use strict";
 
+//TODO
+function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFunction=normalize){
+	var r = [add(pos, vec3(0,radius,0)), subtract(pos,vec3(0,radius,0))]
+	for(var y = 1; i < numLayers-1; i++){
+		var tmpy = ((y / numLayers) * 360)
+		for(var x = 0; x < numFaces; x++){
+			var tmpx = ((x / numFaces) * 360)
+			r.push(add(pos, vec3(Math.sin(radians(tmpx)), Math.cos(radians(tmpy)), Math.cos(radians(tmpx)))))
+		}
+	}
+}
+
 function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIANGLES, normFunction = normalize) {
 	var facePoints = []
 	for (var i = 0; i < numFaces; i++) {
