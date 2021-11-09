@@ -108,6 +108,7 @@ function userTick(delta, time) {
 		case "wallGrow":
 			
 			for(var i = 0; i < walls.length; i++){
+				walls[i]._transform.pos=vec3(walls[i]._transform.pos[0], mix(0, 5, current), walls[i]._transform.pos[2])
 				walls[i]._transform.scl = vec3(1, current, 1);
 			}
 			break
@@ -137,7 +138,7 @@ function init() {
 	_mainCamera._attachChildToSelf(playerLight, "relative")
 	altCamera._renderEngine = false
 	//generateMaze_()
-	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
+	var tmp = _getRect(vec3(0, 0, 0), vec3(50, 0, 50))
 
 	//floors, ceil
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
@@ -170,67 +171,67 @@ function init() {
 	var longWall = _getRect(vec3(0,0,0), vec3(0,5,25))
 
 	//start left and right
-	walls = [new _Object({pos: vec3(-5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	walls = [new _Object({pos: vec3(-5, 0, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(5, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(5, 0, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 	//across hallway
-	new _Object({pos: vec3(0, 5, 20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(0, 0, 20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(15, 0, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-15, 5, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-15, 0, 10), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 
 	//across across left
-	new _Object({pos: vec3(-35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-35, 0, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-25, 0, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-25, 0, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-30, 0, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(-30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(-30, 0, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
 	//across across right
-	new _Object({pos: vec3(35, 5, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(35, 0, 15), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(25, 5, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(25, 0, 0), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(25, 5, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(25, 0, 30), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 0, 1)},
 	[{pointIndex: shortWall.index, matIndex: [0], texCoords: shortWall.texCoords, type: _gl.TRIANGLES, normals: shortWall.normals, tangents: shortWall.tangents, textureIndex: 0}],
 	shortWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(30, 5, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(30, 0, 50), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]]),
 
-	new _Object({pos: vec3(30, 5, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
+	new _Object({pos: vec3(30, 0, -20), rot: eulerToQuat(vec3(0,1,0), 90, normalize), scl: vec3(1, 0, 1)},
 	[{pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0}],
 	longWall.points, [mat2], _Bounds._RECT, [txes[1]])]
 }
