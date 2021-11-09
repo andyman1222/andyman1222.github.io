@@ -17,9 +17,7 @@ var altCamera;
 
 var directLight;
 
-var txes = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"]),
-new _ComplexTexture(_gl, ["images/Brick_Wall_008_COLOR.jpg", "images/Brick_Wall_008_NORM.jpg", "images/Brick_Wall_008_DISP.png", "images/Brick_Wall_008_OCC.jpg", "images/Brick_Wall_008_SPEC.jpg"]),
-new _ComplexTexture(_gl, ["images/Wood_Floor_010_basecolor.jpg", "images/Wood_Floor_010_normal.jpg", "images/Wood_Floor_010_height.png", "images/Wood_Floor_010_ambientOcclusion.jpg", "images/Wood_Floor_010_roughness.jpg"])]
+var txes = null;
 
 function switchCamera() {
 	if (_mainCamera._enabled) {
@@ -105,30 +103,30 @@ function userTick(delta, time) {
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (_mainCamera._enabled) {
-				var d = vec3(0,0,0)
+				var d = vec3(0, 0, 0)
 				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
 				if ((i == 87) || (i == 119)) {//w
 					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
 					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-						_mainCamera._transform.pos = n
+					_mainCamera._transform.pos = n
 				}
 
 				if ((i == 65) || (i == 97)) {//a
 					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
 					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-						_mainCamera._transform.pos = n
+					_mainCamera._transform.pos = n
 				}
 
 				if ((i == 83) || (i == 115)) {//s
 					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
 					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-						_mainCamera._transform.pos = n
+					_mainCamera._transform.pos = n
 				}
 
 				if ((i == 68) || (i == 100)) {//d
 					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
 					//if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
-						_mainCamera._transform.pos = n
+					_mainCamera._transform.pos = n
 				}
 			}
 			else {
@@ -174,9 +172,13 @@ function userTick(delta, time) {
 
 var prevPos = 0
 var rClick = 0
-var mat = new _ScaledTexMat(true, 1, 1, 0, 0, 8, 32, 1, [vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(1,1,1,1), vec4(10, 8, 32, 1), vec4(1,1,0,0)])
+var mat = new _ScaledTexMat(true, 1, 1, 0, 0, 8, 32, 1, [vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(10, 8, 32, 1), vec4(1, 1, 0, 0)])
 
 function init() {
+	txes = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"]),
+	new _ComplexTexture(_gl, ["images/Brick_Wall_008_COLOR.jpg", "images/Brick_Wall_008_NORM.jpg", "images/Brick_Wall_008_DISP.png", "images/Brick_Wall_008_OCC.jpg", "images/Brick_Wall_008_SPEC.jpg"]),
+	new _ComplexTexture(_gl, ["images/Wood_Floor_010_basecolor.jpg", "images/Wood_Floor_010_normal.jpg", "images/Wood_Floor_010_height.png", "images/Wood_Floor_010_ambientOcclusion.jpg", "images/Wood_Floor_010_roughness.jpg"])]
+
 	altCamera = new _Camera(_bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera._enabled = false
 	_mainCamera._transform.pos = vec3(0, 5, 0)
@@ -188,13 +190,15 @@ function init() {
 	//generateMaze_()
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ pointIndex: tmp.index, matIndex: 
-			[0, 0, 0, 0, 0, 0, //top
-			1, 1, 1, 1, 1, 1, //bottom
-			1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}]
+		{
+			pointIndex: tmp.index, matIndex:
+				[0, 0, 0, 0, 0, 0, //top
+					1, 1, 1, 1, 1, 1, //bottom
+					1, 1, 1, 1, 1, 1,
+					1, 1, 1, 1, 1, 1,
+					1, 1, 1, 1, 1, 1,
+					1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0
+		}]
 		, tmp.points, [mat, new _Material(-1)], _Bounds._RECT, [txes[2]])
 }
 
