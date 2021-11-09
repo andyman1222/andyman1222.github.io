@@ -94,11 +94,12 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 
 function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 	_canvas = document.getElementById(defaultCanvas);
-	/*_canvas.addEventListener("webglcontextlost", function(event) {
+	_canvas.addEventListener("webglcontextlost", function(event) {
 		event.preventDefault();
 		cancelAnimationFrame(_requestId);
+		alert("WebGL context lost. Please reload the page.")
 	}, false);
-	_canvas.addEventListener("webglcontextrestored", function(event) {
+	/*_canvas.addEventListener("webglcontextrestored", function(event) {
 		_setDefaultGraphics();
 		_complexTextures.forEach((o) => {
 			o._init();
