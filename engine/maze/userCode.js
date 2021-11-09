@@ -221,15 +221,15 @@ function init() {
 	//walls
 
 	tmp = _getRect(vec3(0,0,0), vec3(0, 5, 5))
-	new _Object({pos: vec3(-10, 0, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(-10, 5, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 
-	new _Object({pos: vec3(10, 0, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(10, 5, 10), rot: eulerToQuat(vec3(0,0,1), 0), scl: vec3(1, 1, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 
-	new _Object({pos: vec3(0, 0, 20), rot: eulerToQuat(vec3(0,1,0), 90), scl: vec3(1, 1, 1)},
+	new _Object({pos: vec3(0, 5, 20), rot: eulerToQuat(vec3(0,1,0), 90), scl: vec3(1, 1, 1)},
 	[{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
 	tmp.points, [mat2], _Bounds._RECT, [txes[1]])
 }
