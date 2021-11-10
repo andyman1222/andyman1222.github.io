@@ -311,6 +311,7 @@ function init() {
 	flip = new _Object({pos: vec3(-20, 3, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
 	[{pointIndex: tmp.index, matIndex: [0, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
 	tmp.points, [new _BasicMaterial(vec4(0,0,0,1)), new _BasicMaterial(vec4(1,1,1,1))], _Bounds._SPHERE, [])
+	
 	flip._customTickFunc = function (d, t) {
 		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d))
 		var tmp = subtract(this._transform.pos, _mainCamera._transform.pos)
