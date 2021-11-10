@@ -179,7 +179,7 @@ function userTick(delta, time) {
 				break
 			case "forward3":
 				_mainCamera._transform.pos = vec3(0, 5, 0)
-				_mainCamera._transform.rot = eulerToQuat(forward(_mainCamera._transform.rot), flipped ? 0 : -180)
+				_mainCamera._transform.rot = eulerToQuat(forward(_mainCamera._transform.rot), !flipped ? 0 : 180)
 				x = _mainCamera._transform.pos
 				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(15, 0, 15)))
 				state = "forward"
@@ -308,15 +308,17 @@ function init() {
 
 	//fliperoo
 	tmp = _getSphere(vec3(0,0,0),vec3(1,1,1),16, 8)
-	flip = new _Object({pos: vec3(-20, 1, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
+	flip = new _Object({pos: vec3(-25, 1, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
 	[{pointIndex: tmp.index, matIndex: [0, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
 	tmp.points, [new _BasicMaterial(vec4(0,0,0,1)), new _BasicMaterial(vec4(1,1,1,1))], _Bounds._SPHERE, [])
 
 	flip._customTickFunc = function (d, t) {
 		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d*.1))
 		var tmp = subtract(this._transform.pos, _mainCamera._transform.pos)
-		if(length(vec2(tmp[0], tmp[2])) < 1)
+		if(length(vec2(tmp[0], tmp[2])) < 1){
 			flipped = true
+			_bufferedConsoleLog("in range")
+		}
 		else flipped = false
 	}.bind(flip)
 }

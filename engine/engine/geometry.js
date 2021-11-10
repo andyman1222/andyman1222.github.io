@@ -20,10 +20,11 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
-				p.push(((y*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx, ty))
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2, ty))
+				p.push(((y*numFaces)+x+2)-numFaces)
+				tx.push(vec2(txx, ty))
+				
 				
 			}
 			else {
