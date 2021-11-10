@@ -6,7 +6,7 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	var p = []
 	var tx = []
 	var txy, txy2
-	for(var y = 1; y < nl-1; y++){
+	for(var y = 1; y < nl; y++){
 		var tmpy = ((y / nl) * 180)
 		txy = Math.cos(radians(tmpy))
 		txy2 = Math.cos(radians((((y-1) / nl) * 180)))
