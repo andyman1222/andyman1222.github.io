@@ -18,11 +18,10 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
 			r.push(add(pos, mult(radius, vec3(txx*tyi, ty, Math.cos(radians(tmpx))*tyi))))
 			if(y == 1){
-				
-				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2, ty))
 				p.push(((y*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx, ty))
+				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2, ty))
 				p.push(0)
 				tx.push(vec2(txx,1))
 				
@@ -31,10 +30,11 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 			}
 			else {
 				
-				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,ty))
+				
 				p.push(((y*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,ty))
+				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2,ty))
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,ty2))
 				
@@ -43,10 +43,10 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 				
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,ty2))
-				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,ty2))
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2,ty))
+				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2,ty2))
 				
 				
 			}
@@ -58,10 +58,11 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var txx = Math.sin(radians(tmpx))
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
 		
-		p.push((((nl-1)*numFaces)+x+2)-numFaces)
-		tx.push(vec2(txx, ty))
+		
 		p.push((((nl-1)*numFaces)+((x+1)%numFaces)+2)-numFaces)
 		tx.push(vec2(txx2, ty))
+		p.push((((nl-1)*numFaces)+x+2)-numFaces)
+		tx.push(vec2(txx, ty))
 		p.push(1)
 		tx.push(vec2(txx, -1))
 	}
