@@ -147,7 +147,7 @@ function userTick(delta, time) {
 			case "forward2":
 				if(collidingWithRoator){
 					x = _mainCamera._transform.rot
-					f = addRotation(_mainCamera._transform.rot, eulerToQuat(forward(_mainCamera._transform.rot), flipped?180:-180, normalize))
+					f = addRotation(_mainCamera._transform.rot, eulerToQuat(normalize(forward(_mainCamera._transform.rot)), flipped?180:-180, normalize))
 					flipped = !flipped
 					rate = .0025
 					state = "rotate"
@@ -179,7 +179,7 @@ function userTick(delta, time) {
 				break
 			case "forward3":
 				_mainCamera._transform.pos = vec3(0, 5, 0)
-				_mainCamera._transform.rot = eulerToQuat(forward(_mainCamera._transform.rot), !flipped ? 0 : 180)
+				_mainCamera._transform.rot = eulerToQuat(normalize(forward(_mainCamera._transform.rot)), !flipped ? 0 : 180)
 				flip._transform.pos=vec3((Math.random()>.5?1:-1)*30, 1, 15)
 				x = _mainCamera._transform.pos
 				f = add(x, mult(normalize(forward(_mainCamera._transform.rot)), vec3(15, 0, 15)))
