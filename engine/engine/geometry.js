@@ -9,11 +9,12 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	for(var y = 1; y < nl; y++){
 		txy = mix(1, -1, y / nl)
 		txy2 = mix(1, -1, (y-1) / nl)
+		tyi = Math.sin(radians(txy * 180))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
 			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-			r.push(add(pos, mult(tyi, mult(radius, vec3(txx, txy, Math.cos(radians(tmpx)))))))
+			r.push(add(pos, mult(radius, vec3(txx*tyi, txy, Math.cos(radians(tmpx)))*tyi)))
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
