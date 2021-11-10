@@ -727,7 +727,7 @@ class _Object extends _Primitive {
 
 				for (var ii = 0; ii < i.length; ii++) {
 					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1, camera._wireframe || camera._noLighting)
-					buf._points.push(this._pointInfo[i[ii]])
+					buf._points.push(mult(this._pointInfo[i[ii]], vec3(1,-1,1)))
 					switch (d.type) {
 						case _gl.TRIANGLES:
 						buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
