@@ -460,16 +460,20 @@ class _Bounds {
 	_type;
 	_pos;
 	_extent;
-	_radius;
 	_parentObject;
+	_shape;
 
 
 	constructor(pointInfo, type, parentObject) {
 		this._type = type;
 		this._parentObject = parentObject;
-
+		this._updateBounds(pointInfo);
 		//get center of all points rendered
-		this._pos = vec3()
+		
+	}
+
+	_updateBounds(pointInfo){
+		this._pos = vec3(0,0,0)
 		if (pointInfo.length > 0) {
 			var min = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2]) //POINTERS PLS
 			var max = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2])
@@ -483,23 +487,18 @@ class _Bounds {
 
 			this._pos = mult(.5, add(min, max))
 			//(this._pos)
-
+			this._extent = mult(.5, subtract(max, min));
 			if (type == _Bounds._SPHERE) {
 				//get furthest point from points rendered
-				this._radius = subtract(pointInfo[0], this._pos)
-				for (var i = 1; i < pointInfo.length; i++) {
-					var tmp = subtract(pointInfo[i], this._pos)
-					if (length(tmp) > length(this._radius)) this._radius = tmp
-				}
+				
+				this._shape = _getSphere(this._pos, this._extent, 5, 5)
+				
 			} else if (type == _Bounds._RECT) {
-
-				this._extent = mult(.5, subtract(max, min));
-
+				this._shape = _getRect(this._pos, this._extent);
 				//set pos to the middle of the min and max points
 
 			} else throw "Only _Bounds types supported now are RECT and SPHERE"
 		} else {
-			this._radius = 0
 			this._extent = vec3(0, 0, 0)
 		}
 	}
@@ -507,10 +506,7 @@ class _Bounds {
 	//defines points to draw _Bounds, manually
 	_getDrawBounds(multMat = vec3(1, 1, 1)) {
 		var r = []
-		var tmp;
-		if (this._type == _Bounds._RECT) { //sphere TBD
-			tmp = _getRect(this._pos, this._extent);
-		}
+		var tmp = this._shape;
 		for (var i = 0; i < tmp.index.length; i++)
 			r.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
 		return r
@@ -519,11 +515,8 @@ class _Bounds {
 	//defines points to draw _Bounds, manually
 	_getGraphicsDrawBounds(boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
-		var tmp;
-		r.colors.push(boundsColor)
-		if (this._type == _Bounds._RECT) { //sphere TBD
-			tmp = _getRect(this._pos, this._extent);
-		}
+		var tmp = this._shape;
+		r.colors.push(boundsColor);
 		for (var i = 0; i < tmp.index.length; i++)
 			r.points.push(vec3to4(tmp.points[tmp.index[i]]))
 		return r

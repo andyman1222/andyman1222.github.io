@@ -2,7 +2,7 @@
 
 function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFunction=normalize){
 	var nl = numLayers+1
-	var r = [add(pos, vec3(0,radius,0)), subtract(pos,vec3(0,radius,0))]
+	var r = [add(pos, vec3(0,radius[1],0)), subtract(pos,vec3(0,radius[1],0))]
 	var p = []
 	var tx = []
 	var txy, txy2
@@ -14,7 +14,7 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
 			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-			r.push(add(pos, vec3(txx, txy, Math.cos(radians(tmpx)))))
+			r.push(add(pos, multiply(radius, vec3(txx, txy, Math.cos(radians(tmpx))))))
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
