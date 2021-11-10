@@ -8,6 +8,7 @@ _fisqrt.i = new Int32Array( _fisqrt.y.buffer )
 var _time = 0;
 var _id = 0;
 var _requestId = 0;
+var _tickEnabled = true;
 
 
 ////USER INPUT

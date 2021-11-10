@@ -33,10 +33,12 @@ function _tick(prevTime) {
 	_objects.forEach((o) => (o._preTick(delta, _time)))
 	_cameras.forEach((o) => (o._preTick(delta, _time)))
 	
-	_lights.forEach((o) => (o._onTick(delta, _time)))
-	_objects.forEach((o) => (o._onTick(delta, _time)))
-	_cameras.forEach((o) => (o._onTick(delta, _time)))
-	_userTickFunction(delta, _time)
+	if(_tickEnabled){
+		_lights.forEach((o) => (o._onTick(delta, _time)))
+		_objects.forEach((o) => (o._onTick(delta, _time)))
+		_cameras.forEach((o) => (o._onTick(delta, _time)))
+		_userTickFunction(delta, _time)
+	}
 	
 	_consoleBufferLock = true
 	var tmp = [..._consoleBuffer]
