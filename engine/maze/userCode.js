@@ -147,9 +147,9 @@ function userTick(delta, time) {
 			case "forward2":
 				if(collidingWithRoator){
 					x = _mainCamera._transform.rot
-					f = addRotation(_mainCamera._transform.rot, eulerToQuat(forward(_mainCamera._transform.rot), 180, normalize))
+					f = addRotation(_mainCamera._transform.rot, eulerToQuat(forward(_mainCamera._transform.rot), flipped?180:-180, normalize))
 					flipped = !flipped
-					rate = .005
+					rate = .0025
 					state = "rotate"
 				}
 				else {
