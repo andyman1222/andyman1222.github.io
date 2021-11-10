@@ -313,7 +313,7 @@ function init() {
 	tmp.points, [new _BasicMaterial(vec4(0,0,0,1)), new _BasicMaterial(vec4(1,1,1,1))], _Bounds._SPHERE, [])
 
 	flip._customTickFunc = function (d, t) {
-		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d))
+		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d*.01))
 		var tmp = subtract(this._transform.pos, _mainCamera._transform.pos)
 		if(length(vec2(tmp[0], tmp[2])) < 1)
 			flipped = true

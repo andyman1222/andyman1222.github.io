@@ -10,35 +10,37 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		txy = mix(1, -1, y / nl)
 		txy2 = mix(1, -1, (y-1) / nl)
 		tyi = Math.cos(radians(txy * 90))
+		ty = Math.sin(radians(txy * 90))
+		ty2 = Math.sin(radians(txy2 * 90))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
 			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-			r.push(add(pos, mult(radius, vec3(txx*tyi, txy, Math.cos(radians(tmpx))*tyi))))
+			r.push(add(pos, mult(radius, vec3(txx*tyi, ty, Math.cos(radians(tmpx))*tyi))))
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
 				p.push(((y*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx, txy))
+				tx.push(vec2(txx, ty))
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2, txy))
+				tx.push(vec2(txx2, ty))
 				
 			}
 			else {
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx,txy2))
+				tx.push(vec2(txx,ty2))
 				p.push(((y*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx,txy))
+				tx.push(vec2(txx,ty))
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy))
+				tx.push(vec2(txx2,ty))
 				
 
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy))
+				tx.push(vec2(txx2,ty))
 				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy2))
+				tx.push(vec2(txx2,ty2))
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx,txy2))
+				tx.push(vec2(txx,ty2))
 				
 			}
 			
@@ -49,9 +51,9 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var txx = Math.sin(radians(tmpx))
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
 		p.push((((nl-1)*numFaces)+x+2)-numFaces)
-		tx.push(vec2(txx, txy))
+		tx.push(vec2(txx, ty))
 		p.push((((nl-1)*numFaces)+((x+1)%numFaces)+2)-numFaces)
-		tx.push(vec2(txx2, txy))
+		tx.push(vec2(txx2, ty))
 		p.push(1)
 		tx.push(vec2(txx, -1))
 		
