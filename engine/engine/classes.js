@@ -488,12 +488,12 @@ class _Bounds {
 			this._pos = mult(.5, add(min, max))
 			//(this._pos)
 			this._extent = mult(.5, subtract(max, min));
-			if (type == _Bounds._SPHERE) {
+			if (this._type == _Bounds._SPHERE) {
 				//get furthest point from points rendered
 				
 				this._shape = _getSphere(this._pos, this._extent, 5, 5)
 				
-			} else if (type == _Bounds._RECT) {
+			} else if (this._type == _Bounds._RECT) {
 				this._shape = _getRect(this._pos, this._extent);
 				//set pos to the middle of the min and max points
 
