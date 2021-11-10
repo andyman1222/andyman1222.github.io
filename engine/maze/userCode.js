@@ -308,7 +308,7 @@ function init() {
 
 	//fliperoo
 	tmp = _getSphere(vec3(0,0,0),vec3(1,1,1),16, 8)
-	flip = new _Object({pos: vec3(-20, 3, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
+	flip = new _Object({pos: vec3(0, 3, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
 	[{pointIndex: tmp.index, matIndex: [0, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
 	tmp.points, [new _BasicMaterial(vec4(0,0,0,1)), new _BasicMaterial(vec4(1,1,1,1))], _Bounds._SPHERE, [])
 
