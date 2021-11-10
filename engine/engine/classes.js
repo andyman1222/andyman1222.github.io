@@ -11,6 +11,9 @@ class _Primitive {
 	_parent = null
 	_prevTransform;
 	_updated;
+	_customTickFunc = function(delta, time) {}
+	_customPreTick = function(delta, time) {}
+	_customPostTick = function(delta, time) {}
 
 	constructor(transform) {
 		this._transform = transform
@@ -131,9 +134,14 @@ class _Primitive {
 		this._updated = true
 	}
 
-	_onTick(delta, time) {
+	_preTick(delta, time) {
 		if ((this._prevTransform == null) || (!equal(this._transform.pos, this._prevTransform.pos) || !quatEqual(this._transform.rot, this._prevTransform.rot) || !equal(this._transform.scl, this._prevTransform.scl)))
 			this._updated = true
+		this._customPreTick(delta, time)
+	}
+
+	_onTick(delta, time){
+		this._customTickFunc(delta, time)
 	}
 
 	_postTick(delta, time) {
@@ -143,6 +151,7 @@ class _Primitive {
 			this._prevParent = this._parent
 			this._addRemoveObjects = []
 		}
+		this._customPostTick(delta, time)
 	}
 }
 

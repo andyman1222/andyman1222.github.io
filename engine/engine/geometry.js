@@ -1,15 +1,59 @@
 "use strict";
 
-//TODO
 function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFunction=normalize){
 	var r = [add(pos, vec3(0,radius,0)), subtract(pos,vec3(0,radius,0))]
-	for(var y = 1; i < numLayers-1; i++){
+	var p = []
+	var tx = []
+	var txy, txy2
+	for(var y = 1; y < numLayers-1; y++){
 		var tmpy = ((y / numLayers) * 360)
+		txy = Math.cos(radians(tmpy))
+		txy2 = Math.cos(radians((((y-1) / numLayers) * 360)))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
-			r.push(add(pos, vec3(Math.sin(radians(tmpx)), Math.cos(radians(tmpy)), Math.cos(radians(tmpx)))))
+			var txx = Math.sin(radians(tmpx))
+			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
+			r.push(add(pos, vec3(txx, txy, Math.cos(radians(tmpx)))))
+			if(y == 1){
+				p.push(0)
+				tx.push(vec2(txx,1))
+				p.push((y*numFaces)+x+2)
+				tx.push(vec2(txx, txy))
+				p.push(((y*numFaces)+((x+1)%numFaces))+2)
+				tx.push(vec2(txx2, txy))
+			}
+			else {
+				p.push(((y-1)*numFaces)+x+2)
+				tx.push(vec2(txx,txy2))
+				p.push((y*numFaces)+x+2)
+				tx.push(vec2(txx,txy))
+				p.push(((y*numFaces)+((x+1)%numFaces))+2)
+				tx.push(vec2(txx2,txy))
+				p.push(((y*numFaces)+((x+1)%numFaces))+2)
+				tx.push(vec2(txx2,txy))
+				p.push((((y-1)*numFaces)+((x+1)%numFaces))+2)
+				tx.push(vec2(txx2,txy2))
+				p.push(((y-1)*numFaces)+x+2)
+				tx.push(vec2(txx,txy2))
+			}
+			
 		}
 	}
+	for(var x = 0; x < numFaces; x++){
+		var tmpx = ((x / numFaces) * 360)
+		var txx = Math.sin(radians(tmpx))
+		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
+		p.push(((numLayers-1)*numFaces)+x+2)
+		tx.push(vec2(txx, txy))
+		p.push(((numLayers-1)*numFaces)+((x+1)%numFaces)+2)
+		tx.push(vec2(txx2, txy))
+		p.push(1)
+		tx.push(vec2(txx, -1))
+	}
+
+	var norm = normalsFromTriangleVerts(r, p, normFunction)
+	var t = tanFromTriangleVerts(r, p, tx, normFunction)
+	return{points: r, index: p, texCoords: tx, normals: norm, tangents: t}
 }
 
 function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIANGLES, normFunction = normalize) {

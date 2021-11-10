@@ -104,6 +104,11 @@ var rate = .001
 var walls = []
 var x = null
 var f = null
+var flip = null
+
+var flipped = false
+
+var collidingWithRoator = false
 
 function userTick(delta, time) {
 	current = clamp((current + (delta * rate)), 0, 1)
@@ -114,11 +119,13 @@ function userTick(delta, time) {
 				walls[i]._transform.pos = vec3(walls[i]._transform.pos[0], mix(0, 5, current), walls[i]._transform.pos[2])
 				walls[i]._transform.scl = vec3(1, current, 1);
 			}
+			flip._transform.pos = vec3(flip._transform.pos[0], mix(0, 5, current), flip._transform.pos[2])
+			flip._transform.scl = vec3(1, current, 1);
 			break
 		case "forward": case "forward2": case "forward3":
 			_mainCamera._transform.pos = mix(x, f, current)
 			break
-		case "turn1": case "turn2":
+		case "turn1": case "turn2": case "rotate":
 			_mainCamera._transform.rot = quatLerp(x, f, current)
 
 
@@ -138,11 +145,27 @@ function userTick(delta, time) {
 				state = "turn1"
 				break
 			case "forward2":
-				x = _mainCamera._transform.rot
-				f = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), 90 * (Math.random() > .5 ? -1 : 1), normalize))
-				rate = .001
-				state = "turn2"
+				if(collidingWithRoator){
+					x = _mainCamera._transform.rot
+					f = addRotation(_mainCamera._transform.rot, eulerToQuat(forward(_mainCamera._transform.rot), 180))
+					flipped = !flipped
+					rate = .001
+					state = "rotate"
+				}
+				else {
+					x = _mainCamera._transform.rot
+					f = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), 90 * (Math.random() > .5 ? -1 : 1), normalize))
+					rate = .001
+					state = "turn2"
+				}
+				
 				break
+			case "rotate":
+				x = _mainCamera._transform.rot
+					f = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), 90 * (Math.random() > .5 ? -1 : 1), normalize))
+					rate = .001
+					state = "turn2"
+					break
 			case "turn1":
 				x = _mainCamera._transform.pos
 				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(30, 0, 30)))
@@ -156,7 +179,7 @@ function userTick(delta, time) {
 				break
 			case "forward3":
 				_mainCamera._transform.pos = vec3(0, 5, 0)
-				_mainCamera._transform.rot = eulerToQuat(vec3(0, 1, 0), 0)
+				_mainCamera._transform.rot = eulerToQuat(forward(_mainCamera._transform.rot), flipped ? 0 : -180)
 				x = _mainCamera._transform.pos
 				f = add(x, mult(forward(_mainCamera._transform.rot), vec3(15, 0, 15)))
 				state = "forward"
@@ -282,6 +305,19 @@ function init() {
 	new _Object({ pos: vec3(30, 0, -20), rot: eulerToQuat(vec3(0, 1, 0), 90, normalize), scl: vec3(1, 0, 1) },
 		[{ pointIndex: longWall.index, matIndex: [0], texCoords: longWall.texCoords, type: _gl.TRIANGLES, normals: longWall.normals, tangents: longWall.tangents, textureIndex: 0 }],
 		longWall.points, [mat2], _Bounds._RECT, [txes[1]])]
+
+	//fliperoo
+	tmp = _getSphere(vec3(0,0,0),1,16, 8, _gl.TRIANGLES, normalize)
+	flip = new _Object({pos: vec3(-20, 3, 15), rot: eulerToQuat(vec3(0,1,0),0,normalize), scl: vec3(1,0,1)},
+	[{pointIndex: tmp.index, matIndex: [0, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
+	tmp.points, [new _BasicMaterial(vec4(0,0,0,1)), new _BasicMaterial(vec4(1,1,1,1))], _Bounds._SPHERE, [])
+	flip._customTickFunc = function (d, t) {
+		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d))
+		var tmp = subtract(this._transform.pos, _mainCamera._transform.pos)
+		if(length(vec2(tmp[0], tmp[2])) < 1)
+			flipped = true
+		else flipped = false
+	}.bind(flip)
 }
 
 window.onload = function () {

@@ -17,6 +17,17 @@ class _Material {
     }
 }
 
+class _BasicMaterial extends _Material{
+    constructor(baseColor = vec4(1,1,1,1), diffuse=1,specular=1,ambient=1,shininess=1,txCoordScl=vec2(1,1),txCoordDisp=vec2(0,0)){
+        super(-1, [baseColor, 
+            vec4(diffuse, diffuse, diffuse, 1), 
+            vec4(specular, specular, specular, 1), 
+            vec4(ambient, ambient, ambient, 1), 
+            vec4(shininess, 0, 0, 0), 
+            vec4(txCoordScl[0], txCoordScl[1], txCoordDisp[0], txCoordDisp[1])])
+    }
+}
+
 class _NoDraw extends _Material {
     constructor() {
         super(-1)

@@ -29,10 +29,14 @@ function _tick(prevTime) {
 	l = _mouseBuffer.length
 	for(var x = 0; x < l; x++)
 		_userMouseFunction(_mouseBuffer.shift())
-	_userTickFunction(delta, _time)
+	_lights.forEach((o) => (o._preTick(delta, _time)))
+	_objects.forEach((o) => (o._preTick(delta, _time)))
+	_cameras.forEach((o) => (o._preTick(delta, _time)))
+	
 	_lights.forEach((o) => (o._onTick(delta, _time)))
 	_objects.forEach((o) => (o._onTick(delta, _time)))
 	_cameras.forEach((o) => (o._onTick(delta, _time)))
+	_userTickFunction(delta, _time)
 	
 	_consoleBufferLock = true
 	var tmp = [..._consoleBuffer]
