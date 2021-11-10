@@ -317,10 +317,10 @@ function init() {
 		this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(0,1,0), d*.1))
 		var tmp = subtract(this._transform.pos, _mainCamera._transform.pos)
 		if(length(vec2(tmp[0], tmp[2])) < 1){
-			flipped = true
-			_bufferedConsoleLog("in range")
+			collidingWithRoator = true
+			//_bufferedConsoleLog("in range")
 		}
-		else flipped = false
+		else collidingWithRoator = false
 	}.bind(flip)
 }
 
