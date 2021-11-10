@@ -119,7 +119,7 @@ function userTick(delta, time) {
 				walls[i]._transform.pos = vec3(walls[i]._transform.pos[0], mix(0, 5, current), walls[i]._transform.pos[2])
 				walls[i]._transform.scl = vec3(1, current, 1);
 			}
-			flip._transform.pos = vec3(flip._transform.pos[0], mix(0, 5, current), flip._transform.pos[2])
+			flip._transform.pos = vec3(flip._transform.pos[0], mix(0, 1, current), flip._transform.pos[2])
 			flip._transform.scl = vec3(1, current, 1);
 			break
 		case "forward": case "forward2": case "forward3":
