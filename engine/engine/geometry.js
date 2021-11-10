@@ -7,10 +7,8 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	var tx = []
 	var txy, txy2, tyi
 	for(var y = 1; y < nl; y++){
-		var tmpy = ((y / nl) * 360)
-		txy = Math.cos(radians(tmpy))
-		txy2 = Math.cos(radians((((y-1) / nl) * 360)))
-		tyi = Math.sin(radians(tmpy))
+		txy = mix(1, -1, y / nl)
+		txy2 = mix(1, -1, (y-1) / nl)
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
