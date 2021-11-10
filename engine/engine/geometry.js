@@ -1,14 +1,15 @@
 "use strict";
 
 function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFunction=normalize){
+	var nl = numLayers+1
 	var r = [add(pos, vec3(0,radius,0)), subtract(pos,vec3(0,radius,0))]
 	var p = []
 	var tx = []
 	var txy, txy2
-	for(var y = 1; y < numLayers-1; y++){
-		var tmpy = ((y / numLayers) * 180)
+	for(var y = 1; y < nl-1; y++){
+		var tmpy = ((y / nl) * 180)
 		txy = Math.cos(radians(tmpy))
-		txy2 = Math.cos(radians((((y-1) / numLayers) * 180)))
+		txy2 = Math.cos(radians((((y-1) / nl) * 180)))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
@@ -43,9 +44,9 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var tmpx = ((x / numFaces) * 360)
 		var txx = Math.sin(radians(tmpx))
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-		p.push(((numLayers-1)*numFaces)+x+2)
+		p.push(((nl-2)*numFaces)+x+2)
 		tx.push(vec2(txx, txy))
-		p.push(((numLayers-1)*numFaces)+((x+1)%numFaces)+2)
+		p.push(((nl-2)*numFaces)+((x+1)%numFaces)+2)
 		tx.push(vec2(txx2, txy))
 		p.push(1)
 		tx.push(vec2(txx, -1))
