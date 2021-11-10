@@ -5,37 +5,39 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	var r = [add(pos, vec3(0,radius[1],0)), subtract(pos,vec3(0,radius[1],0))]
 	var p = []
 	var tx = []
-	var txy, txy2
+	var txy, txy2, tyi
 	for(var y = 1; y < nl; y++){
 		var tmpy = ((y / nl) * 180)
 		txy = Math.cos(radians(tmpy))
 		txy2 = Math.cos(radians((((y-1) / nl) * 180)))
+		tyi = Math.sin(radians(tmpy))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
 			var txx = Math.sin(radians(tmpx))
 			var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-			r.push(add(pos, mult(radius, vec3(txx, txy, Math.cos(radians(tmpx))))))
+			r.push(add(pos, mult(tyi, Math.mult(radius, vec3(txx, txy, Math.cos(radians(tmpx)))))))
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
-				p.push(((y*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx, txy))
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2, txy))
+				p.push(((y*numFaces)+x+2)-numFaces)
+				tx.push(vec2(txx, txy))
 			}
 			else {
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,txy2))
+				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2,txy))
 				p.push(((y*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,txy))
+
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2,txy))
-				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy))
-				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy2))
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,txy2))
+				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2,txy2))
 			}
 			
 		}
@@ -44,12 +46,12 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var tmpx = ((x / numFaces) * 360)
 		var txx = Math.sin(radians(tmpx))
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-		p.push((((nl-2)*numFaces)+x+2)-numFaces)
+		p.push((((nl-1)*numFaces)+x+2)-numFaces)
 		tx.push(vec2(txx, txy))
-		p.push((((nl-2)*numFaces)+((x+1)%numFaces)+2)-numFaces)
-		tx.push(vec2(txx2, txy))
 		p.push(1)
 		tx.push(vec2(txx, -1))
+		p.push((((nl-1)*numFaces)+((x+1)%numFaces)+2)-numFaces)
+		tx.push(vec2(txx2, txy))
 	}
 
 	var norm = normalsFromTriangleVerts(r, p, normFunction)
