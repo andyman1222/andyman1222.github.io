@@ -5,7 +5,7 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	var r = [add(pos, vec3(0,radius[1],0)), subtract(pos,vec3(0,radius[1],0))]
 	var p = []
 	var tx = []
-	var txy, txy2, tyi
+	var txy, txy2, tyi, ty, ty2
 	for(var y = 1; y < nl; y++){
 		txy = mix(1, -1, y / nl)
 		txy2 = mix(1, -1, (y-1) / nl)
