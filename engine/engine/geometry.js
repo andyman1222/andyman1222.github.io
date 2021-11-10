@@ -7,9 +7,9 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 	var tx = []
 	var txy, txy2, tyi
 	for(var y = 1; y < nl; y++){
-		var tmpy = ((y / nl) * 180)
+		var tmpy = ((y / nl) * 360)
 		txy = Math.cos(radians(tmpy))
-		txy2 = Math.cos(radians((((y-1) / nl) * 180)))
+		txy2 = Math.cos(radians((((y-1) / nl) * 360)))
 		tyi = Math.sin(radians(tmpy))
 		for(var x = 0; x < numFaces; x++){
 			var tmpx = ((x / numFaces) * 360)
@@ -19,25 +19,28 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 			if(y == 1){
 				p.push(0)
 				tx.push(vec2(txx,1))
-				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2, txy))
 				p.push(((y*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx, txy))
+				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2, txy))
+				
 			}
 			else {
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,txy2))
-				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
-				tx.push(vec2(txx2,txy))
 				p.push(((y*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,txy))
+				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
+				tx.push(vec2(txx2,txy))
+				
 
 				p.push((((y*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2,txy))
-				p.push((((y-1)*numFaces)+x+2)-numFaces)
-				tx.push(vec2(txx,txy2))
 				p.push(((((y-1)*numFaces)+((x+1)%numFaces))+2)-numFaces)
 				tx.push(vec2(txx2,txy2))
+				p.push((((y-1)*numFaces)+x+2)-numFaces)
+				tx.push(vec2(txx,txy2))
+				
 			}
 			
 		}
@@ -48,10 +51,11 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
 		p.push((((nl-1)*numFaces)+x+2)-numFaces)
 		tx.push(vec2(txx, txy))
-		p.push(1)
-		tx.push(vec2(txx, -1))
 		p.push((((nl-1)*numFaces)+((x+1)%numFaces)+2)-numFaces)
 		tx.push(vec2(txx2, txy))
+		p.push(1)
+		tx.push(vec2(txx, -1))
+		
 	}
 
 	var norm = normalsFromTriangleVerts(r, p, normFunction)
