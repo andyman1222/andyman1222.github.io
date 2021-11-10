@@ -51,10 +51,10 @@ function _getSphere(pos, radius, numFaces, numLayers, type=_gl.TRIANGLES, normFu
 		var tmpx = ((x / numFaces) * 360)
 		var txx = Math.sin(radians(tmpx))
 		var txx2 = Math.sin(radians(((((x+1)%numFaces) / numFaces) * 360)))
-		p.push((((nl-1)*numFaces)+x+2)-numFaces)
-		tx.push(vec2(txx, ty))
 		p.push((((nl-1)*numFaces)+((x+1)%numFaces)+2)-numFaces)
 		tx.push(vec2(txx2, ty))
+		p.push((((nl-1)*numFaces)+x+2)-numFaces)
+		tx.push(vec2(txx, ty))
 		p.push(1)
 		tx.push(vec2(txx, -1))
 		
