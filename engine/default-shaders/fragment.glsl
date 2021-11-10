@@ -251,7 +251,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
-	vec3 norm = ((texture(normalMap, tx).rgb*vec3(-1,1,1))*2.-1.);
+	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.)*vec3(-1,1,1);
 	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
