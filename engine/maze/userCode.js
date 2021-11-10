@@ -149,7 +149,7 @@ function userTick(delta, time) {
 					x = _mainCamera._transform.rot
 					f = addRotation(_mainCamera._transform.rot, eulerToQuat(forward(_mainCamera._transform.rot), 180, normalize))
 					flipped = !flipped
-					rate = .01
+					rate = .005
 					state = "rotate"
 				}
 				else {
