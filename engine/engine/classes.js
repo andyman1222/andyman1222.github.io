@@ -720,7 +720,7 @@ class _Object extends _Primitive {
 
 
 				buf._offsets.push(i.length)
-				buf._types.push(camera.wireframe ? buf._gTarget.LINE_LOOP : d.type)
+				buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
 
 				if (d.textureIndex != -1)
 					buf._loadTexture(this._textureInfo[d.textureIndex])
