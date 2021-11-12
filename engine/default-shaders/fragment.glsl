@@ -118,7 +118,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 
 			case 2://directional
 			float NdotL = 0.;
-			vec3 ld = vec3(-1,-1,1)*normalize(lights[x].directionW)
+			vec3 ld = vec3(-1,-1,1)*normalize(lights[x].directionW);
 			if(tangentSpace)
 				NdotL=dot(TBN*(ld),N);
 			else NdotL=dot((ld),N);
