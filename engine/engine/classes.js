@@ -417,7 +417,7 @@ class _Buffer {
 	_setViewMatrix(v, p, s) {
 		if (this._viewMatrix != null) this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
 		if (this._cameraPosLoc != null) this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
-		if (this.cameraSclLoc != null) this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
+		if (this._cameraSclLoc != null) this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
 	}
 
 	_setModelMatrix(m) {
