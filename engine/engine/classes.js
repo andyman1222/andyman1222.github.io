@@ -468,17 +468,21 @@ class _Buffer {
 		}
 	}
 
-	_loadMaterial(m, hasTexture = false, noLighting = false) {
+	_loadMaterial(m, hasTexture = false, noLighting = false, noParallax = false) {
 		if (!noLighting) {
 			if (!hasTexture){
 				if(m._index == 2 || m._index == 3) this._matIndicies.push(1)
-				else if(m.index == 4 || m.index == 5) this._matIndicies.push(0)
+				else this._matIndicies.push(0)
+			}
+			else if(noParallax){
+				if(m._index == 2) this._matIndicies.push(3)
+				else this._matIndicies.push(5)
 			}
 			else this._matIndicies.push(m._index)
 		}
 		else {
 			if (hasTexture)
-				if (m._index == 2) this._matIndicies.push(4)
+				if (m._index == 2 && !noParallax) this._matIndicies.push(4)
 				else this._matIndicies.push(5)
 			else this._matIndicies.push(0)
 		}
@@ -666,6 +670,7 @@ class _Camera extends _Primitive {
 	_showBounds = false
 	_renderEngine = false
 	_noTexture = false
+	_noParallax = false
 	_render = true
 	_enabled = true
 	_bufs = []
@@ -741,7 +746,7 @@ class _Camera extends _Primitive {
 							f._renderData();
 						f._points.push(this._debugPoints[i + x])
 						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
-						f._loadMaterial(tmp, false, this._wireframe || this._noLighting)
+						f._loadMaterial(tmp, false, this._wireframe || this._noLighting, this._noParallax)
 						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 						f._tangents.push(vec3(0, 1, 0))
 						//f._bitangents.push(vec3(0, 0, 1))
