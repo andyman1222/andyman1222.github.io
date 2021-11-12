@@ -245,8 +245,10 @@ class _Buffer {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._bufferMask = bufferMask;
-
 		this._isFrameBuffer = isFrameBuffer;
+
+		this._gTarget.useProgram(this._program);
+
 		if(isFrameBuffer)
 			this._frameBuf = this._gTarget.createFrameBuffer();
 
