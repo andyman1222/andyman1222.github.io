@@ -901,7 +901,6 @@ class _Object extends _Primitive {
 		var b = this._bounds._getGraphicsDrawBounds()
 
 		buf._setModelMatrix(newMat)
-		this._updateCameraView()
 		for (var g = 0; g < this._drawInfo.length; g++) {
 			var d = this._drawInfo[g]
 			var i = d.pointIndex
