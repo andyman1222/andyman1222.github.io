@@ -216,8 +216,8 @@ function init() {
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{
 			pointIndex: tmp.index, matIndex:
-				[0, 0, 0, 0, 0, 0, //bottom
-					1, 1, 1, 1, 1, 1, //top
+				[ 1, 1, 1, 1, 1, 1, //bottom
+					0, 0, 0, 0, 0, 0,//top
 					1, 1, 1, 1, 1, 1,
 					1, 1, 1, 1, 1, 1,
 					1, 1, 1, 1, 1, 1,
@@ -229,8 +229,8 @@ function init() {
 	new _Object({ pos: vec3(0, 10, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{
 			pointIndex: tmp.index, matIndex:
-				[1, 1, 1, 1, 1, 1, //bottom
-					0, 0, 0, 0, 0, 0, //top
+				[0, 0, 0, 0, 0, 0, //bottom
+					1, 1, 1, 1, 1, 1, //top
 					1, 1, 1, 1, 1, 1,
 					1, 1, 1, 1, 1, 1,
 					1, 1, 1, 1, 1, 1,
