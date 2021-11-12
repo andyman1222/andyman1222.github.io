@@ -213,7 +213,6 @@ class _Buffer {
 	_lightAltNegativeArrayLoc = []
 	_lightIndLoc;
 	_cameraPosLoc;
-	_matIndLoc;
 	_textureLoc = []
 	_cameraSclLoc;
 
@@ -472,7 +471,7 @@ class _Buffer {
 		//load new buffer data
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
-		this._gTarget.useProgram(this._program);
+		//this._gTarget.useProgram(this._program);
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT);
 		this._clearBuffers();
 	}
