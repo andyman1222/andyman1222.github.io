@@ -50,7 +50,7 @@ void main(void) {
     vec3 N = normalize((normalMatrix*vec4(inNormalL, 0.)).xyz*vec3(1,1,1));
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
-    vec3 B = cross(N, T)*vec3(1, 1,1);
+    vec3 B = cross(N, T)*vec3(-1, 1,1);
 
     TBN = transpose(mat3(T, B, N));
 
