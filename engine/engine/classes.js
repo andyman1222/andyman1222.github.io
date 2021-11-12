@@ -894,7 +894,7 @@ class _Object extends _Primitive {
 						buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
 						break;
 					default:
-						buf._normals.push(mult(d.normals[ii], vec3(1,-1,-1)))
+						buf._normals.push(d.normals[ii])
 						buf._tangents.push(d.tangents[ii])
 						
 					}
