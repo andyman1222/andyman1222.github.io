@@ -223,6 +223,7 @@ class _Buffer {
 	_isFrameBuffer;
 	_isRenderbuffer;
 	_lightMask = 0x1;
+	_bufferMask = 0x1;
 
 	_customClearFunction = (gTarget, program) => {}
 	_customBeginRenderFunction = (gTarget, program) => {}
