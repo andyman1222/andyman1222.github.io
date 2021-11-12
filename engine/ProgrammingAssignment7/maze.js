@@ -214,7 +214,7 @@ draw_maze()
         p1 = vertex[Math.floor(edge[i].vertex1)];
         p2 = vertex[Math.floor(edge[i].vertex2)];
         var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
-        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
+        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(1,0,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
         tmp.points, [materials[i%materials.length]], _Bounds._RECT, txArr))
       }
@@ -225,7 +225,7 @@ draw_maze()
         p1 = vertex[Math.floor(perimeter[i].vertex1)];
         p2 = vertex[Math.floor(perimeter[i].vertex2)];
         var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
-        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
+        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 6, (p2[1]+p1[1])/2), rot: Quaternion(1,0,0,0), scl: vec3(1,1,1)},
         [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: 0}],
         tmp.points, [new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1)], _Bounds._RECT, txArr))
       }
