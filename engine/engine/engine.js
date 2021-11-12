@@ -68,7 +68,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
 
-	_bData = new _Buffer(_gl, _program, false, false);
+	_bData = new _Buffer(_gl, _program);
 
 	_mainCamera = new _Camera(_bData);
 	
