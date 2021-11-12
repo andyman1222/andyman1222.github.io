@@ -222,7 +222,6 @@ class _Buffer {
 	_texCount = 0;
 	_isFrameBuffer;
 	_isRenderbuffer;
-	_lightMask = 0x1;
 	_bufferMask = 0x1;
 
 	_customClearFunction = (gTarget, program) => {}
@@ -242,7 +241,7 @@ class _Buffer {
 		modelMatrixStr="modelMatrix", lightsArrayStr="lights", lightsIndexStr="maxLightIndex", 
 		normalStr="inNormalL", tanStr="inTangentL", biTanStr=null, texCoordStr="inTexCoord",
 		cameraPosStr="inCameraPosW", cameraScaleStr="inCameraScale", customSetupFunction=function(gTarget, program) {},
-		_bufferMask = 0x1) {
+		bufferMask = 0x1) {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._bufferMask = bufferMask;
