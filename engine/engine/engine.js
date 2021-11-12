@@ -4,7 +4,7 @@ function _render(time) {
 	for(var i = 0; i < _buffers.length; i++)
 		_buffers[i]._beginRender();
 	for (var i = 0; i < _cameras.length; i++)
-		_cameras[i]._pushToBuffer();
+		_cameras[i]._pushToBuffers();
 
 		_requestId = requestAnimationFrame(_render);
 }
@@ -67,33 +67,15 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_gl.frontFace(_gl.CW);
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
-	_gl.useProgram(_program);
 
-	_bData = new _Buffer(_gl, _program, 
-		"inPointsL",
-		"inMatProp",
-		6,
-		"inMatIndex",
-		["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"],
-		5,
-		"projMatrix",
-		"viewMatrix",
-		"normalMatrix",
-		"modelMatrix",
-		"lights",
-		"maxLightIndex",
-		"inNormalL",
-		"inTangentL",
-		"inTexCoord",
-		"inCameraPosW",
-		"inCameraScale");
+	_bData = new _Buffer(_gl, _program, false, false);
 
 	_mainCamera = new _Camera(_bData);
 	
 	_coords = new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, [{
 		pointIndex: [0, 1, 2, 3, 4, 5], matIndex: [0, 0, 1, 1, 2, 2], texCoords: [vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1), vec2(0,0), vec2(1,1)], type: _gl.LINES,
 		normals: [vec3(-1, 0, 0), vec3(1, 0, 0), vec3(0, -1, 0), vec3(0, 1, 0), vec3(0, 0, -1), vec3(0, 0, 1)],
-		tangents: [vec3(0, 1, 0), vec3(0, -1, 0), vec3(0, 0, 1), vec3(0, 0, -1), vec3(1, 0, 0), vec3(-1, 0, 0)], textureIndex: -1}],
+		tangents: [vec3(0, 1, 0), vec3(0, -1, 0), vec3(0, 0, 1), vec3(0, 0, -1), vec3(1, 0, 0), vec3(-1, 0, 0)], textureIndex: -1, bufferMask: 0x1, cameraMask: 0x1, lightMask: 0x1}],
 	[vec3(-1000000, 0, 0), vec3(1000000, 0, 0), vec3(0, -1000000, 0), vec3(0, 1000000, 0), vec3(0, 0, -1000000), vec3(0, 0, 1000000)],
 	[new _SolidColorNoLighting(vec4(1,0,0,1)), new _SolidColorNoLighting(vec4(0,1,0,1)), new _SolidColorNoLighting(vec4(0,0,1,1))], _Bounds._RECT, [], true)
 }

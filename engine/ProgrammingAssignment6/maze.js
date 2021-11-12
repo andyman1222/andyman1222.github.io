@@ -214,7 +214,7 @@ draw_maze()
        p2 = vertex[Math.floor(edge[i].vertex2)];
        var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
-       [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
+       [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1, bufferMask: 0x1, cameraMask: 0x1, lightMask: 0x1}],
        tmp.points, [materials[i%materials.length]], _Bounds._RECT))
      }
    }
@@ -225,7 +225,7 @@ draw_maze()
        p2 = vertex[Math.floor(perimeter[i].vertex2)];
        var tmp = _getRect(vec3(0,0,0), vec3(Math.abs(p2[0]-p1[0])/2+.5, 5, Math.abs(p2[1]-p1[1])/2+.5))
        walls.push(new _Object({pos: vec3((p2[0]+p1[0])/2, 5, (p2[1]+p1[1])/2), rot: Quaternion(0,1,0,0), scl: vec3(1,1,1)},
-       [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}],
+       [{pointIndex: tmp.index, matIndex: [0], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1, bufferMask: 0x1, cameraMask: 0x1, lightMask: 0x1}],
        tmp.points, [new _Material()], _Bounds._RECT))
      }
    }

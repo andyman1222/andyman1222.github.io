@@ -353,8 +353,9 @@ function _flipTexCoords(r){
 function _newID() { return _id++ }
 
 
-function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, textureIndex = -1, type=_gl.TRIANGLES){
-	return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, textureIndex: textureIndex, type: type}
+function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, textureIndex = -1, type=_gl.TRIANGLES, bufferMask = 0x1, cameraMask = 0x1, lightMask = 0x1){
+    return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, textureIndex: textureIndex, type: type, 
+        bufferMask: bufferMask, cameraMask: cameraMask, lightMask: lightMask}
 }
 
 function _Transform(pos=vec3(0,0,0), rot=Quaternion(1,0,0,0), scl=vec3(1,1,1)){

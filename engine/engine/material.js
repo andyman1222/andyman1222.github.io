@@ -11,9 +11,11 @@ class _Material {
     _prevIndex
     _prevParameters
     _updated
-    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]) {
+    _lightMask
+    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)], lightMask = 0x1) {
         this._index = index
         this._parameters = parameters
+        this._lightMask = lightMask
     }
 }
 
@@ -66,14 +68,13 @@ class _ScaledTexMatNoLight extends _ScaledTexMat {
  */
 class _ComplexTexture {
     _images = []
-
     _texs = []
-
     _urls = []
-
     _imgTexMap = new Map()
-
     _imgChange = new Map()
+    _lightMasks = []
+    _cameraMasks = []
+    _bufferMasks = []
 
     _gl;
     _sw;
@@ -82,7 +83,8 @@ class _ComplexTexture {
     _generateMip;
     _id = null;
 
-    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null) {
+    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null, lightMasks = 0x1, cameraMasks = 0x1, bufferMasks = 0x1) {
+        
         this._urls = urls
         this._sw = sWrap
         if (sWrap == null) this._sw = gl.REPEAT;
@@ -92,14 +94,20 @@ class _ComplexTexture {
         if (filterMode == null) this._fm = gl.NEAREST_MIPMAP_LINEAR;
         this._generateMip = generateMip;
         this._gl = gl;
-        this._init();
-
+        this._init(lightMasks, cameraMasks, bufferMasks);
+        
 
     }
 
-    _init() {
+    _init(lightMasks, cameraMasks, bufferMasks) {
         this._texs = []
+        this._lightMasks = []
+        this._cameraMasks = []
+        this._bufferMasks = []
         for (var x = 0; x < this._urls.length; x++) {
+            if(lightMasks instanceof Array)
+                this._lightMasks.push(lightMasks[x%lightMasks.length])
+            else this._lightMasks.push(lightMasks)
             var i = this._texs.push(_gl.createTexture()) - 1;
             this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[i]);
             if (this._images[x] == null || this._images[a].src == null) {
@@ -139,21 +147,23 @@ class _ComplexTexture {
         delete this;
     }
 
-    _applyTexture(locations) {
+    _applyTexture(locations, bufferMask, cameraMask) {
         for (var x = 0; x < this._texs.length; x++) {
-            if (this._imgChange.get(this._images[x]) == true) {
+            if((cameraMask & bufferMask & this._cameraMasks[x] & this._bufferMasks[x]) != 0){
+                if (this._imgChange.get(this._images[x]) == true) {
+                    this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
+                    this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
+                        this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
+                    if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
+                    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
+                    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
+                    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
+                    this._imgChange.set(this._images[x], false)
+                }
+                this._gl.activeTexture(this._gl.TEXTURE0 + x);
                 this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
-                this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
-                    this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
-                if (this._generateMip) this._gl.generateMipmap(this._gl.TEXTURE_2D);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._sw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._tw);
-                this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._fm);
-                this._imgChange.set(this._images[x], false)
+                this._gl.uniform1i(locations[x], x);
             }
-            this._gl.activeTexture(this._gl.TEXTURE0 + x);
-            this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[x]);
-            this._gl.uniform1i(locations[x], x);
         }
     }
 }

@@ -15,8 +15,15 @@ class _Primitive {
 	_customPreTick = function(delta, time) {}
 	_customPostTick = function(delta, time) {}
 
-	constructor(transform) {
+	_cameraMask = 0x1;
+	_bufferMask = 0x1;
+	_lightMask = 0x1;
+
+	constructor(transform, bufferMask= 0x1, cameraMask= 0x1, lightMask= 0x1) {
 		this._transform = transform
+		this._bufferMask = bufferMask
+		this._cameraMask = cameraMask
+		this._lightMask = lightMask
 
 	}
 
@@ -168,21 +175,23 @@ class _Buffer {
 	_offsets = [];
 	_texCoords = []
 	_normals = []
-	//_bitangents = []
+	_bitangents = [] //NOTE: default shader calculates bitangents
 	_tangents = []
 
 	_posBuffer;
 	_normBuf;
 	_txBuf;
 	_tanBuf;
-	//_bitanBuf;
+	_biTanBuf;
 	_matParamsBufs = [];
 	_matIndBuf;
+	_frameBuf;
+	_renderBuf;
 
 	_inPos;
 	_inTexCoord;
 	_inNormal;
-	//_inBitan;
+	_inBitan;
 	_inTan;
 	_inMatIndex
 	_inMatParams = [];
@@ -209,98 +218,170 @@ class _Buffer {
 	_cameraSclLoc;
 
 	_bufLimit;
-	_matParamCount;
-	_texCount;
+	_matParamCount = 0;
+	_texCount = 0;
+	_isFrameBuffer;
+	_isRenderbuffer;
+	_lightMask = 0x1;
+
+	_customClearFunction = (gTarget, program) => {}
+	_customBeginRenderFunction = (gTarget, program) => {}
+	_customPreRenderFunction = (gTarget, program) => {}
+	_customRenderFunction = (gTarget, program) => {}
+	_customPostRenderFunction = (gTarget, program) => {}
 
 	_getUniform(loc) {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 
-	constructor(gTarget, program, coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr, modelMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, texCoordStr, cameraPosStr, cameraScaleStr) {
+	constructor(gTarget, program, isFrameBuffer=false, isRenderBuffer=false,
+		coordStr="inPointsL", matStr="inMatProp", matParamCount=6, matIndStr="inMatIndex", 
+		texStr=["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"], 
+		texCount=5, projMatrixStr="projMatrix", viewMatrixStr="viewMatrix", normalMatrixStr="normalMatrix",
+		modelMatrixStr="modelMatrix", lightsArrayStr="lights", lightsIndexStr="maxLightIndex", 
+		normalStr="inNormalL", tanStr="inTangentL", biTanStr=null, texCoordStr="inTexCoord",
+		cameraPosStr="inCameraPosW", cameraScaleStr="inCameraScale", customSetupFunction=function(gTarget, program) {},
+		_bufferMask = 0x1) {
 		this._gTarget = gTarget;
 		this._program = program;
-		this._posBuffer = this._gTarget.createBuffer();
-		this._normBuf = this._gTarget.createBuffer();
-		this._txBuf = this._gTarget.createBuffer();
-		this._tanBuf = this._gTarget.createBuffer();
-		//this._bitanBuf = this._gTarget.createBuffer();
-		this._matIndBuf = this._gTarget.createBuffer();
-		this._inPos = this._gTarget.getAttribLocation(this._program, coordStr);
-		if (this._inPos == -1) alert(coordStr + ": unknown/invalid shader location");
+		this._bufferMask = bufferMask;
 
-		this._matParamCount = matParamCount;
-		for (var i = 0; i < matParamCount; i++) {
-			this._matParamsBufs.push(this._gTarget.createBuffer())
-			if (!(matStr instanceof Array)) {
-				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
-				if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr + "" + i + ": unknown/invalid shader location");
-			}
-			else {
-				this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
-				if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr[i] + ": unknown/invalid shader location");
-			}
+		this._isFrameBuffer = isFrameBuffer;
+		if(isFrameBuffer)
+			this._frameBuf = this._gTarget.createFrameBuffer();
 
+		this._isRenderbuffer = isRenderBuffer;
+		if(isRenderBuffer)
+			this._renderBuf = this._gTarget.createRenderBuffer();
+
+		if(coordStr != null){
+			this._posBuffer = this._gTarget.createBuffer();
+			this._inPos = this._gTarget.getAttribLocation(this._program, coordStr);
+			if (this._inPos == -1) alert(coordStr + ": unknown/invalid shader location");
 		}
 
-		this._texCount = texCount;
-		for (var i = 0; i < texCount; i++) {
-			if (!(texStr instanceof Array)) {
-				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "[" + i + "]"));
-				if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr + "[" + i + "]" + ": unknown/invalid shader location");
-			}
-			else {
-				this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
-				if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr[i] + ": unknown/invalid shader location");
+		if(normalStr != null){
+			this._normBuf = this._gTarget.createBuffer();
+			this._inNormal = this._gTarget.getAttribLocation(this._program, normalStr);
+			if (this._inNormal == -1) alert(normalStr + ": unknown/invalid shader location");
+		}
+		
+		if(texCoordStr != null){
+			this._txBuf = this._gTarget.createBuffer();
+			this._inTexCoord = this._gTarget.getAttribLocation(this._program, texCoordStr);
+			if (this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
+		}
+
+		if(tanStr != null){
+			this._tanBuf = this._gTarget.createBuffer();
+			this._inTan = this._gTarget.getAttribLocation(this._program, tanStr);
+			if (this._inTan == -1) alert(tanStr + ": unknown/invalid shader location");
+		}
+
+		if(biTanStr != null){
+			this._biTanBuf = this._gTarget.createBuffer();
+			this._inBiTan = this._gTarget.getAttribLocation(this._program, biTanStr);
+			if (this._inBiTan == -1) alert(biTanStr + ": unknown/invalid shader location");
+		}
+
+		if(matStr != null){
+			this._matIndBuf = this._gTarget.createBuffer();
+			this._matParamCount = matParamCount;
+			for (var i = 0; i < matParamCount; i++) {
+				this._matParamsBufs.push(this._gTarget.createBuffer())
+				if (!(matStr instanceof Array)) {
+					this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr + "" + i));
+					if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr + "" + i + ": unknown/invalid shader location");
+				}
+				else {
+					this._inMatParams.push(this._gTarget.getAttribLocation(this._program, matStr[i]));
+					if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(matStr[i] + ": unknown/invalid shader location");
+				}
+
 			}
 		}
 
-		this._inMatIndex = this._gTarget.getAttribLocation(this._program, matIndStr);
-		if (this._inMatIndex == -1) alert(matIndStr + ": unknown/invalid shader location");
-		this._projMatrix = this._gTarget.getUniformLocation(this._program, projMatrixStr);
-		if (this._projMatrix == -1) alert(projMatrixStr + ": unknown/invalid shader location");
-		this._viewMatrix = this._gTarget.getUniformLocation(this._program, viewMatrixStr);
-		if (this._viewMatrix == -1) alert(viewMatrixStr + ": unknown/invalid shader location");
-		this._normalMatrix = this._gTarget.getUniformLocation(this._program, normalMatrixStr);
-		if (this._normalMatrix == -1) alert(normalMatrixStr + ": unknown/invalid shader location");
-		this._modelMatrix = this._gTarget.getUniformLocation(this._program, modelMatrixStr);
-		if (this._modelMatrix == -1) alert(modelMatrixStr + ": unknown/invalid shader location");
-		this._lightIndLoc = this._gTarget.getUniformLocation(this._program, lightsIndexStr);
-		if (this._lightIndLoc == -1) alert(lightsIndexStr + ": unknown/invalid shader location");
-		this._inNormal = this._gTarget.getAttribLocation(this._program, normalStr);
-		if (this._inNormal == -1) alert(normalStr + ": unknown/invalid shader location");
-		this._inTan = this._gTarget.getAttribLocation(this._program, tanStr);
-		if (this._inTan == -1) alert(tanStr + ": unknown/invalid shader location");
-		//this._inBitan = this._gTarget.getAttribLocation(this._program, biTanStr);
-		//if (this._inBitan == -1) alert(biTanStr + ": unknown/invalid shader location");
-		this._inTexCoord = this._gTarget.getAttribLocation(this._program, texCoordStr);
-		if (this._inTexCoord == -1) alert(texCoordStr + ": unknown/invalid shader location");
-		this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
-		if (this._cameraPosLoc == -1) alert(cameraPosStr + ": unknown/invalid shader location");
-		this._cameraSclLoc = this._gTarget.getUniformLocation(this._program, cameraScaleStr);
-		if (this._cameraSclLoc == -1) alert(cameraScaleStr + ": unknown/invalid shader location");
-
-		for (var i = 0; i < _maxLightCount; i++) {
-			this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
-			if (this._lightTypeArrayLoc == -1) alert(lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
-			this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].locationW"))
-			this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].directionW"))
-			this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].angle"))
-			this._lightAttenArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].attenuation"))
-			this._lightColorArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].color"))
-			this._lightDiffArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].diffuseMultiply"))
-			this._lightSpecArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].specularMultiply"))
-			this._lightShinyArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].shininess"))
-			this._lightNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].negativeHandler"))
-			this._lightAltNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].negativeHandlerAlt"))
-			//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr+"["+i+"].lightmask"))
+		if(texStr != null){
+			this._texCount = texCount;
+			for (var i = 0; i < texCount; i++) {
+				if (!(texStr instanceof Array)) {
+					this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr + "[" + i + "]"));
+					if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr + "[" + i + "]" + ": unknown/invalid shader location");
+				}
+				else {
+					this._textureLoc.push(this._gTarget.getUniformLocation(this._program, texStr[i]));
+					if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(texStr[i] + ": unknown/invalid shader location");
+				}
+			}
 		}
+
+		if(matIndStr != null){
+			this._inMatIndex = this._gTarget.getAttribLocation(this._program, matIndStr);
+			if (this._inMatIndex == -1) alert(matIndStr + ": unknown/invalid shader location");
+		}
+
+		if(projMatrixStr != null){
+			this._projMatrix = this._gTarget.getUniformLocation(this._program, projMatrixStr);
+			if (this._projMatrix == -1) alert(projMatrixStr + ": unknown/invalid shader location");
+		}
+
+		if(viewMatrixStr != null){
+			this._viewMatrix = this._gTarget.getUniformLocation(this._program, viewMatrixStr);
+			if (this._viewMatrix == -1) alert(viewMatrixStr + ": unknown/invalid shader location");
+		}
+		if(normalMatrixStr != null){
+			this._normalMatrix = this._gTarget.getUniformLocation(this._program, normalMatrixStr);
+			if (this._normalMatrix == -1) alert(normalMatrixStr + ": unknown/invalid shader location");
+		}
+		
+		if(modelMatrixStr != null){
+			this._modelMatrix = this._gTarget.getUniformLocation(this._program, modelMatrixStr);
+			if (this._modelMatrix == -1) alert(modelMatrixStr + ": unknown/invalid shader location");
+		}
+		
+		if(lightsIndexStr != null){
+			this._lightIndLoc = this._gTarget.getUniformLocation(this._program, lightsIndexStr);
+			if (this._lightIndLoc == -1) alert(lightsIndexStr + ": unknown/invalid shader location");
+		}
+		
+		if(cameraPosStr != null){
+			this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, cameraPosStr);
+			if (this._cameraPosLoc == -1) alert(cameraPosStr + ": unknown/invalid shader location");
+		}
+		
+		if(cameraScaleStr != null){
+			this._cameraSclLoc = this._gTarget.getUniformLocation(this._program, cameraScaleStr);
+			if (this._cameraSclLoc == -1) alert(cameraScaleStr + ": unknown/invalid shader location");
+		}
+
+		if(lightsArrayStr != null)
+			for (var i = 0; i < _maxLightCount; i++) {
+				this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].type"))
+				if (this._lightTypeArrayLoc == -1) alert(lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
+				this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].locationW"))
+				this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].directionW"))
+				this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].angle"))
+				this._lightAttenArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].attenuation"))
+				this._lightColorArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].color"))
+				this._lightDiffArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].diffuseMultiply"))
+				this._lightSpecArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].specularMultiply"))
+				this._lightShinyArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].shininess"))
+				this._lightNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].negativeHandler"))
+				this._lightAltNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr + "[" + i + "].negativeHandlerAlt"))
+				//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr+"["+i+"].lightmask"))
+			}
+		
 		this._bufLimit = (this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
 			this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
 			this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
+
+		customSetupFunction(this._gTarget, this._program);
+
 		_buffers.push(this);
 	}
 
 	_clearBuffers() {
+		this._customClearFunction(this._gTarget, this._program)
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i] = []
 		this._matIndicies = []
@@ -314,52 +395,56 @@ class _Buffer {
 	}
 
 	_setViewMatrix(v, p, s) {
-		this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
-		this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
-		this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
+		if (this._viewMatrix != null) this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
+		if (this._cameraPosLoc != null) this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
+		if (this.cameraSclLoc != null) this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
 	}
 
 	_setModelMatrix(m) {
-		this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
-		this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))	}
+		if(this._modelMatrix != null) this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
+		if(this._normalMatrix != null) this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))	}
 
 	_setProjMatrix(p) {
-		this._gTarget.uniformMatrix4fv(this._projMatrix, false, flatten(p));
+		if(this._projMatrix != null) this._gTarget.uniformMatrix4fv(this._projMatrix, false, flatten(p));
 	}
 
 	_updateLights() {
 		var x = -1
-		this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
-		_lights.forEach((l) => {
-			if (l != null && x < _maxLightCount - 1 && l._enabled) {
-				x++;
-				this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
-				this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([l._type]))
-				switch (l._type) {
-					case 4:
-						this._gTarget.uniform1fv(this._lightAngleArrayLoc[x], new Float32Array([l._angle]))
-					case 3:
-						this._gTarget.uniform1fv(this._lightAttenArrayLoc[x], new Float32Array([l._attenuation]))
-						this._gTarget.uniform4fv(this._lightDiffArrayLoc[x], flatten(l._diffuseMultiply))
-						this._gTarget.uniform4fv(this._lightSpecArrayLoc[x], flatten(l._specularMultiply))
-						this._gTarget.uniform1fv(this._lightShinyArrayLoc[x], new Float32Array([l._shininess]))
-						this._gTarget.uniform1iv(this._lightAltNegativeArrayLoc[x], new Int32Array([l._handleNegativeAlt]))
-					case 2:
-						var t = l._getWorldTransform(true)
-						this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(forward(t.rot)))
-						this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos))
-					case 1:
-						this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
-						break;
+		if(this._lightIndLoc != null){
+			this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
+			_lights.forEach((l) => {
+				if (l != null && x < _maxLightCount - 1 && l._enabled && this._lightTypeArrayLoc.length-1 > x && ((l._lightMask & this._bufferMask) != 0)) {
+					x++;
+					this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
+					this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([l._type]))
+					switch (l._type) {
+						case 4:
+							this._gTarget.uniform1fv(this._lightAngleArrayLoc[x], new Float32Array([l._angle]))
+						case 3:
+							this._gTarget.uniform1fv(this._lightAttenArrayLoc[x], new Float32Array([l._attenuation]))
+							this._gTarget.uniform4fv(this._lightDiffArrayLoc[x], flatten(l._diffuseMultiply))
+							this._gTarget.uniform4fv(this._lightSpecArrayLoc[x], flatten(l._specularMultiply))
+							this._gTarget.uniform1fv(this._lightShinyArrayLoc[x], new Float32Array([l._shininess]))
+							this._gTarget.uniform1iv(this._lightAltNegativeArrayLoc[x], new Int32Array([l._handleNegativeAlt]))
+						case 2:
+							var t = l._getWorldTransform(true)
+							this._gTarget.uniform3fv(this._lightDirArrayLoc[x], flatten(forward(t.rot)))
+							this._gTarget.uniform3fv(this._lightLocArrayLoc[x], flatten(t.pos))
+						case 1:
+							this._gTarget.uniform4fv(this._lightColorArrayLoc[x], flatten(l._color));
+							break;
 
+					}
+					this._gTarget.uniform1iv(this._lightNegativeArrayLoc[x], new Int32Array([l._handleNegative]))
+				} else if (x >= _maxLightCount - 1 && l != null && l._enabled) {
+					_bufferedConsoleLog("WARNING: More than " + _maxLightCount + " used, light with ID " + l._id + " will not be visible.")
+				} else if(l._lightMask & this._bufferMask == 0){
+					this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
 				}
-				this._gTarget.uniform1iv(this._lightNegativeArrayLoc[x], new Int32Array([l._handleNegative]))
-			} else if (x >= _maxLightCount - 1 && l != null && l._enabled) {
-				_bufferedConsoleLog("WARNING: More than " + _maxLightCount + " used, light with ID " + l._id + " will not be visible.")
-			}
-		})
-		for (x++; x < _maxLightCount; x++)
-			this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
+			})
+			for (x++; x < _maxLightCount && x < this._lightTypeArrayLoc.length; x++)
+				this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([0]))
+		}
 	}
 
 	_loadMaterial(m, hasTexture = false, noLighting = false) {
@@ -376,29 +461,37 @@ class _Buffer {
 			this._matParams[i].push(m._parameters[i % m._parameters.length])
 	}
 
-	_loadTexture(t) {
-		t._applyTexture(this._textureLoc)
+	_loadTexture(t, cameraMask) {
+		if(this._textureLoc.length > 0) t._applyTexture(this._textureLoc, this._bufferMask, cameraMask)
 	}
 
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
+		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
+		this._gTarget.useProgram(this._program);
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT);
 		this._clearBuffers();
 	}
 
 	_renderData() {
 		if (this._points.length > 0) {
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._points), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inPos);
+			this._customPreRenderFunction(this._gTarget, this._program);
 
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Int16Array(this._matIndicies), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribIPointer(this._inMatIndex, 1, this._gTarget.SHORT, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inMatIndex);
+			if(this._posBuffer != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._points), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inPos);
+			}
+
+			if(this._matIndBuf != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Int16Array(this._matIndicies), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribIPointer(this._inMatIndex, 1, this._gTarget.SHORT, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inMatIndex);
+			}
 
 			//load materials
 			for (var i = 0; i < this._matParamCount; i++) {
@@ -408,33 +501,42 @@ class _Buffer {
 				this._gTarget.enableVertexAttribArray(this._inMatParams[i]);
 			}
 
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._normBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._normals), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inNormal, 3, this._gTarget.FLOAT, true, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inNormal);
+			if(this._normBuf != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._normBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._normals), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inNormal, 3, this._gTarget.FLOAT, true, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inNormal);
+			}
 
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._tanBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._tangents), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inTan, 3, this._gTarget.FLOAT, true, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inTan);
+			if(this._tanBuf != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._tanBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._tangents), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inTan, 3, this._gTarget.FLOAT, true, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inTan);
+			}
 
-			/*
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._bitanBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._bitangents), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inBitan, 3, this._gTarget.FLOAT, true, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inBitan);*/
+			if(this._biTanBuf != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._biTanBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._bitangents), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inBiTan, 3, this._gTarget.FLOAT, true, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inBiTan);
+			}
 
-			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._txBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._texCoords), this._gTarget.STATIC_DRAW);
-			this._gTarget.vertexAttribPointer(this._inTexCoord, 2, this._gTarget.FLOAT, false, 0, 0);
-			this._gTarget.enableVertexAttribArray(this._inTexCoord);
+			if(this._txBuf != null){
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._txBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._texCoords), this._gTarget.STATIC_DRAW);
+				this._gTarget.vertexAttribPointer(this._inTexCoord, 2, this._gTarget.FLOAT, false, 0, 0);
+				this._gTarget.enableVertexAttribArray(this._inTexCoord);
+			}
 
 			//draw
 			var offset = 0;
 			for (var i = 0; i < this._types.length; i++) {
+				this._customRenderFunction(this._gTarget, this._program);
 				this._gTarget.drawArrays(this._types[i], offset, this._offsets[i]);
 				offset += this._offsets[i];
 			}
+			this._customPostRenderFunction(this._gTarget, this._program);
 		}
 		/*var tmp = this._gTarget.getError()
 		if (tmp != this._gTarget.NO_ERROR) {
@@ -538,6 +640,7 @@ class _Camera extends _Primitive {
 	_renderEngine = false
 	_render = true
 	_enabled = true
+	_bufs = []
 	_clearDebug() {
 		this._debugPoints = []
 		this._debugColors = []
@@ -578,43 +681,80 @@ class _Camera extends _Primitive {
 	 * @param showBounds if true, show _Bounds of all geometry
 	 * @param renderAfter true if _Camera should be immediately rendered to its view after pushing data to buffer
 	 */
-	_pushToBuffer() {
+	_pushToBuffers() {
 		if (this._enabled) {
-			this._buf._clearBuffers();
-			var p = this._getWorldTransform(true);
-			this._buf._setViewMatrix(this._getViewMat(), p.pos, p.scl)
+			this._bufs.forEach((f) => {
+				f._clearBuffers();
+				var p = this._getWorldTransform(true);
+				f._setViewMatrix(this._getViewMat(), p.pos, p.scl)
 
-			//adding objects
+				//adding objects
 
-			_objects.forEach((o) => {
-				if ((this._renderEngine && o._isEngine) || !o._isEngine) {
-					if (o._visible) {
-						o._setGraphicsData(this._buf, this);
-						if(this._render) this._buf._renderData();
+				_objects.forEach((o) => {
+					if (((o._bufferMask & o._cameraMask & f._bufferMask & this._cameraMask) != 0) && ((this._renderEngine && o._isEngine) || !o._isEngine)) {
+						if (o._visible) {
+							o._setGraphicsData(f, this);
+							if(this._render) f._renderData();
+						}
 					}
+				});
+				var x = 0
+				for (var o = 0; o < this._debugOffsets.length; o++) {
+					f._types.push(this._debugTypes[o])
+					f._offsets.push(this._debugOffsets[o])
+					for (var i = 0; i < this._debugOffsets[o]; i++) {
+						if (i.length + f._points.length > f._bufLimit)
+							f._renderData();
+						f._points.push(this._debugPoints[i + x])
+						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
+						f._clearBuffers();
+				var p = this._getWorldTransform(true);
+				f._setViewMatrix(this._getViewMat(), p.pos, p.scl)
+
+				//adding objects
+
+				_objects.forEach((o) => {
+					if ((this._renderEngine && o._isEngine) || !o._isEngine) {
+						if (o._visible) {
+							o._setGraphicsData(f, this);
+							if(this._render) f._renderData();
+						}
+					}
+				});
+				var x = 0
+				for (var o = 0; o < this._debugOffsets.length; o++) {
+					f._types.push(this._debugTypes[o])
+					f._offsets.push(this._debugOffsets[o])
+					for (var i = 0; i < this._debugOffsets[o]; i++) {
+						if (i.length + f._points.length > f._bufLimit)
+							f._renderData();
+						f._points.push(this._debugPoints[i + x])
+						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
+						f._loadMaterial(tmp, false, this._wireframe || this._noLighting)
+						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
+						f._tangents.push(vec3(0, 1, 0))
+						//f._bitangents.push(vec3(0, 0, 1))
+					}
+					f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
+					x += this._debugOffsets[o]
+					base += this._debugOffsets[o].length
 				}
-			});
-			var x = 0
-			for (var o = 0; o < this._debugOffsets.length; o++) {
-				this._buf._types.push(this._debugTypes[o])
-				this._buf._offsets.push(this._debugOffsets[o])
-				for (var i = 0; i < this._debugOffsets[o]; i++) {
-					if (i.length + this._buf._points.length > this._buf._bufLimit)
-						this._buf._renderData();
-					this._buf._points.push(this._debugPoints[i + x])
-					var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
-					this._buf._loadMaterial(tmp, false, this._wireframe || this._noLighting)
-					this._buf._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
-					this._buf_tangents.push(vec3(0, 1, 0))
-					//this._buf_bitangents.push(vec3(0, 0, 1))
+				//render any remaining data
+				if (this._render)
+					f._renderData()._loadMaterial(tmp, false, this._wireframe || this._noLighting)
+						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
+						f._tangents.push(vec3(0, 1, 0))
+						//f._bitangents.push(vec3(0, 0, 1))
+					}
+					f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
+					x += this._debugOffsets[o]
+					base += this._debugOffsets[o].length
 				}
-				this._buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
-				x += this._debugOffsets[o]
-				base += this._debugOffsets[o].length
-			}
-			//render any remaining data
-			if (this._render)
-				this._buf._renderData()
+				//render any remaining data
+				if (this._render)
+					f._renderData()
+				})
+			
 		}
 
 
@@ -623,12 +763,12 @@ class _Camera extends _Primitive {
 		//var rotMat = mult(mult(rotateZ(this._transform.rot[2]), rotateY(-(this._transform.rot[1] - 90))), rotateX(-this._transform.rot[0]))//this may look wrong, and it most definately is, but it works
 	}
 
-	_updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000]) {
+	_updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], width=this._buf._gTarget.canvas.clientWidth, height=this._buf._gTarget.canvas.clientHeight) {
 		this._fov = fov;
 		this._ortho = orthographic;
 		this._range = range;
 		if (aspect < 0)
-			this._aspect = this._buf._gTarget.canvas.clientWidth / this._buf._gTarget.canvas.clientHeight
+			this._aspect = width / height
 		else this._aspect = aspect;
 		this._buf._setProjMatrix(this._getProjMat());
 	}
@@ -640,12 +780,12 @@ class _Camera extends _Primitive {
 	 * @param {vec3} scl 
 	 * @param {*} fov 
 	 * @param {*} ortho 
-	 * @param {*} targetBuffer 
+	 * @param {*} targetBuffers
 	 */
-	constructor(targetBuffer, pos = vec3(0, 0, 0), rot = eulerToQuat(vec3(1, 0, 0), 0), scl = vec3(1, 1, 1), fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], enabled = true, renderEngine = false) {
+	constructor(targetBuffers, pos = vec3(0, 0, 0), rot = eulerToQuat(vec3(1, 0, 0), 0), scl = vec3(1, 1, 1), fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], enabled = true, renderEngine = false) {
 		//if(rot.length != 4) throw "Rotations must be quaternions!"
 		super({ pos: pos, rot: rot, scl: scl })
-		this._buf = targetBuffer
+		this._bufs = targetBuffers
 		this._enabled = enabled
 		this._renderEngine = renderEngine
 		this._updateCameraView(fov, aspect, orthographic, range)
@@ -723,7 +863,7 @@ class _Object extends _Primitive {
 				buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
 
 				if (d.textureIndex != -1)
-					buf._loadTexture(this._textureInfo[d.textureIndex])
+					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
 					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1, camera._wireframe || camera._noLighting)

@@ -182,7 +182,7 @@ function init() {
 	generateMaze_()
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ pointIndex: tmp.index, matIndex: [1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
+		{ pointIndex: tmp.index, matIndex: [1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1, bufferMask: 0x1, cameraMask: 0x1, lightMask: 0x1}]
 		, tmp.points, [new _SolidColorNoLighting(vec4(.5, .5, .5, 1)), new _Material()], _Bounds._RECT)
 }
 
