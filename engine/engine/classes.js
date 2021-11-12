@@ -763,18 +763,20 @@ class _Camera extends _Primitive {
 		//var rotMat = mult(mult(rotateZ(this._transform.rot[2]), rotateY(-(this._transform.rot[1] - 90))), rotateX(-this._transform.rot[0]))//this may look wrong, and it most definately is, but it works
 	}
 
-	_updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], targetBuf = this._bufs[0], width=null, height=null) {
+	_updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], targetBuf = null, width=null, height=null) {
+		var b = targetBuf
 		var w = width
 		var h = height
-		if(w == null) w = targetBuf._gTarget.canvas.clientWidth;
-		if(h == null) h = targetBuf._gTarget.canvas.clientHeight;
+		if (b == null) b = this._bufs[0]
+		if(w == null) w = b._gTarget.canvas.clientWidth;
+		if(h == null) h = b._gTarget.canvas.clientHeight;
 		this._fov = fov;
 		this._ortho = orthographic;
 		this._range = range;
 		if (aspect < 0)
 			this._aspect = w / h
 		else this._aspect = aspect;
-		targetBuf._setProjMatrix(this._getProjMat());
+		b._setProjMatrix(this._getProjMat());
 	}
 
 	/**
