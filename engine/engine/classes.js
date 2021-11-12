@@ -470,6 +470,10 @@ class _Buffer {
 
 	_loadMaterial(m, hasTexture = false, noLighting = false) {
 		if (!noLighting) {
+			if (!hasTexture){
+				if(m._index == 2 || m._index == 3) this._matIndicies.push(1)
+				else if(m.index == 4 || m.index == 5) this._matIndicies.push(0)
+			}
 			this._matIndicies.push(m._index)
 		}
 		else {
