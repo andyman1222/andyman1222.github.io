@@ -45,12 +45,12 @@ out vec4 matProp[MAT_PROP_COUNT];
 void main(void) {
     vec4 coordsW = modelMatrix * (vec4(inPointsL, 1.) * vec4(1,1,-1,1)) * vec4(1, 1, -1, 1);
     gl_Position = projMatrix * viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.));
-    vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(-1,-1,1));
+    vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(1,-1,1));
     //vec3 T = normalize(inTangent);
     vec3 N = normalize((normalMatrix*vec4(inNormalL, 0.)).xyz*vec3(1,1,1));
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
-    vec3 B = cross(N, T)*vec3(-1, -1,-1);
+    vec3 B = cross(N, T)*vec3(1, -1,-1);
 
     TBN = transpose(mat3(T, B, N));
 
