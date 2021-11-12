@@ -890,7 +890,7 @@ class _Object extends _Primitive {
 					buf._points.push(mult(this._pointInfo[i[ii]], vec3(1,-1,-1)))
 					switch (d.type) {
 						case _gl.TRIANGLES:
-						buf._normals.push(mult(d.normals[Math.floor(ii / 3)], vec3(1,-1,-1))) //push 3 for each vert
+						buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
 						buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
 						break;
 					default:
