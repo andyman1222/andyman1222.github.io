@@ -422,7 +422,8 @@ class _Buffer {
 
 	_setModelMatrix(m) {
 		if(this._modelMatrix != null) this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
-		if(this._normalMatrix != null) this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))	}
+		if(this._normalMatrix != null) this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))
+	}
 
 	_setProjMatrix(p) {
 		if(this._projMatrix != null) this._gTarget.uniformMatrix4fv(this._projMatrix, false, flatten(p));
@@ -663,6 +664,11 @@ class _Camera extends _Primitive {
 	_render = true
 	_enabled = true
 	_bufs = []
+	_currentFov = -1
+	_currentAspect = -1
+	_currentRange = [-1, -1]
+	_currentProjMat = null
+
 	_clearDebug() {
 		this._debugPoints = []
 		this._debugColors = []
@@ -789,16 +795,37 @@ class _Camera extends _Primitive {
 		var b = targetBuf
 		var w = width
 		var h = height
+		var a = aspect
+		
 		if (b == null) b = this._bufs[0]
 		if(w == null) w = b._gTarget.canvas.clientWidth;
 		if(h == null) h = b._gTarget.canvas.clientHeight;
-		this._fov = fov;
-		this._ortho = orthographic;
-		this._range = range;
-		if (aspect < 0)
-			this._aspect = w / h
-		else this._aspect = aspect;
-		b._setProjMatrix(this._getProjMat());
+		if (a < 0) a = w / h
+
+		var changed = false;
+		if(this._fov != fov){
+			this._fov = fov;
+			changed = true;
+		}
+		if(this._ortho != orthographic){
+			this._ortho = orthographic;
+			changed = true
+		}
+		
+		if(this._range != range){
+			this._range = range;
+			changed = true
+		}
+		
+		
+		if (a != this._aspect) {
+			this._aspect =a
+			changed = true
+		}
+
+		if(changed || this._currentProjMat == null)
+			this._currentProjMat = this._getProjMat()
+		b._setProjMatrix(this._currentProjMat);
 	}
 
 	/**
