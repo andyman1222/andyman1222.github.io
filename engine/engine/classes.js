@@ -661,6 +661,7 @@ class _Camera extends _Primitive {
 	_noLighting = false
 	_showBounds = false
 	_renderEngine = false
+	_noTexture = false
 	_render = true
 	_enabled = true
 	_bufs = []
@@ -736,48 +737,13 @@ class _Camera extends _Primitive {
 							f._renderData();
 						f._points.push(this._debugPoints[i + x])
 						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
-						f._clearBuffers();
-				var p = this._getWorldTransform(true);
-				f._setViewMatrix(this._getViewMat(), p.pos, p.scl)
-
-				//adding objects
-
-				_objects.forEach((o) => {
-					if ((this._renderEngine && o._isEngine) || !o._isEngine) {
-						if (o._visible) {
-							o._setGraphicsData(f, this);
-							if(this._render) f._renderData();
-						}
-					}
-				});
-				var x = 0
-				for (var o = 0; o < this._debugOffsets.length; o++) {
-					f._types.push(this._debugTypes[o])
-					f._offsets.push(this._debugOffsets[o])
-					for (var i = 0; i < this._debugOffsets[o]; i++) {
-						if (i.length + f._points.length > f._bufLimit)
-							f._renderData();
-						f._points.push(this._debugPoints[i + x])
-						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
 						f._loadMaterial(tmp, false, this._wireframe || this._noLighting)
 						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
 						f._tangents.push(vec3(0, 1, 0))
 						//f._bitangents.push(vec3(0, 0, 1))
+						f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 					}
-					f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 					x += this._debugOffsets[o]
-					base += this._debugOffsets[o].length
-				}
-				//render any remaining data
-				if (this._render)
-					f._renderData()._loadMaterial(tmp, false, this._wireframe || this._noLighting)
-						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
-						f._tangents.push(vec3(0, 1, 0))
-						//f._bitangents.push(vec3(0, 0, 1))
-					}
-					f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
-					x += this._debugOffsets[o]
-					base += this._debugOffsets[o].length
 				}
 				//render any remaining data
 				if (this._render)
@@ -920,7 +886,7 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
-					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1, camera._wireframe || camera._noLighting)
+					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting)
 					buf._points.push(mult(this._pointInfo[i[ii]], vec3(1,-1,-1)))
 					switch (d.type) {
 						case _gl.TRIANGLES:

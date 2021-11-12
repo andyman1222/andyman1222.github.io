@@ -278,7 +278,7 @@ switch(matIndex){
 	return;
 
 	case 1: //no texture
-	fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+	fColor=standardMaterial(matProp, normalW, positionT, cameraPosT, true);
 	break;
 
 	case 2: //parallaxed texture
