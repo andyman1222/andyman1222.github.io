@@ -664,9 +664,10 @@ class _Camera extends _Primitive {
 	_render = true
 	_enabled = true
 	_bufs = []
-	_currentFov = -1
-	_currentAspect = -1
-	_currentRange = [-1, -1]
+	_fov = 90
+	_aspect = 1280/720
+	_ortho = false
+	_range = [.1, 200000]
 	_currentProjMat = null
 
 	_clearDebug() {
@@ -715,7 +716,7 @@ class _Camera extends _Primitive {
 				f._clearBuffers();
 				var p = this._getWorldTransform(true);
 				f._setViewMatrix(this._getViewMat(), p.pos, p.scl)
-
+				f._setProjMatrix(this._currentProjMat);
 				//adding objects
 
 				_objects.forEach((o) => {
@@ -791,15 +792,13 @@ class _Camera extends _Primitive {
 		//var rotMat = mult(mult(rotateZ(this._transform.rot[2]), rotateY(-(this._transform.rot[1] - 90))), rotateX(-this._transform.rot[0]))//this may look wrong, and it most definately is, but it works
 	}
 
-	_updateCameraView(fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], targetBuf = null, width=null, height=null) {
-		var b = targetBuf
+	_updateCameraView(fov = this._fov, aspect = this._aspect, orthographic = this._ortho, range = this._range, width=null, height=null) {
 		var w = width
 		var h = height
 		var a = aspect
 		
-		if (b == null) b = this._bufs[0]
-		if(w == null) w = b._gTarget.canvas.clientWidth;
-		if(h == null) h = b._gTarget.canvas.clientHeight;
+		if(w == null) w = this._bufs[0]._gTarget.canvas.clientWidth;
+		if(h == null) h = this._bufs[0]._gTarget.canvas.clientHeight;
 		if (a < 0) a = w / h
 
 		var changed = false;
@@ -819,13 +818,13 @@ class _Camera extends _Primitive {
 		
 		
 		if (a != this._aspect) {
-			this._aspect =a
+			this._aspect = a
 			changed = true
 		}
 
 		if(changed || this._currentProjMat == null)
 			this._currentProjMat = this._getProjMat()
-		b._setProjMatrix(this._currentProjMat);
+		
 	}
 
 	/**
@@ -902,7 +901,7 @@ class _Object extends _Primitive {
 		var b = this._bounds._getGraphicsDrawBounds()
 
 		buf._setModelMatrix(newMat)
-		
+		this._updateCameraView()
 		for (var g = 0; g < this._drawInfo.length; g++) {
 			var d = this._drawInfo[g]
 			var i = d.pointIndex
