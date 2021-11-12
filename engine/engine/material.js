@@ -108,6 +108,12 @@ class _ComplexTexture {
             if(lightMasks instanceof Array)
                 this._lightMasks.push(lightMasks[x%lightMasks.length])
             else this._lightMasks.push(lightMasks)
+            if(cameraMasks instanceof Array)
+                this._cameraMasks.push(cameraMasks[x%cameraMasks.length])
+            else this._cameraMasks.push(cameraMasks)
+            if(bufferMasks instanceof Array)
+                this._bufferMasks.push(bufferMasks[x%bufferMasks.length])
+            else this._bufferMasks.push(bufferMasks)
             var i = this._texs.push(_gl.createTexture()) - 1;
             this._gl.bindTexture(this._gl.TEXTURE_2D, this._texs[i]);
             if (this._images[x] == null || this._images[a].src == null) {
