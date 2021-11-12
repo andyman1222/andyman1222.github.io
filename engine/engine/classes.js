@@ -225,9 +225,10 @@ class _Buffer {
 	_setup = false;
 
 	_strs = {
-		coordStr, matStr, matParamCount, matIndStr, texStr, texCount, projMatrixStr, viewMatrixStr, normalMatrixStr,
-		modelMatrixStr, lightsArrayStr, lightsIndexStr, normalStr, tanStr, biTanStr, texCoordStr, cameraPosStr, cameraScaleStr,
-		customSetupFunction
+		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, projMatrixStr: null, 
+		viewMatrixStr: null, normalMatrixStr: null, modelMatrixStr: null, lightsArrayStr: null, lightsIndexStr: null, 
+		normalStr: null, tanStr: null, biTanStr: null, texCoordStr: null, cameraPosStr: null, cameraScaleStr: null,
+		customSetupFunction: null
 	}
 	
 	_customClearFunction = (gTarget, program) => {}
