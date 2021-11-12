@@ -240,7 +240,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 }
 
 vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
-	sMat mat = getStandardLight(mp[4], norm*vec3(-1,1,1), pos, viewPos, tangentSpace);
+	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
