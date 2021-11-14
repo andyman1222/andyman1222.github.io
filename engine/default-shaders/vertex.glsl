@@ -1,6 +1,6 @@
 #version 300 es
 
-precision mediump float;
+precision highp float;
 
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;

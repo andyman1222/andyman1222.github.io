@@ -101,7 +101,7 @@ function quatEqual(q1, q2) {
  * @param {*} rot 
  * @return {Quaternion} (w, x, y, z)
  */
-function eulerToQuat(axis, angle, normFunction = fastNorm) {
+function eulerToQuat(axis, angle, normFunction = normalize) {
     if (length(axis) == 0) throw "Undefined axis (0,0,0)"
     var a = mult(axis, vec3(1, -1, 1))
     var c = Math.cos(radians(angle % 360) / 2)
@@ -270,7 +270,7 @@ function getMidpoint(points) {
  * Returns a 4-vector representation of a plane- (x, y, z, b)
  * @param {*} points 3 points
  */
-function getPlane(points, normFunction = fastNorm) {
+function getPlane(points, normFunction = normalize) {
     if (points.length == 3) {
         var cp = cross(subtract(points[2], points[0]), subtract(points[1], arguments[0]))
         var d = dot(cp, points[2])
