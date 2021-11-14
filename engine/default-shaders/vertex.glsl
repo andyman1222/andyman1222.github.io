@@ -3,7 +3,7 @@
 precision highp float;
 
 const int LIGHT_COUNT=64;
-const int MAT_PROP_COUNT=6;
+const int MAT_PROP_COUNT=7;
 
 in vec3 inPointsL;
 in vec3 inNormalL;
@@ -18,6 +18,7 @@ in vec4 inMatProp2;
 in vec4 inMatProp3;
 in vec4 inMatProp4;
 in vec4 inMatProp5;
+in vec4 inMatProp6;
 
 uniform vec3 inCameraScale;
 uniform mat4 viewMatrix;
@@ -47,7 +48,7 @@ void main(void) {
     gl_Position = projMatrix * viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.));
     vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(-1,1,-1));
     //vec3 T = normalize(inTangent);
-    vec3 N = normalize((normalMatrix*(vec4(inNormalL, 0.) * vec4(1,1,-1,1))).xyz*vec3(1,1,1));
+    vec3 N = normalize((normalMatrix*(vec4(inNormalL, 0.))).xyz*vec3(1,1,1));
     //vec3 N = normalize(inNormal);
     T=normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T)*vec3(-1, -1,-1);
@@ -72,6 +73,7 @@ void main(void) {
     matProp[3] = inMatProp3;
     matProp[4] = inMatProp4;
     matProp[5] = inMatProp5;
+    matProp[6] = inMatProp6;
 
     matIndex = inMatIndex;
 

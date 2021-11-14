@@ -198,3 +198,14 @@ function _getRect(pos, extent, normFunction = normalize) {
 	var t = tanFromTriangleVerts(p, ind, tx, normFunction)
 	return{points: p, index: ind, texCoords: tx, normals: norm, tangents: t}
 }
+
+function _addToPointIndArr(arr, val){
+	var r = []
+	for(var x = 0; x < arr.length; x++)
+		r.push(arr[x]+val)
+	return r
+}
+
+function _mergePointArrs(firstArr, secArr){
+	return [...firstArr, ...secArr]
+}

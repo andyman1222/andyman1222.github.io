@@ -3,7 +3,7 @@
 precision highp float;
 
 const int LIGHT_COUNT=64;
-const int MAT_PROP_COUNT=6;
+const int MAT_PROP_COUNT=7;
 const float ATTENUATION_DROPOFF=.05;
 in vec2 texCoord;
 in mat3 TBN;
@@ -83,7 +83,7 @@ struct sMat{
 	vec4 specular;
 };
 
-sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
+sMat getStandardLight(vec4 mp6, vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
 	sMat r;
 	r.ambient=vec4(0.,0.,0.,1.);
 	r.diffuse=vec4(0.,0.,0.,1.);
@@ -181,7 +181,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 						case 0:default:
 						specular=dot(N, halfVector);
 					}
-					specular=pow(specular,lights[x].shininess*mp5.r);
+					specular=pow(specular,lights[x].shininess*mp6.r);
 				}
 				vec4 tmpDiff=a*(lights[x].color*lights[x].diffuseMultiply*diffuse);
 				vec4 tmpSpec=a*(specular*lights[x].color*lights[x].specularMultiply);
@@ -249,7 +249,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
-	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)).rgb,
+	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)+mp[5]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*mp[0].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
@@ -267,13 +267,13 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 	vec4 amb = mat.ambient*mp[3]*txDiff;
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*txSpec;
-	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)).rgb,
+	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+mp[5]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
 void main(void){
-	vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
+	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	//vec2 txc = texCoord;
 	switch(matIndex){
 		case -2: //debug- draw texcoord
@@ -287,7 +287,7 @@ void main(void){
 		break;
 
 		case 2: //parallaxed texture
-		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
 		//break;
 
 		case 3: //texture, no parallax
@@ -295,7 +295,7 @@ void main(void){
 		break;
 
 		case 4: //unlit texture, parallax
-		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
 
 		case 5: //unlit texture, no parallax
 		fColor = texture(baseImage, txc) * matProp[0];

@@ -2,7 +2,7 @@
 
 /**
  * Material points to index that defines its functionality in the shader, as well as any necessary arguments, such as specular, diffuse, etc.
- * Default: index 0, parameters=[baseColor=(.5,.5,.5,1), diffuse = (.5,.5,.5,1), specular = (.5,.5,.5,1), ambient = (1,1,1,1), misc = (shininess=1,parallax min=0 (default 8),parallax max=0 (default 32),parallax scale=0 (default .1)), texCoord=(uScale=1, vScale=1, uAdd=0, vAdd=0)]
+ * Default: index 0, parameters=[baseColor=(.5,.5,.5,1), diffuse = (.5,.5,.5,1), specular = (.5,.5,.5,1), ambient = (1,1,1,1), emissive = (0,0,0,1) (emissive alpha unused), misc = (shininess=1,parallax min=0 (default 8),parallax max=0 (default 32),parallax scale=0 (default .1)), texCoord=(uScale=1, vScale=1, uAdd=0, vAdd=0)]
  */
 
 class _Material {
@@ -12,7 +12,7 @@ class _Material {
     _prevParameters
     _updated
     _lightMask
-    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)], lightMask = 0x1) {
+    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(0,0,0,1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)], lightMask = 0x1) {
         this._index = index
         this._parameters = parameters
         this._lightMask = lightMask
@@ -25,6 +25,7 @@ class _BasicMaterial extends _Material{
             vec4(diffuse, diffuse, diffuse, 1), 
             vec4(specular, specular, specular, 1), 
             vec4(ambient, ambient, ambient, 1), 
+            vec4(0, 0, 0, 1),
             vec4(shininess, 0, 0, 0), 
             vec4(txCoordScl[0], txCoordScl[1], txCoordDisp[0], txCoordDisp[1])])
     }
@@ -41,13 +42,14 @@ class _SolidColorNoLighting extends _Material {
         super(0, [vec4(color[0], color[1], color[2], color[3]),
         vec4(0, 0, 0, 1),
         vec4(0, 0, 0, 1),
+        vec4(0, 0, 0, 1),
         vec4(1, 8, 32, .1),
         vec4(1, 1, 0, 0)])
     }
 }
 
 class _ScaledTexMat extends _Material {
-    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=.1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]){
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=.1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(0,0,0,1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]){
         super(1, [parameters[0], parameters[1], parameters[2], parameters[3], vec4(parameters[4][0], minLayers, maxLayers, heightScale), vec4(uScale, vScale, uDisp, vDisp)])
         if(parallax) this._index = 2;
         else this._index = 3;
@@ -55,7 +57,7 @@ class _ScaledTexMat extends _Material {
 }
 
 class _ScaledTexMatNoLight extends _ScaledTexMat {
-    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=.1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]){
+    constructor(parallax=false, uScale = 1, vScale = 1, uDisp=0, vDisp=0, minLayers=8, maxLayers=32, heightScale=.1, parameters = [vec4(1, 1, 1, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(0,0,0,1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)]){
         super(parallax, uScale, vScale, uDisp, vDisp, minLayers, maxLayers, heightScale, parameters)
         if(parallax) this._index = 4;
         else this._index = 5;

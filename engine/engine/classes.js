@@ -238,7 +238,7 @@ class _Buffer {
 	}
 	
 	constructor(gTarget, program, clearColor = vec4(0,0,0,1),
-		coordStr="inPointsL", matStr="inMatProp", matParamCount=6, matIndStr="inMatIndex", 
+		coordStr="inPointsL", matStr="inMatProp", matParamCount=7, matIndStr="inMatIndex", 
 		texStr=["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"], 
 		texCount=5, projMatrixStr="projMatrix", viewMatrixStr="viewMatrix", normalMatrixStr="normalMatrix",
 		modelMatrixStr="modelMatrix", lightsArrayStr="lights", lightsIndexStr="maxLightIndex", 
