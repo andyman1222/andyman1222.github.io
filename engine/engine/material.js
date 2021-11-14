@@ -12,7 +12,7 @@ class _Material {
     _prevParameters
     _updated
     _lightMask
-    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 1, 1, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)], lightMask = 0x1) {
+    constructor(index = 1, parameters = [vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(.5, .5, .5, 1), vec4(1, 8, 32, .1), vec4(1, 1, 0, 0)], lightMask = 0x1) {
         this._index = index
         this._parameters = parameters
         this._lightMask = lightMask
