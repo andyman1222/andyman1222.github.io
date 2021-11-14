@@ -79,23 +79,22 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
 	var r = []
 	var ind = []
 	var tx = []
-	var m = r.push(pos)//always texcoord (0,0)
+	var m = r.push(subtract(pos, vec3(0, height/2, 0)))-1//always texcoord (0,0)
 	//norm.push(vec3(0, -1, 0))
-	var t = r.push(add(pos, vec3(0, height, 0)))//always texcoord (0,0)
+	var t = r.push(add(pos, vec3(0, height/2, 0)))-1//always texcoord (0,0)
 	//norm.push(vec3(0, 1, 0))
 	var i1, i2, i3, i4
 	var oi1, oi2
 	for (var i = 0; i < facePoints.length; i++) {
 
-		//note: this lazily calculates the normals, in that it doesn't actually get them based on the edges to the point
 		if (i == 0) {
-			i1 = r.push(add(vec3(facePoints[i][0] * radius, height, facePoints[i][1] * radius), pos));
+			i1 = r.push(add(vec3(facePoints[i][0] * radius, height, facePoints[i][1] * radius), pos))-1;
 			//norm.push(normFunction(vec3(facePoints[i][0], .5, facePoints[i][1])))
-			i2 = r.push(add(vec3(facePoints[i][0] * radius, 0, facePoints[i][1] * radius), pos));
+			i2 = r.push(add(vec3(facePoints[i][0] * radius, 0, facePoints[i][1] * radius), pos))-1;
 			//norm.push(normFunction(vec3(facePoints[i][0], -.5, facePoints[i][1])))
-			i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
+			i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos))-1;
 			//norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
-			i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
+			i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos))-1;
 			//norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
 			oi1 = i1
 			oi2 = i2
@@ -107,9 +106,9 @@ function _getCylinder(pos, radius, height, numFaces, addDeg = 0, type = _gl.TRIA
 				i3 = oi1
 				i4 = oi2
 			} else {
-				i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
+				i3 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, height, facePoints[(i + 1) % facePoints.length][1] * radius), pos))-1;
 				//norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], .5, facePoints[(i + 1) % facePoints.length][1])))
-				i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos));
+				i4 = r.push(add(vec3(facePoints[(i + 1) % facePoints.length][0] * radius, 0, facePoints[(i + 1) % facePoints.length][1] * radius), pos))-1;
 				//norm.push(normFunction(vec3(facePoints[(i + 1) % facePoints.length][0], -.5, facePoints[(i + 1) % facePoints.length][1])))
 			}
 
