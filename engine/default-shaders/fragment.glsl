@@ -4,6 +4,7 @@ precision mediump float;
 
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;
+const int ATTENUATION_DROPOFF=.01;
 in vec2 texCoord;
 in mat3 TBN;
 
@@ -150,87 +151,90 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 			case 4://spot
 			//TODO: implement? For now just use point light implementation
 			case 3://point
+			
 			vec3 v_surfaceToLight = vec3(0.,0.,0.);
 			if(tangentSpace)
 				v_surfaceToLight=(TBN*(lights[x].locationW))-pos; //potentially expensive operation and repetitive per vertex but I can't figure out how to calculate it in vertex
 			else v_surfaceToLight=(lights[x].locationW)-pos;
-			vec3 v_surfaceToView=viewPos-pos;
-			vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
-			vec3 surfaceToViewDirection=normalize(v_surfaceToView);
-			vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+			float a = 1./(1.+((1./lights[x].attenuation)*length(v_surfaceToLight)));
+			if(a > ATTENUATION_DROPOFF){
+				vec3 v_surfaceToView=viewPos-pos;
+				vec3 surfaceToLightDirection=normalize(v_surfaceToLight);
+				vec3 surfaceToViewDirection=normalize(v_surfaceToView);
+				vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
 
-			float diffuse=dot(N,surfaceToLightDirection);
-			float specular=0.;
+				float diffuse=dot(N,surfaceToLightDirection);
+				float specular=0.;
 
-			if((diffuse>0.&&lights[x].negativeHandler==1)||(diffuse<0.&&lights[x].negativeHandler==2)||(lights[x].negativeHandler!=2&&lights[x].negativeHandler!=1)){
-				
-				switch(lights[x].negativeHandlerAlt){
+				if((diffuse>0.&&lights[x].negativeHandler==1)||(diffuse<0.&&lights[x].negativeHandler==2)||(lights[x].negativeHandler!=2&&lights[x].negativeHandler!=1)){
+					
+					switch(lights[x].negativeHandlerAlt){
+						case 1:
+						specular=max(dot(N, halfVector),0.);
+						break;
+						case 2:
+						specular=min(dot(N, halfVector),0.);
+						break;
+						case 3:
+						specular=abs(dot(N, halfVector));
+						break;
+						case 0:default:
+						specular=dot(N, halfVector);
+					}
+					specular=pow(specular,lights[x].shininess*mp5.r);
+				}
+				vec4 tmpDiff=a*(lights[x].color*lights[x].diffuseMultiply*diffuse);
+				vec4 tmpSpec=a*(specular*lights[x].color*lights[x].specularMultiply);
+
+				switch(lights[x].negativeHandler){
 					case 1:
-					specular=max(dot(N, halfVector),0.);
+					r.diffuse=vec4(max(0.,tmpDiff.r)+r.diffuse.r,
+					max(0.,tmpDiff.g)+r.diffuse.g,
+					max(0.,tmpDiff.b)+r.diffuse.b,
+					mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,max(0.,diffuse)));
+					
 					break;
 					case 2:
-					specular=min(dot(N, halfVector),0.);
+					r.diffuse=vec4(min(0.,tmpDiff.r)+r.diffuse.r,
+					min(0.,tmpDiff.g)+r.diffuse.g,
+					min(0.,tmpDiff.b)+r.diffuse.b,
+					mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,min(0.,diffuse)));
+					
 					break;
 					case 3:
-					specular=abs(dot(N, halfVector));
-					break;
+					r.diffuse=vec4(abs(tmpDiff.r)+r.diffuse.r,
+					abs(tmpDiff.g)+r.diffuse.g,
+					abs(tmpDiff.b)+r.diffuse.b,
+					mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,abs(diffuse)));
+					
 					case 0:default:
-					specular=dot(N, halfVector);
+					r.diffuse=vec4(tmpDiff.rgb+r.diffuse.rgb,mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,diffuse));
+					
 				}
-				specular=pow(specular,lights[x].shininess*mp5.r);
-			}
-			float a = 1./(1.+((1./lights[x].attenuation)*length(v_surfaceToLight)));
-			vec4 tmpDiff=a*(lights[x].color*lights[x].diffuseMultiply*diffuse);
-			vec4 tmpSpec=a*(specular*lights[x].color*lights[x].specularMultiply);
 
-			switch(lights[x].negativeHandler){
-				case 1:
-				r.diffuse=vec4(max(0.,tmpDiff.r)+r.diffuse.r,
-				max(0.,tmpDiff.g)+r.diffuse.g,
-				max(0.,tmpDiff.b)+r.diffuse.b,
-				mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,max(0.,diffuse)));
-				
-				break;
-				case 2:
-				r.diffuse=vec4(min(0.,tmpDiff.r)+r.diffuse.r,
-				min(0.,tmpDiff.g)+r.diffuse.g,
-				min(0.,tmpDiff.b)+r.diffuse.b,
-				mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,min(0.,diffuse)));
-				
-				break;
-				case 3:
-				r.diffuse=vec4(abs(tmpDiff.r)+r.diffuse.r,
-				abs(tmpDiff.g)+r.diffuse.g,
-				abs(tmpDiff.b)+r.diffuse.b,
-				mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,abs(diffuse)));
-				
-				case 0:default:
-				r.diffuse=vec4(tmpDiff.rgb+r.diffuse.rgb,mix(r.diffuse.a,lights[x].color.a*lights[x].diffuseMultiply.a*r.diffuse.a,diffuse));
-				
-			}
+				switch(lights[x].negativeHandlerAlt){
+					case 1:
+					r.specular=vec4(max(0.,tmpSpec.r)+r.specular.r,
+					max(0.,tmpSpec.g)+r.specular.g,
+					max(0.,tmpSpec.b)+r.specular.b,
+					mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,max(0.,specular)));
+					break;
+					case 2:
+					r.specular=vec4(min(0.,tmpSpec.r)+r.specular.r,
+					min(0.,tmpSpec.g)+r.specular.g,
+					min(0.,tmpSpec.b)+r.specular.b,
+					mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,min(0.,specular)));
+					break;
+					case 3:
+					r.specular=vec4(abs(tmpSpec.r)+r.specular.r,
+					abs(tmpSpec.g)+r.specular.g,
+					abs(tmpSpec.b)+r.specular.b,
+					mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,abs(specular)));
+					break;
+					case 0: default:
+					r.specular=vec4(tmpSpec.rgb+r.specular.rgb,mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,specular));
 
-			switch(lights[x].negativeHandlerAlt){
-				case 1:
-				r.specular=vec4(max(0.,tmpSpec.r)+r.specular.r,
-				max(0.,tmpSpec.g)+r.specular.g,
-				max(0.,tmpSpec.b)+r.specular.b,
-				mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,max(0.,specular)));
-				break;
-				case 2:
-				r.specular=vec4(min(0.,tmpSpec.r)+r.specular.r,
-				min(0.,tmpSpec.g)+r.specular.g,
-				min(0.,tmpSpec.b)+r.specular.b,
-				mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,min(0.,specular)));
-				break;
-				case 3:
-				r.specular=vec4(abs(tmpSpec.r)+r.specular.r,
-				abs(tmpSpec.g)+r.specular.g,
-				abs(tmpSpec.b)+r.specular.b,
-				mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,abs(specular)));
-				break;
-				case 0: default:
-				r.specular=vec4(tmpSpec.rgb+r.specular.rgb,mix(r.specular.a,lights[x].color.a*lights[x].specularMultiply.a*r.specular.a,specular));
-
+				}
 			}
 
 			default:

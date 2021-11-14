@@ -166,7 +166,6 @@ class _Primitive {
  * buffer _Object representing all data necessary for any output buffer/view
  */
 
-//TODO: increase the number of material parameters from 4 vec4s to 8 if possible
 class _Buffer {
 	_matParams = []
 	_matIndicies = []
@@ -185,8 +184,6 @@ class _Buffer {
 	_biTanBuf;
 	_matParamsBufs = [];
 	_matIndBuf;
-	_frameBuf;
-	_renderBuf;
 
 	_inPos;
 	_inTexCoord;
@@ -219,10 +216,9 @@ class _Buffer {
 	_bufLimit;
 	_matParamCount = 0;
 	_texCount = 0;
-	_isFrameBuffer;
-	_isRenderbuffer;
 	_bufferMask = 0x1;
 	_setup = false;
+	_clearColor;
 
 	_setupInfo = {
 		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, projMatrixStr: null, 
@@ -241,7 +237,7 @@ class _Buffer {
 		return this._gTarget.getUniform(this._program, loc)
 	}
 	
-	constructor(gTarget, program, isFrameBuffer=false, isRenderBuffer=false,
+	constructor(gTarget, program, clearColor = vec4(0,0,0,1),
 		coordStr="inPointsL", matStr="inMatProp", matParamCount=6, matIndStr="inMatIndex", 
 		texStr=["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"], 
 		texCount=5, projMatrixStr="projMatrix", viewMatrixStr="viewMatrix", normalMatrixStr="normalMatrix",
@@ -252,8 +248,7 @@ class _Buffer {
 		this._gTarget = gTarget;
 		this._program = program;
 		this._bufferMask = bufferMask;
-		this._isFrameBuffer = isFrameBuffer;
-		this._isRenderbuffer = isRenderBuffer;
+		this._clearColor = clearColor;
 
 		this._setupInfo = {
 			coordStr: coordStr, matStr: matStr, matParamCount: matParamCount, matIndStr: matIndStr, texStr: texStr, texCount: texCount,
@@ -267,13 +262,6 @@ class _Buffer {
 	}
 
 	_init(){
-		if(this._isFrameBuffer)
-			this._frameBuf = this._gTarget.createFrameBuffer();
-
-		
-		if(this._isRenderBuffer)
-			this._renderBuf = this._gTarget.createRenderBuffer();
-
 		if(this._setupInfo.coordStr != null){
 			this._posBuffer = this._gTarget.createBuffer();
 			this._inPos = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
@@ -502,7 +490,8 @@ class _Buffer {
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
 		//this._gTarget.useProgram(this._program);
-		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT);
+		this._gTarget.clearColor(this._clearColor[0], this._clearColor[1], this._clearColor[2], this._clearColor[3])
+		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT|this._gTarget.DEPTH_BUFFER_BIT);
 		this._clearBuffers();
 	}
 
