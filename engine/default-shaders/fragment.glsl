@@ -273,36 +273,36 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 }
 
 void main(void){
-vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
-//vec2 txc = texCoord;
-switch(matIndex){
-	case -2: //debug- draw texcoord
-	fColor = vec4(txc, 0., 1.);
+	vec2 txc = (texCoord*vec2(matProp[5][0], matProp[5][1]))+vec2(matProp[5][2], matProp[5][3]);
+	//vec2 txc = texCoord;
+	switch(matIndex){
+		case -2: //debug- draw texcoord
+		fColor = vec4(txc, 0., 1.);
 
-	case -1: //nodraw
-	return;
+		case -1: //nodraw
+		return;
 
-	case 1: //no texture
-	fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
-	break;
+		case 1: //no texture
+		fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+		break;
 
-	case 2: //parallaxed texture
-	txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
-	//break;
+		case 2: //parallaxed texture
+		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+		//break;
 
-	case 3: //texture, no parallax
-	fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
-	break;
+		case 3: //texture, no parallax
+		fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
+		break;
 
-	case 4: //unlit texture, parallax
-	txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
+		case 4: //unlit texture, parallax
+		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[4][1], matProp[4][2], matProp[4][3]);
 
-	case 5: //unlit texture, no parallax
-	fColor = texture(baseImage, txc) * matProp[0];
-	break;
+		case 5: //unlit texture, no parallax
+		fColor = texture(baseImage, txc) * matProp[0];
+		break;
 
-	case 0: default: //solid color
-	fColor=matProp[0];
-	break;
+		case 0: default: //solid color
+		fColor=matProp[0];
+		break;
 	}
 }

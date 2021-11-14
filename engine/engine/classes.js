@@ -460,12 +460,15 @@ class _Buffer {
 		if (!noLighting) {
 			if (!hasTexture){
 				if(m._index == 2 || m._index == 3) this._matIndicies.push(1)
-				else this._matIndicies.push(0)
+				else if(m._index == 4 || m._index == 5) this._matIndicies.push(0)
+				else this._matIndicies.push(m._index)
 			}
 			else if(noParallax){
 				if(m._index == 2) this._matIndicies.push(3)
-				else this._matIndicies.push(5)
+				else if(m._index == 4) this._matIndicies.push(5)
+				else this._matIndicies.push(m._index)
 			}
+
 			else this._matIndicies.push(m._index)
 		}
 		else {
