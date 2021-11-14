@@ -192,9 +192,9 @@ function init() {
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
 		, tmp.points, [new _Material(), new _Material(-1)], _Bounds._RECT)
 	var cube = _getRect(vec3(-10,0,0),vec3(1,1,1))
-	var sphere = _getSphere(vec3(0,0,0),1,10,10)
+	var sphere = _getSphere(vec3(0,0,0),vec3(1,1,1),10,10)
 	var sphereArr = _addToPointIndArr(sphere.index, cube.index.length)
-	var cylinder = _getCylinder(vec3(10,0,0),1,1,10)
+	var cylinder = _getCylinder(vec3(10,0,0),vec3(1,1,1),10)
 	var cylinderArr = _addToPointIndArr(cylinder.index, cube.index.length+sphere.index.length)
 	var points = _mergePointArrs(_mergePointArrs(cube.points, sphere.points), cylinder.points)
 	var t = new _Object({pos: vec3(0, 1, 10), rot: eulerToQuat(vec3(0,0,1),0),scl: vec3(1,1,1)}, [{pointIndex: cube.index, matIndex: [0], texCoords: cube.texCoords,
