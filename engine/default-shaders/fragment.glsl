@@ -83,7 +83,7 @@ struct sMat{
 	vec4 specular;
 };
 
-sMat getStandardLight(vec4 mp6, vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
+sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
 	sMat r;
 	r.ambient=vec4(0.,0.,0.,1.);
 	r.diffuse=vec4(0.,0.,0.,1.);
@@ -181,7 +181,7 @@ sMat getStandardLight(vec4 mp6, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 						case 0:default:
 						specular=dot(N, halfVector);
 					}
-					specular=pow(specular,lights[x].shininess*mp6.r);
+					specular=pow(specular,lights[x].shininess*mp5.r);
 				}
 				vec4 tmpDiff=a*(lights[x].color*lights[x].diffuseMultiply*diffuse);
 				vec4 tmpSpec=a*(specular*lights[x].color*lights[x].specularMultiply);
@@ -245,11 +245,11 @@ sMat getStandardLight(vec4 mp6, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 }
 
 vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
-	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
+	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
-	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)+mp[5]).rgb,
+	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)+mp[4]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*mp[0].a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
@@ -257,7 +257,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
 	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.)*vec3(-1,1,1);
-	sMat mat = getStandardLight(mp[4], norm, pos, viewPos, tangentSpace);
+	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
 	vec4 txSpec = texture(roughnessMap, tx)*mp[2];
@@ -267,7 +267,7 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 	vec4 amb = mat.ambient*mp[3]*txDiff;
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*txSpec;
-	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+mp[5]).rgb,
+	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+mp[4]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
