@@ -4,7 +4,7 @@ precision mediump float;
 
 const int LIGHT_COUNT=64;
 const int MAT_PROP_COUNT=6;
-const int ATTENUATION_DROPOFF=.01;
+const float ATTENUATION_DROPOFF=.01;
 in vec2 texCoord;
 in mat3 TBN;
 
