@@ -103,7 +103,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, postVerte
 }
 
 function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl",
-defaultPostVertex="https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultPostFragment="https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {
+defaultPostVertex="https://andyman1222.github.io/engine/default-shaders/postprocess-vertex.glsl", defaultPostFragment="https://andyman1222.github.io/engine/default-shaders/postprocess-fragment.glsl") {
 	_userInitFunction = userInit
 	_userTickFunction = userTick;
 	_userKeyFunction = userKey;
