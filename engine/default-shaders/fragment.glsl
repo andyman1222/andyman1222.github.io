@@ -1,5 +1,5 @@
 #version 300 es
-
+#extension GL_EXT_draw_buffers : require
 precision highp float;
 
 const int LIGHT_COUNT=64;
@@ -18,7 +18,8 @@ in vec3 normalW;
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 
-out vec4 fColor;
+layout(location=0) out vec4 fColor;
+layout(location=1) out vec4 fDepth;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 struct light
@@ -305,4 +306,5 @@ void main(void){
 		fColor=matProp[0];
 		break;
 	}
+	fDepth = vec4(gl_FragDepth, 0, 0, 0);
 }
