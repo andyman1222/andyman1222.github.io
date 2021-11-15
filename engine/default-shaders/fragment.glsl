@@ -264,7 +264,7 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 
 vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
 	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
-	fNormal = norm;
+	fNormal = vec4(norm, 1);
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
@@ -282,7 +282,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
 	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.)*vec3(-1,1,1);
-	fNormal = norm;
+	fNormal = vec4(norm, 1);
 	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
@@ -307,8 +307,8 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 void main(void){
 	fDepth = gl_FragCoord;
 	fMiscMat = matProp[5];
-	fCameraPos = cameraPosT;
-	fPosition = positionT;
+	fCameraPos = vec4(cameraPosT, 1);
+	fPosition = vec4(positionT, 1);
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	fTexInfo = matProp[6];
 	//vec2 txc = texCoord;
@@ -316,23 +316,23 @@ void main(void){
 		case -3: //debug- draw depth
 		fScene = fDepth;
 		fColor = matProp[0];
-		fNormal = normalT;
+		fNormal = vec4(norm, 1);
 		fAmbient = matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		getStandardLight(matProp[5], normalT, positionT, cameraPosT, true);
 		fParallaxDepth = gl_FragCoord;
 		break;
 		case -2: //debug- draw texcoord
 		fScene = vec4(txc, 0., 1.);
-		fNormal = normalT;
+		fNormal = vec4(norm, 1);
 		fColor = matProp[0];
 		fAmbient = matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		getStandardLight(matProp[5], normalT, positionT, cameraPosT, true);
 		fParallaxDepth = gl_FragCoord;
 		break;
 		case -1: //nodraw. Doesn't even put anything into postprocess
@@ -340,7 +340,7 @@ void main(void){
 
 		case 1: //no texture
 		fScene=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
-		fNormal = normalT;
+		fNormal = vec4(norm, 1);
 		fParallaxDepth = gl_FragCoord;
 		break;
 
@@ -368,23 +368,23 @@ void main(void){
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		getStandardLight(matProp[5], normalT, positionT, cameraPosT, true);
 		if(matIndex == 5){
-			fNormal = normalT;
+			fNormal = vec4(norm, 1);
 			fParallaxDepth = gl_FragCoord;
 		}
 		break;
 
 		case 0: default: //solid color no lighting
 		fScene=matProp[0];
-		fNormal = normalT;
+		fNormal = vec4(norm, 1);
 		fColor = matProp[0];
 		fAmbient = matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
 		fParallaxDepth = gl_FragCoord;
-		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		getStandardLight(matPRop[5], normalT, positionT, cameraPosT, true);
 		break;
 	}
 	
