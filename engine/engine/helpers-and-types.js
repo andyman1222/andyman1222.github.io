@@ -272,7 +272,7 @@ function getMidpoint(points) {
  */
 function getPlane(points, normFunction = normalize) {
     if (points.length == 3) {
-        var cp = cross(subtract(points[2], points[0]), subtract(points[1], arguments[0]))
+        var cp = cross(subtract(points[2], points[0]), subtract(points[1], points[0]))
         var d = dot(cp, points[2])
         return normFunction(vec4(cp[0], cp[1], cp[2], d))
     }

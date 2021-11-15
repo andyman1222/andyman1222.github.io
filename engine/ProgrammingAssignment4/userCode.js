@@ -52,7 +52,7 @@ function userMouseEvent(e) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
 						_mainCamera._clearDebug()
 						var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
-						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera._getWorldTransform().pos])
+						var intersect = linearIntersect(getPlane([vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)]), [mousePos, _mainCamera._getWorldTransform().pos])
 						var i = Math.floor(intersect[0] / (boardSize / 8) + 4);
 						var j = 7 - Math.floor(intersect[2] / (boardSize / 8) + 4);
 						_bufferedConsoleLog(intersect)
