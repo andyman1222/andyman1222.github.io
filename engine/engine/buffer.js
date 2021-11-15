@@ -492,7 +492,7 @@ class _ScreenBuffer {
 			-1, 1,
 			1, 1,
 			1, 1,
-			-1, 1,
+			1, -1,
 			-1, -1]), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribPointer(this._postPosIn, 2, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._postPosIn);

@@ -19,6 +19,6 @@ flat out int matIndex;
 out vec4 matProp[MAT_PROP_COUNT];
 
 void main(void){
-    gl_Position = vec4((inPointsL/vec2(2,2))+vec2(1,1), 0, 1);
-    texCoords = inPointsL;
+    gl_Position = vec4(inPointsL, 0, 1);
+    texCoords = (inPointsL/vec2(2,2))+vec2(1,1);
 }
