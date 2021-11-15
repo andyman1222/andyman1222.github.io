@@ -268,15 +268,15 @@ class _ScreenBuffer {
 			}
 		}
 
-		_renderbuffer = this._gTarget.createRenderbuffer();
-		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, _renderbuffer);
+		this._renderbuffer = this._gTarget.createRenderbuffer();
+		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._renderbuffer);
 		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, framebuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
 			this._outImage, 0);
 		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
-			_renderbuffer);
+			this._renderbuffer);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
@@ -389,7 +389,7 @@ class _ScreenBuffer {
 		if (!this._setup) this._init();
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, _framebuffer);
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
 			this._gTarget.TEXTURE_2D, _outImage, 0);
