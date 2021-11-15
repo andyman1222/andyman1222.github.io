@@ -38,9 +38,9 @@ function userMouseEvent(e) {
 					var pos = _getMousePos(e, canvas)
 					if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
-						_mainCamera.clearDebug()
+						_mainCamera._clearDebug()
 						var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
-						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera.getWorldTransform().pos])
+						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera._getWorldTransform().pos])
 						var i = Math.floor(intersect[0] / (boardSize / 8) + 4);
 						var j = 7 - Math.floor(intersect[2] / (boardSize / 8) + 4);
 						_bufferedConsoleLog(intersect)
@@ -179,7 +179,7 @@ class checkerPiece {
 			[_DrawInfo(cylinder.index, [0], cylinder.texCoords, cylinder.normals, cylinder.tangents)], cylinder.points, [new _BasicMaterial(color)], _Bounds._SPHERE)
 		this.square = startSquare
 		this.isKing = false
-		this.targetPos = this.model.pos;
+		this.targetPos = this.model._transform.pos;
 		this.currentTime = moveTime;
 		this.moveTime = moveTime;
 		this.side = side;
@@ -222,7 +222,7 @@ function init() {
 
 	_mainCamera._transform.pos = vec3(0, 50, -50)
 
-	_mainCamera.attachSelfToParent(cameraBall, { pos: "keepWorld", rot: "relative", scl: "relative" })
+	_mainCamera._attachSelfToParent(cameraBall, { pos: "keepWorld", rot: "relative", scl: "relative" })
 	var c = _getCylinder(vec3(0,1,0),vec3(3,1,3),20)
 	var s = _getRect(vec3(0,0,0),[boardSize / 16, 1, boardSize / 16])
 	for (var x = 0; x < 8; x++) {
