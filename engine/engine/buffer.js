@@ -287,6 +287,9 @@ class _ScreenBuffer {
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
 			this._outImage, 0);
 
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
+			this._depthStencilImage, 0);
+
 		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
 			this._renderbuffer);
 
@@ -412,7 +415,7 @@ class _ScreenBuffer {
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
 			this._gTarget.TEXTURE_2D,this._outImage, 0);
 
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_STENCIL_ATTACHMENT, this._gTarget.TEXTURE_2D,
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
 			this._depthStencilImage, 0);
 
 		
@@ -477,6 +480,7 @@ class _ScreenBuffer {
 			}
 
 			//draw
+			this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
 			var offset = 0;
 			for (var i = 0; i < this._types.length; i++) {
 				this._customRenderFunction(this._gTarget, this._program);
