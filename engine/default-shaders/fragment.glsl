@@ -16,6 +16,7 @@ in vec3 normalW;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
+in vec4 positionS;
 
 layout(location=0) out vec4 fColor;
 layout(location=1) out vec4 fDepth;
@@ -276,6 +277,8 @@ void main(void){
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	//vec2 txc = texCoord;
 	switch(matIndex){
+		case -3:
+		fColor = vec4(gl_FragDepth, gl_FragDepth, gl_FragDepth, 1);
 		case -2: //debug- draw texcoord
 		fColor = vec4(txc, 0., 1.);
 
@@ -305,5 +308,5 @@ void main(void){
 		fColor=matProp[0];
 		break;
 	}
-	fDepth = vec4(gl_FragDepth, gl_FragDepth, gl_FragDepth, 1);
+	fDepth = positionS;
 }
