@@ -18,7 +18,7 @@ out vec4 fColor;
 
 const int samples = 4;
 const float minDepth = .1;
-const float dist = 3;
+const float dist = 3.;
 
 void main(void){
     vec4 results;
@@ -27,9 +27,9 @@ void main(void){
     //fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
-    else if (d.b > 0){
+    else if (d.b > 0.){
         //fColor = vec4(1,0,0,1);
-        for(int x = 1.; x < samples; x++){
+        for(int x = 1; x < samples; x++){
             for(int y = 0; y < samples; y++){
                 vec2 tx = vec2(cos((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)), sin((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)));
                 results = results + texture(scene, tx);
