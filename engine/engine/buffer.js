@@ -293,7 +293,7 @@ class _ScreenBuffer {
 				this._gTarget.uniform1i(this._postImageLoc[i], i);
 			}
 	
-			for(var i = 0; i < _postTexCount; i++) this._drawBuffers.push(this._gTarget.COLOR_ATTACHMENT0+i)
+			for(var i = 0; i < this._postTexCount; i++) this._drawBuffers.push(this._gTarget.COLOR_ATTACHMENT0+i)
 		}
 
 		this._gTarget.useProgram(this._program)
