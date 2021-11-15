@@ -66,6 +66,7 @@ class _ScreenBuffer {
 	_postPosBuf;
 	_outBuffer;
 	_depthBuffer;
+	_inSetup=false;
 
 	_setupInfo = {
 		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, projMatrixStr: null,
@@ -110,6 +111,7 @@ class _ScreenBuffer {
 	}
 
 	_init() {
+		this._inSetup = true
 		this._gTarget.useProgram(this._program)
 		if (this._setupInfo.coordStr != null) {
 			this._posBuffer = this._gTarget.createBuffer();
@@ -305,6 +307,7 @@ class _ScreenBuffer {
 		}
 
 		this._setup = true
+		this._inSetup = false
 	}
 
 	_clearBuffers() {
@@ -415,28 +418,30 @@ class _ScreenBuffer {
 		this._gTarget.enable(this._gTarget.BLEND)
 		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
 		this._gTarget.frontFace(this._gTarget.CW);
-		this._gTarget.depthFunc(this._gTarget.GREATER)
+		this._gTarget.depthFunc(this._gTarget.LESS)
 
-		if (!this._setup) this._init();
+		if(!this._inSetup){
+			if (!this._setup) this._init();
 		
-		this._customBeginRenderFunction(this._gTarget, this._program)
-		this._updateLights();
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+			this._customBeginRenderFunction(this._gTarget, this._program)
+			this._updateLights();
+			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
-		
+			
 
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
-			this._gTarget.TEXTURE_2D,this._outImage, 0);
+			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
+			this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
+				this._gTarget.TEXTURE_2D,this._outImage, 0);
 
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
-			this._depthStencilImage, 0);
+			this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
+				this._depthStencilImage, 0);
 
-		this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
-		//this._gTarget.useProgram(this._program);
-		this._gTarget.clearColor(0, 0, 0, 0)
-		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
-		this._clearBuffers();
+			this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
+			//this._gTarget.useProgram(this._program);
+			this._gTarget.clearColor(0, 0, 0, 0)
+			this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
+			this._clearBuffers();
+		}
 	}
 
 	_renderData() {
