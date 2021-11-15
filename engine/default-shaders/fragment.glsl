@@ -18,7 +18,8 @@ in vec3 normalW;
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 
-
+out vec4 fColor;
+out vec4 fDepth;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 struct light
@@ -277,13 +278,13 @@ void main(void){
 	//vec2 txc = texCoord;
 	switch(matIndex){
 		case -2: //debug- draw texcoord
-		gl_FragColor = vec4(txc, 0., 1.);
+		fColor = vec4(txc, 0., 1.);
 
 		case -1: //nodraw
 		return;
 
 		case 1: //no texture
-		gl_FragColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+		fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
 		break;
 
 		case 2: //parallaxed texture
@@ -291,18 +292,19 @@ void main(void){
 		//break;
 
 		case 3: //texture, no parallax
-		gl_FragColor = standardImage(matProp, positionT, txc, cameraPosT, true);
+		fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
 		break;
 
 		case 4: //unlit texture, parallax
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
 
 		case 5: //unlit texture, no parallax
-		gl_FragColor = texture(baseImage, txc) * matProp[0];
+		fColor = texture(baseImage, txc) * matProp[0];
 		break;
 
 		case 0: default: //solid color
-		gl_FragColor=matProp[0];
+		fColor=matProp[0];
 		break;
 	}
+	fDepth = vec4(gl_FragDepth, 0, 0, 0);
 }

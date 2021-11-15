@@ -437,7 +437,7 @@ class _ScreenBuffer {
 			this._gTarget.TEXTURE_2D,this._outImage, 0);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._depthbuffer);
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.TEXTURE_2D,
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
 			this._depthImage, 0);
 
 			/*
