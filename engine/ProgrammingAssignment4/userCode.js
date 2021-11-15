@@ -254,6 +254,6 @@ function init() {
 }
 
 window.onload = function () {
-	this._engineInit("gl-_canvas", init, userTick, userKeyEvent, userMouseEvent)
+	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
 }
 
