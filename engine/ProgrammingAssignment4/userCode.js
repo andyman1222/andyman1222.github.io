@@ -224,7 +224,7 @@ function init() {
 	_mainCamera._transform.pos = vec3(0, 50, -50)
 
 	_mainCamera._attachSelfToParent(cameraBall, { pos: "keepWorld", rot: "relative", scl: "relative" })
-	var c = _getCylinder(vec3(0,1,0),vec3(3,1,3),20)
+	var c = _getCylinder(vec3(0,1,0),vec3((boardSize/16)*.8,1,(boardSize/16)*.8),20)
 	var s = _getRect(vec3(0,0,0),[boardSize / 16, 1, boardSize / 16])
 	for (var x = 0; x < 8; x++) {
 		boardPieces.push([])
