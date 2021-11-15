@@ -245,6 +245,7 @@ class _ScreenBuffer {
 		//gl.generateMipmap(gl.TEXTURE_2D);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+		gl.bindTexture(gl.TEXTURE_2D, null);
 
 		this._depthStencilImage = this._gTarget.createTexture();
 		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
@@ -255,6 +256,7 @@ class _ScreenBuffer {
 		//gl.generateMipmap(gl.TEXTURE_2D);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+		gl.bindTexture(gl.TEXTURE_2D, null);
 
 		this._outBuffer = this._gTarget.createFramebuffer();
 		this._outBuffer.width = this._gTarget.canvas.clientWidth;
@@ -508,7 +510,7 @@ class _ScreenBuffer {
 		this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-		
+
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
 		
