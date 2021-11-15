@@ -59,7 +59,7 @@ class _ScreenBuffer {
 	_clearColor;
 
 	_outImage;
-	_postImageLoc;
+	_postImageLoc = [];
 	_postPosIn;
 	_postPosBuf;
 	_framebuffer;
