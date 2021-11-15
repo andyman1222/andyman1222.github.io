@@ -19,6 +19,7 @@ flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 
 void main(void){
-    vec4 t = texture(depthMap, texCoords);
-    fColor = vec4(t.rgb, 1);
+    vec4 t = texture(baseImage, texCoords);
+    //fColor = vec4(t.rgb, 1);
+    fColor = t;
 }
