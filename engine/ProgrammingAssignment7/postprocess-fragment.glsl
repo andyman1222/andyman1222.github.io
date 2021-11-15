@@ -1,0 +1,39 @@
+#version 300 es
+
+precision highp float;
+
+uniform sampler2D scene;
+uniform sampler2D depth; 
+uniform sampler2D normal;
+uniform sampler2D position;
+uniform sampler2D color;
+uniform sampler2D diffuse;
+uniform sampler2D specular;
+uniform sampler2D emissive;
+
+//uniform sampler2D cameraAngle;
+
+in vec2 texCoords;
+out vec4 fColor;
+
+const int samples = 4;
+const float minDepth = -10.;
+const float scale = 10.;
+
+void main(void){
+    vec4 results;
+    vec4 t = texture(scene, texCoords);
+    vec4 d = texture(depth, texCoords);
+    //fColor = vec4(t.rgb, 1);
+    if(length(d) > -10)
+        fColor = t;
+    else {
+        for(float x = 0.; x < (length(d)+minDepth)/scale; x++){
+            for(int y = 0; y < samples; y++){
+                vec2 tx = vec2(cos((y/samples)*2.*3.14)*(x+1.), sin((y/samples)*2.*3.14)*(x+1.));
+                results = results + texture(scene, tx);
+            }
+        }
+        fColor = results / (((length(d)+minDepth)/scale)*samples);
+    }
+}
