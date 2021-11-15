@@ -18,7 +18,7 @@ in vec3 normalW;
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 
-layout out vec4 fColor;
+out vec4 fColor;
 
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 struct light
