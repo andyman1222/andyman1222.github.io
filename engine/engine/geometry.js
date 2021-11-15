@@ -89,7 +89,7 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 		var f1 = facePoints[(i + 1) % facePoints.length][0]
 		var f2 = facePoints[(i + 1) % facePoints.length][1]
 		if (i == 0) {
-			i1 = r.push(add(rotateAbout(mult(radiusHeight, vec3(facePoints[i][0], 1, facePoints[i][1]), rot), pos)))-1;
+			i1 = r.push(add(rotateAbout(mult(radiusHeight, vec3(facePoints[i][0], 1, facePoints[i][1])), rot), pos))-1;
 			i2 = r.push(add(rotateAbout(mult(radiusHeight, vec3(facePoints[i][0], -1, facePoints[i][1])), rot), pos))-1;
 			i3 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, 1, f2)), rot), pos))-1;
 			i4 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, -1, f2)), rot), pos))-1;
