@@ -408,14 +408,14 @@ class _ScreenBuffer {
 		//("Rendering")
 		//load new buffer data
 		this._gTarget.useProgram(this._program)
-		this._Target.viewport(0, 0, _canvas.width, _canvas.height);
-		this._Target.enable(this._Target.DEPTH_TEST);
-		this._Target.enable(this._Target.CULL_FACE);
-		this._Target.colorMask(true, true, true, true);
-		this._Target.enable(this._Target.BLEND)
-		this._Target.blendFunc(this._Target.SRC_ALPHA, this._Target.ONE_MINUS_SRC_ALPHA);
-		this._Target.frontFace(this._Target.CW);
-		
+		this._gTarget.viewport(0, 0, _canvas.width, _canvas.height);
+		this._gTarget.enable(this._gTarget.DEPTH_TEST);
+		this._gTarget.enable(this._gTarget.CULL_FACE);
+		this._gTarget.colorMask(true, true, true, true);
+		this._gTarget.enable(this._gTarget.BLEND)
+		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
+		this._gTarget.frontFace(this._gTarget.CW);
+
 		if (!this._setup) this._init();
 		
 		this._customBeginRenderFunction(this._gTarget, this._program)
