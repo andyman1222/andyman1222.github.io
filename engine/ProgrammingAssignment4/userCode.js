@@ -4,6 +4,18 @@ var coords;
 var test;
 var pointerLocked = false;
 
+var keys = []
+var mouseMove = false
+var mouseInRect = false
+var mouseReleased = true
+
+var xSpeed = 0, ySpeed = 0
+var maxSpeed = 1
+
+var cameraBall
+var cameraTime = 1000, cameraTargetPos = vec3(0, 50, -50), cameraTargetRot = eulerToQuat(vec3(1, 1, 0), 0), currentCameraTime = 0, prevCameraPos = null, prevCameraRot = null
+
+
 function userMouseEvent(e) {
 	switch (e.type) {
 		case "mousemove":
@@ -14,13 +26,13 @@ function userMouseEvent(e) {
 				ySpeed = e.movementY * maxSpeed
 				cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
 				cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(right(cameraBall._transform.rot), ySpeed))
-				canvas.requestPointerLock();
+				_canvas.requestPointerLock();
 				pointerLocked = true;
 			}
 			break;
 		case "mousedown":
 			if (e.button == 0) {
-				var pos = _getMousePos(e, canvas)
+				var pos = _getMousePos(e, _canvas)
 				if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 					mouseReleased = false
 					mouseInRect = true
@@ -35,7 +47,7 @@ function userMouseEvent(e) {
 				pointerLocked = false;
 				if (!mouseMove) {
 		
-					var pos = _getMousePos(e, canvas)
+					var pos = _getMousePos(e, _canvas)
 					if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
 						_mainCamera._clearDebug()
@@ -88,22 +100,11 @@ function userKeyEvent(e) {
 	}
 }
 
-var keys = []
-var mouseMove = false
-var mouseInRect = false
-var mouseReleased = true
-
-var xSpeed = 0, ySpeed = 0
-var maxSpeed = 1
-
-var cameraBall
 /**
  * user defined, overridable
- * HOWEVER: queueNewTick(tick) MUST BE CALLED or else game will not tick!
  * @param {*} prevTime 
  */
 
-var cameraTime = 1000, cameraTargetPos = vec3(0, 50, -50), cameraTargetRot = eulerToQuat(vec3(1, 1, 0), 0), currentCameraTime = 0, prevCameraPos = null, prevCameraRot = null
 
 function userTick(delta, time) {
 
@@ -253,6 +254,6 @@ function init() {
 }
 
 window.onload = function () {
-	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
+	this._engineInit("gl-_canvas", init, userTick, userKeyEvent, userMouseEvent)
 }
 
