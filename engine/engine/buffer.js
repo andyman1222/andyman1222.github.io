@@ -286,7 +286,10 @@ class _ScreenBuffer {
 				this._depthBuffer);
 	
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+			for(var i = 0; i < this._texCount; i++){
+				this._gl.activeTexture(this._gl.TEXTURE0 + x);
+				this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+			}
 			this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, null);
 	
 			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
@@ -416,7 +419,11 @@ class _ScreenBuffer {
 
 			this._customBeginRenderFunction(this._gTarget, this._program)
 			this._updateLights();
-			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+
+			for(var i = 0; i < this._texCount; i++){
+				this._gl.activeTexture(this._gl.TEXTURE0 + x);
+				this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+			}
 
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
 			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
