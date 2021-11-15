@@ -57,7 +57,7 @@ function _tick(prevTime) {
 	_queueNewTick(_tick);
 }
 
-function _setDefaultGraphics(vertexPath, fragmentPath){
+function _setDefaultGraphics(vertexPath, fragmentPath, postVertexPath, postFragmentPath){
 	//  Configure WebGL
 	_gl.viewport(0, 0, _canvas.width, _canvas.height);
 	_gl.enable(_gl.DEPTH_TEST);
