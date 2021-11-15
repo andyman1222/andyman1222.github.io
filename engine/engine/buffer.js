@@ -415,6 +415,7 @@ class _ScreenBuffer {
 		this._gTarget.enable(this._gTarget.BLEND)
 		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
 		this._gTarget.frontFace(this._gTarget.CW);
+		this._gTarget.depthFunc(this._gTarget.GEQUAL)
 
 		if (!this._setup) this._init();
 		
