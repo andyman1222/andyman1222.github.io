@@ -280,7 +280,7 @@ void main(void){
 	//vec2 txc = texCoord;
 	switch(matIndex){
 		case -3:
-		fColor = vec4(fDepth, fDepth, fDepth, 1);
+		fColor = fDepth;
 		break;
 		case -2: //debug- draw texcoord
 		fColor = vec4(txc, 0., 1.);
