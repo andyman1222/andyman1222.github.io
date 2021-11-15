@@ -20,5 +20,5 @@ in vec4 matProp[MAT_PROP_COUNT];
 
 void main(void){
     vec4 t = texture(baseImage, texCoords);
-    fColor = vec3(texCoords, 0);
+    fColor = vec4(texCoords, 0, 1);
 }
