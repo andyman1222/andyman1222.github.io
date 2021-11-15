@@ -906,7 +906,7 @@ class _Object extends _Primitive {
 					buf._renderData();
 			}
 		}
-		if (camera._showBounds && !o._isEngine) {
+		if (camera._showBounds && !this._isEngine) {
 			if (camera._render)
 				buf._renderData();
 			buf._types.push(buf._gTarget.LINE_LOOP);
