@@ -242,10 +242,10 @@ class _ScreenBuffer {
 		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
 			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
 		// Mipmapping seems to cause problems in at least some cases
-		//gl.generateMipmap(gl.TEXTURE_2D);
+		//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
-		gl.bindTexture(gl.TEXTURE_2D, null);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
 		this._depthStencilImage = this._gTarget.createTexture();
 		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
@@ -253,10 +253,10 @@ class _ScreenBuffer {
 		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
 			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
 		// Mipmapping seems to cause problems in at least some cases
-		//gl.generateMipmap(gl.TEXTURE_2D);
+		//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
-		gl.bindTexture(gl.TEXTURE_2D, null);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
 		this._outBuffer = this._gTarget.createFramebuffer();
 		this._outBuffer.width = this._gTarget.canvas.clientWidth;
