@@ -470,11 +470,14 @@ function mult(u, v) {
 
     return result;
   }
+  if (u.type == 'vec2' && v.type == 'vec2') {
+    return vec3(u[0] * v[0], u[1] * v[1]);
+  }
   if (u.type == 'vec3' && v.type == 'vec3') {
-    return vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]);;
+    return vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]);
   }
   if (u.type == 'vec4' && v.type == 'vec4') {
-    return vec4(u[0] * v[0], u[1] * v[1], u[2] * v[2], u[3] * v[3]);;
+    return vec4(u[0] * v[0], u[1] * v[1], u[2] * v[2], u[3] * v[3]);
   }
   throw "mult(): trying to mult incompatible types " + u + " and " + v;
 }
