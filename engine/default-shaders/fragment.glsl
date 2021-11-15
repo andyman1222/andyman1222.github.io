@@ -259,10 +259,9 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 	vec4 spe = mat.specular*mp[2];
 	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)+mp[4]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*mp[0].a);
-	fAmbient = mp[3];
 	fSpecular = mp[2];
 	fDiffuse = mp[1];
-	fColor = mp[0];
+	fColor = mp[0]*mp[3];
 	fEmissive = mp[4];
 	fDepth = gl_FragCoord;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
@@ -285,10 +284,9 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 	vec4 spe = mat.specular*txSpec;
 	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+txEmissive).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
-	fAmbient = mp[3]*txDiff;
 	fSpecular = txSpec;
 	fDiffuse = mp[1];
-	fColor = txBase;
+	fColor = txBase*mp[3]*txDiff;
 	fEmissive = txEmissive;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
@@ -301,9 +299,8 @@ void main(void){
 	switch(matIndex){
 		case -3: //debug- draw depth
 		fScene = fDepth;
-		fColor = matProp[0];
+		fColor = matProp[0]*matProp[3];
 		fNormal = vec4(normalT, 1);
-		fAmbient = matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
@@ -312,8 +309,7 @@ void main(void){
 		case -2: //debug- draw texcoord
 		fScene = vec4(txc, 0., 1.);
 		fNormal = vec4(normalT, 1);
-		fColor = matProp[0];
-		fAmbient = matProp[3];
+		fColor = matProp[0]*matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
@@ -346,8 +342,7 @@ void main(void){
 
 		case 5: //unlit texture, no parallax
 		fScene = texture(baseImage, txc) * matProp[0];
-		fColor = texture(baseImage, txc) * matProp[0];
-		fAmbient = matProp[3];
+		fColor = texture(baseImage, txc) * matProp[0]*matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
@@ -360,8 +355,7 @@ void main(void){
 		case 0: default: //solid color no lighting
 		fScene=matProp[0];
 		fNormal = vec4(normalT, 1);
-		fColor = matProp[0];
-		fAmbient = matProp[3];
+		fColor = matProp[0]*matProp[3];
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
