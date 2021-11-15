@@ -69,19 +69,18 @@ function _getSphere(pos, radius, numFaces, numLayers, rot=eulerToQuat(vec3(0,1,0
 	return{points: r, index: p, texCoords: tx, normals: norm, tangents: t}
 }
 
-function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 0), normFunction = normalize) {
+function _getCylinder(pos, radiusHalfHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 0), normFunction = normalize) {
 	var facePoints = []
 	for (var i = 0; i < numFaces; i++) {
 		var tmp = ((i / numFaces) * 360)
-		facePoints.push(vec2(Math.sin(radians(tmp))*radiusHeight[0], Math.cos(radians(tmp))*radiusHeight[2]))
+		facePoints.push(vec2(Math.sin(radians(tmp))*radiusHalfHeight[0], Math.cos(radians(tmp))*radiusHalfHeight[2]))
 	}
-	radiusHeight[1] = radiusHeight[1]/2
-	var tmp = vec2(radiusHeight[0], radiusHeight[2])
+	var tmp = vec2(radiusHalfHeight[0], radiusHalfHeight[2])
 	var r = []
 	var ind = []
 	var tx = []
-	var m = r.push(subtract(pos, rotateAbout(vec3(0, radiusHeight[1], 0), rot)))-1//always texcoord (0,0)
-	var t = r.push(add(pos, rotateAbout(vec3(0, radiusHeight[1], 0), rot)))-1//always texcoord (0,0)
+	var m = r.push(subtract(pos, rotateAbout(vec3(0, radiusHalfHeight[1], 0), rot)))-1//always texcoord (0,0)
+	var t = r.push(add(pos, rotateAbout(vec3(0, radiusHalfHeight[1], 0), rot)))-1//always texcoord (0,0)
 	var i1, i2, i3, i4
 	var oi1, oi2
 	
@@ -89,10 +88,10 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 		var f1 = facePoints[(i + 1) % facePoints.length][0]
 		var f2 = facePoints[(i + 1) % facePoints.length][1]
 		if (i == 0) {
-			i1 = r.push(add(rotateAbout(mult(radiusHeight, vec3(facePoints[i][0], 1, facePoints[i][1])), rot), pos))-1;
-			i2 = r.push(add(rotateAbout(mult(radiusHeight, vec3(facePoints[i][0], -1, facePoints[i][1])), rot), pos))-1;
-			i3 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, 1, f2)), rot), pos))-1;
-			i4 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, -1, f2)), rot), pos))-1;
+			i1 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(facePoints[i][0], 1, facePoints[i][1])), rot), pos))-1;
+			i2 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(facePoints[i][0], -1, facePoints[i][1])), rot), pos))-1;
+			i3 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(f1, 1, f2)), rot), pos))-1;
+			i4 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(f1, -1, f2)), rot), pos))-1;
 			oi1 = i1
 			oi2 = i2
 		}
@@ -103,8 +102,8 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 				i3 = oi1
 				i4 = oi2
 			} else {
-				i3 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, 1, f2)), rot), pos))-1;
-				i4 = r.push(add(rotateAbout(mult(radiusHeight, vec3(f1, -1, f2)), rot), pos))-1;
+				i3 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(f1, 1, f2)), rot), pos))-1;
+				i4 = r.push(add(rotateAbout(mult(radiusHalfHeight, vec3(f1, -1, f2)), rot), pos))-1;
 			}
 
 		}
@@ -117,8 +116,8 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 		var d2 = Math.sin(radians((((i+1)%facePoints.length)/facePoints.length)*360))
 		
 
-		tx.push(vec2(d, radiusHeight[1]), vec2(d, -radiusHeight[1]), vec2(d2, radiusHeight[1]),
-			vec2(d2, -radiusHeight[1]), vec2(d2, radiusHeight[1]), vec2(d, -radiusHeight[1]),
+		tx.push(vec2(d, radiusHalfHeight[1]), vec2(d, -radiusHalfHeight[1]), vec2(d2, radiusHalfHeight[1]),
+			vec2(d2, -radiusHalfHeight[1]), vec2(d2, radiusHalfHeight[1]), vec2(d, -radiusHalfHeight[1]),
 			mult(tmp, facePoints[i]), vec2(0, 0), mult(tmp, facePoints[(i + 1) % facePoints.length]),
 			mult(tmp, facePoints[(i + 1) % facePoints.length]), vec2(0, 0), mult(tmp, facePoints[i]))
 	}
