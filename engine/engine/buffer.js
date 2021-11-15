@@ -59,10 +59,14 @@ class _ScreenBuffer {
 	_clearColor;
 
 	_outImage;
+	_depthImage;
+	_stencilImage;
 	_postImageLoc = [];
 	_postPosIn;
 	_postPosBuf;
-	_framebuffer;
+	_colorbuffer;
+	_depthbuffer;
+	_stencilbuffer;
 	_renderbuffer;
 
 	_setupInfo = {
@@ -246,10 +250,40 @@ class _ScreenBuffer {
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
 
-		this._framebuffer = this._gTarget.createFramebuffer();
-		this._framebuffer.width = this._gTarget.canvas.clientWidth;
-		this._framebuffer.height = this._gTarget.canvas.clientHeight;
-		this._framebuffer.texture = this._outImage
+		this._depthImage = this._gTarget.createTexture();
+		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._depthImage);
+		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
+			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
+		// Mipmapping seems to cause problems in at least some cases
+		//gl.generateMipmap(gl.TEXTURE_2D);
+		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
+		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+
+		this._stencilImage = this._gTarget.createTexture();
+		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._stencilImage);
+		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
+			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
+		// Mipmapping seems to cause problems in at least some cases
+		//gl.generateMipmap(gl.TEXTURE_2D);
+		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
+		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+
+		this._colorbuffer = this._gTarget.createFramebuffer();
+		this._colorbuffer.width = this._gTarget.canvas.clientWidth;
+		this._colorbuffer.height = this._gTarget.canvas.clientHeight;
+		this._colorbuffer.texture = this._outImage
+
+		this._depthbuffer = this._gTarget.createFramebuffer();
+		this._depthbuffer.width = this._gTarget.canvas.clientWidth;
+		this._depthbuffer.height = this._gTarget.canvas.clientHeight;
+		this._depthbuffer.texture = this._depthImage
+
+		this._stencilbuffer = this._gTarget.createFramebuffer();
+		this._stencilbuffer.width = this._gTarget.canvas.clientWidth;
+		this._stencilbuffer.height = this._gTarget.canvas.clientHeight;
+		this._stencilbuffer.texture = this._stencilImage
 
 		if (this._setupInfo.coordStr != null) {
 			this._postPosBuf = this._gTarget.createBuffer();
@@ -273,15 +307,20 @@ class _ScreenBuffer {
 		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._renderbuffer);
 		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
 
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._colorbuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
 			this._outImage, 0);
+
 		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
 			this._renderbuffer);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, null);
+
+		for(var i = 0; i < this._setupInfo.texCount; i++){
+			this._gTarget.uniform1i(this._postImageLoc[i], i);
+		}
 
 		this._setup = true
 	}
@@ -391,10 +430,20 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._program)
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._colorbuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
 			this._gTarget.TEXTURE_2D,this._outImage, 0);
+
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._depthbuffer);
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.TEXTURE_2D,
+			this._depthImage, 0);
+
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._stencilbuffer);
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.STENCIL_ATTACHMENT, this._gTarget.TEXTURE_2D,
+			this._stencilImage, 0);
+		
 		//this._gTarget.useProgram(this._program);
 		this._gTarget.clearColor(0, 0, 0, 0)
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
@@ -481,11 +530,19 @@ class _ScreenBuffer {
 	_applyPostProcessToScene() {
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 		this._gTarget.useProgram(this._postProcessProgram)
+		
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
+
+		this._gTarget.activeTexture(this._gTarget.TEXTURE1);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._stencilImage);
+		
+		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._depthImage);
+		
+		
 		this._gTarget.clearColor(this._clearColor[0], this._clearColor[1], this._clearColor[2], this._clearColor[3])
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
-		this._gTarget.uniform1i(this._postImageLoc[0], 0);
 		if (this._postPosBuf != null) {
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._postPosBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1,
@@ -496,7 +553,7 @@ class _ScreenBuffer {
 			-1, -1]), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribPointer(this._postPosIn, 2, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._postPosIn);
-		}
+		} else throw "Missing required shader input for vertex location"
 		this._gTarget.drawArrays(this._gTarget.TRIANGLES, 0, 6)
 	}
 }
