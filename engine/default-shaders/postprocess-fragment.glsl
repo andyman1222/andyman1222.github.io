@@ -20,6 +20,6 @@ in vec4 matProp[MAT_PROP_COUNT];
 
 void main(void){
     vec4 t = texture(baseImage, texCoords);
-    fColor = vec4(t.rgb, 1);
-    //fColor = t;
+    //fColor = vec4(t.rgb, 1);
+    fColor = t;
 }
