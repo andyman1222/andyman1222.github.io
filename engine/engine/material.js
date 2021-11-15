@@ -87,7 +87,7 @@ class _ComplexTexture {
     _generateMip;
     _id = null;
 
-    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null, defaultColors=[vec4(255,255,255,255),vec4(0,255,0,255),vec4(255,255,255,255),vec4(255,255,255,255),vec4(0,0,0,255),vec4(0,0,0,255)], lightMasks = 0x1, cameraMasks = 0x1, bufferMasks = 0x1) {
+    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null, defaultColors=[vec4(255,255,255,255),vec4(0,0,255,255),vec4(255,255,255,255),vec4(255,255,255,255),vec4(0,0,0,255),vec4(0,0,0,255)], lightMasks = 0x1, cameraMasks = 0x1, bufferMasks = 0x1) {
         
         this._urls = urls
         this._defaultColors = defaultColors
