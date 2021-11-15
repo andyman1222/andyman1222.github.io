@@ -287,8 +287,8 @@ class _ScreenBuffer {
 	
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 			for(var i = 0; i < this._texCount; i++){
-				this._gl.activeTexture(this._gl.TEXTURE0 + x);
-				this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+				this._gTarget.activeTexture(this._gTarget.TEXTURE0 + x);
+				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 			}
 			this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, null);
 	
@@ -421,8 +421,8 @@ class _ScreenBuffer {
 			this._updateLights();
 
 			for(var i = 0; i < this._texCount; i++){
-				this._gl.activeTexture(this._gl.TEXTURE0 + x);
-				this._gl.bindTexture(this._gl.TEXTURE_2D, null);
+				this._gTarget.activeTexture(this._gTarget.TEXTURE0 + x);
+				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 			}
 
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
