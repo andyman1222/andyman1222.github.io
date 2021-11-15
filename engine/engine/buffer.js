@@ -108,6 +108,7 @@ class _ScreenBuffer {
 	}
 
 	_init() {
+		this._gTarget.useProgram(this._program)
 		if (this._setupInfo.coordStr != null) {
 			this._posBuffer = this._gTarget.createBuffer();
 			this._inPos = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
@@ -385,8 +386,9 @@ class _ScreenBuffer {
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
-		this._gTarget.useProgram(this._program)
+		
 		if (!this._setup) this._init();
+		this._gTarget.useProgram(this._program)
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
