@@ -115,7 +115,6 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 
 		var d = Math.sin(radians((i/facePoints.length)*360))
 		var d2 = Math.sin(radians((((i+1)%facePoints.length)/facePoints.length)*360))
-		var x = length(subtract(i3, i1))
 		
 
 		tx.push(vec2(d, radiusHeight[1]), vec2(d, -radiusHeight[1]), vec2(d2, radiusHeight[1]),
