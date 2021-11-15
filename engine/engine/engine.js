@@ -82,7 +82,7 @@ function _setDefaultGraphics(vertexPath, fragmentPath, postVertexPath, postFragm
 	[new _SolidColorNoLighting(vec4(1,0,0,1)), new _SolidColorNoLighting(vec4(0,1,0,1)), new _SolidColorNoLighting(vec4(0,0,1,1))], _Bounds._RECT, [], true)
 }
 
-function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
+function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, postVertex, postFragment) {
 	_canvas = document.getElementById(defaultCanvas);
 	_canvas.addEventListener("webglcontextlost", function(event) {
 		event.preventDefault();
@@ -99,7 +99,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 	_gl = _canvas.getContext('webgl2');
 	if (!_gl) { alert("WebGL 2.0 isn't available"); }
 
-	_setDefaultGraphics(vertexPath, fragmentPath);
+	_setDefaultGraphics(vertexPath, fragmentPath, postVertex, postFragment);
 }
 
 function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl",
@@ -109,7 +109,7 @@ defaultPostVertex="https://andyman1222.github.io/engine/default-shaders/vertex.g
 	_userKeyFunction = userKey;
 	_userMouseFunction = userMouse;
 	_userPostTickFunction = userPostTick;
-	_initDefaultGraphics(defaultCanvas, defaultVertex, defaultFragment);
+	_initDefaultGraphics(defaultCanvas, defaultVertex, defaultFragment, defaultPostVertex, defaultPostFragment);
 	_userInitFunction();
 	_queueNewTick(_tick);
 	_render();
