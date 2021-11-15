@@ -16,6 +16,17 @@ var cameraBall
 var cameraTime = 1000, cameraTargetPos = vec3(0, 50, -50), cameraTargetRot = eulerToQuat(vec3(1, 1, 0), 0), currentCameraTime = 0, prevCameraPos = null, prevCameraRot = null
 
 
+var boardPieces = [], boardState = [], checkersPieces = [], removedCheckersPieces = [[], []], origBoardColors = []
+var boardSize = 64
+
+var prevPos = 0
+var rClick = 0
+
+var side = "red"
+var state = "move"
+
+var selectedPiece = null
+
 function userMouseEvent(e) {
 	switch (e.type) {
 		case "mousemove":
@@ -156,16 +167,6 @@ function userTick(delta, time) {
 	}
 }
 
-var boardPieces = [], boardState = [], checkersPieces = [], removedCheckersPieces = [[], []], origBoardColors = []
-var boardSize = 64
-
-var prevPos = 0
-var rClick = 0
-
-var side = "red"
-var state = "move"
-
-var selectedPiece = null
 
 function switchSide() {
 	side = side == "blue" ? "red" : "blue"
@@ -224,7 +225,7 @@ function init() {
 	_mainCamera._transform.pos = vec3(0, 50, -50)
 
 	_mainCamera._attachSelfToParent(cameraBall, { pos: "keepWorld", rot: "relative", scl: "relative" })
-	var c = _getCylinder(vec3(0,1,0),vec3((boardSize/16)*.8,1,(boardSize/16)*.8),20)
+	var c = _getCylinder(vec3(0,2,0),vec3((boardSize/16)*.5,1,(boardSize/16)*.5),20)
 	var s = _getRect(vec3(0,0,0),[boardSize / 16, 1, boardSize / 16])
 	for (var x = 0; x < 8; x++) {
 		boardPieces.push([])
