@@ -171,7 +171,7 @@ var rClick = 0
 function init() {
 	altCamera = new _Camera(_bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera._enabled = false
-	_mainCamera._transform.pos = vec3(0, 5, 0)
+	_mainCamera._transform.pos = vec3(0, 1, 0)
 	new _AmbientLight(vec4(1, 0, 0, 1), null)
 	directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(0, 0, 1, 1), null)
 	var playerLight = new _PointLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(0, 1, 0, 1), null, 10)

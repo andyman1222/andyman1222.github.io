@@ -81,7 +81,7 @@ function _getCylinder(pos, radiusHeight, numFaces, rot=eulerToQuat(vec3(0,1,0), 
 	var ind = []
 	var tx = []
 	var m = r.push(subtract(pos, rotateAbout(vec3(0, radiusHeight[1], 0), rot)))-1//always texcoord (0,0)
-	var t = r.push(add(pos, rotateAbout(vec3(0, -radiusHeight[1], 0), rot)))-1//always texcoord (0,0)
+	var t = r.push(add(pos, rotateAbout(vec3(0, radiusHeight[1], 0), rot)))-1//always texcoord (0,0)
 	var i1, i2, i3, i4
 	var oi1, oi2
 	
