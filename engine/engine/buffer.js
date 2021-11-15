@@ -413,7 +413,7 @@ class _ScreenBuffer {
 		this._updateLights();
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
-		//this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
+		this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
