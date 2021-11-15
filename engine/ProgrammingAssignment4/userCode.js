@@ -12,8 +12,8 @@ function userMouseEvent(e) {
 	
 				xSpeed = e.movementX * maxSpeed
 				ySpeed = e.movementY * maxSpeed
-				cameraBall.transform.rot = addRotation(cameraBall.transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-				cameraBall.transform.rot = addRotation(cameraBall.transform.rot, eulerToQuat(right(cameraBall.transform.rot), ySpeed))
+				cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
+				cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(right(cameraBall._transform.rot), ySpeed))
 				canvas.requestPointerLock();
 				pointerLocked = true;
 			}
@@ -117,22 +117,22 @@ function userTick(delta, time) {
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if ((i == 87) || (i == 119))//w
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(1, forward(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(1, forward(_mainCamera._transform.rot)))
 
 			if ((i == 65) || (i == 97))//a
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(-1, right(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(-1, right(_mainCamera._transform.rot)))
 
 			if ((i == 83) || (i == 115))//s
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(-1, forward(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(-1, forward(_mainCamera._transform.rot)))
 
 			if ((i == 68) || (i == 100))//d
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(1, right(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(1, right(_mainCamera._transform.rot)))
 
 			if ((i == 81))//q
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(-1, up(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(-1, up(_mainCamera._transform.rot)))
 
 			if ((i == 69))//e
-				_mainCamera.transform.pos = add(_mainCamera.transform.pos, mult(1, up(_mainCamera.transform.rot)))
+				_mainCamera._transform.pos = add(_mainCamera._transform.pos, mult(1, up(_mainCamera._transform.rot)))
 
 			if (i == 27) {//escape
 				document.exitPointerLock();
@@ -143,8 +143,8 @@ function userTick(delta, time) {
 		}
 
 	if(!pointerLocked){
-		cameraBall.transform.rot = addRotation(cameraBall.transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-		cameraBall.transform.rot = addRotation(cameraBall.transform.rot, eulerToQuat(right(cameraBall.transform.rot), ySpeed))
+		cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
+		cameraBall._transform.rot = addRotation(cameraBall._transform.rot, eulerToQuat(right(cameraBall._transform.rot), ySpeed))
 		if(Math.abs(xSpeed) > .1)
 			xSpeed -= Math.sign(xSpeed)*delta*(maxSpeed*.001)
 		else xSpeed = 0
@@ -175,7 +175,7 @@ function switchSide() {
 
 class checkerPiece {
 	constructor(startSquare, color, side, moveTime, cylinder) {
-		this.model = new _Object({ pos: boardPieces[startSquare[0]][startSquare[1]].transform.pos, rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) },
+		this.model = new _Object({ pos: boardPieces[startSquare[0]][startSquare[1]]._transform.pos, rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) },
 			[_DrawInfo(cylinder.index, [0], cylinder.texCoords, cylinder.normals, cylinder.tangents)], cylinder.points, [new _BasicMaterial(color)], _Bounds._SPHERE)
 		this.square = startSquare
 		this.isKing = false
@@ -187,7 +187,7 @@ class checkerPiece {
 
 	setTargetPos(pos) {
 		this.targetPos = pos;
-		this.prevPos = this.model.transform.pos;
+		this.prevPos = this.model._transform.pos;
 		this.currentTime = 0;
 
 	}
@@ -197,7 +197,7 @@ class checkerPiece {
 			this.currentTime = clamp((this.currentTime += delta), 0, this.moveTime);
 
 			//apply a curve in the y axis cuz why not
-			this.model.transform.pos = mix(this.prevPos, this.targetPos, this.currentTime / this.moveTime);
+			this.model._transform.pos = mix(this.prevPos, this.targetPos, this.currentTime / this.moveTime);
 		}
 		else {
 
@@ -220,7 +220,7 @@ function init() {
 	new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(1, 1, 1, 1), null)
 	cameraBall = new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 45), scl: vec3(1, 1, 1) }, [], [], [], _Bounds._SPHERE)
 
-	_mainCamera.transform.pos = vec3(0, 50, -50)
+	_mainCamera._transform.pos = vec3(0, 50, -50)
 
 	_mainCamera.attachSelfToParent(cameraBall, { pos: "keepWorld", rot: "relative", scl: "relative" })
 	var c = _getCylinder(vec3(0,1,0),vec3(3,1,3),20)
