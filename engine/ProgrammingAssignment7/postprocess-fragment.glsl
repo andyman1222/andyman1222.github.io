@@ -17,7 +17,7 @@ in vec2 texCoords;
 out vec4 fColor;
 
 const int samples = 4;
-const float minDepth = -10.;
+const float minDepth = .1;
 const float scale = 10.;
 
 void main(void){
@@ -25,7 +25,7 @@ void main(void){
     vec4 t = texture(scene, texCoords);
     vec4 d = texture(depth, texCoords);
     //fColor = vec4(t.rgb, 1);
-    if(d.b > 0.)
+    if(d.b > minDepth)
         fColor = d;
     else {
         fColor = vec4(1,0,0,1);
