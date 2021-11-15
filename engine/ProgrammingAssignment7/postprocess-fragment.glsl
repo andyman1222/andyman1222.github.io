@@ -28,13 +28,13 @@ void main(void){
     if(d.b > minDepth)
         fColor = d;
     else {
-        fColor = vec4(1,0,0,1);
-        /*for(float x = 0.; x < (d.b+minDepth)/float(scale); x++){
+        //fColor = vec4(1,0,0,1);
+        for(float x = 0.; x < (d.b+minDepth)/float(scale); x++){
             for(int y = 0; y < samples; y++){
                 vec2 tx = vec2(cos((float(y)/float(samples))*2.*3.14)*(x+1.), sin((float(y)/float(samples))*2.*3.14)*(float(x)+1.));
                 results = results + texture(scene, tx);
             }
         }
-        fColor = results / (((d.b+minDepth)/float(scale))*float(samples));*/
+        fColor = results / (((d.b+minDepth)/float(scale))*float(samples));
     }
 }
