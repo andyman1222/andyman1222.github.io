@@ -392,7 +392,7 @@ class _ScreenBuffer {
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
-			this._gTarget.TEXTURE_2D, _outImage, 0);
+			this._gTarget.TEXTURE_2D,this._outImage, 0);
 		//this._gTarget.useProgram(this._program);
 		this._gTarget.clearColor(0, 0, 0, 0)
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
@@ -479,7 +479,7 @@ class _ScreenBuffer {
 	_applyPostProcessToScene() {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, _outImage);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
 		this._gTarget.uniform1i(_postImageLoc[0], 0);
 		if (this._postPosBuf != null) {
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._postPosBuf);
