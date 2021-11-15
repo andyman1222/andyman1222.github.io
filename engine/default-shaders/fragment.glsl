@@ -346,7 +346,7 @@ void main(void){
 
 		case 2: //parallaxed texture
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
-		float d = 1.-texture(depthMap, txc).r
+		float d = 1.-texture(depthMap, txc).r;
 		fParallaxDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 		//break;
 
@@ -359,6 +359,7 @@ void main(void){
 
 		case 4: //unlit texture, parallax
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
+		float d = 1.-texture(depthMap, txc).r;
 		fParallaxDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 
 		case 5: //unlit texture, no parallax
