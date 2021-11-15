@@ -25,15 +25,16 @@ void main(void){
     vec4 t = texture(scene, texCoords);
     vec4 d = texture(depth, texCoords);
     //fColor = vec4(t.rgb, 1);
-    if(length(d) > -10.)
+    if(d.b > -10.)
         fColor = t;
     else {
-        for(float x = 0.; x < (length(d)+minDepth)/float(scale); x++){
+        fColor = vec4(1,0,0,1);
+        /*for(float x = 0.; x < (d.b+minDepth)/float(scale); x++){
             for(int y = 0; y < samples; y++){
                 vec2 tx = vec2(cos((float(y)/float(samples))*2.*3.14)*(x+1.), sin((float(y)/float(samples))*2.*3.14)*(float(x)+1.));
                 results = results + texture(scene, tx);
             }
         }
-        fColor = results / (((length(d)+minDepth)/float(scale))*float(samples));
+        fColor = results / (((d.b+minDepth)/float(scale))*float(samples));*/
     }
 }
