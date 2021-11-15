@@ -35,6 +35,7 @@ var _canvas;
 var _bData;
 var _mainCamera;
 var _program;
+var _postProcessProgram;
 
 
 ////DEFAULT GAME OBJECTS

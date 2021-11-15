@@ -5,6 +5,8 @@ function _render(time) {
 		_buffers[i]._beginRender();
 	for (var i = 0; i < _cameras.length; i++)
 		_cameras[i]._pushToBuffers();
+		for(var i = 0; i < _buffers.length; i++)
+		_buffers[i]._applyPostProcessToScene();
 
 		_requestId = requestAnimationFrame(_render);
 }
@@ -58,7 +60,6 @@ function _tick(prevTime) {
 function _setDefaultGraphics(vertexPath, fragmentPath){
 	//  Configure WebGL
 	_gl.viewport(0, 0, _canvas.width, _canvas.height);
-	_gl.clearColor(0.0, 0.0, 0.0, 1.0);
 	_gl.enable(_gl.DEPTH_TEST);
 	_gl.enable(_gl.CULL_FACE);
 	_gl.colorMask(true, true, true, true);
@@ -67,8 +68,9 @@ function _setDefaultGraphics(vertexPath, fragmentPath){
 	_gl.frontFace(_gl.CW);
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
+	_postProcessProgram = initShaders(_gl, postVertexPath, postFragmentPath);
 
-	_bData = new _Buffer(_gl, _program);
+	_bData = new _ScreenBuffer(_gl, _program, _postProcessProgram);
 
 	_mainCamera = new _Camera(_bData);
 	
@@ -100,7 +102,8 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath) {
 	_setDefaultGraphics(vertexPath, fragmentPath);
 }
 
-function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {
+function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, userPostTick = function(delta, time) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl",
+defaultPostVertex="https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultPostFragment="https://andyman1222.github.io/engine/default-shaders/fragment.glsl") {
 	_userInitFunction = userInit
 	_userTickFunction = userTick;
 	_userKeyFunction = userKey;
