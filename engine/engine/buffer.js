@@ -238,7 +238,7 @@ class _ScreenBuffer {
 
 		this._gTarget.useProgram(this._postProcessProgram)
 
-
+		this._gTarget.getExtension('WEBGL_depth_texture');
 
 		this._outImage = this._gTarget.createTexture();
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
