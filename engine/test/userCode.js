@@ -105,25 +105,21 @@ function userTick(delta, time) {
 				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
 				if ((i == 87) || (i == 119)) {//w
 					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 65) || (i == 97)) {//a
 					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 83) || (i == 115)) {//s
 					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 68) || (i == 100)) {//d
 					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 			}
