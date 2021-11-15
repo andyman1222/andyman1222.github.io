@@ -45,7 +45,8 @@ class _Camera extends _Primitive {
 		
 
 		return rotMat*/
-		return lookAt(this._transform.pos, add(this._transform.pos,forward(this._transform.rot)), up(this._transform.rot), true)
+		var tmp = this._getWorldTransform()
+		return lookAt(tmp.pos, add(tmp.pos,forward(tmp.rot)), up(tmp.rot), true)
 	}
 
 	/**
