@@ -479,6 +479,7 @@ class _ScreenBuffer {
 	}
 
 	_applyPostProcessToScene() {
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
