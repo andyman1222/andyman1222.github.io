@@ -26,7 +26,7 @@ void main(void){
     vec4 d = texture(depth, texCoords);
     //fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
-        fColor = d;
+        fColor = t;
     else {
         //fColor = vec4(1,0,0,1);
         for(float x = 0.; x < (d.b+minDepth)/float(scale); x++){
