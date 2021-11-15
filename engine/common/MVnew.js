@@ -471,7 +471,7 @@ function mult(u, v) {
     return result;
   }
   if (u.type == 'vec2' && v.type == 'vec2') {
-    return vec3(u[0] * v[0], u[1] * v[1]);
+    return vec2(u[0] * v[0], u[1] * v[1]);
   }
   if (u.type == 'vec3' && v.type == 'vec3') {
     return vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]);
