@@ -272,7 +272,7 @@ class _ScreenBuffer {
 		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._renderbuffer);
 		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
 
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, framebuffer);
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._framebuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
 			this._outImage, 0);
 		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
