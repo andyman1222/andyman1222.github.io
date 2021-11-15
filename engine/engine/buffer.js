@@ -506,7 +506,7 @@ class _ScreenBuffer {
 			}
 
 			//draw
-			gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
+			this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
 			var offset = 0;
 			for (var i = 0; i < this._types.length; i++) {
 				this._customRenderFunction(this._gTarget, this._program);
