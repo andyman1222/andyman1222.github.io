@@ -16,7 +16,7 @@ in vec3 normalW;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
-in vec4 positionS;
+//in vec4 positionS;
 
 layout(location=0) out vec4 fColor;
 layout(location=1) out vec4 fDepth;
@@ -308,5 +308,5 @@ void main(void){
 		fColor=matProp[0];
 		break;
 	}
-	fDepth = positionS;
+	fDepth = gl_FragCoord;
 }

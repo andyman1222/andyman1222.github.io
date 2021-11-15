@@ -33,7 +33,7 @@ out vec2 texCoord;
 //varying vec3 position;
 out vec3 positionT;
 out vec3 positionVT;
-out vec4 positionS;
+//out vec4 positionS;
 out vec3 cameraPosT;
 out vec3 cameraPosW;
 out vec3 normalT;
@@ -61,7 +61,7 @@ void main(void) {
     //normal = tsMatrix*N;
     positionT = TBN*(coordsW.xyz);
     positionVT = TBN * (viewMatrix * coordsW).xyz;
-    positionS = gl_Position;
+    //positionS = gl_Position;
     cameraPosT = TBN*inCameraPosW;
     cameraPosW=inCameraPosW;
     normalT = TBN*N;
