@@ -63,7 +63,7 @@ class _ScreenBuffer {
 	_postImageLoc = [];
 	_postIn = [];
 	_postPosBuf;
-	_outBuffers = [];
+	_outBuffer;
 	_depthBuffer;
 	_inSetup = false;
 
@@ -240,6 +240,7 @@ class _ScreenBuffer {
 		this._setupInfo.customSetupFunction(this._gTarget, this._program);
 
 		this._gTarget.useProgram(this._postProcessProgram)
+		this._outBuffer = this._gTarget.createFramebuffer();
 
 		if (this._setupInfo.postTexStr != null) {
 			this._postTexCount = this._setupInfo.postTexCount;
@@ -263,11 +264,6 @@ class _ScreenBuffer {
 					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.postTexStr[i]));
 					if (this._postImageLoc[i] == -1) alert(this._setupInfo.postTexStr[i] + ": unknown/invalid shader location");
 				}
-
-				this._outBuffers.push(this._gTarget.createFramebuffer());
-				this._outBuffers[i].width = this._gTarget.canvas.clientWidth;
-				this._outBuffers[i].height = this._gTarget.canvas.clientHeight;
-				this._outBuffers[i].texture = this._outImages[i]
 			}
 
 			if (this._setupInfo.coordStr != null) {
@@ -421,8 +417,6 @@ class _ScreenBuffer {
 			this._customBeginRenderFunction(this._gTarget, this._program)
 			this._updateLights();
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
-
-
 
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
 			for (var i = 0; i < this._setupInfo.postTexCount; i++) {

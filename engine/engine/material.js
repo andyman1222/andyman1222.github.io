@@ -134,7 +134,7 @@ class _ComplexTexture {
                 }.bind(this);
                 this._imgTexMap.set(this._images[a], this._texs[i])
                 this._imgChange.set(this._images[a], false)
-                this._images[a].src = this._urls[x];
+                if(this._urls[x] != null) this._images[a].src = this._urls[x];
             } else {
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
                     this._gl.RGBA, this._gl.UNSIGNED_BYTE, this._images[x]);
