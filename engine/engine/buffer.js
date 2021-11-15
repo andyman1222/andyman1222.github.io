@@ -409,6 +409,13 @@ class _ScreenBuffer {
 		
 		if (!this._setup) this._init();
 		this._gTarget.useProgram(this._program)
+		_gl.viewport(0, 0, _canvas.width, _canvas.height);
+		_gl.enable(_gl.DEPTH_TEST);
+		_gl.enable(_gl.CULL_FACE);
+		_gl.colorMask(true, true, true, true);
+		_gl.enable(_gl.BLEND)
+		_gl.blendFunc(_gl.SRC_ALPHA, _gl.ONE_MINUS_SRC_ALPHA);
+		_gl.frontFace(_gl.CW);
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);

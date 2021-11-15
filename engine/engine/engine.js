@@ -58,14 +58,6 @@ function _tick(prevTime) {
 }
 
 function _setDefaultGraphics(vertexPath, fragmentPath, postVertexPath, postFragmentPath){
-	//  Configure WebGL
-	_gl.viewport(0, 0, _canvas.width, _canvas.height);
-	_gl.enable(_gl.DEPTH_TEST);
-	_gl.enable(_gl.CULL_FACE);
-	_gl.colorMask(true, true, true, true);
-	_gl.enable(_gl.BLEND)
-	_gl.blendFunc(_gl.SRC_ALPHA, _gl.ONE_MINUS_SRC_ALPHA);
-	_gl.frontFace(_gl.CW);
 	//  Load shaders and initialize attribute buffers
 	_program = initShaders(_gl, vertexPath, fragmentPath);
 	_postProcessProgram = initShaders(_gl, postVertexPath, postFragmentPath);
