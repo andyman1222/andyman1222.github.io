@@ -17,7 +17,7 @@ in vec2 texCoords;
 out vec4 fColor;
 
 void main(void){
-    vec4 t = texture(depth, texCoords);
+    vec4 t = texture(diffuse, texCoords);
     //fColor = vec4(t.rgb, 1);
     fColor = t;
 }
