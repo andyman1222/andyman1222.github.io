@@ -67,7 +67,7 @@ class _ScaledTexMatNoLight extends _ScaledTexMat {
 
 /**
  * Representation of a texture with a base color, normal, displacement, AO (diffuse) and roughness (specular) images
- * Default _urls: [base color image, normal map, displacement map, AO/diffuse map, specular map]
+ * Default _urls: [base color image, normal map, displacement map, AO/diffuse map, specular map, emissive map]
  */
 class _ComplexTexture {
     _images = []
@@ -78,6 +78,7 @@ class _ComplexTexture {
     _lightMasks = []
     _cameraMasks = []
     _bufferMasks = []
+    _defaultColors = []
 
     _gl;
     _sw;
@@ -86,9 +87,10 @@ class _ComplexTexture {
     _generateMip;
     _id = null;
 
-    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null, lightMasks = 0x1, cameraMasks = 0x1, bufferMasks = 0x1) {
+    constructor(gl, urls, generateMip = true, sWrap = null, tWrap = null, filterMode = null, defaultColors=[vec4(255,255,255,255),vec4(0,255,0,255),vec4(255,255,255,255),vec4(255,255,255,255),vec4(0,0,0,255),vec4(0,0,0,255)], lightMasks = 0x1, cameraMasks = 0x1, bufferMasks = 0x1) {
         
         this._urls = urls
+        this._defaultColors = defaultColors
         this._sw = sWrap
         if (sWrap == null) this._sw = gl.REPEAT;
         this._tw = tWrap
@@ -122,7 +124,7 @@ class _ComplexTexture {
             if (this._images[x] == null || this._images[a].src == null) {
                 this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA,
                     1, 1, 0, this._gl.RGBA, this._gl.UNSIGNED_BYTE,
-                    new Uint8Array([255, 255, 255, 255]));
+                    new Uint8Array(this._defaultColors[x]));
                 if (this._images[x] == null) var a = this._images.push(new Image()) - 1
                 else var a = x
                 this._images[a].onload = function (e) {

@@ -7,9 +7,9 @@ uniform sampler2D depth;
 uniform sampler2D normal;
 uniform sampler2D position;
 uniform sampler2D color;
-uniform sampler2D ambient;
 uniform sampler2D diffuse;
 uniform sampler2D specular;
+uniform sampler2D emissive;
 
 //uniform sampler2D cameraAngle;
 

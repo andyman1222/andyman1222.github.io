@@ -90,7 +90,7 @@ class _ScreenBuffer {
 		coordStr = "inPointsL", matStr = "inMatProp", matParamCount = 7, matIndStr = "inMatIndex",
 		texStr = ["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap", "emissiveImage"],
 		texCount = 6, postTexStr =
-			["scene", "depth", "normal", "position", "color", "ambient", "diffuse", "specular"],
+			["scene", "depth", "normal", "position", "color", "diffuse", "specular", "emissive"],
 		postTexCount = 8, projMatrixStr = "projMatrix", viewMatrixStr = "viewMatrix", normalMatrixStr = "normalMatrix",
 		modelMatrixStr = "modelMatrix", lightsArrayStr = "lights", lightsIndexStr = "maxLightIndex",
 		normalStr = "inNormalL", tanStr = "inTangentL", biTanStr = null, texCoordStr = "inTexCoord",

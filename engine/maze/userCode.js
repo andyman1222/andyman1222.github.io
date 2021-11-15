@@ -194,9 +194,9 @@ var rClick = 0
 var mat = null;
 
 function init() {
-	txes = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg"]),
-	new _ComplexTexture(_gl, ["images/Brick_wall_008_COLOR.jpg", "images/Brick_wall_008_NORM.jpg", "images/Brick_wall_008_DISP.png", "images/Brick_wall_008_OCC.jpg", "images/Brick_wall_008_SPEC.jpg"]),
-	new _ComplexTexture(_gl, ["images/Wood_Floor_010_basecolor.jpg", "images/Wood_Floor_010_normal.jpg", "images/Wood_Floor_010_height.png", "images/Wood_Floor_010_ambientOcclusion.jpg", "images/Wood_Floor_010_roughness.jpg"])]
+	txes = [new _ComplexTexture(_gl, ["images/Brick_Wall_015_COLOR.jpg", "images/Brick_Wall_015_NORM.jpg", "images/Brick_Wall_015_DISP.png", "images/Brick_Wall_015_OCC.jpg", "images/Brick_Wall_015_ROUGH.jpg", null]),
+	new _ComplexTexture(_gl, ["images/Brick_wall_008_COLOR.jpg", "images/Brick_wall_008_NORM.jpg", "images/Brick_wall_008_DISP.png", "images/Brick_wall_008_OCC.jpg", "images/Brick_wall_008_SPEC.jpg", null]),
+	new _ComplexTexture(_gl, ["images/Wood_Floor_010_basecolor.jpg", "images/Wood_Floor_010_normal.jpg", "images/Wood_Floor_010_height.png", "images/Wood_Floor_010_ambientOcclusion.jpg", "images/Wood_Floor_010_roughness.jpg", null])]
 
 	mat = new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1, [vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(1, 1, 1, 1), vec4(0, 0, 0, 1), vec4(10, 8, 32, .001), vec4(1, 1, 0, 0)])
 	mat2 = new _ScaledTexMat(true, .1, .1, 0, 0, 8, 32, .1, [vec4(2, 1, 1, 1), vec4(1, 2, 2, 1), vec4(1, 2, 2, 1), vec4(1, 1, 1, 1), vec4(0, 0, 0, 1), vec4(10, 8, 32, .001), vec4(1, 1, 0, 0)])

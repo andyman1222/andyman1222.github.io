@@ -22,11 +22,10 @@ layout(location=0) out vec4 fScene; //final scene output with lights and colors 
 layout(location=1) out vec4 fDepth; //depth map
 layout(location=2) out vec4 fNormal; //surface normals
 layout(location=3) out vec4 fPosition; //fragment coordinates
-layout(location=4) out vec4 fColor; //surface color
-layout(location=5) out vec4 fAmbient; //surface ambient multiply
-layout(location=6) out vec4 fDiffuse; //surface diffuse multiply
-layout(location=7) out vec4 fSpecular; //surface specular multiply
-layout(location=8) out vec4 fEmissive; //surface emissive color
+layout(location=4) out vec4 fColor; //surface color * ambient multiply
+layout(location=5) out vec4 fDiffuse; //surface diffuse multiply
+layout(location=6) out vec4 fSpecular; //surface specular multiply
+layout(location=7) out vec4 fEmissive; //surface emissive color
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 struct light
 {
