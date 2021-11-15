@@ -480,7 +480,7 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
-		this._gTarget.uniform1i(_postImageLoc[0], 0);
+		this._gTarget.uniform1i(this._postImageLoc[0], 0);
 		if (this._postPosBuf != null) {
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._postPosBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1,
