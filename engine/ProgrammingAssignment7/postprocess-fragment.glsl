@@ -28,12 +28,12 @@ void main(void){
     if(length(d) > -10)
         fColor = t;
     else {
-        for(float x = 0.; x < (length(d)+minDepth)/scale; x++){
+        for(float x = 0.; x < (length(d)+minDepth)/float(scale); x++){
             for(int y = 0; y < samples; y++){
-                vec2 tx = vec2(cos((y/samples)*2.*3.14)*(x+1.), sin((y/samples)*2.*3.14)*(x+1.));
+                vec2 tx = vec2(cos((float(y)/float(samples))*2.*3.14)*(x+1.), sin((float(y)/float(samples))*2.*3.14)*(float(x)+1.));
                 results = results + texture(scene, tx);
             }
         }
-        fColor = results / (((length(d)+minDepth)/scale)*samples);
+        fColor = results / ((length(d)+minDepth)/float(scale)*samples);
     }
 }
