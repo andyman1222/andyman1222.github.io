@@ -516,7 +516,7 @@ class _ScreenBuffer {
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
-		for(var i = 0; i < this.postTexCount; i++){
+		for(var i = 0; i < this._postTexCount; i++){
 			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
 		}
