@@ -65,7 +65,7 @@ class _ScreenBuffer {
 	_postPosIn;
 	_postPosBuf;
 	_outBuffer;
-	_renderbuffer;
+	_depthBuffer;
 
 	_setupInfo = {
 		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, projMatrixStr: null,
@@ -281,19 +281,20 @@ class _ScreenBuffer {
 			}
 		}
 
-		this._renderbuffer = this._gTarget.createRenderbuffer();
-		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._renderbuffer);
-		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
-
+		this._depthBuffer = this._gTarget.createRenderbuffer();
+		
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
-		/*this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
 			this._outImage, 0);
 
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
-			this._depthStencilImage, 0);*/
+			this._depthStencilImage, 0);
 
+		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._depthBuffer);
+		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
+	
 		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
-			this._renderbuffer);
+			this._depthBuffer);
 
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
@@ -406,16 +407,17 @@ class _ScreenBuffer {
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
+		this._gTarget.useProgram(this._program)
+		this._Target.viewport(0, 0, _canvas.width, _canvas.height);
+		this._Target.enable(this._Target.DEPTH_TEST);
+		this._Target.enable(this._Target.CULL_FACE);
+		this._Target.colorMask(true, true, true, true);
+		this._Target.enable(this._Target.BLEND)
+		this._Target.blendFunc(this._Target.SRC_ALPHA, this._Target.ONE_MINUS_SRC_ALPHA);
+		this._Target.frontFace(this._Target.CW);
 		
 		if (!this._setup) this._init();
-		this._gTarget.useProgram(this._program)
-		_gl.viewport(0, 0, _canvas.width, _canvas.height);
-		_gl.enable(_gl.DEPTH_TEST);
-		_gl.enable(_gl.CULL_FACE);
-		_gl.colorMask(true, true, true, true);
-		_gl.enable(_gl.BLEND)
-		_gl.blendFunc(_gl.SRC_ALPHA, _gl.ONE_MINUS_SRC_ALPHA);
-		_gl.frontFace(_gl.CW);
+		
 		this._customBeginRenderFunction(this._gTarget, this._program)
 		this._updateLights();
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
