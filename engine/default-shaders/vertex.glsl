@@ -19,7 +19,7 @@ in vec4 inMatProp3;
 in vec4 inMatProp4;
 in vec4 inMatProp5;
 in vec4 inMatProp6;
- test error
+
 uniform vec3 inCameraScale;
 uniform mat4 viewMatrix;
 uniform mat4 projMatrix;

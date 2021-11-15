@@ -5,7 +5,7 @@ precision highp float;
 const int MAT_PROP_COUNT=7;
 in vec2 inPointsL;
 out vec2 texCoords;
-
+ test error
 in int inMatIndex;
 in vec4 inMatProp0;//screw GLSL ES not supporting in attribute arrays
 in vec4 inMatProp1;
