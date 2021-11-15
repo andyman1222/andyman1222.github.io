@@ -59,13 +59,13 @@ class _ScreenBuffer {
 	_clearColor;
 
 	_outImage;
-	_depthImage;
+	_depthStencilImage;
 	_stencilImage;
 	_postImageLoc = [];
 	_postPosIn;
 	_postPosBuf;
 	_colorbuffer;
-	_depthbuffer;
+	_depthStencilBuffer;
 	_stencilbuffer;
 	_renderbuffer;
 
@@ -248,9 +248,9 @@ class _ScreenBuffer {
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
 
-		this._depthImage = this._gTarget.createTexture();
+		this._depthStencilImage = this._gTarget.createTexture();
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._depthImage);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._depthStencilImage);
 		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
 			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
 		// Mipmapping seems to cause problems in at least some cases
@@ -258,31 +258,15 @@ class _ScreenBuffer {
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
 
-		/*
-		this._stencilImage = this._gTarget.createTexture();
-		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._stencilImage);
-		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.DEPTH_STENCIL, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
-			this._gTarget.DEPTH_STENCIL, this._gTarget.UNSIGNED_BYTE, null);
-		// Mipmapping seems to cause problems in at least some cases
-		//gl.generateMipmap(gl.TEXTURE_2D);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);*/
-
 		this._colorbuffer = this._gTarget.createFramebuffer();
 		this._colorbuffer.width = this._gTarget.canvas.clientWidth;
 		this._colorbuffer.height = this._gTarget.canvas.clientHeight;
 		this._colorbuffer.texture = this._outImage
 
-		this._depthbuffer = this._gTarget.createFramebuffer();
-		this._depthbuffer.width = this._gTarget.canvas.clientWidth;
-		this._depthbuffer.height = this._gTarget.canvas.clientHeight;
-		this._depthbuffer.texture = this._depthImage
-
-		/*this._stencilbuffer = this._gTarget.createFramebuffer();
-		this._stencilbuffer.width = this._gTarget.canvas.clientWidth;
-		this._stencilbuffer.height = this._gTarget.canvas.clientHeight;
-		this._stencilbuffer.texture = this._stencilImage*/
+		this._depthStencilBuffer = this._gTarget.createFramebuffer();
+		this._depthStencilBuffer.width = this._gTarget.canvas.clientWidth;
+		this._depthStencilBuffer.height = this._gTarget.canvas.clientHeight;
+		this._depthStencilBuffer.texture = this._depthStencilImage
 
 		if (this._setupInfo.coordStr != null) {
 			this._postPosBuf = this._gTarget.createBuffer();
@@ -436,14 +420,10 @@ class _ScreenBuffer {
 			this._gTarget.TEXTURE_2D,this._outImage, 0);
 
 		
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._depthbuffer);
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
-			this._depthImage, 0);
+		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._depthStencilBuffer);
+		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_STENCIL_ATTACHMENT, this._gTarget.TEXTURE_2D,
+			this._depthStencilImage, 0);
 
-			
-		/*this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._stencilbuffer);
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.STENCIL_ATTACHMENT, this._gTarget.TEXTURE_2D,
-			this._stencilImage, 0);*/
 		
 		//this._gTarget.useProgram(this._program);
 		this._gTarget.clearColor(0, 0, 0, 0)
@@ -535,12 +515,9 @@ class _ScreenBuffer {
 		
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
-
-		this._gTarget.activeTexture(this._gTarget.TEXTURE1);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._stencilImage);
 		
 		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._depthImage);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._depthStencilImage);
 		
 		
 		this._gTarget.clearColor(this._clearColor[0], this._clearColor[1], this._clearColor[2], this._clearColor[3])
