@@ -415,7 +415,7 @@ class _ScreenBuffer {
 		this._gTarget.enable(this._gTarget.BLEND)
 		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
 		this._gTarget.frontFace(this._gTarget.CW);
-		this._gTarget.depthFunc(this._gTarget.LEQUAL)
+		this._gTarget.depthFunc(this._gTarget.LESS)
 
 		if (!this._setup) this._init();
 		
@@ -520,6 +520,7 @@ class _ScreenBuffer {
 		
 		//this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
 		this._gTarget.useProgram(this._postProcessProgram)
+		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
