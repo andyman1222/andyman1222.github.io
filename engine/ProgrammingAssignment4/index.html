@@ -1,0 +1,36 @@
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 coordinates;
+	attribute vec4 inColor;
+
+	uniform mat4 viewMatrix;
+	uniform mat4 projMatrix;
+	
+	varying lowp vec4 color;
+
+	void main(void) {
+		gl_Position = projMatrix * viewMatrix * coordinates;
+		color = (inColor);
+	}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+	precision lowp float;
+	varying vec4 color;
+
+	void main(void) {
+		gl_FragColor = color;
+	}
+</script>
+
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MVnew.js"></script>
+<script type="text/javascript" src="engine.js"></script>
+
+<canvas id="gl-canvas" width="1280" height="720"> </canvas>
+<p>WASDQE to move. Drag mouse to rotate camera. Click square to select chess piece (note: chess piece movements are implemented but I have not added any game logic).</p>
+<button onclick="switchSide()">switch side (lets you select the other color instead)</button>
+<p>Note about trackball interface: this is 1:1 with the mouse, using an invisible object centered to the screen with the camera attached to it. I have not programmed any acceleration or deceleration.</p>
+
+</html>
