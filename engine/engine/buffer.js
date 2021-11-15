@@ -306,6 +306,7 @@ class _ScreenBuffer {
 			this._gTarget.uniform1i(this._postImageLoc[i], i);
 		}
 
+		this._gTarget.useProgram(this._program)
 		this._setup = true
 		this._inSetup = false
 	}
