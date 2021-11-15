@@ -274,14 +274,17 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 }
 
 void main(void){
+	fDepth = gl_FragCoord;
+	gl_FragDepth = gl_FragCoord.r;
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	//vec2 txc = texCoord;
 	switch(matIndex){
 		case -3:
-		fColor = vec4(gl_FragDepth, gl_FragDepth, gl_FragDepth, 1);
+		fColor = vec4(fDepth, fDepth, fDepth, 1);
+		break;
 		case -2: //debug- draw texcoord
 		fColor = vec4(txc, 0., 1.);
-
+		break;
 		case -1: //nodraw
 		return;
 
@@ -308,5 +311,6 @@ void main(void){
 		fColor=matProp[0];
 		break;
 	}
-	fDepth = gl_FragCoord;
+	
+	
 }
