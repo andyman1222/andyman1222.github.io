@@ -413,15 +413,14 @@ class _ScreenBuffer {
 		this._updateLights();
 		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
+		//this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
+
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
 			this._gTarget.TEXTURE_2D,this._outImage, 0);
 
 		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
 			this._depthStencilImage, 0);
-	
-
-		//this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
 		
 		//this._gTarget.useProgram(this._program);
 		this._gTarget.clearColor(0, 0, 0, 0)
@@ -508,7 +507,7 @@ class _ScreenBuffer {
 
 	_applyPostProcessToScene() {
 		
-		this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
+		//this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
