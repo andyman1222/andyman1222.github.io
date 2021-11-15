@@ -237,7 +237,7 @@ class _ScreenBuffer {
 
 		this._outImage = this._gTarget.createTexture();
 		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, texture);
+		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImage);
 		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
 			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
 		// Mipmapping seems to cause problems in at least some cases
