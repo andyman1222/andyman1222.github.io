@@ -828,6 +828,7 @@ class _Object extends _Primitive {
 	_textureInfo = []
 	_visible = []
 	_id = -1
+	_bounds;
 
 	/**To be called whenever individual points are adjusted */
 	_reevaluateBounds(pointInfo, boundsType) {
@@ -910,8 +911,8 @@ class _Object extends _Primitive {
 			if (camera._render)
 				buf._renderData();
 			buf._types.push(buf._gTarget.LINE_LOOP);
-			
-			buf._offsets.push(current.bounds.length)
+			var b = this._bounds._getGraphicsDrawBounds();
+			buf._offsets.push(b.points.length)
 			for (var i = 0; i < b.points.length; i++) {
 				buf._points.push(b.points[i])
 				var tmp = new _SolidColorNoLighting(b.colors[i % b.colors.length]);
