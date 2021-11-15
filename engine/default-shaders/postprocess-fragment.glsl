@@ -2,24 +2,29 @@
 
 precision highp float;
 
-const int MAT_PROP_COUNT=7;
+uniform sampler2D scene;
+uniform sampler2D depth; 
+uniform sampler2D normal;
+uniform sampler2D position;
+uniform sampler2D lAmbient;
+uniform sampler2D lDiffuse;
+uniform sampler2D lSpecular;
+uniform sampler2D color;
+uniform sampler2D ambient;
+uniform sampler2D diffuse;
+uniform sampler2D specular;
+uniform sampler2D misc;
+uniform sampler2D texInfo;
+uniform sampler2D cameraPos;
+uniform sampler2D parallaxDepth;
 
-//For the sake of simplicity, the names of these vars are reused from the main shaders.
-//They can be used however you want.
-uniform sampler2D baseImage;
-uniform sampler2D normalMap;
-uniform sampler2D depthMap;
-uniform sampler2D diffuseMap;
-uniform sampler2D roughnessMap;
+//uniform sampler2D cameraAngle;
 
 in vec2 texCoords;
 out vec4 fColor;
 
-flat in int matIndex;
-in vec4 matProp[MAT_PROP_COUNT];
-
 void main(void){
-    vec4 t = texture(depthMap, texCoords);
+    vec4 t = texture(parallaxDepth, texCoords);
     //fColor = vec4(t.rgb, 1);
     fColor = t;
 }

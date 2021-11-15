@@ -54,22 +54,23 @@ class _ScreenBuffer {
 	_bufLimit;
 	_matParamCount = 0;
 	_texCount = 0;
+	_postTexCount = 0;
 	_bufferMask = 0x1;
 	_setup = false;
 	_clearColor;
 
-	_outImage;
-	_depthStencilImage;
-	_stencilImage;
+	_outImages = [];
 	_postImageLoc = [];
-	_postPosIn;
+	_postIn = [];
 	_postPosBuf;
-	_outBuffer;
+	_outBuffers = [];
 	_depthBuffer;
-	_inSetup=false;
+	_inSetup = false;
+
+	_drawBuffers = [];
 
 	_setupInfo = {
-		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, projMatrixStr: null,
+		coordStr: null, matStr: null, matParamCount: null, matIndStr: null, texStr: null, texCount: null, postTexStr: null, postTexCount: null, projMatrixStr: null,
 		viewMatrixStr: null, normalMatrixStr: null, modelMatrixStr: null, lightsArrayStr: null, lightsIndexStr: null,
 		normalStr: null, tanStr: null, biTanStr: null, texCoordStr: null, cameraPosStr: null, cameraScaleStr: null,
 		customSetupFunction: null
@@ -87,8 +88,11 @@ class _ScreenBuffer {
 
 	constructor(gTarget, program, postProcessProgram, clearColor = vec4(0, 0, 0, 1),
 		coordStr = "inPointsL", matStr = "inMatProp", matParamCount = 7, matIndStr = "inMatIndex",
-		texStr = ["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap"],
-		texCount = 5, projMatrixStr = "projMatrix", viewMatrixStr = "viewMatrix", normalMatrixStr = "normalMatrix",
+		texStr = ["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap", "emissiveImage"],
+		texCount = 6, postTexStr =
+			["scene", "depth", "normal", "position", "lAmbient", "lDiffuse", "lSpecular", "color", "ambient", "diffuse", "specular",
+				"misc", "texInfo", "cameraPos", "parallaxDepth"],
+		postTexCount = 16, projMatrixStr = "projMatrix", viewMatrixStr = "viewMatrix", normalMatrixStr = "normalMatrix",
 		modelMatrixStr = "modelMatrix", lightsArrayStr = "lights", lightsIndexStr = "maxLightIndex",
 		normalStr = "inNormalL", tanStr = "inTangentL", biTanStr = null, texCoordStr = "inTexCoord",
 		cameraPosStr = "inCameraPosW", cameraScaleStr = "inCameraScale", customSetupFunction = function (gTarget, program) { },
@@ -100,7 +104,7 @@ class _ScreenBuffer {
 		this._postProcessProgram = postProcessProgram;
 
 		this._setupInfo = {
-			coordStr: coordStr, matStr: matStr, matParamCount: matParamCount, matIndStr: matIndStr, texStr: texStr, texCount: texCount,
+			coordStr: coordStr, matStr: matStr, matParamCount: matParamCount, matIndStr: matIndStr, texStr: texStr, texCount: texCount, postTexStr: postTexStr, postTexCount: postTexCount,
 			projMatrixStr: projMatrixStr, viewMatrixStr: viewMatrixStr, normalMatrixStr: normalMatrixStr, modelMatrixStr: modelMatrixStr,
 			lightsArrayStr: lightsArrayStr, lightsIndexStr: lightsIndexStr, normalStr: normalStr, tanStr: tanStr, biTanStr: biTanStr, texCoordStr: texCoordStr,
 			cameraPosStr: cameraPosStr, cameraScaleStr: cameraScaleStr, customSetupFunction: customSetupFunction
@@ -238,72 +242,63 @@ class _ScreenBuffer {
 
 		this._gTarget.useProgram(this._postProcessProgram)
 
-		this._outImage = this._gTarget.createTexture();
-		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImage);
-		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
-			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
-		// Mipmapping seems to cause problems in at least some cases
-		//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+		if (this._setupInfo.postTexStr != null) {
+			this._postTexCount = this._setupInfo.postTexCount;
+			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
+				this._outImages.push(this._gTarget.createTexture());
+				this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
+				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
+				this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
+					this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
+				// Mipmapping seems to cause problems in at least some cases
+				//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
+				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
+				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
-		this._depthStencilImage = this._gTarget.createTexture();
-		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._depthStencilImage);
-		this._gTarget.texImage2D(this._gTarget.TEXTURE_2D, 0, this._gTarget.RGBA, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight, 0,
-			this._gTarget.RGBA, this._gTarget.UNSIGNED_BYTE, null);
-		// Mipmapping seems to cause problems in at least some cases
-		//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
-		this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
-
-		this._outBuffer = this._gTarget.createFramebuffer();
-		this._outBuffer.width = this._gTarget.canvas.clientWidth;
-		this._outBuffer.height = this._gTarget.canvas.clientHeight;
-		this._outBuffer.texture = this._outImage
-
-		if (this._setupInfo.coordStr != null) {
-			this._postPosBuf = this._gTarget.createBuffer();
-			this._postPosIn = this._gTarget.getAttribLocation(this._postProcessProgram, this._setupInfo.coordStr);
-		}
-
-		if (this._setupInfo.texStr != null) {
-			for (var i = 0; i < this._setupInfo.texCount; i++) {
 				if (!(this._setupInfo.texStr instanceof Array)) {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.texStr + "[" + i + "]"));
-					if (this._postImageLoc[this._postImageLoc.length - 1] == -1) alert(this._setupInfo.texStr + "[" + i + "]" + ": unknown/invalid shader location");
+					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.postTexStr + "[" + i + "]"));
+					if (this._postImageLoc[i] == -1) alert(this._setupInfo.postTexStr + "[" + i + "]" + ": unknown/invalid shader location");
 				}
 				else {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.texStr[i]));
-					if (this._postImageLoc[this._postImageLoc.length - 1] == -1) alert(this._setupInfo.texStr[i] + ": unknown/invalid shader location");
+					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.postTexStr[i]));
+					if (this._postImageLoc[i] == -1) alert(this._setupInfo.postTexStr[i] + ": unknown/invalid shader location");
 				}
+
+				this._outBuffers.push(this._gTarget.createFramebuffer());
+				this._outBuffers[i].width = this._gTarget.canvas.clientWidth;
+				this._outBuffers[i].height = this._gTarget.canvas.clientHeight;
+				this._outBuffers[i].texture = this._outImages[i]
 			}
-		}
 
-		this._depthBuffer = this._gTarget.createRenderbuffer();
-		
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0, this._gTarget.TEXTURE_2D,
-			this._outImage, 0);
-
-		this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
-			this._depthStencilImage, 0);
-
-		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._depthBuffer);
-		this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
+			if (this._setupInfo.coordStr != null) {
+				this._postPosBuf = this._gTarget.createBuffer();
+				this._postPosIn = this._gTarget.getAttribLocation(this._postProcessProgram, this._setupInfo.coordStr);
+			}
 	
-		this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
-			this._depthBuffer);
-
-		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
-		this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, null);
-
-		for(var i = 0; i < this._setupInfo.texCount; i++){
-			this._gTarget.uniform1i(this._postImageLoc[i], i);
+			this._depthBuffer = this._gTarget.createRenderbuffer();
+	
+			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
+			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
+				this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0+i, this._gTarget.TEXTURE_2D,
+					this._outImages[i], 0);
+			}
+	
+			this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, this._depthBuffer);
+			this._gTarget.renderbufferStorage(this._gTarget.RENDERBUFFER, this._gTarget.DEPTH_COMPONENT16, this._gTarget.canvas.clientWidth, this._gTarget.canvas.clientHeight);
+	
+			this._gTarget.framebufferRenderbuffer(this._gTarget.FRAMEBUFFER, this._gTarget.DEPTH_ATTACHMENT, this._gTarget.RENDERBUFFER,
+				this._depthBuffer);
+	
+			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
+			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
+			this._gTarget.bindRenderbuffer(this._gTarget.RENDERBUFFER, null);
+	
+			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
+				this._gTarget.uniform1i(this._postImageLoc[i], i);
+			}
+	
+			for(var i = 0; i < 15; i++) this._drawBuffers.push(this._gTarget.COLOR_ATTACHMENT0+i)
 		}
 
 		this._gTarget.useProgram(this._program)
@@ -421,23 +416,22 @@ class _ScreenBuffer {
 		this._gTarget.frontFace(this._gTarget.CW);
 		this._gTarget.depthFunc(this._gTarget.LESS)
 
-		if(!this._inSetup){
+		if (!this._inSetup) {
 			if (!this._setup) this._init();
-		
+
 			this._customBeginRenderFunction(this._gTarget, this._program)
 			this._updateLights();
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
-			
+
 
 			this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, this._outBuffer);
-			this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0,
-				this._gTarget.TEXTURE_2D,this._outImage, 0);
+			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
+				this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT0+i, this._gTarget.TEXTURE_2D,
+					this._outImages[i], 0);
+			}
 
-			this._gTarget.framebufferTexture2D(this._gTarget.FRAMEBUFFER, this._gTarget.COLOR_ATTACHMENT1, this._gTarget.TEXTURE_2D,
-				this._depthStencilImage, 0);
-
-			this._gTarget.drawBuffers([this._gTarget.COLOR_ATTACHMENT0, this._gTarget.COLOR_ATTACHMENT1]);
+			this._gTarget.drawBuffers(this._drawBuffers);
 			//this._gTarget.useProgram(this._program);
 			this._gTarget.clearColor(0, 0, 0, 0)
 			this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
@@ -523,28 +517,27 @@ class _ScreenBuffer {
 	}
 
 	_applyPostProcessToScene() {
-		
+
 		//this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
-		this._gTarget.activeTexture(this._gTarget.TEXTURE0);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._outImage);
-		
-		this._gTarget.activeTexture(this._gTarget.TEXTURE2);
-		this._gTarget.bindTexture(this._gTarget.TEXTURE_2D,this._depthStencilImage);
-		
-		
+		for(var i = 0; i < this.postTexCount; i++){
+			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
+			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
+		}
+
+
 		this._gTarget.clearColor(this._clearColor[0], this._clearColor[1], this._clearColor[2], this._clearColor[3])
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
 		if (this._postPosBuf != null) {
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._postPosBuf);
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1,
 			-1, 1,
-			1, 1,
-			1, 1,
-			1, -1,
+				1, 1,
+				1, 1,
+				1, -1,
 			-1, -1]), this._gTarget.STATIC_DRAW);
 			this._gTarget.vertexAttribPointer(this._postPosIn, 2, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._postPosIn);

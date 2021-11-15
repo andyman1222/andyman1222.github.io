@@ -18,9 +18,22 @@ flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 //in vec4 positionS;
 
-layout(location=0) out vec4 fColor;
-layout(location=1) out vec4 fDepth;
-
+layout(location=0) out vec4 fScene; //final scene output with lights and colors (no postprocessing)
+layout(location=1) out vec4 fDepth; //depth map
+layout(location=2) out vec4 fNormal; //surface normals
+layout(location=3) out vec4 fPosition; //fragment coordinates
+layout(location=4) out vec4 fLAmbient; //light ambient
+layout(location=5) out vec4 fLDiffuse; //light diffuse
+layout(location=6) out vec4 fLSpecular; //light specular
+layout(location=7) out vec4 fColor; //surface color
+layout(location=8) out vec4 fAmbient; //surface ambient multiply
+layout(location=9) out vec4 fDiffuse; //surface diffuse multiply
+layout(location=10) out vec4 fSpecular; //surface specular multiply
+layout(location=11) out vec4 fEmissive; //surface emissive color
+layout(location=12) out vec4 fMiscMat; //shiniess, parallax info
+layout(location=13) out vec4 fTexInfo; //texcoord scale and translation
+layout(location=14) out vec4 fCameraPos; //tangent-space position of the camera
+layout(location=15) out vec4 fParallaxDepth; //depth including textures with a depth map
 //attribute int matIndex; //default = 0, constant values; 1 = texture, constant values; -1 = unlit solid color
 struct light
 {
@@ -45,6 +58,7 @@ uniform sampler2D normalMap;
 uniform sampler2D depthMap;
 uniform sampler2D diffuseMap;//light multiplier
 uniform sampler2D roughnessMap;//light multiplier
+uniform sampler2D emissiveImage;//emissive
 
 //uniform sampler2D miscTextures[11];
 
@@ -242,22 +256,33 @@ sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentS
 			break;
 		}
 	}
+	fLAmbient = r.ambient;
+	fLSpecular = r.specular;
+	fLDiffuse = r.diffuse;
 	return r;
 }
 
 vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
 	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
+	fNormal = norm;
 	vec4 amb = mat.ambient*mp[3];
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*mp[2];
 	vec4 tmp=vec4(((amb*mp[0])+(dif*mp[0])+(spe)+mp[4]).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*mp[0].a);
+	fAmbient = mp[3];
+	fSpecular = mp[2];
+	fDiffuse = mp[1];
+	fColor = mp[0];
+	fEmissive = mp[4];
+	fParallaxDepth = gl_FragCoord;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
 //no parallax
 vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, bool tangentSpace){
 	vec3 norm = ((texture(normalMap, tx).rgb)*2.-1.)*vec3(-1,1,1);
+	fNormal = norm;
 	sMat mat = getStandardLight(mp[5], norm, pos, viewPos, tangentSpace);
 	vec4 txDiff = texture(diffuseMap, tx); //AO map
 	//vec4 txDiff = vec4(1.,1.,1.,1.);
@@ -265,49 +290,101 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 	//vec4 txSpec = vec4(vec3(1.,1.,1.)-txRough.rgb,txRough.a);
 	//vec4 txSpec = vec4(1.,1.,1.,1.);
 	vec4 txBase = texture(baseImage, tx)*mp[0];
+	vec4 txEmissive = texture(emissiveImage, tx)*mp[4];
 	vec4 amb = mat.ambient*mp[3]*txDiff;
 	vec4 dif = mat.diffuse*mp[1];
 	vec4 spe = mat.specular*txSpec;
-	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+mp[4]).rgb,
+	vec4 tmp=vec4(((amb*txBase)+(dif*txBase)+(spe)+txEmissive).rgb,
 	mix(1., amb.a, length(amb))*mix(1., dif.a, length(dif))*mix(1., spe.a, length(spe))*txBase.a);
+	fAmbient = mp[3]*txDiff;
+	fSpecular = txSpec;
+	fDiffuse = mp[1];
+	fColor = txBase;
+	fEmissive = txEmissive;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
 void main(void){
 	fDepth = gl_FragCoord;
+	fMiscMat = matProp[5];
+	fCameraPos = cameraPosT;
+	fPosition = positionT;
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
+	fTexInfo = matProp[6];
 	//vec2 txc = texCoord;
 	switch(matIndex){
-		case -3:
-		fColor = fDepth;
+		case -3: //debug- draw depth
+		fScene = fDepth;
+		fColor = matProp[0];
+		fNormal = normalT;
+		fAmbient = matProp[3];
+		fSpecular = matProp[2];
+		fDiffuse = matProp[1];
+		fEmissive = matProp[4];
+		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		fParallaxDepth = gl_FragCoord;
 		break;
 		case -2: //debug- draw texcoord
-		fColor = vec4(txc, 0., 1.);
+		fScene = vec4(txc, 0., 1.);
+		fNormal = normalT;
+		fColor = matProp[0];
+		fAmbient = matProp[3];
+		fSpecular = matProp[2];
+		fDiffuse = matProp[1];
+		fEmissive = matProp[4];
+		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		fParallaxDepth = gl_FragCoord;
 		break;
-		case -1: //nodraw
+		case -1: //nodraw. Doesn't even put anything into postprocess
 		return;
 
 		case 1: //no texture
-		fColor=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+		fScene=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
+		fNormal = normalT;
+		fParallaxDepth = gl_FragCoord;
 		break;
 
 		case 2: //parallaxed texture
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
+		float d = 1.-texture(depthMap, txc).r
+		fParallaxDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 		//break;
 
 		case 3: //texture, no parallax
-		fColor = standardImage(matProp, positionT, txc, cameraPosT, true);
+		fScene = standardImage(matProp, positionT, txc, cameraPosT, true);
+		if(matIndex == 3){
+			fParallaxDepth = gl_FragCoord;
+		}
 		break;
 
 		case 4: //unlit texture, parallax
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
+		fParallaxDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 
 		case 5: //unlit texture, no parallax
+		fScene = texture(baseImage, txc) * matProp[0];
 		fColor = texture(baseImage, txc) * matProp[0];
+		fAmbient = matProp[3];
+		fSpecular = matProp[2];
+		fDiffuse = matProp[1];
+		fEmissive = matProp[4];
+		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
+		if(matIndex == 5){
+			fNormal = normalT;
+			fParallaxDepth = gl_FragCoord;
+		}
 		break;
 
-		case 0: default: //solid color
-		fColor=matProp[0];
+		case 0: default: //solid color no lighting
+		fScene=matProp[0];
+		fNormal = normalT;
+		fColor = matProp[0];
+		fAmbient = matProp[3];
+		fSpecular = matProp[2];
+		fDiffuse = matProp[1];
+		fEmissive = matProp[4];
+		fParallaxDepth = gl_FragCoord;
+		getStandardLight(mp[5], normalT, positionT, cameraPosT, true);
 		break;
 	}
 	
