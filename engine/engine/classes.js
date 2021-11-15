@@ -173,6 +173,7 @@ class _Bounds {
 	_extent;
 	_parentObject;
 	_shape;
+	_noDraw = false;
 
 
 	constructor(pointInfo, type, parentObject) {
@@ -211,25 +212,30 @@ class _Bounds {
 			} else throw "Only _Bounds types supported now are RECT and SPHERE"
 		} else {
 			this._extent = vec3(0, 0, 0)
+			this._noDraw = true
 		}
 	}
 
 	//defines points to draw _Bounds, manually
 	_getDrawBounds(multMat = vec3(1, 1, 1)) {
 		var r = []
-		var tmp = this._shape;
-		for (var i = 0; i < tmp.index.length; i++)
-			r.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
+		if(!this._noDraw) {
+			var tmp = this._shape;
+			for (var i = 0; i < tmp.index.length; i++)
+				r.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
+		}
 		return r
 	}
 
 	//defines points to draw _Bounds, manually
 	_getGraphicsDrawBounds(boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
-		var tmp = this._shape;
-		r.colors.push(boundsColor);
-		for (var i = 0; i < tmp.index.length; i++)
-			r.points.push(vec3to4(tmp.points[tmp.index[i]]))
+		if(!this._noDraw) {
+			var tmp = this._shape;
+			r.colors.push(boundsColor);
+			for (var i = 0; i < tmp.index.length; i++)
+				r.points.push(vec3to4(tmp.points[tmp.index[i]]))
+		}
 		return r
 	}
 }
