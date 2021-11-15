@@ -90,9 +90,8 @@ class _ScreenBuffer {
 		coordStr = "inPointsL", matStr = "inMatProp", matParamCount = 7, matIndStr = "inMatIndex",
 		texStr = ["baseImage", "normalMap", "depthMap", "diffuseMap", "specularMap", "emissiveImage"],
 		texCount = 6, postTexStr =
-			["scene", "depth", "normal", "position", "lAmbient", "lDiffuse", "lSpecular", "color", "ambient", "diffuse", "specular",
-				"misc", "texInfo", "cameraPos", "parallaxDepth"],
-		postTexCount = 16, projMatrixStr = "projMatrix", viewMatrixStr = "viewMatrix", normalMatrixStr = "normalMatrix",
+			["scene", "depth", "normal", "position", "color", "ambient", "diffuse", "specular"],
+		postTexCount = 8, projMatrixStr = "projMatrix", viewMatrixStr = "viewMatrix", normalMatrixStr = "normalMatrix",
 		modelMatrixStr = "modelMatrix", lightsArrayStr = "lights", lightsIndexStr = "maxLightIndex",
 		normalStr = "inNormalL", tanStr = "inTangentL", biTanStr = null, texCoordStr = "inTexCoord",
 		cameraPosStr = "inCameraPosW", cameraScaleStr = "inCameraScale", customSetupFunction = function (gTarget, program) { },
