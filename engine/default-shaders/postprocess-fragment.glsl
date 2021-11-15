@@ -19,5 +19,6 @@ flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
 
 void main(void){
-    fColor = texture(baseImage, texCoords)
+    vec4 t = texture(baseImage, texCoords)
+    fColor = mix(vec4(0,0,0,1),t,t.a);
 }

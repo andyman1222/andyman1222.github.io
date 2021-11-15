@@ -253,17 +253,17 @@ class _ScreenBuffer {
 
 		if (this._setupInfo.coordStr != null) {
 			this._postPosBuf = this._gTarget.createBuffer();
-			this._postPosIn = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
+			this._postPosIn = this._gTarget.getAttribLocation(this._postProcessProgram, this._setupInfo.coordStr);
 		}
 
 		if (this._setupInfo.texStr != null) {
 			for (var i = 0; i < this._setupInfo.texCount; i++) {
 				if (!(this._setupInfo.texStr instanceof Array)) {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.texStr + "[" + i + "]"));
+					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.texStr + "[" + i + "]"));
 					if (this._postImageLoc[this._postImageLoc.length - 1] == -1) alert(this._setupInfo.texStr + "[" + i + "]" + ": unknown/invalid shader location");
 				}
 				else {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.texStr[i]));
+					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.texStr[i]));
 					if (this._postImageLoc[this._postImageLoc.length - 1] == -1) alert(this._setupInfo.texStr[i] + ": unknown/invalid shader location");
 				}
 			}
