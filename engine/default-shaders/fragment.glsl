@@ -305,5 +305,4 @@ void main(void){
 		fColor=matProp[0];
 		break;
 	}
-	fDepth = vec4(gl_FragDepth, 0, 0, 0);
 }
