@@ -25,7 +25,7 @@ void main(void){
     vec4 t = texture(scene, texCoords);
     vec4 d = texture(depth, texCoords);
     //fColor = vec4(t.rgb, 1);
-    if(d.b > 0)
+    if(d.b > 0.)
         fColor = d;
     else {
         fColor = vec4(1,0,0,1);
