@@ -66,7 +66,7 @@ function _getCylinder(pos, radiusHalfHeight, numFaces, rot=eulerToQuat(vec3(0,1,
 	var facePoints = []
 	for (var i = 0; i < numFaces; i++) {
 		var tmp = ((i / numFaces) * 360)
-		facePoints.push(vec2(Math.sin(radians(tmp))*radiusHalfHeight[0], Math.cos(radians(tmp))*radiusHalfHeight[2]))
+		facePoints.push(vec2(Math.sin(radians(tmp)), Math.cos(radians(tmp))))
 	}
 	var tmp = vec2(radiusHalfHeight[0], radiusHalfHeight[2])
 	var r = []

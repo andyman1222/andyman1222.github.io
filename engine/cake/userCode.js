@@ -134,12 +134,64 @@ function userTick(delta, time) {
 var prevPos = 0
 var rClick = 0
 
-class candle{
+class flame{
+	obj;
+	light;
+	lightC = 1;
+	getMaterials(){
+		this.obj._matInfo[2][4][3] = (Math.random()*.5)+.5
+		this.obj._matInfo[3][4][3] = (Math.random()*.5)+.5
+		this.obj._matInfo[4][4][3] = (Math.random()*.5)+.5
+		this.obj._transform.rot = addRotation(this.obj._parent._getWorldTransform().rot, eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), Math.random()*.1))
+		this.light._attenuation=((this.obj._matInfo[2][4][3]+this.obj._matInfo[3][4][3]+this.obj._matInfo[4][4][3])/3)*lightC
+	}
 
+	constructor(){
+		var tmp = _getSphere(vec3(0,1,0), vec3(1, 2, 1), 5, 3);
+		var matArr = []
+		for(var x = 0; x < 5; x++)
+				matArr.push(0, 0, 1)
+		for(var i = 1; i < 4; i++)
+			for(var x = 0; x < 5; x++)
+				matArr.push(i, i+1, i+1, i+1, i, i)
+		for(var x = 0; x < 5; x++)
+			matArr.push(3, 3, 4)
+		this.light = new _PointLight({pos: vec3(0,1,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
+			vec4(.9,.7,.5,1), null, lightC)
+		
+		this.obj = new _Object({pos: vec3(0, 4, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
+		[_DrawInfo(tmp.index, matArr, tmp.texCoords, tmp.normals, tmp.tangents)], tmp.points, [new _BasicMaterial(vec4(0, 0, 0, 0)),
+			new _BasicMaterial(vec4(0, 0, 0, .9), 0, 0, 0, vec4(.2,0,.5,.5)),
+			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9,.7,.5,1)),
+			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9,.9,.8,1)),
+			new _BasicMaterial(vec4(.2,.1,0,.9),0,0,0,vec4(.9,.6,.2,1))], _Bounds._SPHERE)
+		this.light._attachSelfToParent(this.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
+		this.obj._customTickFunc = function(delta, time){
+			this.getMaterials();
+		}.bind(this)
+		
+	}
 }
 
+class candle{
+	obj;
+	f;
+	constructor(posX, posY, cake){
+		var c = _getCylinder(vec3(0,1,0),vec3(1, 2, 1), 8)
+		this.obj = new _Object({pos: vec3(posX, 2, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), Math.random()*.1), scl: vec3(1,1,1)},
+		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
+		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
+		this.f = new flame()
+		this.obj._attachChildToSelf(f.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
+		this.obj._attachSelfToParent(cake, {pos: "keepWorld", rot: "keepWorld", scl: "keepWorld"})
+	}
+}
+
+var candles = []
+var cake
 function init() {
 	_mainCamera._transform.pos = vec3(0, 5, -15)
+	new _AmbientLight(vec4(.9/10,.7/10,.5/10,1), null)
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{ pointIndex: tmp.index, matIndex: 
@@ -149,13 +201,33 @@ function init() {
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
-		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,.5), vec4(0,0,0,1), vec4(1,1,1,1), vec4(1,1,1,1), 10), new _Material(-1)], _Bounds._RECT)
-	var cake = _getCylinder(vec3(0,0,0),vec3(10, 1, 10), 20)
+		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,.5), 0, 1, 1, 10), new _Material(-1)], _Bounds._RECT)
+	cake = _getCylinder(vec3(0,0,0),vec3(10, 1, 10), 20)
 	new _Object({pos: vec3(0,1,0), rot: eulerToQuat(vec3(0,0,1),0), scl: vec3(1,1,1)}, [_DrawInfo(
 		cake.index, [0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1], cake.texCoords, cake.normals, cake.tangents)],
-		cake.points, [new _BasicMaterial(vec4(.8, .8, .8, 1), vec4(1, 1, 1, 1), vec4(.2, .2, .2, 1), vec4(1, 1, 1, 1), 1),
-			new _BasicMaterial(vec4(0.90, 0.76, 0.42, 1), vec4(1, 1, 1, 1), vec4(.2, .2, .2, 1), vec4(1, 1, 1, 1), 1)],
+		cake.points, [new _BasicMaterial(vec4(.8, .8, .8, 1), 1, .2, 1, 1),
+			new _BasicMaterial(vec4(0.90, 0.76, 0.42, 1), 1, .2, 1, 1)],
 		_Bounds._SPHERE)
+
+	var arr = [];
+	for(let i = 0; i < 20; i++) {
+		arr.push([]);
+		for(let j = 0; j < 20; j++) {
+			arr[i].push(false);
+		}
+	}
+	var a = Math.random()*360;
+	var r = Math.random();
+	var px = Math.floor((Math.cos(radians(a))*r)*10)
+	var py = Math.floor((Math.sin(radians(a))*r)*10)
+	for(var x = 0; x < 52; x++){
+		while(arr[px/10][py/10] == true){
+			px = Math.floor((Math.cos(radians(a))*r)*10)
+			py = Math.floor((Math.sin(radians(a))*r)*10)
+		}
+		arr[px/10][py/10] = true
+		candles.push(new candle(px, py, cake))
+	}
 }
 
 window.onload = function () {
