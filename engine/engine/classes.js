@@ -196,14 +196,16 @@ class _Bounds {
 	_updateBounds(pointInfo) {
 		this._pos = vec3(0, 0, 0)
 		if (pointInfo.length > 0) {
-			var min = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2]) //POINTERS PLS
-			var max = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2])
+			var min = vec3(pointInfo[0], pointInfo[1], pointInfo[2]) //POINTERS PLS
+			var max = vec3(pointInfo[0], pointInfo[1], pointInfo[2])
 			//get min and max x, y, z values
-			for (var i = 0; i < pointInfo.length; i++) {
-				for (var ii = 0; ii < pointInfo[i].length; ii++) {
-					if (pointInfo[i][ii] > max[ii]) { max[ii] = pointInfo[i][ii] }
-					if (pointInfo[i][ii] < min[ii]) { min[ii] = pointInfo[i][ii] }
-				}
+			for (var i = 0; i < pointInfo.length; i += 3) {
+				if (pointInfo[i] > max[0]) { max[0] = pointInfo[i] }
+				if (pointInfo[i] < min[0]) { min[0] = pointInfo[i] }
+				if (pointInfo[i + 1] > max[1]) { max[1] = pointInfo[i + 1] }
+				if (pointInfo[i + 1] < min[1]) { min[1] = pointInfo[i + 1] }
+				if (pointInfo[i + 2] > max[2]) { max[2] = pointInfo[i + 2] }
+				if (pointInfo[i + 2] < min[2]) { min[2] = pointInfo[i + 2] }
 			}
 
 			this._pos = mult(.5, add(min, max))
@@ -255,7 +257,7 @@ class _Bounds {
  * Note: For attached primitives to _Object, if you want to attach a _Primitive to a point, you must set the _Primitive's transform to the point location manually.
  */
 class _Object extends _Primitive {
-	_drawInfo = []
+	_drawInfo = new Float32Array()
 	_pointInfo = []
 	_isEngine = false
 	_matInfo = []
@@ -263,10 +265,9 @@ class _Object extends _Primitive {
 	_visible = []
 	_id = -1
 	_bounds;
-	_drawPoints = new Float32Array()
-	_drawNormals = new Float32Array()
-	_drawTangents = new Float32Array()
-	
+	_boundsType;
+	_pointsChanged = false
+
 
 	/**To be called whenever individual points are adjusted */
 	_reevaluateBounds(pointInfo, boundsType) {
@@ -280,20 +281,87 @@ class _Object extends _Primitive {
 	 * @param {drawInfo} drawInfo array of [{pointIndex[], matIndex[], texCoords[], type}]
 	 * @param {enum} drawType 
 	 */
-	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, textureInfo = [], isEngine = false, visible = true) {
+	constructor(startTransform, drawInfo, pointInfo, matInfo, boundsType, textureInfo = [], isEngine = false, visible = true, preTickFunc = function (delta, time) { }) {
 		//if(startTransform.rot.length != 4) throw "Rotations must be quaternions!"
 		super(startTransform)
 		this._id = _newID();
 		this._drawInfo = drawInfo;
-		this._pointInfo = pointInfo;
-		this._reevaluateBounds(pointInfo, boundsType)
+		this._pointInfo = flatten(pointInfo);
+		this._boundsType = boundsType
+		this._reevaluateBounds(this._pointInfo, boundsType)
 		this._isEngine = isEngine
 		this._matInfo = matInfo
 		this._textureInfo = textureInfo
 		this._visible = visible
+
+		var tmpDPI = [], tmpN = []
+		for (var g = 0; g < this._drawInfo.length; g++) {
+			var d = this._drawInfo[g]
+			d.startInd = tmpDPI.length
+			d.pointIndex = new UInt16Array(d.pointIndex)
+			d.tangents = flatten(d.tangents)
+			d.texCoords = flatten(d.texCoords)
+			for (var i = 0; i < d.pointIndex.length; i++) {
+				tmpDPI.push(d.pointIndex[i])
+				switch (d.type) {
+					case _gl.TRIANGLES:
+						tmpN.push(d.normals[Math.floor(i / 3)]) //push 3 for each vert
+						tmpN.push(d.tangents[Math.floor(i / 3)]) //push 3 for each vert
+						break;
+					default:
+						tmpN.push(d.normals[i])
+						tmpN.push(d.tangents[i])
+
+				}
+			}
+			d.normals = flatten(tmpN)
+		}
+
+		this._customPreTick = function (delta, time) {
+			if (this._pointsChanged) this._reevaluateBounds(this._pointInfo, this._boundsType)
+			preTickFunc(delta, time)
+		}
 		_objects.set(this._id, this)
 	}
 
+	_modifyNormal(newNormal, drawInd, normalInd) {
+		var d = this._drawInfo[drawInd]
+		d.normals[normalInd * 3] = newNormal[0]
+		d.normals[(normalInd * 3) + 1] = newNormal[1]
+		d.normals[(normalInd * 3) + 2] = newNormal[2]
+		this._updated = true
+	}
+
+	_modifyTangent(newTangent, drawInd, tanInd) {
+		var d = this._drawInfo[drawInd]
+		d.tangents[tanInd * 3] = newTangent[0]
+		d.tangents[(tanInd * 3) + 1] = newTangent[1]
+		d.tangents[(tanInd * 3) + 2] = newTangent[2]
+		this._updated = true
+	}
+
+	_modifyTexCoord(newTexCoord, drawInd, txInd) {
+		var d = this._drawInfo[drawInd]
+		d.texCoords[txInd * 2] = newTexCoord[0]
+		d.texCoords[(txInd * 2) + 1] = newTexCoord[1]
+		this._updated = true
+	}
+
+	_modifyPointInd(newTangent, drawInd, pointInd) {
+		var d = this._drawInfo[drawInd]
+		d.tangents[pointInd * 3] = newTangent[0]
+		d.tangents[(pointInd * 3) + 1] = newTangent[1]
+		d.tangents[(pointInd * 3) + 2] = newTangent[2]
+		this._updated = true
+	}
+
+	_modifyPoint(newPoint, pointInd) {
+		this._updated = true
+		this._pointsChanged = true
+		this._drawInfo[pointInd * 3] = newPoint[0]
+		this._drawInfo[(pointInd * 3) + 1] = newPoint[1]
+		this._drawInfo[(pointInd * 3) + 2] = newPoint[2]
+	}
 
 	/**
 	 * Returns points array and bounding box relative to world coordinates
@@ -307,6 +375,7 @@ class _Object extends _Primitive {
 		var b = this._bounds._getGraphicsDrawBounds()
 
 		buf._setModelMatrix(newMat)
+		buf._points = this._pointInfo
 		for (var g = 0; g < this._drawInfo.length; g++) {
 			var d = this._drawInfo[g]
 			var i = d.pointIndex
@@ -315,52 +384,52 @@ class _Object extends _Primitive {
 				console.error("Unable to load data to GPU. Too many points. Length: " + i.length + "; Object: " + o);
 			else {
 
-				if (((i.length + buf._points.length > buf._bufLimit) || d.textureIndex != -1) && camera._render)
-					buf._renderData();
+				buf._offsets = i.length
 
-				buf._offsets.push(i.length)
-				
-				buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
+				buf._types = camera._wireframe ? buf._gTarget.LINE_LOOP : d.type
 
 				if (d.textureIndex != -1)
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
+				buf._pointIndicies = d.pointIndex
+
 				buf._texCoords = d.texCoords
+				buf._normals = d.normals
+				buf._tangents = d.tangents
 				for (var ii = 0; ii < i.length; ii++) {
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
-					switch (d.type) {
-						case _gl.TRIANGLES:
-							buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
-							buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
-							break;
-						default:
-							buf._normals.push(d.normals[ii])
-							buf._tangents.push(d.tangents[ii])
 
-					}
 					//buf._texCoords.push(d.texCoords[ii])
 				}
-
-				if ((d.textureIndex != -1 || camera._showNormalTangents) && camera._render)
+				if (camera._render)
 					buf._renderData();
 			}
 		}
 		if (camera._showBounds && !this._isEngine) {
-			if (camera._render)
-				buf._renderData();
-			buf._types.push(buf._gTarget.LINE_LOOP);
+			buf._types = buf._gTarget.LINE_LOOP;
 			var b = this._bounds._getGraphicsDrawBounds();
-			buf._offsets.push(b.points.length)
+			buf._offsets = b.points.length
+			var points = []
+			var pointIndicies = []
+			var normals = []
+			var tangents = []
+			var texCoords = []
 			for (var i = 0; i < b.points.length; i++) {
-				buf._points.push(b.points[i])
+				points.push(b.points[i])
+				pointIndicies.push(i)
 				var tmp = new _SolidColorNoLighting(b.colors[i % b.colors.length]);
 				buf._loadMaterial(tmp, false, camera._wireframe || camera._noLighting)
-				buf._normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
-				buf._tangents.push(vec3(0, 1, 0))
-				buf._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
-				//buf_bitangents.push(vec3(0, 0, 1))
+				normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
+				tangents.push(vec3(0, 1, 0))
+				texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 			}
+			buf._texCoords = flatten(texCoords)
+			buf._normals =  flatten(normals)
+			buf._tangents =  flatten(tangents)
+			buf._points =  flatten(points)
+			buf._pointIndicies = new UInt16Array(pointIndicies)
+			buf._renderData();
 		} //camera will take care of final _renderData for this object
 	}
 

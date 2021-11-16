@@ -82,19 +82,28 @@ class _Camera extends _Primitive {
 				});
 				var x = 0
 				for (var o = 0; o < this._debugOffsets.length; o++) {
-					f._types.push(this._debugTypes[o])
-					f._offsets.push(this._debugOffsets[o])
+					f._types = this._debugTypes[o]
+					f._offsets = this._debugOffsets[o]
+					var points = []
+					var pointIndicies = []
+					var normals = []
+					var tangents = []
+					var texCoords = []
 					for (var i = 0; i < this._debugOffsets[o]; i++) {
-						if (i.length + f._points.length > f._bufLimit)
-							f._renderData();
-						f._points.push(this._debugPoints[i + x])
+						points.push(this._debugPoints[i + x])
+						pointIndicies.push(i)
 						var tmp = new _SolidColorNoLighting(this._debugColors[i % this._debugColors.length]);
 						f._loadMaterial(tmp, false, this._wireframe || this._noLighting, this._noParallax)
-						f._normals.push(vec3(1, 0, 0))//debug data has no normals, this is just filler
-						f._tangents.push(vec3(0, 1, 0))
-						//f._bitangents.push(vec3(0, 0, 1))
-						f._texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
+						normals.push(vec3(1, 0, 0))//_Bounds have no normals, this is just filler
+						tangents.push(vec3(0, 1, 0))
+						texCoords.push(vec2(0, 0)) //_Bounds have no textures, again just filler
 					}
+					f._texCoords = flatten(texCoords)
+					f._normals =  flatten(normals)
+					f._tangents =  flatten(tangents)
+					f._points =  flatten(points)
+					f._pointIndicies = new UInt16Array(pointIndicies)
+					f._renderData();
 					x += this._debugOffsets[o]
 				}
 				//render any remaining data

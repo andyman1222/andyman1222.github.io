@@ -6,6 +6,7 @@ class _ScreenBuffer {
 	_matParams = []
 	_matIndicies = []
 	_points = []
+	_pointIndicies = []
 	_types = [];
 	_offsets = [];
 	_texCoords = []
@@ -20,6 +21,8 @@ class _ScreenBuffer {
 	_biTanBuf;
 	_matParamsBufs = [];
 	_matIndBuf;
+
+	_pointIndBuf;
 
 	_inPos;
 	_inTexCoord;
@@ -116,6 +119,10 @@ class _ScreenBuffer {
 	_init() {
 		this._inSetup = true
 		this._gTarget.useProgram(this._program)
+
+		this._pointIndBuf = this._gTarget.createBuffer()
+		this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
+
 		if (this._setupInfo.coordStr != null) {
 			this._posBuffer = this._gTarget.createBuffer();
 			this._inPos = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
@@ -447,11 +454,15 @@ class _ScreenBuffer {
 		if (this._points.length > 0) {
 			this._customPreRenderFunction(this._gTarget, this._program);
 
+			this._gTarget.bindBuffer
+
 			if (this._posBuffer != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._points), this._gTarget.STATIC_DRAW);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inPos);
+				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
+				this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndicies, this._gTarget.STATIC_DRAW)
 			}
 
 			if (this._matIndBuf != null) {
@@ -471,28 +482,28 @@ class _ScreenBuffer {
 
 			if (this._normBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._normBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._normals), this._gTarget.STATIC_DRAW);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._normals, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inNormal, 3, this._gTarget.FLOAT, true, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inNormal);
 			}
 
 			if (this._tanBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._tanBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._tangents), this._gTarget.STATIC_DRAW);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._tangents, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inTan, 3, this._gTarget.FLOAT, true, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inTan);
 			}
 
 			if (this._biTanBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._biTanBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._bitangents), this._gTarget.STATIC_DRAW);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._bitangents, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inBiTan, 3, this._gTarget.FLOAT, true, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inBiTan);
 			}
 
 			if (this._txBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._txBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._texCoords), this._gTarget.STATIC_DRAW);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._texCoords, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inTexCoord, 2, this._gTarget.FLOAT, false, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inTexCoord);
 			}
@@ -501,7 +512,8 @@ class _ScreenBuffer {
 			var offset = 0;
 			for (var i = 0; i < this._types.length; i++) {
 				this._customRenderFunction(this._gTarget, this._program);
-				this._gTarget.drawArrays(this._types[i], offset, this._offsets[i]);
+				//this._gTarget.drawArrays(this._types[i], offset, this._offsets[i]);
+				this._gTarget.drawElements(this._types[i], this._offsets[i], this._gTarget.UNSIGNED_SHORT, offset)
 				offset += this._offsets[i];
 			}
 			this._customPostRenderFunction(this._gTarget, this._program);
@@ -526,7 +538,7 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-
+		this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, null);
 		for(var i = 0; i < this._postTexCount; i++){
 			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
