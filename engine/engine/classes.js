@@ -314,15 +314,18 @@ class _Object extends _Primitive {
 					buf._renderData();
 
 
-				buf._offsets.push(i.length)
+				buf._offsets.push(3)
 				buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
 
 				if (d.textureIndex != -1)
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
-					if(ii%3 == 0)
+					if(ii % 3 == 0){
 						buf._renderData();
+						buf._offsets.push(3)
+						buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
+					}
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
