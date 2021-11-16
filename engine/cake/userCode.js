@@ -138,12 +138,12 @@ class flame{
 	obj;
 	light;
 	lightC = .1;
-	getMaterials(){
+	getMaterials(d){
 		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._transform.scl[1] = (Math.random()*.5)+.5
-		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 10*(Math.random()-.5))
+		this.obj._transform.rot = addRotation(eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 10*(Math.random()-.5)), addRotation(this.obj._transform.rot, eulerToQuat(vec3(0,1,0),d*Math.random())))
 		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
 
@@ -168,7 +168,7 @@ class flame{
 			new _BasicMaterial(vec4(0, 0, 0, 0))], _Bounds._SPHERE)
 		this.light._attachSelfToParent(this.obj, {pos: "noChange", rot: "keepWorld", scl: "keepWorld"})
 		this.obj._customTickFunc = function(delta, time){
-			this.getMaterials();
+			this.getMaterials(delta);
 		}.bind(this)
 		
 	}
