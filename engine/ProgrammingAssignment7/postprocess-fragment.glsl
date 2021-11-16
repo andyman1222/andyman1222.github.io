@@ -23,9 +23,8 @@ const float scale = 10.;
 
 void main(void){
     vec4 results;
-    vec4 t = texture(scene, texCoords);
     vec4 d = texture(depth, texCoords);
-    fColor = texture(scene, round(texCoords*vec2(10, 10))/vec2(10,10))*length(d);
+    fColor = texture(scene, round(texCoords*vec2(10, 10))/vec2(10,10))*length(d.rgb);
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
