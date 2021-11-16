@@ -210,23 +210,23 @@ function init() {
 		_Bounds._SPHERE)
 
 	var arr = [];
-	for(let i = 0; i < 20; i++) {
+	for(let i = 0; i < 40; i++) {
 		arr.push([]);
-		for(let j = 0; j < 20; j++) {
+		for(let j = 0; j < 40; j++) {
 			arr[i].push(false);
 		}
 	}
 	var a = Math.random()*360;
 	var r = Math.random();
-	var px = Math.floor((Math.cos(radians(a))*r)*10)
-	var py = Math.floor((Math.sin(radians(a))*r)*10)
+	var px = Math.floor((Math.cos(radians(a))*r)*20)
+	var py = Math.floor((Math.sin(radians(a))*r)*20)
 	for(var x = 0; x < 52; x++){
-		while(arr[px+10][py+10] == true){
-			px = Math.floor((Math.cos(radians(a))*r)*10)
-			py = Math.floor((Math.sin(radians(a))*r)*10)
+		while(arr[px+20][py+20] == true){
+			px = Math.floor((Math.cos(radians(a))*r)*20)
+			py = Math.floor((Math.sin(radians(a))*r)*20)
 		}
-		arr[px+10][py+10] = true
-		candles.push(new candle(px, py, cake))
+		arr[px+20][py+20] = true
+		candles.push(new candle(px/2, py/2, cake))
 	}
 }
 
