@@ -23,7 +23,7 @@ const float scale = 50.;
 
 void main(void){
     vec4 results;
-    fColor = mix(texture(scene, texCoords), texture(scene, round(texCoords*vec2(scale, scale))/vec2(scale,scale)), length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale))));
+    fColor = mix(texture(scene, round(texCoords*vec2(scale, scale))/vec2(scale,scale)), texture(scene, texCoords),  length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale))));
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
