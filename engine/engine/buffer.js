@@ -547,15 +547,15 @@ class _ScreenBuffer {
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
 		if (this._postPosBuf != null) {
 			this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._postPosBuf);
-			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1, -1,
-			-1, 1, -1,
-				1, 1, -1,
-				1, -1 -1]), this._gTarget.STATIC_DRAW);
-			this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
-			this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, new Uint16Array(0, 1, 2, 2, 3, 0), this._gTarget.STATIC_DRAW)
-			this._gTarget.vertexAttribPointer(this._postPosIn, 3, this._gTarget.FLOAT, false, 0, 0);
+			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1,
+			-1, 1,
+				1, 1,
+				1, 1,
+				1, -1,
+			-1, -1]), this._gTarget.STATIC_DRAW);
+			this._gTarget.vertexAttribPointer(this._postPosIn, 2, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._postPosIn);
-			this._gTarget.drawElements(this._gTarget.TRIANGLES, 6, this._gTarget.UNSIGNED_SHORT, 0)
+			this._gTarget.drawArrays(this._gTarget.TRIANGLES, 0, 6)
 		} else throw "Missing required shader input for vertex location"
 		
 	}
