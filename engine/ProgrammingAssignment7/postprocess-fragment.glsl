@@ -19,7 +19,7 @@ out vec4 fColor;
 const int samples = 4;
 const float minDepth = .1;
 const float dist = 3.;
-const float scale = 20;
+const float scale = 20.;
 
 void main(void){
     vec4 results;
