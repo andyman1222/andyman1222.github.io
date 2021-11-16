@@ -536,7 +536,7 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-		this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, null);
+		//this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, null);
 		for(var i = 0; i < this._postTexCount; i++){
 			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
@@ -550,12 +550,12 @@ class _ScreenBuffer {
 			this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Float32Array([-1, -1,
 			-1, 1,
 				1, 1,
-				1, 1,
-				1, -1,
-			-1, -1]), this._gTarget.STATIC_DRAW);
+				1, -1,]), this._gTarget.STATIC_DRAW);
+			this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
+			this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, new Uint16Array(0, 1, 2, 2, 3, 0), this._gTarget.STATIC_DRAW)
 			this._gTarget.vertexAttribPointer(this._postPosIn, 2, this._gTarget.FLOAT, false, 0, 0);
 			this._gTarget.enableVertexAttribArray(this._postPosIn);
 		} else throw "Missing required shader input for vertex location"
-		this._gTarget.drawArrays(this._gTarget.TRIANGLES, 0, 6)
+		this._gTarget.drawElements(this._gTarget.TRIANGLES,6, this._gTarget.UNSIGNED_SHORT, 0)
 	}
 }
