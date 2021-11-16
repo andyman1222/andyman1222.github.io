@@ -202,10 +202,10 @@ function init() {
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
 		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,.5), 0, 1, 1, 10), new _Material(-1)], _Bounds._RECT)
-	cake = _getCylinder(vec3(0,0,0),vec3(10, 1, 10), 20)
-	new _Object({pos: vec3(0,1,0), rot: eulerToQuat(vec3(0,0,1),0), scl: vec3(1,1,1)}, [_DrawInfo(
-		cake.index, [0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1], cake.texCoords, cake.normals, cake.tangents)],
-		cake.points, [new _BasicMaterial(vec4(.8, .8, .8, 1), 1, .2, 1, 1),
+	var c = _getCylinder(vec3(0,0,0),vec3(10, 1, 10), 20)
+	cake = new _Object({pos: vec3(0,1,0), rot: eulerToQuat(vec3(0,0,1),0), scl: vec3(1,1,1)}, [_DrawInfo(
+		c.index, [0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
+		c.points, [new _BasicMaterial(vec4(.8, .8, .8, 1), 1, .2, 1, 1),
 			new _BasicMaterial(vec4(0.90, 0.76, 0.42, 1), 1, .2, 1, 1)],
 		_Bounds._SPHERE)
 
