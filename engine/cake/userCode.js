@@ -139,6 +139,7 @@ class flame{
 	light;
 	lightC = .1;
 	getMaterials(d){
+		this.lightC = document.getElementById("myRange").value*.1
 		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
