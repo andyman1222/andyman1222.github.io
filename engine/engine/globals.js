@@ -9,6 +9,7 @@ var _time = 0;
 var _id = 0;
 var _requestId = 0;
 var _tickEnabled = true;
+var _offsetThreshold = 50; //Used to reduce array sizes created with flatten because otherwise JS will waste teime garbage collecting
 
 
 ////USER INPUT
