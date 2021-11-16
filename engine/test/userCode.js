@@ -199,6 +199,11 @@ function init() {
 	type: _gl.TRIANGLES, normals: cylinder.normals, tangents: cylinder.tangents, textureIndex: -1}], points, [new _BasicMaterial()], _Bounds._RECT, [])
 
 	t._customTickFunc = function(d, t) {this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(1,0,0), d*.01))}.bind(t)
+
+	var s = _getRect(vec3(0, 0, 0), vec3(.5,.5,.5))
+	var x = new _Object({pos: vec3(0, 1, 0), rot: eulerToQuat(vec3(0,0,1),0),scl: vec3(1,1,1)},[{pointIndex: s.index, matIndex: [0], texCoords: s.texCoords, 
+	type: _gl.TRIANGLES, normals: s.normals, tangents: s.tangents, textureIndex: -1}], s.points, [new _BasicMaterial()], _Bounds._RECT, [])
+	x._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 }
 
 window.onload = function () {
