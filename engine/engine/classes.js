@@ -34,7 +34,7 @@ class _Primitive {
 
 	_getWorldTransform(flipZ = false) {
 		if (this._parent != null) {
-			var p = this._parent._getWorldTransform(this._parent._flipZRotation)
+			var p = this._parent._getWorldTransform(!this._parent._flipZRotation)
 			if ((this._parent._flipZRotation || flipZ) && !(this._parent._flipZRotation && flipZ))
 				return {
 					pos: add(rotateAbout(mult(this._transform.pos, p.scl), p.rot), p.pos),
