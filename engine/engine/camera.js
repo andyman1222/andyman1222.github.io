@@ -67,7 +67,7 @@ class _Camera extends _Primitive {
 		if (this._enabled) {
 			this._bufs.forEach((f) => {
 				f._clearBuffers();
-				var p = this._getWorldTransform(true);
+				var p = this._getWorldTransform();
 				f._setViewMatrix(this._getViewMat(), p.pos, p.scl)
 				f._setProjMatrix(this._currentProjMat);
 				//adding objects
