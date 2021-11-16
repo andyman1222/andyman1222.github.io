@@ -254,6 +254,8 @@ class _ScreenBuffer {
 				//this._gTarget.generateMipmap(this._gTarget.TEXTURE_2D);
 				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MIN_FILTER, this._gTarget.NEAREST);
 				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_MAG_FILTER, this._gTarget.NEAREST);
+				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_WRAP_S, this._gTarget.CLAMP_TO_EDGE)
+				this._gTarget.texParameteri(this._gTarget.TEXTURE_2D, this._gTarget.TEXTURE_WRAP_T, this._gTarget.CLAMP_TO_EDGE)
 				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
 				if (!(this._setupInfo.texStr instanceof Array)) {

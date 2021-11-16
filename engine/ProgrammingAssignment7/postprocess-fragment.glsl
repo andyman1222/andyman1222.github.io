@@ -19,11 +19,11 @@ out vec4 fColor;
 const int samples = 4;
 const float minDepth = .1;
 const float dist = 3.;
-const float scale = 20.;
+const float scale = 50.;
 
 void main(void){
     vec4 results;
-    fColor = texture(scene, round(texCoords*vec2(scale, scale))/vec2(scale,scale))*length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)));
+    fColor = mix(texture(scene, texCoords), texture(scene, round(texCoords*vec2(scale, scale))/vec2(scale,scale)), length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale))));
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
