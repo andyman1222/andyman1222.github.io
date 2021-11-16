@@ -182,7 +182,7 @@ class candle{
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
-		this.obj._attachChildToSelf(f.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
+		this.obj._attachChildToSelf(this.f.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
 		this.obj._attachSelfToParent(cake, {pos: "keepWorld", rot: "keepWorld", scl: "keepWorld"})
 	}
 }
