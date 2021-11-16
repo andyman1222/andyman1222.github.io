@@ -36,6 +36,7 @@ void main(void){
                 results = results + texture(scene, tx);
             }
         }
-        fColor = mix(t, results / (float(samples)*float(samples)), (d.b-minDepth)/scale);
+        fColor = results / (float(samples)*float(samples));
+        //fColor = mix(t, results / (float(samples)*float(samples)), (d.b-minDepth)/scale);
     }
 }
