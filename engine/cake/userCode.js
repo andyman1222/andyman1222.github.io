@@ -144,7 +144,7 @@ class flame{
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._transform.scl[1] = (Math.random()*.5)+.5
 		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 10*(Math.random()-.5))
-		this.obj._transform.rot = addRotation(this.obj._transform.rot, eulerToQuat(up(this.obj._transform.rot),d*((Math.random()-.5)*2)))
+		this.obj._transform.rot = addRotation(this.obj._transform.rot, eulerToQuat(up(this.obj._transform.rot),d*10*((Math.random()-.5)*2)))
 		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
 
@@ -171,7 +171,7 @@ class flame{
 		this.obj._customTickFunc = function(delta, time){
 			this.getMaterials(delta);
 		}.bind(this)
-		this.obj._transform.rot = addRotation(this.obj._transform.rot, eulerToQuat(up(this.obj._transform.rot),360*((Math.random()-.5)*2)))
+		this.obj._transform.rot = eulerToQuat(up(this.obj._transform.rot),360*((Math.random()-.5)*2))
 	}
 }
 
