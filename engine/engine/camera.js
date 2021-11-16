@@ -102,7 +102,7 @@ class _Camera extends _Primitive {
 					f._normals =  flatten(normals)
 					f._tangents =  flatten(tangents)
 					f._points =  flatten(points)
-					f._pointIndicies = new UInt16Array(pointIndicies)
+					f._pointIndicies = new Uint16Array(pointIndicies)
 					f._renderData();
 					x += this._debugOffsets[o]
 				}

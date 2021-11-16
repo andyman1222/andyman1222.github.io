@@ -298,7 +298,7 @@ class _Object extends _Primitive {
 		for (var g = 0; g < this._drawInfo.length; g++) {
 			var d = this._drawInfo[g]
 			d.startInd = tmpDPI.length
-			d.pointIndex = new UInt16Array(d.pointIndex)
+			d.pointIndex = new Uint16Array(d.pointIndex)
 			d.tangents = flatten(d.tangents)
 			d.texCoords = flatten(d.texCoords)
 			for (var i = 0; i < d.pointIndex.length; i++) {
@@ -428,7 +428,7 @@ class _Object extends _Primitive {
 			buf._normals =  flatten(normals)
 			buf._tangents =  flatten(tangents)
 			buf._points =  flatten(points)
-			buf._pointIndicies = new UInt16Array(pointIndicies)
+			buf._pointIndicies = new Uint16Array(pointIndicies)
 			buf._renderData();
 		} //camera will take care of final _renderData for this object
 	}
