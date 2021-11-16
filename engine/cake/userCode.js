@@ -143,7 +143,7 @@ class flame{
 		this.obj._matInfo[3][4][3] = (Math.random()*.5)+.5
 		this.obj._matInfo[4][4][3] = (Math.random()*.5)+.5
 		this.obj._transform.rot = addRotation(this.obj._parent._getWorldTransform().rot, eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), Math.random()*.1))
-		this.light._attenuation=((this.obj._matInfo[2][4][3]+this.obj._matInfo[3][4][3]+this.obj._matInfo[4][4][3])/3)*lightC
+		this.light._attenuation=((this.obj._matInfo[2][4][3]+this.obj._matInfo[3][4][3]+this.obj._matInfo[4][4][3])/3)*this.lightC
 	}
 
 	constructor(){
@@ -157,7 +157,7 @@ class flame{
 		for(var x = 0; x < 5; x++)
 			matArr.push(3, 3, 4)
 		this.light = new _PointLight({pos: vec3(0,1,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
-			vec4(.9,.7,.5,1), null, lightC)
+			vec4(.9,.7,.5,1), null, this.lightC)
 		
 		this.obj = new _Object({pos: vec3(0, 4, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
 		[_DrawInfo(tmp.index, matArr, tmp.texCoords, tmp.normals, tmp.tangents)], tmp.points, [new _BasicMaterial(vec4(0, 0, 0, 0)),
