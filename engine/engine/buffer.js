@@ -454,15 +454,6 @@ class _ScreenBuffer {
 		if (this._points.length > 0) {
 			this._customPreRenderFunction(this._gTarget, this._program);
 
-			if (this._posBuffer != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inPos);
-				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
-				this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndicies, this._gTarget.STATIC_DRAW)
-			}
-
 			if (this._matIndBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Int16Array(this._matIndicies), this._gTarget.STATIC_DRAW);
@@ -504,6 +495,16 @@ class _ScreenBuffer {
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._texCoords, this._gTarget.STATIC_DRAW);
 				this._gTarget.vertexAttribPointer(this._inTexCoord, 2, this._gTarget.FLOAT, false, 0, 0);
 				this._gTarget.enableVertexAttribArray(this._inTexCoord);
+			}
+
+			if (this._posBuffer != null) {
+				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
+				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
+				this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndicies, this._gTarget.STATIC_DRAW)
+				this._gTarget.enableVertexAttribArray(this._inPos);
+				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
+				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
 			}
 
 			//draw
