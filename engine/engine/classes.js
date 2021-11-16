@@ -263,12 +263,17 @@ class _Object extends _Primitive {
 	_visible = []
 	_id = -1
 	_bounds;
+	_drawPoints = new Float32Array()
+	_drawNormals = new Float32Array()
+	_drawTangents = new Float32Array()
+	
 
 	/**To be called whenever individual points are adjusted */
 	_reevaluateBounds(pointInfo, boundsType) {
 		this._bounds = new _Bounds(pointInfo, boundsType);
 	}
 
+	/**To be called whenever individual points are adjusted. Updates float32arrays  */
 	/**
 	 * 
 	 * @param {transform} startTransform
@@ -280,7 +285,7 @@ class _Object extends _Primitive {
 		super(startTransform)
 		this._id = _newID();
 		this._drawInfo = drawInfo;
-		this._pointInfo = pointInfo
+		this._pointInfo = pointInfo;
 		this._reevaluateBounds(pointInfo, boundsType)
 		this._isEngine = isEngine
 		this._matInfo = matInfo
@@ -320,6 +325,7 @@ class _Object extends _Primitive {
 				if (d.textureIndex != -1)
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
+				buf._texCoords = d.texCoords
 				for (var ii = 0; ii < i.length; ii++) {
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
@@ -333,7 +339,7 @@ class _Object extends _Primitive {
 							buf._tangents.push(d.tangents[ii])
 
 					}
-					buf._texCoords.push(d.texCoords[ii])
+					//buf._texCoords.push(d.texCoords[ii])
 				}
 
 				if ((d.textureIndex != -1 || camera._showNormalTangents) && camera._render)
