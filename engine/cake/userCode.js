@@ -217,7 +217,7 @@ function init() {
 		}
 	}
 	var a = Math.random()*360;
-	var r = Math.random();
+	var r = Math.random()*.9;
 	var px = Math.floor((Math.cos(radians(a))*r)*10)
 	var py = Math.floor((Math.sin(radians(a))*r)*10)
 	for(var x = 0; x < 52; x++){
