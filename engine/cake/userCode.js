@@ -193,7 +193,7 @@ var candles = []
 var cake
 function init() {
 	_mainCamera._transform.pos = vec3(0, 5, -15)
-	new _AmbientLight(vec4(.9/10,.7/10,.5/10,1), null)
+	new _AmbientLight(vec4(.9/5,.7/5,.5/5,1), null)
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{ pointIndex: tmp.index, matIndex: 
@@ -219,13 +219,13 @@ function init() {
 		}
 	}
 	var a = Math.random()*360;
-	var r = Math.random()*.8;
+	var r = Math.random()*.9;
 	var px = Math.floor((Math.cos(radians(a))*r)*10)
 	var py = Math.floor((Math.sin(radians(a))*r)*10)
 	for(var x = 0; x < 52; x++){
 		while(arr[px+10][py+10] == true){
 			a = Math.random()*360;
-			r = Math.random();
+			r = Math.random()*.9;
 			px = Math.floor((Math.cos(radians(a))*r)*10)
 			py = Math.floor((Math.sin(radians(a))*r)*10)
 		}
