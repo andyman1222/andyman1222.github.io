@@ -11,7 +11,7 @@ class _Primitive {
 	_parent = null
 	_prevTransform;
 	_updated;
-	_flipZRotation = true;
+	_flipZRotation = false;
 	_customTickFunc = function (delta, time) { }
 	_customPreTick = function (delta, time) { }
 	_customPostTick = function (delta, time) { }
