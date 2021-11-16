@@ -179,7 +179,7 @@ class candle{
 	f;
 	constructor(posX, posY, cake){
 		var c = _getCylinder(vec3(0,2,0),vec3(.5, 2, .5), 16)
-		this.obj = new _Object({pos: vec3(posX, 5, posY), rot: eulerTOQuat(vec3(0,1,0),0), scl: vec3(1,1,1)},
+		this.obj = new _Object({pos: vec3(posX, 5, posY), rot: eulerToQuat(vec3(0,1,0),0), scl: vec3(1,1,1)},
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
