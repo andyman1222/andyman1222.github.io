@@ -203,7 +203,7 @@ function init() {
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
-		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,1), 1, 1, 1, 10), new _Material(-1)], _Bounds._RECT)
+		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,1), 0, 1, 1, vec4(0,0,0,1), 10), new _Material(-1)], _Bounds._RECT)
 
 	var c = _getCylinder(vec3(0,0,0),vec3(10, 4, 10), 50)
 	cake = new _Object({pos: vec3(0,1,0), rot: eulerToQuat(vec3(0,0,1),0), scl: vec3(1,1,1)}, [_DrawInfo(
