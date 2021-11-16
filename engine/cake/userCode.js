@@ -219,13 +219,13 @@ function init() {
 		}
 	}
 	var a = Math.random()*360;
-	var r = Math.random()*.9;
+	var r = Math.random()*.8;
 	var px = Math.floor((Math.cos(radians(a))*r)*10)
 	var py = Math.floor((Math.sin(radians(a))*r)*10)
 	for(var x = 0; x < 52; x++){
 		while(arr[px+10][py+10] == true){
 			a = Math.random()*360;
-			r = Math.random()*.9;
+			r = Math.random()*.8;
 			px = Math.floor((Math.cos(radians(a))*r)*10)
 			py = Math.floor((Math.sin(radians(a))*r)*10)
 		}
