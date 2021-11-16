@@ -147,7 +147,7 @@ class flame{
 	}
 
 	constructor(){
-		var tmp = _getSphere(vec3(0,1,0), vec3(1, 2, 1), 5, 3);
+		var tmp = _getSphere(vec3(0,1,0), vec3(.5, 2, .5), 5, 3);
 		var matArr = []
 		for(var x = 0; x < 5; x++)
 				matArr.push(0, 1, 1)
@@ -159,7 +159,7 @@ class flame{
 		this.light = new _PointLight({pos: vec3(0,1,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
 			vec4(.9,.7,.5,1), null, this.lightC)
 		
-		this.obj = new _Object({pos: vec3(0, 4, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
+		this.obj = new _Object({pos: vec3(0, 2, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
 		[_DrawInfo(tmp.index, matArr, tmp.texCoords, tmp.normals, tmp.tangents)], tmp.points, [new _BasicMaterial(vec4(.2,.1,0,.9),0,0,0,vec4(.9*2,.6*2,.2*2,1)),
 			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9*2,.9*2,.8*2,1)),
 			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9*2,.7*2,.5*2,1)),
@@ -177,7 +177,7 @@ class candle{
 	obj;
 	f;
 	constructor(posX, posY, cake){
-		var c = _getCylinder(vec3(0,1,0),vec3(1, 2, 1), 16)
+		var c = _getCylinder(vec3(0,1,0),vec3(.5, 1, .5), 16)
 		this.obj = new _Object({pos: vec3(posX, 2, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
@@ -230,7 +230,7 @@ function init() {
 		arr[px+10][py+10] = true
 		candles.push(new candle(px, py, cake))
 	}
-	cake._transform.scl=vec3(.25,.25,.25)
+	cake._transform.scl=vec3(.25,1,.25)
 }
 
 window.onload = function () {
