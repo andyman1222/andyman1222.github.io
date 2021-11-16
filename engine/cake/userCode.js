@@ -221,11 +221,11 @@ function init() {
 	var px = Math.floor((Math.cos(radians(a))*r)*10)
 	var py = Math.floor((Math.sin(radians(a))*r)*10)
 	for(var x = 0; x < 52; x++){
-		while(arr[px/10][py/10] == true){
+		while(arr[px+10][py+10] == true){
 			px = Math.floor((Math.cos(radians(a))*r)*10)
 			py = Math.floor((Math.sin(radians(a))*r)*10)
 		}
-		arr[px/10][py/10] = true
+		arr[px+10][py+10] = true
 		candles.push(new candle(px, py, cake))
 	}
 }
