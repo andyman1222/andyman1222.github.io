@@ -166,7 +166,7 @@ class flame{
 			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9*2,.7*2,.5*2,1)),
 			new _BasicMaterial(vec4(0, 0, 0, .9), 0, 0, 0, vec4(.2*2,0,.5*2,.5)),
 			new _BasicMaterial(vec4(0, 0, 0, 0))], _Bounds._SPHERE)
-		this.light._attachSelfToParent(this.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
+		this.light._attachSelfToParent(this.obj, {pos: "relative", rot: "keepWorld", scl: "keepWorld"})
 		this.obj._customTickFunc = function(delta, time){
 			this.getMaterials();
 		}.bind(this)
@@ -183,7 +183,7 @@ class candle{
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
-		this.obj._attachChildToSelf(this.f.obj, {pos: "dontChange", rot: "keepWorld", scl: "keepWorld"})
+		this.obj._attachChildToSelf(this.f.obj, {pos: "relative", rot: "keepWorld", scl: "keepWorld"})
 		this.obj._attachSelfToParent(cake, {pos: "keepWorld", rot: "keepWorld", scl: "keepWorld"})
 	}
 }
@@ -218,7 +218,7 @@ function init() {
 		}
 	}
 	var a = Math.random()*360;
-	var r = Math.random()*.9;
+	var r = Math.random()*.8;
 	var px = Math.floor((Math.cos(radians(a))*r)*10)
 	var py = Math.floor((Math.sin(radians(a))*r)*10)
 	for(var x = 0; x < 52; x++){
