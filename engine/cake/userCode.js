@@ -137,12 +137,12 @@ var rClick = 0
 class flame{
 	obj;
 	light;
-	lightC = .5;
+	lightC = .25;
 	getMaterials(){
 		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
-		this.obj._transform.scl[1] = (Math.random())+.5
+		this.obj._transform.scl[1] = (Math.random()*.5)+.25
 		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 3*(Math.random()-.5))
 		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
@@ -160,7 +160,7 @@ class flame{
 		this.light = new _PointLight({pos: vec3(0,4,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
 			vec4(.9,.7,.5,1), null, this.lightC)
 		
-		this.obj = new _Object({pos: vec3(0, 2, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
+		this.obj = new _Object({pos: vec3(0, 4, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
 		[_DrawInfo(tmp.index, matArr, tmp.texCoords, tmp.normals, tmp.tangents)], tmp.points, [new _BasicMaterial(vec4(.2,.1,0,.9),0,0,0,vec4(.9*2,.6*2,.2*2,1)),
 			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9*2,.9*2,.8*2,1)),
 			new _BasicMaterial(vec4(0,0,0,.9),0,0,0,vec4(.9*2,.7*2,.5*2,1)),
