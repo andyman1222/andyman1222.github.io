@@ -142,8 +142,8 @@ class flame{
 		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.25)+.5
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
-		this.obj._transform.scl[1] = (Math.random()*.5)+.25
-		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 3*(Math.random()-.5))
+		this.obj._transform.scl[1] = (Math.random()*.5)+.5
+		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 10*(Math.random()-.5))
 		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
 
@@ -179,7 +179,7 @@ class candle{
 	f;
 	constructor(posX, posY, cake){
 		var c = _getCylinder(vec3(0,2,0),vec3(.5, 2, .5), 16)
-		this.obj = new _Object({pos: vec3(posX, 5, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
+		this.obj = new _Object({pos: vec3(posX, 5, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 10*(Math.random()-.5)), scl: vec3(1,1,1)},
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
