@@ -12,15 +12,15 @@ class _Primitive {
 	_prevTransform;
 	_updated;
 	_flipZRotation = false;
-	_customTickFunc = function(delta, time) {}
-	_customPreTick = function(delta, time) {}
-	_customPostTick = function(delta, time) {}
+	_customTickFunc = function (delta, time) { }
+	_customPreTick = function (delta, time) { }
+	_customPostTick = function (delta, time) { }
 
 	_cameraMask = 0x1;
 	_bufferMask = 0x1;
 	_lightMask = 0x1;
 
-	constructor(transform, bufferMask= 0x1, cameraMask= 0x1, lightMask= 0x1) {
+	constructor(transform, bufferMask = 0x1, cameraMask = 0x1, lightMask = 0x1) {
 		this._transform = transform
 		this._bufferMask = bufferMask
 		this._cameraMask = cameraMask
@@ -33,27 +33,31 @@ class _Primitive {
 	 */
 
 	_getWorldTransform(flipZ = false) {
-		if(this._parent != null){
+		if (this._parent != null) {
 			var p = this._parent._getWorldTransform(flipZ)
-			if(p._flipZRotation)
-				return {pos: add(rotateAbout(mult(this._transform.pos, p.scl), p.rot), p.pos),
+			if (p._flipZRotation)
+				return {
+					pos: add(rotateAbout(mult(this._transform.pos, p.scl), p.rot), p.pos),
 					rot: addRotation(p.rot, this._transform.rot),
-					scl: mult(p.scl, this._transform.scl)}
-			else return {pos: add(mult(vec3(1,1,-1),rotateAbout(mult(mult(this._transform.pos,vec3(1,1,-1)), p.scl), p.rot)), p.pos),
+					scl: mult(p.scl, this._transform.scl)
+				}
+			else return {
+				pos: add(mult(vec3(1, 1, -1), rotateAbout(mult(mult(this._transform.pos, vec3(1, 1, -1)), p.scl), p.rot)), p.pos),
 				rot: addRotation(p.rot, this._transform.rot),
-				scl: mult(p.scl, this._transform.scl)}
+				scl: mult(p.scl, this._transform.scl)
+			}
 		}
-		return {pos: mult(this._transform.pos, vec3(1,1,1)), rot: this._transform.rot, scl: this._transform.scl}
+		return { pos: mult(this._transform.pos, vec3(1, 1, 1)), rot: this._transform.rot, scl: this._transform.scl }
 	}
 
 	_getModelMat(flipZ = false) {
 		var t = this._getWorldTransform(flipZ);
 		//var tmpf = mult(forward(this._transform.rot),vec3(1,1,flipZ?-1:1)), tmpu = mult(up(this._transform.rot), vec3(1,1,flipZ?-1:1))
-		
+
 		return mult(
 			mult(translate(t.pos[0], t.pos[1], -t.pos[2]),
 				scale(t.scl[0], t.scl[1], t.scl[2])),
-				quatToMat4(t.rot))
+			quatToMat4(t.rot))
 	}
 
 	/**
@@ -152,7 +156,7 @@ class _Primitive {
 		this._customPreTick(delta, time)
 	}
 
-	_onTick(delta, time){
+	_onTick(delta, time) {
 		this._customTickFunc(delta, time)
 	}
 
@@ -186,11 +190,11 @@ class _Bounds {
 		this._parentObject = parentObject;
 		this._updateBounds(pointInfo);
 		//get center of all points rendered
-		
+
 	}
 
-	_updateBounds(pointInfo){
-		this._pos = vec3(0,0,0)
+	_updateBounds(pointInfo) {
+		this._pos = vec3(0, 0, 0)
 		if (pointInfo.length > 0) {
 			var min = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2]) //POINTERS PLS
 			var max = vec3(pointInfo[0][0], pointInfo[0][1], pointInfo[0][2])
@@ -207,9 +211,9 @@ class _Bounds {
 			this._extent = mult(.5, subtract(max, min));
 			if (this._type == _Bounds._SPHERE) {
 				//get furthest point from points rendered
-				
+
 				this._shape = _getSphere(this._pos, this._extent, 5, 5)
-				
+
 			} else if (this._type == _Bounds._RECT) {
 				this._shape = _getRect(this._pos, this._extent);
 				//set pos to the middle of the min and max points
@@ -224,7 +228,7 @@ class _Bounds {
 	//defines points to draw _Bounds, manually
 	_getDrawBounds(multMat = vec3(1, 1, 1)) {
 		var r = []
-		if(!this._noDraw) {
+		if (!this._noDraw) {
 			var tmp = this._shape;
 			for (var i = 0; i < tmp.index.length; i++)
 				r.push(mult(multMat, vec3to4(tmp.points[tmp.index[i]])))
@@ -235,7 +239,7 @@ class _Bounds {
 	//defines points to draw _Bounds, manually
 	_getGraphicsDrawBounds(boundsColor = vec4(1, 1, 0, 1)) {
 		var r = { points: [], colors: [] }
-		if(!this._noDraw) {
+		if (!this._noDraw) {
 			var tmp = this._shape;
 			r.colors.push(boundsColor);
 			for (var i = 0; i < tmp.index.length; i++)
@@ -318,17 +322,17 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
-					buf._loadMaterial(this._matInfo[d.matIndex[ii%d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
+					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
 						case _gl.TRIANGLES:
-						buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
-						buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
-						break;
-					default:
-						buf._normals.push(d.normals[ii])
-						buf._tangents.push(d.tangents[ii])
-						
+							buf._normals.push(d.normals[Math.floor(ii / 3)]) //push 3 for each vert
+							buf._tangents.push(d.tangents[Math.floor(ii / 3)]) //push 3 for each vert
+							break;
+						default:
+							buf._normals.push(d.normals[ii])
+							buf._tangents.push(d.tangents[ii])
+
 					}
 					buf._texCoords.push(d.texCoords[ii])
 				}
