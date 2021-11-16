@@ -143,14 +143,14 @@ class flame{
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.5)+.5
 		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.5)+.5
 		this.obj._transform.rot = addRotation(this.obj._parent._getWorldTransform().rot, eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), Math.random()*.1))
-		this.light._attenuation=((this.obj._matInfo[2][4][3]+this.obj._matInfo[3][4][3]+this.obj._matInfo[4][4][3])/3)*this.lightC
+		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
 
 	constructor(){
 		var tmp = _getSphere(vec3(0,1,0), vec3(1, 2, 1), 5, 3);
 		var matArr = []
 		for(var x = 0; x < 5; x++)
-				matArr.push(1, 1, 0)
+				matArr.push(0, 0, 1)
 		for(var i = 1; i < 4; i++)
 			for(var x = 0; x < 5; x++)
 				matArr.push(i, i+1, i+1, i+1, i, i)
