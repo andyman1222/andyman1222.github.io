@@ -499,12 +499,12 @@ class _ScreenBuffer {
 
 			if (this._posBuffer != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
+				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
+				
 				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
 				this._gTarget.bufferData(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndicies, this._gTarget.STATIC_DRAW)
-				this._gTarget.enableVertexAttribArray(this._inPos);
 				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
-				this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, this._pointIndBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
+				this._gTarget.enableVertexAttribArray(this._inPos);
 			}
 
 			//draw
@@ -512,7 +512,7 @@ class _ScreenBuffer {
 			//for (var i = 0; i < this._types.length; i++) {
 				this._customRenderFunction(this._gTarget, this._program);
 				//this._gTarget.drawArrays(this._types[i], offset, this._offsets[i]);
-				this._gTarget.drawElements(this._types, 0, this._gTarget.UNSIGNED_SHORT, this._offsets)
+				this._gTarget.drawElements(this._types, this._pointIndicies.length, this._gTarget.UNSIGNED_SHORT, 0)
 				//offset += this._offsets[i];
 			//}
 			this._customPostRenderFunction(this._gTarget, this._program);
@@ -537,12 +537,10 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
-		//this._gTarget.bindBuffer(this._gTarget.ELEMENT_ARRAY_BUFFER, null);
 		for(var i = 0; i < this._postTexCount; i++){
 			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
 			this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
 		}
-
 
 		this._gTarget.clearColor(this._clearColor[0], this._clearColor[1], this._clearColor[2], this._clearColor[3])
 		this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
