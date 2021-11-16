@@ -157,7 +157,7 @@ class _Camera extends _Primitive {
 	constructor(targetBuffers, pos = vec3(0, 0, 0), rot = eulerToQuat(vec3(1, 0, 0), 0), scl = vec3(1, 1, 1), fov = 90, aspect = -1, orthographic = false, range = [.1, 200000], enabled = true, renderEngine = false) {
 		//if(rot.length != 4) throw "Rotations must be quaternions!"
 		super({ pos: pos, rot: rot, scl: scl })
-		this._flipZRotation = true
+		//this._flipZRotation = true
 		if(targetBuffers instanceof Array) this._bufs = targetBuffers
 		else this._bufs = [targetBuffers]
 		this._enabled = enabled

@@ -203,8 +203,8 @@ function init() {
 	type: _gl.TRIANGLES, normals: s.normals, tangents: s.tangents, textureIndex: -1}], s.points, [new _BasicMaterial()], _Bounds._RECT, [])
 	x._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 	t._customTickFunc = function(d, t) {this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(1,0,0), d*.01))}.bind(t)
-
-	
+	var testLight = new _PointLight({pos: vec3(0,-1,0),rot:eulerToQuat(vec3(1,0,0),0),scl: vec3(1,1,1)}, vec4(1,1,1,1),null,10)
+	testLight._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 }
 
 window.onload = function () {
