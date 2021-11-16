@@ -171,7 +171,7 @@ class flame{
 		this.obj._customTickFunc = function(delta, time){
 			this.getMaterials(delta);
 		}.bind(this)
-		
+		this.obj._transform.rot = addRotation(this.obj._transform.rot, eulerToQuat(up(obj._transform.rot),360*d*((Math.random()-.5)*2)))
 	}
 }
 
