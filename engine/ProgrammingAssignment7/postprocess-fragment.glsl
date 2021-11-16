@@ -25,7 +25,8 @@ void main(void){
     vec4 results;
     vec4 t = texture(scene, texCoords);
     vec4 d = texture(depth, texCoords);
-    //fColor = vec4(t.rgb, 1);
+    fColor = texture(scene, round(texCoords*vec2(10, 10))/vec2(10,10))*length(d);
+    /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
     else{
@@ -38,6 +39,6 @@ void main(void){
             }
         }
         fColor = results / (float(samples)*float(samples));*/
-        //fColor = mix(t, results / (float(samples)*float(samples)), (d.b-minDepth)/scale);
+        //fColor = mix(t, results / (float(samples)*float(samples)), (d.b-minDepth)/scale);*/
     }
 }
