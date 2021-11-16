@@ -19,6 +19,5 @@ out vec4 fColor;
 void main(void){
     vec4 t = texture(scene, texCoords);
     //fColor = vec4(t.rgb, 1);
-    //fColor = t;
-    fColor=vec4(1,0,0,1);//test
+    fColor = t;
 }
