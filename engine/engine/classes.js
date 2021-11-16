@@ -74,7 +74,7 @@ class _Primitive {
 		switch (attachType.pos) {
 			case "keepWorld":
 				this._transform.pos = rotateAbout(subtract(wt.pos, pt.pos), it.rot)
-				console.log(this._transform.pos)
+				//console.log(this._transform.pos)
 				break
 			case "relative":
 				if (newAttachTransform == null)
@@ -269,7 +269,6 @@ class _Object extends _Primitive {
 		this._bounds = new _Bounds(pointInfo, boundsType);
 	}
 
-
 	/**
 	 * 
 	 * @param {transform} startTransform
@@ -322,6 +321,8 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
+					if(ii%3 == 0)
+						buf._renderData();
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
@@ -335,6 +336,7 @@ class _Object extends _Primitive {
 
 					}
 					buf._texCoords.push(d.texCoords[ii])
+					
 				}
 
 				if ((d.textureIndex != -1 || camera._showNormalTangents) && camera._render)
