@@ -398,7 +398,7 @@ class _Object extends _Primitive {
 				buf._tangents = d.tangents
 				for (var ii = 0; ii < i.length; ii++) {
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
-					buf._points.push(this._pointInfo[i[ii]])
+					//buf._points.push(this._pointInfo[i[ii]])
 
 					//buf._texCoords.push(d.texCoords[ii])
 				}

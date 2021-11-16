@@ -509,13 +509,13 @@ class _ScreenBuffer {
 			}
 
 			//draw
-			var offset = 0;
-			for (var i = 0; i < this._types.length; i++) {
+			//var offset = 0;
+			//for (var i = 0; i < this._types.length; i++) {
 				this._customRenderFunction(this._gTarget, this._program);
 				//this._gTarget.drawArrays(this._types[i], offset, this._offsets[i]);
-				this._gTarget.drawElements(this._types[i], this._offsets[i], this._gTarget.UNSIGNED_SHORT, offset)
-				offset += this._offsets[i];
-			}
+				this._gTarget.drawElements(this._types, 0, this._gTarget.UNSIGNED_SHORT, this._offsets)
+				//offset += this._offsets[i];
+			//}
 			this._customPostRenderFunction(this._gTarget, this._program);
 		}
 		/*var tmp = this._gTarget.getError()
