@@ -137,7 +137,7 @@ var rClick = 0
 class flame{
 	obj;
 	light;
-	lightC = .1;
+	lightC = 1;
 	getMaterials(){
 		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.5)+.5
 		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.5)+.5
@@ -178,7 +178,7 @@ class candle{
 	f;
 	constructor(posX, posY, cake){
 		var c = _getCylinder(vec3(0,1,0),vec3(.5, 1, .5), 16)
-		this.obj = new _Object({pos: vec3(posX, 2, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
+		this.obj = new _Object({pos: vec3(posX, 4, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
@@ -202,7 +202,7 @@ function init() {
 			1, 1, 1, 1, 1, 1,
 			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
 		, tmp.points, [new _BasicMaterial(vec4(.5,.5,.5,.5), 0, 1, 1, 10), new _Material(-1)], _Bounds._RECT)
-	var c = _getCylinder(vec3(0,0,0),vec3(10, 1, 10), 50)
+	var c = _getCylinder(vec3(0,0,0),vec3(10, 4, 10), 50)
 	cake = new _Object({pos: vec3(0,1,0), rot: eulerToQuat(vec3(0,0,1),0), scl: vec3(1,1,1)}, [_DrawInfo(
 		c.index, [0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(.8, .8, .8, 1), 1, .2, 1, 1),
@@ -230,7 +230,7 @@ function init() {
 		arr[px+10][py+10] = true
 		candles.push(new candle(px, py, cake))
 	}
-	cake._transform.scl=vec3(.25,1,.25)
+	cake._transform.scl=vec3(.25,.25,.25)
 }
 
 window.onload = function () {
