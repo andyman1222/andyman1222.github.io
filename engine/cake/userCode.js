@@ -91,7 +91,6 @@ function userMouseEvent(e) {
 
 
 function userTick(delta, time) {
-	directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (_mainCamera._enabled) {
@@ -134,18 +133,6 @@ function userTick(delta, time) {
 				mouseMove = false
 			}
 		}
-
-	/*if(!pointerLocked){
-		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(right(_mainCamera._transform.rot), ySpeed))
-		if(Math.abs(xSpeed) > .1)
-			xSpeed -= Math.sign(xSpeed)*delta*(maxSpeed*.001)
-		else xSpeed = 0
-
-		if(Math.abs(ySpeed) > .1)
-			ySpeed -= Math.sign(ySpeed)*delta*(maxSpeed*.001)
-		else ySpeed = 0
-	}*/
 }
 
 var prevPos = 0
@@ -157,10 +144,6 @@ class candle{
 
 function init() {
 	_mainCamera._transform.pos = vec3(0, 5, -15)
-	//new _AmbientLight(vec4(.2, .2, .2, 1), null)
-	//directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(1, 1, 1, 1), null)
-	//var playerLight = new _PointLight({ pos: vec3(0, -3, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(.5, .5, 0, 1), null, 10)
-	//_mainCamera._attachChildToSelf(playerLight, "relative")
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
 		{ pointIndex: tmp.index, matIndex: 
