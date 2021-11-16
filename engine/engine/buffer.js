@@ -454,8 +454,6 @@ class _ScreenBuffer {
 		if (this._points.length > 0) {
 			this._customPreRenderFunction(this._gTarget, this._program);
 
-			this._gTarget.bindBuffer
-
 			if (this._posBuffer != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, this._points, this._gTarget.STATIC_DRAW);
