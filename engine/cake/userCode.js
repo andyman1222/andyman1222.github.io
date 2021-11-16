@@ -139,24 +139,25 @@ class flame{
 	light;
 	lightC = .5;
 	getMaterials(){
-		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.5)+.5
-		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.5)+.5
-		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.5)+.5
+		this.obj._matInfo[2]._parameters[4][3] = (Math.random()*.25)+.5
+		this.obj._matInfo[3]._parameters[4][3] = (Math.random()*.25)+.5
+		this.obj._matInfo[4]._parameters[4][3] = (Math.random()*.25)+.5
+		this.obj._transform.scl[1] = (Math.random())+.5
 		this.obj._transform.rot = eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 3*(Math.random()-.5))
 		this.light._attenuation=((this.obj._matInfo[2]._parameters[4][3]+this.obj._matInfo[3]._parameters[4][3]+this.obj._matInfo[4]._parameters[4][3])/3)*this.lightC
 	}
 
 	constructor(){
-		var tmp = _getSphere(vec3(0,1,0), vec3(.5, 2, .5), 5, 3);
+		var tmp = _getSphere(vec3(0,1,0), vec3(.5, 1, .5), 5, 3);
 		var matArr = []
 		for(var x = 0; x < 5; x++)
-				matArr.push(0, 1, 1)
+				matArr.push(1, 1, 0)
 		for(var i = 1; i < 4; i++)
 			for(var x = 0; x < 5; x++)
 				matArr.push(i, i+1, i+1, i+1, i, i)
 		for(var x = 0; x < 5; x++)
 			matArr.push(4, 4, 3)
-		this.light = new _PointLight({pos: vec3(0,1,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
+		this.light = new _PointLight({pos: vec3(0,4,0),rot: eulerToQuat(vec3(0,1,0),0),scl: vec3(1,1,1)},
 			vec4(.9,.7,.5,1), null, this.lightC)
 		
 		this.obj = new _Object({pos: vec3(0, 2, 0), rot: eulerToQuat(normalize(vec3(0, 1, 0)), 0), scl: vec3(1,1,1)}, 
@@ -178,7 +179,7 @@ class candle{
 	f;
 	constructor(posX, posY, cake){
 		var c = _getCylinder(vec3(0,2,0),vec3(.5, 2, .5), 16)
-		this.obj = new _Object({pos: vec3(posX, 4, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
+		this.obj = new _Object({pos: vec3(posX, 5, posY), rot: eulerToQuat(normalize(vec3(Math.random(), 0, Math.random())), 5*(Math.random()-.5)), scl: vec3(1,1,1)},
 		[_DrawInfo(c.index, [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1], c.texCoords, c.normals, c.tangents)],
 		c.points, [new _BasicMaterial(vec4(1,1,1,1)), new _BasicMaterial(vec3to4(normalize(vec3(Math.random(), Math.random(), Math.random()))))], _Bounds._RECT)
 		this.f = new flame()
