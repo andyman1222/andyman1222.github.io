@@ -313,9 +313,7 @@ class _Object extends _Primitive {
 				if (((i.length + buf._points.length > buf._bufLimit) || d.textureIndex != -1) && camera._render)
 					buf._renderData();
 
-				if (_offsetThreshold > i.length)
-					buf._offsets.push(i.length)
-				else buf._offsets.push(_offsetThreshold)
+				buf._offsets.push(i.length)
 				
 				buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
 
@@ -323,13 +321,6 @@ class _Object extends _Primitive {
 					buf._loadTexture(this._textureInfo[d.textureIndex], camera._cameraMask)
 
 				for (var ii = 0; ii < i.length; ii++) {
-					if (ii != 0 && ii % _offsetThreshold == 0) {
-						buf._renderData();
-						if (_offsetThreshold > i.length-ii)
-							buf._offsets.push(i.length-ii)
-						else buf._offsets.push(_offsetThreshold)
-						buf._types.push(camera._wireframe ? buf._gTarget.LINE_LOOP : d.type)
-					}
 					buf._loadMaterial(this._matInfo[d.matIndex[ii % d.matIndex.length]], d.textureIndex != -1 && !camera._noTexture, camera._wireframe || camera._noLighting, camera._noParallax)
 					buf._points.push(this._pointInfo[i[ii]])
 					switch (d.type) {
