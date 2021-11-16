@@ -30,7 +30,7 @@ void main(void){
         fColor = t;
     else{
         //fColor = vec4(1,0,0,1);
-        fColor = mix(t, texture(scene, texCoords/vec2(5, 5)), (minDepth-clamp(0., 1., d.b))/minDepth);
+        fColor = mix(t, texCoords+texture(scene, texCoords/vec2(5, 5)), (minDepth-d.b)/minDepth);
         /*for(int x = 1; x < samples; x++){
             for(int y = 0; y < samples; y++){
                 vec2 tx = texCoords+vec2(cos((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)), sin((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)));
