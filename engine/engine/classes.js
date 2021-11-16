@@ -11,6 +11,7 @@ class _Primitive {
 	_parent = null
 	_prevTransform;
 	_updated;
+	_flipZRotation = false;
 	_customTickFunc = function(delta, time) {}
 	_customPreTick = function(delta, time) {}
 	_customPostTick = function(delta, time) {}
@@ -34,7 +35,7 @@ class _Primitive {
 	_getWorldTransform(flipZ = false) {
 		if(this._parent != null){
 			var p = this._parent._getWorldTransform(flipZ)
-			if(this instanceof Camera)
+			if(this._flipZRotation)
 				return {pos: add(rotateAbout(mult(this._transform.pos, p.scl), p.rot), p.pos),
 					rot: addRotation(p.rot, this._transform.rot),
 					scl: mult(p.scl, this._transform.scl)}
