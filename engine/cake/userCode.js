@@ -220,6 +220,7 @@ function init() {
 	var r = Math.random();
 	var px = Math.floor((Math.cos(radians(a))*r)*20)
 	var py = Math.floor((Math.sin(radians(a))*r)*20)
+	/*
 	for(var x = 0; x < 52; x++){
 		while(arr[px+20][py+20] == true){
 			px = Math.floor((Math.cos(radians(a))*r)*20)
@@ -227,7 +228,7 @@ function init() {
 		}
 		arr[px+20][py+20] = true
 		candles.push(new candle(px/2, py/2, cake))
-	}
+	}*/
 }
 
 window.onload = function () {
