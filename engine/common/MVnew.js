@@ -864,29 +864,28 @@ function mix(u, v, s) {
 // Vector and Matrix utility functions
 //
 
+//To reduce garbage collection, arrays will be reused
+
 
 function flatten(v) {
-
+  var floats = []
   if (isVector(v)) {
-    var floats = new Float32Array(v.length)
-    for (var i = 0; i < v.length; i++) floats[i] = v[i];
-    return floats;
+    
+    for (var i = 0; i < v.length; i++) floats.push(v[i]);
+    return new Float32Array(floats);
   }
   if (isMatrix(v)) {
 
-    var floats = new Float32Array(v.length * v.length);
     for (var i = 0; i < v.length; i++) for (j = 0; j < v.length; j++) {
       floats[i * v.length + j] = v[j][i];
     }
-    return floats;
+    return new Float32Array(floats);
   }
-
-  var floats = new Float32Array(v.length * v[0].length);
 
   for (var i = 0; i < v.length; i++) for (var j = 0; j < v[0].length; j++) {
     floats[i * v[0].length + j] = v[i][j];
   }
-  return floats;
+  return new Float32Array(floats);
 }
 
 //
