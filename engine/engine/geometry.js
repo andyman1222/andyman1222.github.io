@@ -24,9 +24,6 @@ function _getSphere(pos, radius, numFaces, numLayers, rot=eulerToQuat(vec3(0,1,0
 				tx.push(vec2(txx2, ty))
 				p.push(0)
 				tx.push(vec2(txx,1))
-				
-				
-				
 			}
 			else {
 				
@@ -43,10 +40,6 @@ function _getSphere(pos, radius, numFaces, numLayers, rot=eulerToQuat(vec3(0,1,0
 				tx.push(vec2(txx2,ty2))
 				p.push((((y-1)*numFaces)+x+2)-numFaces)
 				tx.push(vec2(txx,ty2))
-				
-				
-				
-				
 			}
 			
 		}
