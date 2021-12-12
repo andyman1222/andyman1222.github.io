@@ -101,7 +101,7 @@ function quatEqual(q1, q2) {
  * @param {*} rot 
  * @return {Quaternion} (w, x, y, z)
  */
-function eulerToQuat(axis, angle, normFunction = fastNorm) {
+function eulerToQuat(axis, angle, normFunction = normalize) {
     if (length(axis) == 0) throw "Undefined axis (0,0,0)"
     var a = mult(axis, vec3(1, -1, 1))
     var c = Math.cos(radians(angle % 360) / 2)
@@ -270,9 +270,9 @@ function getMidpoint(points) {
  * Returns a 4-vector representation of a plane- (x, y, z, b)
  * @param {*} points 3 points
  */
-function getPlane(points, normFunction = fastNorm) {
+function getPlane(points, normFunction = normalize) {
     if (points.length == 3) {
-        var cp = cross(subtract(points[2], points[0]), subtract(points[1], arguments[0]))
+        var cp = cross(subtract(points[2], points[0]), subtract(points[1], points[0]))
         var d = dot(cp, points[2])
         return normFunction(vec4(cp[0], cp[1], cp[2], d))
     }
@@ -337,14 +337,25 @@ function tanFromTriangleVerts(v, i, t, normFunction = normalize) {
     return r
 }
 
+/**
+ * Flips the u and v values of an array of texcoords
+ */
+function _flipTexCoords(r){
+    var e = []
+    for(var i = 0; i < r.length; i++){
+        e.push(vec2(r[i][1], r[i][0]))
+    }
+    return e
+}
 
 ///////////////////////////////////////////////////
 
 function _newID() { return _id++ }
 
 
-function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, textureIndex = -1, type=_gl.TRIANGLES){
-	return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, textureIndex: textureIndex, type: type}
+function _DrawInfo(pointIndex, matIndex, texCoords, normals, tangents, textureIndex = -1, type=_gl.TRIANGLES, bufferMask = 0x1, cameraMask = 0x1, lightMask = 0x1){
+    return {pointIndex: pointIndex, matIndex: matIndex, texCoords: texCoords, normals: normals, tangents: tangents, textureIndex: textureIndex, type: type, 
+        bufferMask: bufferMask, cameraMask: cameraMask, lightMask: lightMask}
 }
 
 function _Transform(pos=vec3(0,0,0), rot=Quaternion(1,0,0,0), scl=vec3(1,1,1)){

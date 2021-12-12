@@ -48,6 +48,7 @@ class _Light extends _AmbientLight{
 
 class _DirectionalLight extends _AmbientLight{
 
+    _shadowMap;
     /**
      * 
      * @param {*} t transform of light (directional only accounts rotation)

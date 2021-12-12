@@ -470,11 +470,14 @@ function mult(u, v) {
 
     return result;
   }
+  if (u.type == 'vec2' && v.type == 'vec2') {
+    return vec2(u[0] * v[0], u[1] * v[1]);
+  }
   if (u.type == 'vec3' && v.type == 'vec3') {
-    return vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]);;
+    return vec3(u[0] * v[0], u[1] * v[1], u[2] * v[2]);
   }
   if (u.type == 'vec4' && v.type == 'vec4') {
-    return vec4(u[0] * v[0], u[1] * v[1], u[2] * v[2], u[3] * v[3]);;
+    return vec4(u[0] * v[0], u[1] * v[1], u[2] * v[2], u[3] * v[3]);
   }
   throw "mult(): trying to mult incompatible types " + u + " and " + v;
 }
@@ -861,29 +864,28 @@ function mix(u, v, s) {
 // Vector and Matrix utility functions
 //
 
+//To reduce garbage collection, arrays will be reused
+
 
 function flatten(v) {
-
+  var floats = []
   if (isVector(v)) {
-    var floats = new Float32Array(v.length)
-    for (var i = 0; i < v.length; i++) floats[i] = v[i];
-    return floats;
+    
+    for (var i = 0; i < v.length; i++) floats.push(v[i]);
+    return new Float32Array(floats);
   }
   if (isMatrix(v)) {
 
-    var floats = new Float32Array(v.length * v.length);
     for (var i = 0; i < v.length; i++) for (j = 0; j < v.length; j++) {
       floats[i * v.length + j] = v[j][i];
     }
-    return floats;
+    return new Float32Array(floats);
   }
-
-  var floats = new Float32Array(v.length * v[0].length);
 
   for (var i = 0; i < v.length; i++) for (var j = 0; j < v[0].length; j++) {
     floats[i * v[0].length + j] = v[i][j];
   }
-  return floats;
+  return new Float32Array(floats);
 }
 
 //

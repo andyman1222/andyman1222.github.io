@@ -79,8 +79,8 @@ function userMouseEvent(e) {
 					if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
 						_mainCamera._clearDebug()
-						var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
-						var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1)), [mousePos, _mainCamera._getWorldTransform().pos])
+						//var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
+						//var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1), fastNorm), [mousePos, _mainCamera._getWorldTransform().pos])
 					}
 					rClick = 1;
 				}
@@ -95,52 +95,54 @@ function userMouseEvent(e) {
 }
 
 
+
 function userTick(delta, time) {
 	directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
 			if (_mainCamera._enabled) {
+				var d = vec3(0,0,0)
 				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
 				if ((i == 87) || (i == 119)) {//w
-					var n = add(_mainCamera._transform.pos, mult(.01 * delta, vec3(f[0], 0, f[2])))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2, 0, .2)))
+					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
+					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 65) || (i == 97)) {//a
-					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, vec3(r[0], 0, r[2])))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2, 0, .2)))
+					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
+					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 83) || (i == 115)) {//s
-					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, vec3(f[0], 0, f[2])))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2, 0, .2)))
+					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
+					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 68) || (i == 100)) {//d
-					var n = add(_mainCamera._transform.pos, mult(.01 * delta, vec3(r[0], 0, r[2])))
-					if (positionValid(vec3(n[0], 0, n[2]), vec3(.2, 0, .2)))
+					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
+					if (positionValid(vec3(n[0], 0, n[2]), vec3(.5, 0, .5)))
 						_mainCamera._transform.pos = n
 				}
 			}
 			else {
 				if ((i == 87) || (i == 119)) //w
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, forward(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 65) || (i == 97))//a
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, right(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 83) || (i == 115))//s
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, forward(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 68) || (i == 100))//d
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, right(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 81))//q
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.1 * delta, up(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, up(altCamera._transform.rot)))
 
 				if ((i == 69))//e
-					altCamera._transform.pos = add(altCamera._transform.pos, mult(.1 * delta, up(altCamera._transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, up(altCamera._transform.rot)))
 			}
 
 
@@ -176,14 +178,20 @@ function init() {
 	_mainCamera._transform.pos = vec3(-20, 5, -20)
 	new _AmbientLight(vec4(.2, .2, .2, 1), null)
 	directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(1, 1, 1, 1), null)
-	var playerLight = new _PointLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(.5, .5, 0, 1), null, 1)
+	var playerLight = new _PointLight({ pos: vec3(0, -3, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(.5, .5, 0, 1), null, 10)
 	_mainCamera._attachChildToSelf(playerLight, "relative")
 	altCamera._renderEngine = false
 	generateMaze_()
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 1, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
-		{ pointIndex: tmp.index, matIndex: [1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
-		, tmp.points, [new _SolidColorNoLighting(vec4(.5, .5, .5, 1)), new _Material()], _Bounds._RECT)
+		{ pointIndex: tmp.index, matIndex: 
+			[1, 1, 1, 1, 1, 1,//bottom
+			0, 0, 0, 0, 0, 0, //top
+			1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1,
+			1, 1, 1, 1, 1, 1], texCoords: tmp.texCoords, type: _gl.TRIANGLES, normals: tmp.normals, tangents: tmp.tangents, textureIndex: -1}]
+		, tmp.points, [new _Material(), new _Material(-1)], _Bounds._RECT)
 }
 
 window.onload = function () {

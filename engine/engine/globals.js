@@ -8,6 +8,8 @@ _fisqrt.i = new Int32Array( _fisqrt.y.buffer )
 var _time = 0;
 var _id = 0;
 var _requestId = 0;
+var _tickEnabled = true;
+//var _offsetThreshold = 99; //Used to reduce array sizes created with flatten because otherwise JS will waste teime garbage collecting
 
 
 ////USER INPUT
@@ -16,11 +18,12 @@ var _mouseBuffer = []
 
 
 ////ENGINE ELEMENTS
-var _objects = [];
+var _objects = new Map();
 var _buffers = [];
 var _cameras = [];
 var _lights = [];
 var _complexTextures = [];
+var _bounds = []
 
 
 ////COLLISION VARIABLES
@@ -33,6 +36,7 @@ var _canvas;
 var _bData;
 var _mainCamera;
 var _program;
+var _postProcessProgram;
 
 
 ////DEFAULT GAME OBJECTS

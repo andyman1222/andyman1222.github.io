@@ -8,6 +8,31 @@ function userTick(delta, time) {
 function init() {
 }
 
+function userMouseEvent(e) {
+	switch (e.type) {
+		case "mousemove":
+
+			break;
+		case "mousedown":
+
+			break;
+		case "mouseup":
+			
+			break;
+	}
+}
+
+function userKeyEvent(e) {
+	switch (e.type) {
+		case "keydown":
+
+			break;
+		case "keyup":
+
+			break;
+	}
+}
+
 window.onload = function () {
-	this._engineInit("gl-canvas", init, userTick)
+	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
 }
