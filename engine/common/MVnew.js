@@ -887,8 +887,11 @@ function flatten(v) {
     }
     return v._f32Arr;
   }
+  //array of values
   if(v._f32Arr === undefined)
-      v._f32Arr = new Float32Array(v[0].length*v[0][0].length);
+      if(isVector(v[0]))
+        v._f32Arr = new Float32Array(v[0].length*v.length);
+      else v._f32Arr = new Float32Array(v[0].length*v[0][0].length*v.length);
   for (var i = 0; i < v.length; i++) for (var j = 0; j < v[0].length; j++) {
     v._f32Arr[i * v[0].length + j] = v[i][j];
   }
