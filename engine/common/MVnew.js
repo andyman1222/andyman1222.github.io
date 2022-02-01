@@ -57,9 +57,9 @@ function curve() {
 //
 
 function vec2() {
-  var out = new Array(2);
+  var out = new Float32Array(2);
   out.type = 'vec2';
-  out._f32Arr = new Float32Array(2);
+  //out._f32Arr = new Float32Array(2);
 
   switch (arguments.length) {
     case 0:
@@ -84,9 +84,9 @@ function vec2() {
 function vec3() {
   //var result = _argumentsToArray( arguments );
 
-  var out = new Array(3);
+  var out = new Float32Array(3);
   out.type = 'vec3';
-  out._f32Arr = new Float32Array(3);
+  //out._f32Arr = new Float32Array(3);
 
   switch (arguments.length) {
     case 0:
@@ -114,9 +114,9 @@ function vec3() {
 }
 
 function vec4() {
-  var out = new Array(4);
+  var out = new Float32Array(4);
   out.type = 'vec4';
-  out._f32Arr = new Float32Array(4);
+  //out._f32Arr = new Float32Array(4);
 
   switch (arguments.length) {
 
@@ -877,10 +877,7 @@ function mix(u, v, s) {
 function flatten(v) {
   
   if (isVector(v)) {
-    if(v._f32Arr === undefined)
-      v._f32Arr = new Float32Array(v.length);
-    for (var i = 0; i < v.length; i++) v._f32Arr[i] = v[i];
-    return v._f32Arr;
+    return v;
   }
   if (isMatrix(v)) {
     if(v._f32Arr === undefined)
