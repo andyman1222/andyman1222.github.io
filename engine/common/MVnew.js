@@ -59,6 +59,7 @@ function curve() {
 function vec2() {
   var out = new Array(2);
   out.type = 'vec2';
+  out.f32Arr = new Float32Array(2);
 
   switch (arguments.length) {
     case 0:
@@ -85,6 +86,7 @@ function vec3() {
 
   var out = new Array(3);
   out.type = 'vec3';
+  out.f32Arr = new Float32Array(3);
 
   switch (arguments.length) {
     case 0:
@@ -114,6 +116,8 @@ function vec3() {
 function vec4() {
   var out = new Array(4);
   out.type = 'vec4';
+  out.f32Arr = new Float32Array(4);
+
   switch (arguments.length) {
 
     case 0:
@@ -195,6 +199,7 @@ function mat2() {
   var out = new Array(2);
   out[0] = new Array(2);
   out[1] = new Array(2);
+  out.f32Arr = new Float32Array(2*2);
 
   switch (arguments.length) {
     case 0:
@@ -233,6 +238,7 @@ function mat3() {
   out[0] = new Array(3);
   out[1] = new Array(3);
   out[2] = new Array(3);
+  out.f32Arr = new Float32Array(3*3);
 
   switch (arguments.length) {
     case 0:
@@ -268,6 +274,7 @@ function mat4() {
   out[1] = new Array(4);
   out[2] = new Array(4);
   out[3] = new Array(4);
+  out.f32Arr = new Float32Array(4*4);
 
   switch (arguments.length) {
     case 0:
@@ -871,21 +878,21 @@ function flatten(v) {
   var floats = []
   if (isVector(v)) {
     
-    for (var i = 0; i < v.length; i++) floats.push(v[i]);
-    return new Float32Array(floats);
+    for (var i = 0; i < v.length; i++) v.f32Arr[i] = v[i];
+    return v.f32Arr;
   }
   if (isMatrix(v)) {
 
     for (var i = 0; i < v.length; i++) for (j = 0; j < v.length; j++) {
-      floats[i * v.length + j] = v[j][i];
+      v.f32Arr[i * v.length + j] = v[j][i];
     }
-    return new Float32Array(floats);
+    return v.f32Arr;
   }
 
   for (var i = 0; i < v.length; i++) for (var j = 0; j < v[0].length; j++) {
-    floats[i * v[0].length + j] = v[i][j];
+    v.f32Arr[i * v[0].length + j] = v[i][j];
   }
-  return new Float32Array(floats);
+  return v.f32Arr;
 }
 
 //
