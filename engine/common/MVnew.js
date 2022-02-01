@@ -875,20 +875,23 @@ function mix(u, v, s) {
 
 
 function flatten(v) {
-  var floats = []
+  
   if (isVector(v)) {
-    
+    if(v.f32Arr === undefined)
+      v.f32Arr = new Float32Array(v.length);
     for (var i = 0; i < v.length; i++) v.f32Arr[i] = v[i];
     return v.f32Arr;
   }
   if (isMatrix(v)) {
-
+    if(v.f32Arr === undefined)
+      v.f32Arr = new Float32Array(v[0].length*v[0][0].length);
     for (var i = 0; i < v.length; i++) for (j = 0; j < v.length; j++) {
       v.f32Arr[i * v.length + j] = v[j][i];
     }
     return v.f32Arr;
   }
-
+  if(v.f32Arr === undefined)
+      v.f32Arr = new Float32Array(v[0].length*v[0][0].length);
   for (var i = 0; i < v.length; i++) for (var j = 0; j < v[0].length; j++) {
     v.f32Arr[i * v[0].length + j] = v[i][j];
   }
