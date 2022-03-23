@@ -66,51 +66,72 @@
 			return new Promise((resolve) => resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))))
 		}
 
-
+		canMake = true
 		async function make() {
-			arr = []
-			count = 0
-			cont = true
-			if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
-			document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
-			document.body.style.cursor = "wait"
-			document.getElementById("in").value.split('').forEach(x => {
-				console.log(x);
-				if (count != 0 && !letterGraph.has(count)) {
-					document.getElementById("words").innerText = "There are no words that are that long in English!"
-					cont = false;
-					return false;
-				}
-				if ((/[a-zA-Z]/).test(x)) {
-
-					if (!letterGraph.get(count).has(x.toLowerCase())) {
-						document.getElementById("words").innerText = "No such word with that letter combination exists!"
+			if (canMake) {
+				document.getElementById("in").disabled = true
+				canMake = false
+				arr = []
+				count = 0
+				cont = true
+				if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
+				document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
+				document.body.style.cursor = "wait"
+				document.getElementById("in").value.split('').forEach(x => {
+					console.log(x);
+					if (count != 0 && !letterGraph.has(count)) {
+						document.getElementById("words").innerText = "There are no words that are that long in English!"
 						cont = false;
 						return false;
 					}
-					arr.push(letterGraph.get(count).get(x.toLowerCase()))
-					count++
+					if ((/[a-zA-Z]/).test(x)) {
+
+						if (!letterGraph.get(count).has(x.toLowerCase())) {
+							document.getElementById("words").innerText = "No such word with that letter combination exists!"
+							cont = false;
+							return false;
+						}
+						arr.push(letterGraph.get(count).get(x.toLowerCase()))
+						count++
+					}
+					else if (x === '_')
+						count++
+				})
+				if (cont && count > 0) {
+					document.getElementById("words").innerText = ""
+					tmp = await suggestWord(arr, count).then((tmp) => {
+						tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+						document.getElementById("in").disabled = false
+						document.body.style.cursor = "default"
+						canMake = true
+
+					})
 				}
-				else if (x === '_')
-					count++
-			})
-			if (cont && count > 0) {
-				document.getElementById("words").innerText = ""
-				tmp = await suggestWord(arr, count);
-				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+				else {
+					document.body.style.cursor = "default"
+					document.getElementById("in").disabled = false
+					canMake = true
+				}
+
 			}
-			document.body.style.cursor = "default"
 
 		}
 
 		async function everyWord() {
-			document.getElementById("words").innerText = "Loading all words... This will take time"
-			document.body.style.cursor = "wait"
+			if (canMake) {
+				document.getElementById("in").disabled = true
+				canMake = false
+				document.getElementById("words").innerText = "Loading all words... This will take time"
+				document.body.style.cursor = "wait"
 
-			tmp = await suggestWord([]);
-			document.getElementById("words").innerText = ""
-			tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
-			document.body.style.cursor = "default"
+				suggestWord([]).then((tmp) => {
+					document.getElementById("words").innerText = ""
+					tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+					document.body.style.cursor = "default"
+					document.getElementById("in").disabled = false
+					canMake = true
+				})
+			}
 		}
 
 		//make()
