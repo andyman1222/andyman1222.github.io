@@ -106,9 +106,9 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="" id="in" onkeyup="if(e.keyCode === 13) make()">
+		<input type="text" value="" id="in" onkeyup="if(this.keyCode === 13) make()">
 		<button onclick="make()">Load words</button>
-		<br>Possible words (in order by most frequent letters) (press enter to load): <br>
+		<br>Possible words (in order by most frequent letters): <br>
 		<p id="words"></p></p>
 	</div>
 	</div>
