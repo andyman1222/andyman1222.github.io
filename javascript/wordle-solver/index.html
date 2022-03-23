@@ -66,8 +66,8 @@
 				return [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))
 			}
 
-			function make(e){
-				if(e.key !== 'Enter') return;
+			function make(){
+				
 				arr = []
 				count = 0
 				text = ""
@@ -106,7 +106,7 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="" id="in" onkeyup="make">
+		<input type="text" value="" id="in" onkeyup="(e) => {if(e.key === 'Enter') make()}">
 		<button onclick="make">Load words</button>
 		<br>Possible words (in order by most frequent letters) (press enter to load): <br>
 		<p id="words"></p></p>
