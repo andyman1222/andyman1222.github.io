@@ -104,6 +104,7 @@
 		function everyWord(){
 			document.getElementById("words").innerText = "Loading all words..."
 			tmp = suggestWord([]);
+			document.getElementById("words").innerText = ""
 			tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 		}
 
