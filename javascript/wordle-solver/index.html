@@ -42,7 +42,7 @@
 
 						wordGraph.get(x).push(letterGraph.get(spot).get(y))
 						spot++
-					}.bind(this))
+					})
 				})
 			})
 
@@ -51,7 +51,7 @@
 				wordGraph.get(word).forEach(x => {
 					if(!lettersToOmit.has(x))
 						r += x.words.length
-				}.bind(this))
+				})
 				return r
 			}
 
