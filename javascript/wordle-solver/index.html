@@ -74,7 +74,6 @@
 			if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 			document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
 			document.body.style.cursor = "wait"
-			setTimeout(() => {
 				document.getElementById("in").value.split('').forEach(x => {
 					console.log(x);
 					if (count != 0 && !letterGraph.has(count)) {
@@ -101,19 +100,19 @@
 					tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 				}
 				document.body.style.cursor = "default"
-			}, 100);
+			}
 
 		}
 
 		async function everyWord() {
 			document.getElementById("words").innerText = "Loading all words... This will take time"
 			document.body.style.cursor = "wait"
-			setTimeout(() => {
-				tmp = await suggestWord([]);
-				document.getElementById("words").innerText = ""
-				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
-				document.body.style.cursor = "default"
-			}, 100);
+
+			tmp = await suggestWord([]);
+			document.getElementById("words").innerText = ""
+			tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+			document.body.style.cursor = "default"
+		}
 		}
 
 		//make()
@@ -133,7 +132,7 @@
 			<button onclick="make()">Load words</button><br>
 			<button onclick="everyWord()">Load every English word (warning: may freeze browser for a while)</button><br>
 			<br>Possible words (in order by most frequent letters): <br>
-		<p id="words">Enter some letters and underscores to begin.</p>
+			<p id="words">Enter some letters and underscores to begin.</p>
 		</p>
 	</div>
 	</div>
