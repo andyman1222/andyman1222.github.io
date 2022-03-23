@@ -66,8 +66,8 @@
 				return [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))
 			}
 
+			
 			function make(){
-				
 				arr = []
 				count = 0
 				text = ""
@@ -95,6 +95,8 @@
 					suggestWord(arr, count).forEach(x => text += x + "\n")
 				document.getElementById("words").innerText = text;
 			}
+
+			make()
 	</script>
 
 </head>
@@ -106,7 +108,7 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="" id="in" onkeyup="if(this.keyCode === 13) make()">
+		<input type="text" value="" id="in" onkeyup="make()">
 		<button onclick="make()">Load words</button>
 		<br>Possible words (in order by most frequent letters): <br>
 		<p id="words"></p></p>
