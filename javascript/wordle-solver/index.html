@@ -55,17 +55,48 @@
 			return r
 		}
 
-		function suggestWord(letterArr, length = -1, exclude = new Set(document.getElementById("excl").value.split('\n'))) {
+		function suggestWord(letterArr, length = -1, exclude = new Set()) {
 			return new Promise((resolve) => {
 				if (letterArr.length == 0)
-					resolve(Array.from(wordGraph.keys()).filter(x => !exclude.has(x)).filter(x => length <= 0 || x.length == length)
+					resolve(Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
-				initList = new Set([...letterArr[0].words].filter(x => !exclude.has(x)).filter(x => length <= 0 || x.length == length))
+				initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
 				for (i = 1; i < letterArr.length; i++) {
 					initList = new Set([...initList].filter(x => letterArr[i].words.has(x)))
 				}
 				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
 			})
+		}
+
+		function getLetterArr(i) {
+			arr = []
+			count = 0
+			i.forEach(x => {
+				//console.log(x);
+				if (count != 0 && !letterGraph.has(count)) {
+					throw("There are no words that are that long in English! " + i)
+				}
+				if ((/[a-zA-Z]/).test(x)) {
+
+					if (!letterGraph.get(count).has(x.toLowerCase())) {
+						throw("No such word with that letter combination exists! " + i)
+					}
+					arr.push(letterGraph.get(count).get(x.toLowerCase()))
+					count++
+				}
+				else if (x === '_')
+					count++
+			})
+
+			return {array: arr, count: count}
+		}
+
+		function getExclSet(i){
+			arr = new Set()
+			i.forEach(x => {
+				arr = new Set(getLetterArr(x).filter(y => arr.has(y)))
+			})
+			return arr
 		}
 
 		canMake = true
@@ -79,41 +110,23 @@
 				if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 				document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
 				document.body.style.cursor = "wait"
-				document.getElementById("in").value.split('').forEach(x => {
-					console.log(x);
-					if (count != 0 && !letterGraph.has(count)) {
-						document.getElementById("words").innerText = "There are no words that are that long in English!"
-						cont = false;
-						return false;
-					}
-					if ((/[a-zA-Z]/).test(x)) {
+				try{
+					v = getLetterArr(document.getElementById("in").value.split(''))
+					excl = getExclSet(document.getElementById("excl").value.split('\n'))
 
-						if (!letterGraph.get(count).has(x.toLowerCase())) {
-							document.getElementById("words").innerText = "No such word with that letter combination exists!"
-							cont = false;
-							return false;
-						}
-						arr.push(letterGraph.get(count).get(x.toLowerCase()))
-						count++
-					}
-					else if (x === '_')
-						count++
-				})
-				if (cont && count > 0) {
-
-					suggestWord(arr, count).then((tmp) => {
+					suggestWord(v.array, v.count, excl).then((tmp) => {
 						setTimeout(() => {
 							document.getElementById("words").innerText = ""
 							txt = ""
 							tmp.forEach(x => { txt += x + "\n" })
 							document.getElementById("words").innerText = txt;
-							document.body.style.cursor = "default"
-							document.getElementById("in").disabled = false
-							canMake = true
 						}, 0)
 					})
 				}
-				else {
+				catch (e) {
+					document.getElementById("words").innerText = e
+				}
+				finally{
 					document.body.style.cursor = "default"
 					document.getElementById("in").disabled = false
 					canMake = true
@@ -129,8 +142,9 @@
 				document.getElementById("in").disabled = true
 				document.getElementById("words").innerText = "Loading all words... This will take time"
 				document.body.style.cursor = "wait"
+				excl = getExclSet(document.getElementById("excl").value.split('\n'))
 
-				suggestWord([]).then((tmp) => {
+				suggestWord([],-1, excl).then((tmp) => {
 					setTimeout(() => {
 						document.getElementById("words").innerText = ""
 						txt = ""
@@ -159,7 +173,7 @@
 			<br>Click the button to load results (takes time depending on word complexity)<br>
 			Input:<br>
 			<input type="text" value="" id="in">
-			<br><br>Excluded words: (one per line)<br>
+			<br><br>Excluded words/combinations: (one per line)<br>
 			<textarea id="excl"></textarea> <br>
 			<button onclick="make()">Load words</button><br>
 			<button onclick="everyWord()">Load every English word (warning: may freeze browser for a while)</button><br>
