@@ -57,13 +57,13 @@
 
 		function suggestWord(letterArr, length = -1) {
 			if (letterArr.length == 0)
-				return new Promise((resolve) => Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
+				return new Promise((resolve) => resolve(Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length))
 					.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
 			initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
 			for (i = 1; i < letterArr.length; i++) {
 				initList = new Set([...initList].filter(x => letterArr[i].words.has(x)))
 			}
-			return new Promise((resolve) => [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
+			return new Promise((resolve) => resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))))
 		}
 
 
