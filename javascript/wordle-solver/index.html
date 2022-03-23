@@ -13,13 +13,13 @@
 		var letterGraph = new Map(); //number -> (char[] -> letter[])
 		var wordGraph = new Map() //string -> letter[]
 		var inputs = []
-		
+
 		class letter {
 			char
 			spot
 			frequency = 0
 			words = new Set()
-			constructor(char, spot){
+			constructor(char, spot) {
 				this.char = char
 				this.spot = spot
 			}
@@ -34,9 +34,9 @@
 					spot = 0
 					wordGraph.set(x, new Array())
 					x.split('').forEach(y => {
-						if(!letterGraph.has(spot))
+						if (!letterGraph.has(spot))
 							letterGraph.set(spot, new Map())
-						if(!letterGraph.get(spot).has(y))
+						if (!letterGraph.get(spot).has(y))
 							letterGraph.get(spot).set(y, new letter(y, spot))
 						letterGraph.get(spot).get(y).words.add(x)
 
@@ -46,56 +46,57 @@
 				})
 			})
 
-			function getTotalFrequency(word, lettersToOmit = new Set()){
-				r=0
-				wordGraph.get(word).forEach(function(x) {
-					if(!lettersToOmit.has(x))
-						r += x.words.size
-				}.bind(this))
-				return r
-			}
+		function getTotalFrequency(word, lettersToOmit = new Set()) {
+			r = 0
+			wordGraph.get(word).forEach(function (x) {
+				if (!lettersToOmit.has(x))
+					r += x.words.size
+			}.bind(this))
+			return r
+		}
 
-			function suggestWord(letterArr, length = -1){
-				if(letterArr.length == 0)
-					return Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
-						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a))
-				initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
-				for(i = 1; i < letterArr.length; i++){
-					initList = new Set([...initList].filter(x => letterArr[i].words.has(x)))
+		function suggestWord(letterArr, length = -1) {
+			if (letterArr.length == 0)
+				return Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
+					.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a))
+			initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
+			for (i = 1; i < letterArr.length; i++) {
+				initList = new Set([...initList].filter(x => letterArr[i].words.has(x)))
+			}
+			return [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))
+		}
+
+
+		function make() {
+			arr = []
+			count = 0
+			cont = true
+			document.getElementById("words").innerText = "Loading words..."
+			document.getElementById("in").value.split('').every(x => {
+				if (count != 0 && !letterGraph.has(count)) {
+					document.getElementById("words").innerText = "There are no words that are that long in English!"
+					cont = false;
+					return false;
 				}
-				return [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))
-			}
+				if ((/[a-zA-Z]/).test(x)) {
 
-			
-			function make(){
-				arr = []
-				count = 0
-				cont = true
-				document.getElementById("words").innerText = "Loading words..."
-				document.getElementById("in").value.split('').every(x => {
-					if(count != 0 && !letterGraph.has(count)){
-						document.getElementById("words").innerText = "There are no words that are that long in English!"
+					if (!letterGraph.get(count).has(x.toLowerCase())) {
+						document.getElementById("words").innerText = "No such word with that letter combination exists!"
 						cont = false;
 						return false;
 					}
-					if((/[a-zA-Z]/).test(x)){
-					
-						if(!letterGraph.get(count).has(x.toLowerCase())){
-							document.getElementById("words").innerText = "No such word with that letter combination exists!"
-							cont = false;
-							return false;
-						}
-						arr.push(letterGraph.get(count).get(x.toLowerCase()))
-						count++
-					}
-					else if(x === '_') count++
-				})
-				if(cont){
-					document.getElementById("words").innerText = ""
-					tmp = suggestWord(arr, count);
-					tmp.forEach(x => {document.getElementById("words").innerText += x + "\n"})
+					arr.push(letterGraph.get(count).get(x.toLowerCase()))
+					count++
 				}
+				else if (x === '_')
+					count++
+			})
+			if (cont) {
+				document.getElementById("words").innerText = ""
+				tmp = suggestWord(arr, count);
+				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 			}
+		}
 
 			//make()
 	</script>
@@ -109,10 +110,11 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="" id="in" onkeyup="make()">
-		<button onclick="make()">Load words</button>
-		<br>Possible words (in order by most frequent letters): <br>
-		<p id="words"></p></p>
+			<input type="text" value="" id="in" onkeyup="make()">
+			<button onclick="make()">Load words</button>
+			<br>Possible words (in order by most frequent letters): <br>
+		<p id="words"></p>
+		</p>
 	</div>
 	</div>
 
