@@ -70,7 +70,7 @@
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
 				let initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
 				for (let i = 1; i < letterArr.length; i++) {
-					initList = new Set([...initList].filter(x => letterArr[j].words.has(x) && !wordContainsSet(x, exclude)))
+					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
 				}
 				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
 			})
