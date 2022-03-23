@@ -16,16 +16,12 @@
 		class letter {
 			char
 			spot
-			frequency = 1
+			frequency = 0
 			letterNodes = new Set()
 			constructor(char, spot){
 				this.char = char
 				this.spot = spot
 			}
-		}
-
-		class letterNode {
-			word
 		}
 
 		fetch("https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt")
@@ -35,9 +31,8 @@
 				tmp = data.split('\r\n')
 				tmp.forEach(x => {
 					spot = 0
-					wordGraph.set(tmp, new Array())
+					wordGraph.set(x, new Array())
 					x.split('').forEach(y => {
-						t = new letterNode
 						if(!letterGraph.has(spot))
 							letterGraph.set(spot, new Map())
 						if(!letterGraph.get(spot).has(y))
