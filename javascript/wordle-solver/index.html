@@ -99,7 +99,7 @@
 				})
 				if (cont && count > 0) {
 					document.getElementById("words").innerText = ""
-					tmp = await suggestWord(arr, count).then((tmp) => {
+					suggestWord(arr, count).then((tmp) => {
 						tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 						document.getElementById("in").disabled = false
 						document.body.style.cursor = "default"
