@@ -51,7 +51,7 @@
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
 				}
-				return initList
+				return [...initList].sort((a, b) => wordGraph.get(a).length < wordGraph.get(b).length)
 			}
 
 			function make(){}
