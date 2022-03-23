@@ -66,7 +66,31 @@
 				return [...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr)))
 			}
 
-			function make(){}
+			function make(){
+				arr = []
+				count = 0
+				text = ""
+				cont = true
+				document.getElementById("in").value.split('').every(x => {
+					if(count != 0 && !letterGraph.has(count)){
+						text = "There are no words that are that long in English!"
+						return false;
+					}
+					if((/[a-zA-Z]/).test(x)){
+					
+						if(!letterGraph.get(count).has(x.toLowerCase())){
+							text = "No such word with that letter combination exists!"
+							return false;
+						}
+						arr.push(letterGraph.get(count).get(x.toLowerCase()))
+						count++
+					}
+					else if(x == '_') count++
+				})
+				if(cont)
+				suggestWord(arr, count).forEach(x => text += x)
+				document.getElementById("words").innerText = text;
+			}
 	</script>
 
 </head>
@@ -78,9 +102,9 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="Qu__t_m">
+		<input type="text" value="Qu__t_m" id="in" onchange="make()">
 		<br>Possible words: <br>
-		<div id="words"></div></p>
+		<p id="words"></p></p>
 	</div>
 	</div>
 
