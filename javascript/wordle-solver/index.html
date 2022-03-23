@@ -71,6 +71,7 @@
 			arr = []
 			count = 0
 			cont = true
+			if(document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 			document.getElementById("words").innerText = "Loading words..."
 			document.getElementById("in").value.split('').forEach(x => {
 				console.log(x);
@@ -92,14 +93,21 @@
 				else if (x === '_')
 					count++
 			})
-			if (cont) {
+			if (cont && count > 0) {
 				document.getElementById("words").innerText = ""
 				tmp = suggestWord(arr, count);
 				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 			}
+			
 		}
 
-			//make()
+		function everyWord(){
+			document.getElementById("words").innerText = "Loading all words..."
+			tmp = suggestWord([]);
+			tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+		}
+
+		make()
 	</script>
 
 </head>
@@ -112,7 +120,8 @@
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
 			<input type="text" value="" id="in" onkeyup="make()">
-			<button onclick="make()">Load words</button>
+			<!--button onclick="make()">Load words</button-->
+			<button onclick="everyWord()">Load every English word (warning: may freeze browser)</button>
 			<br>Possible words (in order by most frequent letters): <br>
 		<p id="words"></p>
 		</p>
