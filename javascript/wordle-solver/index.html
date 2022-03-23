@@ -71,8 +71,8 @@
 		canMake = true
 		async function make() {
 			if (canMake) {
-				document.getElementById("in").disabled = true
 				canMake = false
+				document.getElementById("in").disabled = true
 				arr = []
 				count = 0
 				cont = true
@@ -100,16 +100,17 @@
 						count++
 				})
 				if (cont && count > 0) {
-					
-					suggestWord(arr, count).then((tmp) => {
-						document.getElementById("words").innerText = ""
-						txt = ""
-						tmp.forEach(x => { txt += x + "\n" })
-						document.getElementById("words").innerText = txt;
-						document.getElementById("in").disabled = false
-						document.body.style.cursor = "default"
-						canMake = true
 
+					suggestWord(arr, count).then((tmp) => {
+						setTimeout(() => {
+							document.getElementById("words").innerText = ""
+							txt = ""
+							tmp.forEach(x => { txt += x + "\n" })
+							document.getElementById("words").innerText = txt;
+							document.body.style.cursor = "default"
+							document.getElementById("in").disabled = false
+							canMake = true
+						}, 0)
 					})
 				}
 				else {
@@ -124,19 +125,21 @@
 
 		async function everyWord() {
 			if (canMake) {
-				document.getElementById("in").disabled = true
 				canMake = false
+				document.getElementById("in").disabled = true
 				document.getElementById("words").innerText = "Loading all words... This will take time"
 				document.body.style.cursor = "wait"
 
 				suggestWord([]).then((tmp) => {
-					document.getElementById("words").innerText = ""
-					txt = ""
-					tmp.forEach(x => { txt += x + "\n" })
-					document.getElementById("words").innerText = txt;
-					document.body.style.cursor = "default"
-					document.getElementById("in").disabled = false
-					canMake = true
+					setTimeout(() => {
+						document.getElementById("words").innerText = ""
+						txt = ""
+						tmp.forEach(x => { txt += x + "\n" })
+						document.getElementById("words").innerText = txt;
+						document.body.style.cursor = "default"
+						document.getElementById("in").disabled = false
+						canMake = true
+					}, 0)
 				})
 			}
 		}
