@@ -45,7 +45,7 @@
 				})
 			})
 
-			function suggestWord(){
+			function suggestWord(letterMap){
 				initList = new Set(letterGraph.get(letterMap[0].spot).words)
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterGraph.get(letterMap[i].spot).words.has(x)))
