@@ -36,7 +36,7 @@
 				tmp.forEach(x => {
 					spot = 0
 					wordGraph.set(tmp, new Array())
-					x.forEach(y => {
+					x.split('').forEach(y => {
 						t = new letterNode
 						if(!letterGraph.has(spot))
 							letterGraph.set(spot, new Map())
