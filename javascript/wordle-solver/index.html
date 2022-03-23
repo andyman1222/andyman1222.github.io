@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Wordle solver</title>
+	<link rel="stylesheet" href="../../style.css" id="style" type="text/css">
+	<link rel="icon" href="../../images/fish.png" id="icon" type="image/x-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../../headerGet.js"></script>
+	<script>
+		var letterGraph = new Map(); //number -> (char[] -> letter[])
+		var wordGraph = new Map() //string -> letter[]
+		
+		class letter {
+			char
+			spot
+			frequency
+			letterNodes = new Set()
+			letter(char, spot){
+				this.char = char
+				this.spot = spot
+			}
+		}
+
+		class letterNode {
+			word
+		}
+
+		fetch("https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt")
+			.then(response => response.text())
+			.then(data => {
+
+				tmp = data.split('\n')
+				tmp.foreach(x => {
+					spot = 0
+					wordGraph.set(tmp, new Array())
+					x.foreach(y => {
+						t = new letterNode
+						if(!letterGraph.has(spot))
+							letterGraph.set(spot, new Map())
+						if(!letterGraph.get(spot).has(y))
+							letterGraph.get(spot).set(y, new letter(y, spot))
+						letterGraph.get(spot).get(y).letterNodes.add(x)
+
+						wordGraph.get(tmp).push(letterGraph.get(spot).get(y))
+					})
+				})
+			})
+
+			function suggestWord(letterMap){
+
+			}
+	</script>
+
+</head>
+
+<body>
+	<div id='headAndText'>
+	</div>
+	<div id="centerMenu">
+		<h1>Wordle Solver</h1>
+		<hr>
+		Number of letters:
+		<input type="number" value=5>
+		<div id="letters"></div>
+	</div>
+	</div>
+
+</body>
+
+</html>
