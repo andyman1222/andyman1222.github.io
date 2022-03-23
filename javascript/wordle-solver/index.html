@@ -46,12 +46,20 @@
 				})
 			})
 
+			function getTotalFrequency(word, lettersToOmit){
+				r=0
+				wordGraph.get(word).forEach(x => {
+					if(!lettersToOmit.has(x))
+						r += x.words.length
+				})
+			}
+
 			function suggestWord(letterMap, length = -1){
 				initList = new Set([...letterMap[0].words].filter(x => length <= 0 || x.length == length))
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
 				}
-				return [...initList].sort((a, b) => wordGraph.get(a).length < wordGraph.get(b).length)
+				return [...initList].sort((a, b) => getTotalFrequency(wordGraph.get(a), letterMap) < getTotalFrequency(wordGraph.get(b), letterMap))
 			}
 
 			function make(){}
