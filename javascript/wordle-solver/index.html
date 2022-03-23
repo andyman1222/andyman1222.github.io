@@ -29,9 +29,9 @@
 			.then(response => response.text())
 			.then(data => {
 
-				tmp = data.split('\r\n')
+				let tmp = data.split('\r\n')
 				tmp.forEach(x => {
-					spot = 0
+					let spot = 0
 					wordGraph.set(x, new Array())
 					x.split('').forEach(y => {
 						if (!letterGraph.has(spot))
@@ -47,7 +47,7 @@
 			})
 
 		function getTotalFrequency(word, lettersToOmit = new Set()) {
-			r = 0
+			let r = 0
 			wordGraph.get(word).forEach(function (x) {
 				if (!lettersToOmit.has(x))
 					r += x.words.size
@@ -55,9 +55,9 @@
 			return r
 		}
 
-		function wordContainsSet(word, set){
-			for(i = 0; i < wordGraph.get(word).length; i++){
-				if(set.has(wordGraph.get(word)[i]))
+		function wordContainsSet(word, set) {
+			for (let i = 0; i < wordGraph.get(word).length; i++) {
+				if (set.has(wordGraph.get(word)[i]))
 					return true
 			}
 			return false
@@ -68,26 +68,26 @@
 				if (letterArr.length == 0)
 					resolve(Array.from(wordGraph.keys()).filter((x => length <= 0 || x.length == length) && !wordContainsSet(x, exclude))
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
-				initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
-				for (i = 1; i < letterArr.length; i++) {
-					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
+				let initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
+				for (let i = 1; i < letterArr.length; i++) {
+					initList = new Set([...initList].filter(x => letterArr[j].words.has(x) && !wordContainsSet(x, exclude)))
 				}
 				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
 			})
 		}
 
 		function getLetterArr(i) {
-			arr = []
-			count = 0
+			let arr = []
+			let count = 0
 			i.forEach(x => {
 				//console.log(x);
 				if (count != 0 && !letterGraph.has(count)) {
-					throw("There are no words that are that long in English! " + i)
+					throw ("There are no words that are that long in English! " + i)
 				}
 				if ((/[a-zA-Z]/).test(x)) {
 
 					if (!letterGraph.get(count).has(x.toLowerCase())) {
-						throw("No such word with that letter combination exists! " + i)
+						throw ("No such word with that letter combination exists! " + i)
 					}
 					arr.push(letterGraph.get(count).get(x.toLowerCase()))
 					count++
@@ -96,36 +96,36 @@
 					count++
 			})
 
-			return {array: arr, count: count}
+			return { array: arr, count: count }
 		}
 
-		function getExclSet(i){
-			s = new Set()
+		function getExclSet(i) {
+			let s = new Set()
 			i.forEach(x => {
 				s = new Set([...s, ...getLetterArr(x.split('')).array])
 			})
 			return s
 		}
 
-		canMake = true
+		let canMake = true
 		async function make() {
 			if (canMake) {
 				canMake = false
 				document.getElementById("in").disabled = true
-				arr = []
-				count = 0
-				cont = true
+				let arr = []
+				let count = 0
+				let cont = true
 				if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 				document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
 				document.body.style.cursor = "wait"
-				try{
-					v = getLetterArr(document.getElementById("in").value.split(''))
-					excl = getExclSet(document.getElementById("excl").value.split('\n'))
+				try {
+					let v = getLetterArr(document.getElementById("in").value.split(''))
+					let excl = getExclSet(document.getElementById("excl").value.split('\n'))
 
 					suggestWord(v.array, v.count, excl).then((tmp) => {
 						setTimeout(() => {
 							document.getElementById("words").innerText = ""
-							txt = ""
+							let txt = ""
 							tmp.forEach(x => { txt += x + "\n" })
 							document.getElementById("words").innerText = txt;
 						}, 0)
@@ -134,7 +134,7 @@
 				catch (e) {
 					document.getElementById("words").innerText = e
 				}
-				finally{
+				finally {
 					document.body.style.cursor = "default"
 					document.getElementById("in").disabled = false
 					canMake = true
@@ -150,9 +150,9 @@
 				document.getElementById("in").disabled = true
 				document.getElementById("words").innerText = "Loading all words... This will take time"
 				document.body.style.cursor = "wait"
-				excl = getExclSet(document.getElementById("excl").value.split('\n'))
+				let excl = getExclSet(document.getElementById("excl").value.split('\n'))
 
-				suggestWord([],-1, excl).then((tmp) => {
+				suggestWord([], -1, excl).then((tmp) => {
 					setTimeout(() => {
 						document.getElementById("words").innerText = ""
 						txt = ""
@@ -181,7 +181,8 @@
 			<br>Click the button to load results (takes time depending on word complexity)<br>
 			Input:<br>
 			<input type="text" value="" id="in">
-			<br><br>Excluded combinations: (one per line- put any incorrect guess here, replace letters in correct spots with underscore)<br>
+			<br><br>Excluded combinations: (one per line- put any incorrect guess here, replace letters in correct spots
+			with underscore)<br>
 			<textarea id="excl"></textarea> <br>
 			<button onclick="make()">Load words</button><br>
 			<button onclick="everyWord()">Load every English word (warning: may freeze browser for a while)</button><br>
