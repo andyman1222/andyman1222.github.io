@@ -12,6 +12,7 @@
 	<script>
 		var letterGraph = new Map(); //number -> (char[] -> letter[])
 		var wordGraph = new Map() //string -> letter[]
+		var inputs = []
 		
 		class letter {
 			char
@@ -46,12 +47,14 @@
 			})
 
 			function suggestWord(letterMap, length = -1){
-				initList = new Set([...letterMap[0].words].filter(x => length > 0 && x.length == length))
+				initList = new Set([...letterMap[0].words].filter(x => length <= 0 || x.length == length))
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
 				}
 				return initList
 			}
+
+			function make
 	</script>
 
 </head>
@@ -62,9 +65,10 @@
 	<div id="centerMenu">
 		<h1>Wordle Solver</h1>
 		<hr>
-		<p>Number of letters:
-		<input type="number" value=5>
-		<div id="letters"></div></p>
+		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
+		<input type="text" value="Qu__t_m">
+		<br>Possible words: <br>
+		<div id="words"></div></p>
 	</div>
 	</div>
 
