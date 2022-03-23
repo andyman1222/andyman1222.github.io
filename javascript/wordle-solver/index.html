@@ -100,9 +100,12 @@
 						count++
 				})
 				if (cont && count > 0) {
-					document.getElementById("words").innerText = ""
+					
 					suggestWord(arr, count).then((tmp) => {
-						tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+						document.getElementById("words").innerText = ""
+						txt = ""
+						tmp.forEach(x => { txt += x + "\n" })
+						document.getElementById("words").innerText = txt;
 						document.getElementById("in").disabled = false
 						document.body.style.cursor = "default"
 						canMake = true
@@ -128,7 +131,9 @@
 
 				suggestWord([]).then((tmp) => {
 					document.getElementById("words").innerText = ""
-					tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+					txt = ""
+					tmp.forEach(x => { txt += x + "\n" })
+					document.getElementById("words").innerText = txt;
 					document.body.style.cursor = "default"
 					document.getElementById("in").disabled = false
 					canMake = true
