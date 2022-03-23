@@ -46,7 +46,7 @@
 				})
 			})
 
-			function getTotalFrequency(word, lettersToOmit){
+			function getTotalFrequency(word, lettersToOmit = []){
 				r=0
 				wordGraph.get(word).forEach(x => {
 					if(!lettersToOmit.has(x))
