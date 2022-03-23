@@ -66,11 +66,9 @@
 		function suggestWord(letterArr, length = -1, exclude = new Set()) {
 			return new Promise((resolve) => {
 				if (letterArr.length == 0)
-					resolve(Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
-						.filter(x => !wordContainsSet(x, exclude))
+					resolve(Array.from(wordGraph.keys()).filter((x => length <= 0 || x.length == length) && !wordContainsSet(x, exclude))
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
-				initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
-				.filter(x => !wordContainsSet(x, exclude))
+				initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
 				for (i = 1; i < letterArr.length; i++) {
 					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
 				}
