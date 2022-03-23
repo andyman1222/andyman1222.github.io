@@ -52,6 +52,7 @@
 					if(!lettersToOmit.has(x))
 						r += x.words.length
 				})
+				return r
 			}
 
 			function suggestWord(letterMap, length = -1){
@@ -62,7 +63,7 @@
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
 				}
-				return [...initList].sort((a, b) => getTotalFrequency(wordGraph.get(a), letterMap) < getTotalFrequency(wordGraph.get(b), letterMap))
+				return [...initList].sort((a, b) => getTotalFrequency(a, letterMap) < getTotalFrequency(b, letterMap))
 			}
 
 			function make(){}
