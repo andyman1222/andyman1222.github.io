@@ -70,19 +70,18 @@
 			function make(){
 				arr = []
 				count = 0
-				text = ""
 				cont = true
 				document.getElementById("words").innerText = "Loading words..."
 				document.getElementById("in").value.split('').every(x => {
 					if(count != 0 && !letterGraph.has(count)){
-						text = "There are no words that are that long in English!"
+						document.getElementById("words").innerText = "There are no words that are that long in English!"
 						cont = false;
 						return false;
 					}
 					if((/[a-zA-Z]/).test(x)){
 					
 						if(!letterGraph.get(count).has(x.toLowerCase())){
-							text = "No such word with that letter combination exists!"
+							document.getElementById("words").innerText = "No such word with that letter combination exists!"
 							cont = false;
 							return false;
 						}
@@ -92,8 +91,7 @@
 					else if(x == '_') count++
 				})
 				if(cont)
-					suggestWord(arr, count).forEach(x => text += x + "\n")
-				document.getElementById("words").innerText = text;
+					suggestWord(arr, count).forEach(x => document.getElementById("words").innerText += x + "\n")
 			}
 
 			//make()
