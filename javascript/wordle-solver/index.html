@@ -33,10 +33,10 @@
 			.then(data => {
 
 				tmp = data.split('\n')
-				tmp.foreach(x => {
+				tmp.forEach(x => {
 					spot = 0
 					wordGraph.set(tmp, new Array())
-					x.foreach(y => {
+					x.forEach(y => {
 						t = new letterNode
 						if(!letterGraph.has(spot))
 							letterGraph.set(spot, new Map())
@@ -62,9 +62,9 @@
 	<div id="centerMenu">
 		<h1>Wordle Solver</h1>
 		<hr>
-		Number of letters:
+		<p>Number of letters:
 		<input type="number" value=5>
-		<div id="letters"></div>
+		<div id="letters"></div></p>
 	</div>
 	</div>
 
