@@ -90,8 +90,10 @@
 					}
 					else if(x == '_') count++
 				})
-				if(cont)
-					suggestWord(arr, count).forEach(x => document.getElementById("words").innerText += x + "\n")
+				if(cont){
+					document.getElementById("words").innerText = ""
+					suggestWord(arr, count).forEach(x => {console.log(x);document.getElementById("words").innerText += x + "\n"})
+				}
 			}
 
 			//make()
