@@ -48,10 +48,10 @@
 
 			function getTotalFrequency(word, lettersToOmit = new Set()){
 				r=0
-				wordGraph.get(word).forEach(x => {
+				wordGraph.get(word).forEach(function(x) {
 					if(!lettersToOmit.has(x))
 						r += x.words.length
-				})
+				}.bind(this))
 				return r
 			}
 
