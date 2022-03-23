@@ -39,7 +39,7 @@
 							letterGraph.get(spot).set(y, new letter(y, spot))
 						letterGraph.get(spot).get(y).letterNodes.add(x)
 
-						wordGraph.get(tmp).push(letterGraph.get(spot).get(y))
+						wordGraph.get(x).push(letterGraph.get(spot).get(y))
 						spot++
 					})
 				})
