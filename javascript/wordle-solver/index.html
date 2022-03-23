@@ -88,7 +88,7 @@
 					else if(x == '_') count++
 				})
 				if(cont)
-				suggestWord(arr, count).forEach(x => text += x)
+				suggestWord(arr, count).forEach(x => text += x + "\n")
 				document.getElementById("words").innerText = text;
 			}
 	</script>
@@ -102,8 +102,8 @@
 		<h1>Wordle Solver</h1>
 		<hr>
 		<p>Text inputs (use alphanumeric chars only, or numberscores to indicate unknowns):
-		<input type="text" value="Qu__t_m" id="in" onchange="make()">
-		<br>Possible words: <br>
+		<input type="text" value="Qu__t_m" id="in" onchange="make()" onload="make()">
+		<br>Possible words (in order by most frequent letters): <br>
 		<p id="words"></p></p>
 	</div>
 	</div>
