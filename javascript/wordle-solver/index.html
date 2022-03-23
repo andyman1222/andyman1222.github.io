@@ -73,6 +73,7 @@
 			cont = true
 			document.getElementById("words").innerText = "Loading words..."
 			document.getElementById("in").value.split('').every(x => {
+				console.log(x);
 				if (count != 0 && !letterGraph.has(count)) {
 					document.getElementById("words").innerText = "There are no words that are that long in English!"
 					cont = false;
