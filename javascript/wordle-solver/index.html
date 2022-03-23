@@ -92,9 +92,9 @@
 		}
 
 		function getExclSet(i){
-			arr = new Set()
+			s = new Set()
 			i.forEach(x => {
-				arr = new Set(getLetterArr(x.split('')).array.filter(y => arr.has(y)))
+				arr = new Set(getLetterArr(x.split('')).array.filter(y => {s.has(y)}))
 			})
 			return arr
 		}
