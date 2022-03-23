@@ -55,12 +55,12 @@
 			return r
 		}
 
-		function suggestWord(letterArr, length = -1) {
+		function suggestWord(letterArr, length = -1, exclude = new Set(document.getElementById("excl").innerText.split('\n'))) {
 			return new Promise((resolve) => {
 				if (letterArr.length == 0)
-					resolve(Array.from(wordGraph.keys()).filter(x => length <= 0 || x.length == length)
+					resolve(Array.from(wordGraph.keys()).filter(x => !exclude.has(x)).filter(x => length <= 0 || x.length == length)
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
-				initList = new Set([...letterArr[0].words].filter(x => length <= 0 || x.length == length))
+				initList = new Set([...letterArr[0].words].filter(x => !exclude.has(x)).filter(x => length <= 0 || x.length == length))
 				for (i = 1; i < letterArr.length; i++) {
 					initList = new Set([...initList].filter(x => letterArr[i].words.has(x)))
 				}
@@ -155,9 +155,12 @@
 	<div id="centerMenu">
 		<h1>Wordle Solver</h1>
 		<hr>
-		<p>Text inputs (use letters only, or numberscores to indicate unknowns):
+		<p>use letters only, or numberscores to indicate unknowns
 			<br>Click the button to load results (takes time depending on word complexity)<br>
+			Input:
 			<input type="text" value="" id="in">
+			<br><br>Excluded words: (one per line)<br>
+			<textarea id="excl"></textarea> 
 			<button onclick="make()">Load words</button><br>
 			<button onclick="everyWord()">Load every English word (warning: may freeze browser for a while)</button><br>
 			<br>Possible words (in order by most frequent letters): <br>
