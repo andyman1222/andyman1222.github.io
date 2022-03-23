@@ -56,7 +56,7 @@
 
 			function suggestWord(letterMap, length = -1){
 				if(letterMap.length == 0)
-					return wordGraph.keys.filter(x => length <= 0 || x.length == length)
+					return wordGraph.keys().filter(x => length <= 0 || x.length == length)
 				initList = new Set([...letterMap[0].words].filter(x => length <= 0 || x.length == length))
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
