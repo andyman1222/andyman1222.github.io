@@ -55,7 +55,7 @@
 			return r
 		}
 
-		function suggestWord(letterArr, length = -1, exclude = new Set(document.getElementById("excl").innerText.split('\n'))) {
+		function suggestWord(letterArr, length = -1, exclude = new Set(document.getElementById("excl").value.split('\n'))) {
 			return new Promise((resolve) => {
 				if (letterArr.length == 0)
 					resolve(Array.from(wordGraph.keys()).filter(x => !exclude.has(x)).filter(x => length <= 0 || x.length == length)
@@ -157,7 +157,7 @@
 		<hr>
 		<p>use letters only, or numberscores to indicate unknowns
 			<br>Click the button to load results (takes time depending on word complexity)<br>
-			Input:
+			Input:<br>
 			<input type="text" value="" id="in">
 			<br><br>Excluded words: (one per line)<br>
 			<textarea id="excl"></textarea> <br>
