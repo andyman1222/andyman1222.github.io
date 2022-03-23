@@ -73,7 +73,7 @@
 			cont = true
 			if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 			document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
-			document.body.style.cursor="wait"
+			document.body.style.cursor = "wait"
 			setTimeout(() => {
 				document.getElementById("in").value.split('').forEach(x => {
 					console.log(x);
@@ -100,18 +100,20 @@
 					tmp = suggestWord(arr, count);
 					tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 				}
-				document.body.style.cursor="default"
-			}, 10);
+				document.body.style.cursor = "default"
+			}, 100);
 
 		}
 
 		function everyWord() {
 			document.getElementById("words").innerText = "Loading all words... This will take time"
-			document.body.style.cursor="wait"
-			setTimeout(() => {tmp = suggestWord([]);
-			document.getElementById("words").innerText = ""
-			tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
-			document.body.style.cursor="default"}, 10);
+			document.body.style.cursor = "wait"
+			setTimeout(() => {
+				tmp = suggestWord([]);
+				document.getElementById("words").innerText = ""
+				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+				document.body.style.cursor = "default"
+			}, 100);
 		}
 
 		//make()
