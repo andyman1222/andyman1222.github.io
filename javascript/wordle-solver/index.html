@@ -74,33 +74,32 @@
 			if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
 			document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
 			document.body.style.cursor = "wait"
-				document.getElementById("in").value.split('').forEach(x => {
-					console.log(x);
-					if (count != 0 && !letterGraph.has(count)) {
-						document.getElementById("words").innerText = "There are no words that are that long in English!"
+			document.getElementById("in").value.split('').forEach(x => {
+				console.log(x);
+				if (count != 0 && !letterGraph.has(count)) {
+					document.getElementById("words").innerText = "There are no words that are that long in English!"
+					cont = false;
+					return false;
+				}
+				if ((/[a-zA-Z]/).test(x)) {
+
+					if (!letterGraph.get(count).has(x.toLowerCase())) {
+						document.getElementById("words").innerText = "No such word with that letter combination exists!"
 						cont = false;
 						return false;
 					}
-					if ((/[a-zA-Z]/).test(x)) {
-
-						if (!letterGraph.get(count).has(x.toLowerCase())) {
-							document.getElementById("words").innerText = "No such word with that letter combination exists!"
-							cont = false;
-							return false;
-						}
-						arr.push(letterGraph.get(count).get(x.toLowerCase()))
-						count++
-					}
-					else if (x === '_')
-						count++
-				})
-				if (cont && count > 0) {
-					document.getElementById("words").innerText = ""
-					tmp = await suggestWord(arr, count);
-					tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
+					arr.push(letterGraph.get(count).get(x.toLowerCase()))
+					count++
 				}
-				document.body.style.cursor = "default"
+				else if (x === '_')
+					count++
+			})
+			if (cont && count > 0) {
+				document.getElementById("words").innerText = ""
+				tmp = await suggestWord(arr, count);
+				tmp.forEach(x => { document.getElementById("words").innerText += x + "\n" })
 			}
+			document.body.style.cursor = "default"
 
 		}
 
