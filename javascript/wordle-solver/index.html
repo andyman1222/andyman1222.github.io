@@ -17,7 +17,7 @@
 			char
 			spot
 			frequency = 0
-			letterNodes = new Set()
+			words = new Set()
 			constructor(char, spot){
 				this.char = char
 				this.spot = spot
@@ -37,7 +37,7 @@
 							letterGraph.set(spot, new Map())
 						if(!letterGraph.get(spot).has(y))
 							letterGraph.get(spot).set(y, new letter(y, spot))
-						letterGraph.get(spot).get(y).letterNodes.add(x)
+						letterGraph.get(spot).get(y).words.add(x)
 
 						wordGraph.get(x).push(letterGraph.get(spot).get(y))
 						spot++
@@ -46,7 +46,13 @@
 			})
 
 			function suggestWord(letterMap){
-
+				item = letterMap[0]
+				initList = [...letterGraph.get(item.spot).words]
+				for(i = 1; i < letterMap.length; i++){
+					item = letterMap[i]
+					initList = [...letterGraph.get(item.spot).words].filter(x => initList.has(x))
+				}
+				return initList
 			}
 	</script>
 
