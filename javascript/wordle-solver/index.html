@@ -63,7 +63,7 @@
 				for(i = 1; i < letterMap.length; i++){
 					initList = new Set([...initList].filter(x => letterMap[i].words.has(x)))
 				}
-				return [...initList].sort((a, b) => getTotalFrequency(a, letterMap) < getTotalFrequency(b, letterMap))
+				return [...initList].sort((a, b) => getTotalFrequency(a, new Set(letterMap)) < getTotalFrequency(b, new Set(letterMap)))
 			}
 
 			function make(){}
