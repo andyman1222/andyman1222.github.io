@@ -56,7 +56,7 @@
 		}
 
 		function wordContainsSet(word, set){
-			for(i = 0; i < wordGraph.get(word); i++){
+			for(i = 0; i < wordGraph.get(word).length; i++){
 				if(set.has(wordGraph.get(word)))
 					return true
 			}
