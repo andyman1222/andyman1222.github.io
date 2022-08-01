@@ -44,16 +44,20 @@ function unclickFish(){
     document.getElementById("fishy").src="//" + window.location.host + "/images/piranha-resized.jpg";
 }
 
-$(document).ready(function () {
+$(document).on('ready', function () {
     $("#headAndText").load("//" + window.location.host + "/header.html");
     if (date.getMonth() + 1 == 12 || date.getMonth() + 1 < 4) $.getScript("//" + window.location.host + "/snowstorm.js");
+    
+});
+
+$(window).on('load', function(){
     preloadImages = [];
     for(i = 0; i < iconList.length; i++){
         preloadImages.push(new Image());
         preloadImages[i].src="//" + window.location.host + "/images/" + iconList[i];
     }
     setFav.setAttribute('href', "//" + window.location.host + "/images/" + randomFishImage());
-});
+})
 
 
 var headTitle = document.querySelector('head');
