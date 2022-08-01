@@ -47,17 +47,16 @@ function unclickFish(){
 $(document).ready(function () {
     $("#headAndText").load("//" + window.location.host + "/header.html");
     if (date.getMonth() + 1 == 12 || date.getMonth() + 1 < 4) $.getScript("//" + window.location.host + "/snowstorm.js");
-
+    preloadImages = [];
+    for(i = 0; i < iconList.length; i++){
+        preloadImages.push(new Image());
+        preloadImages[i].src="//" + window.location.host + "/images/" + iconList[i];
+    }
+    setFav.setAttribute('href', "//" + window.location.host + "/images/" + randomFishImage());
 });
 
-preloadImages = [];
-for(i = 0; i < iconList.length; i++){
-    preloadImages.push(new Image());
-    preloadImages[i].src="//" + window.location.host + "/images/" + iconList[i];
-}
 
 var headTitle = document.querySelector('head');
 var setFav = document.createElement('link');
 setFav.setAttribute('rel', 'icon');
-setFav.setAttribute('href', "//" + window.location.host + "/images/" + randomFishImage());
 headTitle.appendChild(setFav);
