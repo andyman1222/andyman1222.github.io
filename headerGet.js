@@ -44,7 +44,7 @@ function unclickFish(){
     document.getElementById("fishy").src="//" + window.location.host + "/images/piranha-resized.jpg";
 }
 
-$(document).on('ready', function () {
+$(document).ready(function () {
     $("#headAndText").load("//" + window.location.host + "/header.html");
     if (date.getMonth() + 1 == 12 || date.getMonth() + 1 < 4) $.getScript("//" + window.location.host + "/snowstorm.js");
     
