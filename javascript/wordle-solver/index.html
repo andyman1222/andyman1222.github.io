@@ -12,16 +12,22 @@
 	<script>
 		var letterGraph = new Map(); //number -> (char[] -> letter[])
 		var wordGraph = new Map() //string -> letter[]
+		var letterGraph2 = new Map() //letter -> (letter -> (...))
 		var inputs = []
 
 		class letter {
 			char
 			spot
 			frequency = 0
+			isEnd = false
 			words = new Set()
-			constructor(char, spot) {
+			constructor(char, spot, isEnd=false) {
 				this.char = char
 				this.spot = spot
+				this.isEnd = isEnd
+			}
+			setIsEnd(val){
+				this.isEnd = val
 			}
 		}
 
@@ -33,14 +39,27 @@
 				tmp.forEach(x => {
 					let spot = 0
 					wordGraph.set(x, new Array())
-					x.split('').forEach(y => {
+					let currentLG2Map = letterGraph2
+					let w = x.split('')
+					let l = w.length()
+					w.forEach(y => {
 						if (!letterGraph.has(spot))
 							letterGraph.set(spot, new Map())
-						if (!letterGraph.get(spot).has(y))
-							letterGraph.get(spot).set(y, new letter(y, spot))
-						letterGraph.get(spot).get(y).words.add(x)
+						let k = null
+						if (!letterGraph.get(spot).has(y)){
+							k = new letter(y, spot, spot == l-1)
+							letterGraph.get(spot).set(y, k)
+						}
+						else{
+							k = letterGraph.get(spot).get(y)
+							if(spot == l-1) k.setIsEnd(true)
+						}
+						if(!currentLG2Map.has(k))
+							currentLG2Map.set(k, new Map())
+						k.words.add(x)
 
 						wordGraph.get(x).push(letterGraph.get(spot).get(y))
+						currentLG2Map = currentLG2Map.get(k)
 						spot++
 					})
 				})
@@ -72,6 +91,20 @@
 				for (let i = 1; i < letterArr.length; i++) {
 					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
 				}
+				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
+			})
+		}
+
+		function suggestAnyWord(letterArr, length = -1, exclude = new Set()) {
+			return new Promise((resolve) => {
+				if (letterArr.length == 0)
+					resolve(Array.from(wordGraph.keys()).filter((x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
+						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
+				let goodTree = new Map();
+						/*let initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
+				for (let i = 1; i < letterArr.length; i++) {
+					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
+				}*/
 				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
 			})
 		}
