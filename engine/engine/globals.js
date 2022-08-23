@@ -35,7 +35,7 @@ var _gl;
 var _canvas;
 var _bData;
 var _mainCamera;
-var _program;
+var _defaultProgram;
 var _postProcessProgram;
 
 

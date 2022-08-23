@@ -1,5 +1,6 @@
 /**
  * buffer _Object representing all data necessary for any output buffer/view
+ * A buffer can swap shader programs but expects the shader support all the standard inputs/outputs
  */
 
 class _ScreenBuffer {
@@ -48,7 +49,7 @@ class _ScreenBuffer {
 	_cameraPosLoc;
 	_textureLoc = []
 	_cameraSclLoc;
-	_program;
+	_currentProgram;
 	_postProcessProgram;
 
 	_bufLimit;
@@ -113,39 +114,24 @@ class _ScreenBuffer {
 
 	}
 
-	_init() {
+	_setupBuffer(str, buf, inVar){
+		if(str != null){
+			buf = this._gTarget.createBuffer();
+			inVar = this._gTarget.getAttribLocation(this._currentProgram, str);
+			if(inVar == -1) alert(str + ": unknown/invalid shader location");
+		}
+	}
+
+	_init(program) {
 		this._inSetup = true
-		this._gTarget.useProgram(this._program)
-		if (this._setupInfo.coordStr != null) {
-			this._posBuffer = this._gTarget.createBuffer();
-			this._inPos = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
-			if (this._inPos == -1) alert(this._setupInfo.coordStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.normalStr != null) {
-			this._normBuf = this._gTarget.createBuffer();
-			this._inNormal = this._gTarget.getAttribLocation(this._program, this._setupInfo.normalStr);
-			if (this._inNormal == -1) alert(this._setupInfo.normalStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.texCoordStr != null) {
-			this._txBuf = this._gTarget.createBuffer();
-			this._inTexCoord = this._gTarget.getAttribLocation(this._program, this._setupInfo.texCoordStr);
-			if (this._inTexCoord == -1) alert(this._setupInfo.texCoordStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.tanStr != null) {
-			this._tanBuf = this._gTarget.createBuffer();
-			this._inTan = this._gTarget.getAttribLocation(this._program, this._setupInfo.tanStr);
-			if (this._inTan == -1) alert(this._setupInfo.tanStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.biTanStr != null) {
-			this._biTanBuf = this._gTarget.createBuffer();
-			this._inBiTan = this._gTarget.getAttribLocation(this._program, this._setupInfo.biTanStr);
-			if (this._inBiTan == -1) alert(this._setupInfo.biTanStr + ": unknown/invalid shader location");
-		}
-
+		this._gTarget.useProgram(program)
+		this._currentProgram = program;
+		this._setupBuffer(this._setupInfo.coordStr, this._posBuffer, this._inPos);
+		this._setupBuffer(this._setupInfo.normalStr, this._normBuf, this._inNormal);
+		this._setupBuffer(this._setupInfo.texCoordStr, this._txBuf, this._inTexCoord);
+		this._setupBuffer(this._setupInfo.tanStr, this._tanBuf, this._inTan);
+		this._setupBuffer(this._setupInfo.biTanStr, this._biTanBuf, this._inBiTan);
+		
 		if (this._setupInfo.matStr != null) {
 			this._matIndBuf = this._gTarget.createBuffer();
 			this._matParamCount = this._setupInfo.matParamCount;
@@ -162,6 +148,8 @@ class _ScreenBuffer {
 
 			}
 		}
+
+		
 
 		if (this._setupInfo.texStr != null) {
 			this._texCount = this._setupInfo.texCount;

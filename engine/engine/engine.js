@@ -59,10 +59,10 @@ function _tick(prevTime) {
 
 function _setDefaultGraphics(vertexPath, fragmentPath, postVertexPath, postFragmentPath){
 	//  Load shaders and initialize attribute buffers
-	_program = initShaders(_gl, vertexPath, fragmentPath);
-	_postProcessProgram = initShaders(_gl, postVertexPath, postFragmentPath);
+	_defaultProgram = new shaderProgram(_gl, vertexPath, fragmentPath);
+	_postProcessProgram = new shaderProgram(_gl, postVertexPath, postFragmentPath);
 
-	_bData = new _ScreenBuffer(_gl, _program, _postProcessProgram);
+	_bData = new _ScreenBuffer(_gl, _defaultProgram, _postProcessProgram);
 
 	_mainCamera = new _Camera(_bData);
 	
