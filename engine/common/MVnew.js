@@ -875,7 +875,7 @@ function mix(u, v, s) {
 
 
 function flatten(v) {
-  
+  if (v === undefined) return [];
   if (isVector(v)) {
     return v;
   }
