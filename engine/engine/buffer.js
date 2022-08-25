@@ -9,7 +9,7 @@ class _bufferSet {
 
 	constructor(locationName, gTarget = null, shaderProgram = null){
 		this.locationName = locationName;
-		if(gTarget != null && program != null)
+		if(gTarget != null && shaderProgram != null)
 			this.setupBuffer(gTarget, shaderProgram, true)
 	}
 
