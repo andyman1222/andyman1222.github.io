@@ -35,9 +35,9 @@ class shaderProgram{
         gl.attachShader(this.program, fragmentShader);
         gl.linkProgram(this.program);
     
-        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-            alert("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( program ));
-            console.error("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( program ));
+        if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+            alert("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( this.program ));
+            console.error("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( this.program ));
             return null;
         }
     };
