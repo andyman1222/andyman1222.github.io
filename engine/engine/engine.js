@@ -102,8 +102,14 @@ defaultPostVertex="../default-shaders/postprocess-vertex.glsl", defaultPostFragm
 	_userMouseFunction = userMouse;
 	_userPostTickFunction = userPostTick;
 	_initDefaultGraphics(defaultCanvas, defaultVertex, defaultFragment, defaultPostVertex, defaultPostFragment);
-	_userInitFunction();
-	_queueNewTick(_tick);
-	_render();
+	
+	//delay initial running of code by 1s to allow stuff to load in
+	//TODO: more dynamic wait to load
+	setTimeout(function() {
+		_userInitFunction();
+		_queueNewTick(_tick);
+		_render();
+	  }, 1000);
+	
 }
 
