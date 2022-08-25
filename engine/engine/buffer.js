@@ -56,6 +56,10 @@ class _uniformLocation {
 			if (this.location == -1) alert(this.name + ": unknown/invalid shader location");
 		}
 	}
+
+	isValid(){
+		return this.name != null && this.location != -1
+	}
 }
 
 /**
@@ -367,12 +371,12 @@ class _ScreenBuffer {
 
 	_updateLights() {
 		var x = -1
-		if (this._lightIndLoc != null) {
-			this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
+		if (this._lightIndLoc.isValid) {
+			this._gTarget.uniform1iv(this._lightIndLoc.location, new Int32Array([x]))
 			_lights.forEach((l) => {
 				if (l != null && x < _maxLightCount - 1 && l._enabled && this._lightTypeArrayLoc.length - 1 > x && ((l._lightMask & this._bufferMask) != 0)) {
 					x++;
-					this._gTarget.uniform1iv(this._lightIndLoc, new Int32Array([x]))
+					//this._gTarget.uniform1iv(this._lightIndLoc.location, new Int32Array([x])) //note: extra line???
 					this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([l._type]))
 					switch (l._type) {
 						case 4:
