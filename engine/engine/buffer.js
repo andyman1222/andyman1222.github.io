@@ -45,14 +45,14 @@ class _bufferSet {
 class _uniformLocation {
 	location;
 	name;
-	constructor(uniformName, gTarget, program){
-		this.setLocation(gTarget, program, uniformName)
+	constructor(uniformName, gTarget, shaderProgram){
+		this.setLocation(gTarget, shaderProgram, uniformName)
 	}
 
-	setLocation(gTarget, program, uniformName = null){
+	setLocation(gTarget, shaderProgram, uniformName = null){
 		if(uniformName != null) this.name = uniformName;
 		if (this.name != null) {
-			this.location = gTarget.getUniformLocation(program, this.name);
+			this.location = gTarget.getUniformLocation(shaderProgram.program, this.name);
 			if (this.location == -1) alert(this.name + ": unknown/invalid shader location");
 		}
 	}
@@ -169,7 +169,17 @@ class _ScreenBuffer {
 
 	}
 
-	_init(shaderProgram) {
+	switchShaderPrograms(newProgram){
+		this._gTarget.useProgram(newProgram.program)
+		this._currentProgram = newProgram;
+		return this._currentProgram.program;
+	}
+
+	getWGLProgram(){
+		return this._currentProgram.program;
+	}
+
+	_init(shaderProgram, postShaderProgram) {
 		this._inSetup = true
 		this._gTarget.useProgram(shaderProgram.program)
 		this._currentProgram = shaderProgram;
@@ -188,11 +198,11 @@ class _ScreenBuffer {
 			for (var i = 0; i < this._setupInfo.matParamCount; i++) {
 				this._matParamsBufs.push(this._gTarget.createBuffer())
 				if (!(this._setupInfo.matStr instanceof Array)) {
-					this._inMatParams.push(this._gTarget.getAttribLocation(this._program, this._setupInfo.matStr + "" + i));
+					this._inMatParams.push(this._gTarget.getAttribLocation(shaderProgram.program, this._setupInfo.matStr + "" + i));
 					if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(this._setupInfo.matStr + "" + i + ": unknown/invalid shader location");
 				}
 				else {
-					this._inMatParams.push(this._gTarget.getAttribLocation(this._program, this._setupInfo.matStr[i]));
+					this._inMatParams.push(this._gTarget.getAttribLocation(shaderProgram.program, this._setupInfo.matStr[i]));
 					if (this._inMatParams[this._inMatParams.length - 1] == -1) alert(this._setupInfo.matStr[i] + ": unknown/invalid shader location");
 				}
 
@@ -205,47 +215,47 @@ class _ScreenBuffer {
 			this._texCount = this._setupInfo.texCount;
 			for (var i = 0; i < this._setupInfo.texCount; i++) {
 				if (!(this._setupInfo.texStr instanceof Array)) {
-					this._textureLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.texStr + "[" + i + "]"));
+					this._textureLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.texStr + "[" + i + "]"));
 					if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(this._setupInfo.texStr + "[" + i + "]" + ": unknown/invalid shader location");
 				}
 				else {
-					this._textureLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.texStr[i]));
+					this._textureLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.texStr[i]));
 					if (this._textureLoc[this._textureLoc.length - 1] == -1) alert(this._setupInfo.texStr[i] + ": unknown/invalid shader location");
 				}
 			}
 		}
 
 		if (this._setupInfo.matIndStr != null) {
-			this._inMatIndex = this._gTarget.getAttribLocation(this._program, this._setupInfo.matIndStr);
+			this._inMatIndex = this._gTarget.getAttribLocation(shaderProgram.program, this._setupInfo.matIndStr);
 			if (this._inMatIndex == -1) alert(this._setupInfo.matIndStr + ": unknown/invalid shader location");
 		}
 
 		//get uniform locations
 
-		this._projMatrix = new _uniformLocation(this._setupInfo.projMatrixStr, this._gTarget, this._program);
-		this._viewMatrix = new _uniformLocation(this._setupInfo.viewMatrixStr, this._gTarget, this._program);
-		this._normalMatrix = new _uniformLocation(this._setupInfo.normalMatrixStr, this._gTarget, this._program);
-		this._modelMatrix = new _uniformLocation(this._setupInfo.modelMatrixStr, this._gTarget, this._program);
-		this._lightIndLoc = new _uniformLocation(this._setupInfo.lightsIndexStr, this._gTarget, this._program);
-		this._cameraPosLoc = new _uniformLocation(this._setupInfo.cameraPosStr, this._gTarget, this._program);
-		this._cameraSclLoc = new _uniformLocation(this._setupInfo.cameraScaleStr, this._gTarget, this._program);
+		this._projMatrix = new _uniformLocation(this._setupInfo.projMatrixStr, this._gTarget, shaderProgram);
+		this._viewMatrix = new _uniformLocation(this._setupInfo.viewMatrixStr, this._gTarget, shaderProgram);
+		this._normalMatrix = new _uniformLocation(this._setupInfo.normalMatrixStr, this._gTarget, shaderProgram);
+		this._modelMatrix = new _uniformLocation(this._setupInfo.modelMatrixStr, this._gTarget, shaderProgram);
+		this._lightIndLoc = new _uniformLocation(this._setupInfo.lightsIndexStr, this._gTarget, shaderProgram);
+		this._cameraPosLoc = new _uniformLocation(this._setupInfo.cameraPosStr, this._gTarget, shaderProgram);
+		this._cameraSclLoc = new _uniformLocation(this._setupInfo.cameraScaleStr, this._gTarget, shaderProgram);
 
 		//TODO: cleanup
 		if (this._setupInfo.lightsArrayStr != null)
 			for (var i = 0; i < _maxLightCount; i++) {
-				this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].type"))
+				this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].type"))
 				if (this._lightTypeArrayLoc == -1) alert(this._setupInfo.lightsArrayStr + ": unknown/invalid shader location (check that this points to an array of lights containing the necessary fields.)");
-				this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].locationW"))
-				this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].directionW"))
-				this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].angle"))
-				this._lightAttenArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].attenuation"))
-				this._lightColorArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].color"))
-				this._lightDiffArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].diffuseMultiply"))
-				this._lightSpecArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].specularMultiply"))
-				this._lightShinyArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].shininess"))
-				this._lightNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].negativeHandler"))
-				this._lightAltNegativeArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].negativeHandlerAlt"))
-				//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr+"["+i+"].lightmask"))
+				this._lightLocArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].locationW"))
+				this._lightDirArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].directionW"))
+				this._lightAngleArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].angle"))
+				this._lightAttenArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].attenuation"))
+				this._lightColorArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].color"))
+				this._lightDiffArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].diffuseMultiply"))
+				this._lightSpecArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].specularMultiply"))
+				this._lightShinyArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].shininess"))
+				this._lightNegativeArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].negativeHandler"))
+				this._lightAltNegativeArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.lightsArrayStr + "[" + i + "].negativeHandlerAlt"))
+				//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, lightsArrayStr+"["+i+"].lightmask"))
 			}
 
 		//finalize initial buffer stup
@@ -253,13 +263,13 @@ class _ScreenBuffer {
 			this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
 			this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
 
-		this._setupInfo.customSetupFunction(this._gTarget, this._program);
-
-		this._gTarget.useProgram(this._postProcessProgram)
-		this._outBuffer = this._gTarget.createFramebuffer();
-
+		this._setupInfo.customSetupFunction(this._gTarget, shaderProgram.program);
 
 		//setup postprocess buffers
+		this._gTarget.useProgram(postShaderProgram.program)
+		this._currentProgram = postShaderProgram;
+		this._outBuffer = this._gTarget.createFramebuffer();
+
 		if (this._setupInfo.postTexStr != null) {
 			this._postTexCount = this._setupInfo.postTexCount;
 			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
@@ -277,18 +287,18 @@ class _ScreenBuffer {
 				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, null);
 
 				if (!(this._setupInfo.texStr instanceof Array)) {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.postTexStr + "[" + i + "]"));
+					this._postImageLoc.push(this._gTarget.getUniformLocation(postShaderProgram.program, this._setupInfo.postTexStr + "[" + i + "]"));
 					if (this._postImageLoc[i] == -1) alert(this._setupInfo.postTexStr + "[" + i + "]" + ": unknown/invalid shader location");
 				}
 				else {
-					this._postImageLoc.push(this._gTarget.getUniformLocation(this._postProcessProgram, this._setupInfo.postTexStr[i]));
+					this._postImageLoc.push(this._gTarget.getUniformLocation(postShaderProgram.program, this._setupInfo.postTexStr[i]));
 					if (this._postImageLoc[i] == -1) alert(this._setupInfo.postTexStr[i] + ": unknown/invalid shader location");
 				}
 			}
 
 			if (this._setupInfo.coordStr != null) {
 				this._postPosBuf = this._gTarget.createBuffer();
-				this._postPosIn = this._gTarget.getAttribLocation(this._postProcessProgram, this._setupInfo.coordStr);
+				this._postPosIn = this._gTarget.getAttribLocation(postShaderProgram.program, this._setupInfo.coordStr);
 			}
 	
 			this._depthBuffer = this._gTarget.createRenderbuffer();
@@ -320,13 +330,14 @@ class _ScreenBuffer {
 		}
 
 		//complete setup
-		this._gTarget.useProgram(this._program)
+		this._gTarget.useProgram(this._program.program)
+		this._currentProgram = shaderProgram;
 		this._setup = true
 		this._inSetup = false
 	}
 
 	_clearBuffers() {
-		this._customClearFunction(this._gTarget, this._program)
+		this._customClearFunction(this._gTarget, this._currentProgram)
 		for (var i = 0; i < this._matParamCount; i++)
 			this._matParams[i] = []
 		this._matIndicies = []
@@ -427,7 +438,8 @@ class _ScreenBuffer {
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
-		this._gTarget.useProgram(this._program.program)
+		//TODO: modify for custom programs
+		this.switchShaderPrograms(this._program)
 		this._gTarget.viewport(0, 0, _canvas.width, _canvas.height);
 		this._gTarget.enable(this._gTarget.DEPTH_TEST);
 		this._gTarget.enable(this._gTarget.CULL_FACE);
@@ -438,9 +450,9 @@ class _ScreenBuffer {
 		this._gTarget.depthFunc(this._gTarget.LESS);
 
 		if (!this._inSetup) {
-			if (!this._setup) this._init(this._program);
+			if (!this._setup) this._init(this._program, this._postProcessProgram);
 
-			this._customBeginRenderFunction(this._gTarget, this._program.program)
+			this._customBeginRenderFunction(this._gTarget, this._program)
 			this._updateLights();
 
 			for(var i = 0; i < this._texCount; i++){
@@ -455,7 +467,7 @@ class _ScreenBuffer {
 			}
 
 			this._gTarget.drawBuffers(this._drawBuffers);
-			//this._gTarget.useProgram(this._program);
+			//this._gTarget.useProgram(this._program.program);
 			this._gTarget.clearColor(0, 0, 0, 0)
 			this._gTarget.clear(this._gTarget.COLOR_BUFFER_BIT | this._gTarget.DEPTH_BUFFER_BIT);
 			this._clearBuffers();
