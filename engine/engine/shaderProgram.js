@@ -31,9 +31,9 @@ class shaderProgram{
             fragmentShader = getShader(gl, fShaderName, gl.FRAGMENT_SHADER);
         this.program = gl.createProgram();
     
-        gl.attachShader(program, vertexShader);
-        gl.attachShader(program, fragmentShader);
-        gl.linkProgram(program);
+        gl.attachShader(this.program, vertexShader);
+        gl.attachShader(this.program, fragmentShader);
+        gl.linkProgram(this.program);
     
         if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
             alert("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( program ));
