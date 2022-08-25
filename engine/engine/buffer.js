@@ -7,20 +7,20 @@ class _bufferSet {
 	inputAttribute; //attrib location
 	locationName; //string
 
-	constructor(locationName, gTarget = null, program = null){
+	constructor(locationName, gTarget = null, shaderProgram = null){
 		this.locationName = locationName;
 		if(gTarget != null && program != null)
-			this.setupBuffer(gTarget, program, true)
+			this.setupBuffer(gTarget, shaderProgram, true)
 	}
 
 	/**
 	 * Set up a new buffer for an attribute, if possible. Creates
 	 * TODO: @params
 	 */
-	 setupBuffer(gTarget, program, createNewBuffer = false){
+	 setupBuffer(gTarget, shaderProgram, createNewBuffer = false){
 		if(this.locationName != null){
 			if(createNewBuffer) this.buffer = gTarget.createBuffer();
-			this.inputAttribute = gTarget.getAttribLocation(program, this.locationName);
+			this.inputAttribute = gTarget.getAttribLocation(shaderProgram.program, this.locationName);
 			if(this.inputAttribute == -1) alert(this.locationName + ": unknown/invalid shader location");
 		}
 	}
@@ -169,17 +169,17 @@ class _ScreenBuffer {
 
 	}
 
-	_init(program) {
+	_init(shaderProgram) {
 		this._inSetup = true
-		this._gTarget.useProgram(program)
-		this._currentProgram = program;
+		this._gTarget.useProgram(shaderProgram.program)
+		this._currentProgram = shaderProgram;
 
 		//set up buffers, get attribute locations
-		this._posBuffer = new _bufferSet(this._setupInfo.coordStr, this._gTarget, this._program);
-		this._normBuf = new _bufferSet(this._setupInfo.normalStr, this._gTarget, this._program);
-		this._txBuf = new _bufferSet(this._setupInfo.texCoordStr, this._gTarget, this._program);
-		this._tanBuf = new _bufferSet(this._setupInfo.tanStr, this._gTarget, this._program);
-		this._biTanBuf = new _bufferSet(this._setupInfo.biTanStr, this._gTarget, this._program);
+		this._posBuffer = new _bufferSet(this._setupInfo.coordStr, this._gTarget, shaderProgram);
+		this._normBuf = new _bufferSet(this._setupInfo.normalStr, this._gTarget, shaderProgram);
+		this._txBuf = new _bufferSet(this._setupInfo.texCoordStr, this._gTarget, shaderProgram);
+		this._tanBuf = new _bufferSet(this._setupInfo.tanStr, this._gTarget, shaderProgram);
+		this._biTanBuf = new _bufferSet(this._setupInfo.biTanStr, this._gTarget, shaderProgram);
 		
 		//TODO: cleanup lines 160-197?
 		if (this._setupInfo.matStr != null) {
@@ -427,7 +427,7 @@ class _ScreenBuffer {
 	_beginRender() {
 		//("Rendering")
 		//load new buffer data
-		this._gTarget.useProgram(this._program)
+		this._gTarget.useProgram(this._program.program)
 		this._gTarget.viewport(0, 0, _canvas.width, _canvas.height);
 		this._gTarget.enable(this._gTarget.DEPTH_TEST);
 		this._gTarget.enable(this._gTarget.CULL_FACE);
@@ -435,12 +435,12 @@ class _ScreenBuffer {
 		this._gTarget.enable(this._gTarget.BLEND)
 		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
 		this._gTarget.frontFace(this._gTarget.CW);
-		this._gTarget.depthFunc(this._gTarget.LESS)
+		this._gTarget.depthFunc(this._gTarget.LESS);
 
 		if (!this._inSetup) {
-			if (!this._setup) this._init();
+			if (!this._setup) this._init(this._program);
 
-			this._customBeginRenderFunction(this._gTarget, this._program)
+			this._customBeginRenderFunction(this._gTarget, this._program.program)
 			this._updateLights();
 
 			for(var i = 0; i < this._texCount; i++){
@@ -562,7 +562,7 @@ class _ScreenBuffer {
 	_applyPostProcessToScene() {
 
 		//this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
-		this._gTarget.useProgram(this._postProcessProgram)
+		this._gTarget.useProgram(this._postProcessProgram.program)
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
