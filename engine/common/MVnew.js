@@ -875,7 +875,7 @@ function mix(u, v, s) {
 
 
 function flatten(v) {
-  if (v === undefined){
+  if (v === undefined || v.length == 0){
     return new Float32Array();
   }
   if (isVector(v)) {
