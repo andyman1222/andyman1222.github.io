@@ -95,14 +95,22 @@
 			})
 		}
 
-		function suggestAnyWord(letterArr, length = -1, exclude = new Set()) {
+		function suggestAnyWord(letterMap, length = -1, exclude = new Set()) {
 			return new Promise((resolve) => {
-				if (letterArr.length == 0)
+				if (letterMap.length == 0)
 					resolve(Array.from(wordGraph.keys()).filter((x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
 						.sort((a, b) => getTotalFrequency(b) - getTotalFrequency(a)))
-				let goodTree = new Map();
+				let goodTree = new Map(); //char -> (char -> ..., parent map)
+				let currentTrees = []
+				while(letterMap.length > 0)
+					letterMap.foreach((k, v, map) => {
+						if(v == 0) map.remove(k)
+						else {
+
+						}
+					})
 						/*let initList = new Set([...letterArr[0].words].filter(x => (length <= 0 || x.length == length) && !wordContainsSet(x, exclude)))
-				for (let i = 1; i < letterArr.length; i++) {
+				
 					initList = new Set([...initList].filter(x => letterArr[i].words.has(x) && !wordContainsSet(x, exclude)))
 				}*/
 				resolve([...initList].sort((a, b) => getTotalFrequency(b, new Set(letterArr)) - getTotalFrequency(a, new Set(letterArr))))
@@ -132,6 +140,32 @@
 			return { array: arr, count: count }
 		}
 
+		function getLetterCountMap(i) {
+			let m = new Map()
+			let count = 0
+			i.forEach(x => {
+				//console.log(x);
+				if (count != 0 && !letterGraph.has(count)) {
+					throw ("There are no words that are that long in English! " + i)
+				}
+				if ((/[a-zA-Z]/).test(x)) {
+
+					if (!letterGraph.get(count).has(x.toLowerCase())) {
+						throw ("No such word with that letter combination exists! " + i)
+					}
+					let a = letterGraph.get(count).get(x.toLowerCase())
+					if(m.has(a))
+						m.set(a, m.get(a)+1)
+					else m.set(a, 1)
+					count++
+				}
+				else if (x === '_')
+					count++
+			})
+
+			return { map: m, count: count }
+		}
+
 		function getExclSet(i) {
 			let s = new Set()
 			i.forEach(x => {
@@ -156,6 +190,42 @@
 					let excl = getExclSet(document.getElementById("excl").value.split('\n'))
 
 					suggestWord(v.array, v.count, excl).then((tmp) => {
+						setTimeout(() => {
+							document.getElementById("words").innerText = ""
+							let txt = ""
+							tmp.forEach(x => { txt += x + "\n" })
+							document.getElementById("words").innerText = txt;
+						}, 0)
+					})
+				}
+				catch (e) {
+					document.getElementById("words").innerText = e
+				}
+				finally {
+					document.body.style.cursor = "default"
+					document.getElementById("in").disabled = false
+					canMake = true
+				}
+
+			}
+
+		}
+
+		async function makeAny() {
+			if (canMake) {
+				canMake = false
+				document.getElementById("in").disabled = true
+				let arr = []
+				let count = 0
+				let cont = true
+				if (document.getElementById("in").value.length == 0) document.getElementById("words").innerText = "Enter some letters and underscores to begin."
+				document.getElementById("words").innerText = "Loading words... The more unknown characters, the more word possibilities, the slower the results"
+				document.body.style.cursor = "wait"
+				try {
+					let v = getLetterCountMap(document.getElementById("in").value.split(''))
+					let excl = getExclSet(document.getElementById("excl").value.split('\n'))
+
+					suggestAnyWord(v.map, v.count, excl).then((tmp) => {
 						setTimeout(() => {
 							document.getElementById("words").innerText = ""
 							let txt = ""

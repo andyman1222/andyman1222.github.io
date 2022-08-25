@@ -59,10 +59,10 @@ function _tick(prevTime) {
 
 function _setDefaultGraphics(vertexPath, fragmentPath, postVertexPath, postFragmentPath){
 	//  Load shaders and initialize attribute buffers
-	_program = initShaders(_gl, vertexPath, fragmentPath);
-	_postProcessProgram = initShaders(_gl, postVertexPath, postFragmentPath);
+	_defaultProgram = new shaderProgram(_gl, vertexPath, fragmentPath);
+	_postProcessProgram = new shaderProgram(_gl, postVertexPath, postFragmentPath);
 
-	_bData = new _ScreenBuffer(_gl, _program, _postProcessProgram);
+	_bData = new _ScreenBuffer(_gl, _defaultProgram, _postProcessProgram);
 
 	_mainCamera = new _Camera(_bData);
 	
@@ -94,8 +94,8 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, postVerte
 	_setDefaultGraphics(vertexPath, fragmentPath, postVertex, postFragment);
 }
 
-function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, defaultVertex = "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", defaultFragment = "https://andyman1222.github.io/engine/default-shaders/fragment.glsl",
-defaultPostVertex="https://andyman1222.github.io/engine/default-shaders/postprocess-vertex.glsl", defaultPostFragment="https://andyman1222.github.io/engine/default-shaders/postprocess-fragment.glsl", userPostTick = function(delta, time) {}) {
+function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../engine/default-shaders/fragment.glsl",
+defaultPostVertex="../default-shaders/postprocess-vertex.glsl", defaultPostFragment="../default-shaders/postprocess-fragment.glsl", userPostTick = function(delta, time) {}) {
 	_userInitFunction = userInit
 	_userTickFunction = userTick;
 	_userKeyFunction = userKey;

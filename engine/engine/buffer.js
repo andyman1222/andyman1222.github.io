@@ -1,7 +1,67 @@
+
+/**
+ * TODO
+ */
+class _bufferSet {
+	buffer; //WebGL buffer
+	inputAttribute; //attrib location
+	locationName; //string
+
+	constructor(locationName, gTarget = null, program = null){
+		this.locationName = locationName;
+		if(gTarget != null && program != null)
+			this.setupBuffer(gTarget, program, true)
+	}
+
+	/**
+	 * Set up a new buffer for an attribute, if possible. Creates
+	 * TODO: @params
+	 */
+	 setupBuffer(gTarget, program, createNewBuffer = false){
+		if(this.locationName != null){
+			if(createNewBuffer) this.buffer = gTarget.createBuffer();
+			this.inputAttribute = gTarget.getAttribLocation(program, this.locationName);
+			if(this.inputAttribute == -1) alert(this.locationName + ": unknown/invalid shader location");
+		}
+	}
+
+	isValid(){
+		return this.locationName != null && this.inputAttribute != -1;
+	}
+
+	loadBufferData(gTarget, bufferType, drawType, data, size, type, normalized=false, stride=0, offset=0){
+		if (this.isValid()) {
+			gTarget.bindBuffer(bufferType, this.buffer);
+			gTarget.bufferData(bufferType, data, drawType);
+			gTarget.vertexAttribPointer(this.inputAttribute, size, type, normalized, stride, offset);
+			gTarget.enableVertexAttribArray(this.inputAttribute);
+		}
+	}
+}
+
+/**
+ * TODO
+ */
+class _uniformLocation {
+	location;
+	name;
+	constructor(uniformName, gTarget, program){
+		this.setLocation(gTarget, program, uniformName)
+	}
+
+	setLocation(gTarget, program, uniformName = null){
+		if(uniformName != null) this.name = uniformName;
+		if (this.name != null) {
+			this.location = gTarget.getUniformLocation(program, this.name);
+			if (this.location == -1) alert(this.name + ": unknown/invalid shader location");
+		}
+	}
+}
+
 /**
  * buffer _Object representing all data necessary for any output buffer/view
+ * A buffer can swap shader programs but expects the shader support all the standard inputs/outputs
  */
-
 class _ScreenBuffer {
 	_matParams = []
 	_matIndicies = []
@@ -21,11 +81,6 @@ class _ScreenBuffer {
 	_matParamsBufs = [];
 	_matIndBuf;
 
-	_inPos;
-	_inTexCoord;
-	_inNormal;
-	_inBitan;
-	_inTan;
 	_inMatIndex
 	_inMatParams = [];
 
@@ -48,7 +103,8 @@ class _ScreenBuffer {
 	_cameraPosLoc;
 	_textureLoc = []
 	_cameraSclLoc;
-	_program;
+	
+	_currentProgram;
 	_postProcessProgram;
 
 	_bufLimit;
@@ -113,39 +169,19 @@ class _ScreenBuffer {
 
 	}
 
-	_init() {
+	_init(program) {
 		this._inSetup = true
-		this._gTarget.useProgram(this._program)
-		if (this._setupInfo.coordStr != null) {
-			this._posBuffer = this._gTarget.createBuffer();
-			this._inPos = this._gTarget.getAttribLocation(this._program, this._setupInfo.coordStr);
-			if (this._inPos == -1) alert(this._setupInfo.coordStr + ": unknown/invalid shader location");
-		}
+		this._gTarget.useProgram(program)
+		this._currentProgram = program;
 
-		if (this._setupInfo.normalStr != null) {
-			this._normBuf = this._gTarget.createBuffer();
-			this._inNormal = this._gTarget.getAttribLocation(this._program, this._setupInfo.normalStr);
-			if (this._inNormal == -1) alert(this._setupInfo.normalStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.texCoordStr != null) {
-			this._txBuf = this._gTarget.createBuffer();
-			this._inTexCoord = this._gTarget.getAttribLocation(this._program, this._setupInfo.texCoordStr);
-			if (this._inTexCoord == -1) alert(this._setupInfo.texCoordStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.tanStr != null) {
-			this._tanBuf = this._gTarget.createBuffer();
-			this._inTan = this._gTarget.getAttribLocation(this._program, this._setupInfo.tanStr);
-			if (this._inTan == -1) alert(this._setupInfo.tanStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.biTanStr != null) {
-			this._biTanBuf = this._gTarget.createBuffer();
-			this._inBiTan = this._gTarget.getAttribLocation(this._program, this._setupInfo.biTanStr);
-			if (this._inBiTan == -1) alert(this._setupInfo.biTanStr + ": unknown/invalid shader location");
-		}
-
+		//set up buffers, get attribute locations
+		this._posBuffer = new _bufferSet(this._setupInfo.coordStr, this._gTarget, this._program);
+		this._normBuf = new _bufferSet(this._setupInfo.normalStr, this._gTarget, this._program);
+		this._txBuf = new _bufferSet(this._setupInfo.texCoordStr, this._gTarget, this._program);
+		this._tanBuf = new _bufferSet(this._setupInfo.tanStr, this._gTarget, this._program);
+		this._biTanBuf = new _bufferSet(this._setupInfo.biTanStr, this._gTarget, this._program);
+		
+		//TODO: cleanup lines 160-197?
 		if (this._setupInfo.matStr != null) {
 			this._matIndBuf = this._gTarget.createBuffer();
 			this._matParamCount = this._setupInfo.matParamCount;
@@ -162,6 +198,8 @@ class _ScreenBuffer {
 
 			}
 		}
+
+		
 
 		if (this._setupInfo.texStr != null) {
 			this._texCount = this._setupInfo.texCount;
@@ -182,40 +220,17 @@ class _ScreenBuffer {
 			if (this._inMatIndex == -1) alert(this._setupInfo.matIndStr + ": unknown/invalid shader location");
 		}
 
-		if (this._setupInfo.projMatrixStr != null) {
-			this._projMatrix = this._gTarget.getUniformLocation(this._program, this._setupInfo.projMatrixStr);
-			if (this._projMatrix == -1) alert(this._setupInfo.projMatrixStr + ": unknown/invalid shader location");
-		}
+		//get uniform locations
 
-		if (this._setupInfo.viewMatrixStr != null) {
-			this._viewMatrix = this._gTarget.getUniformLocation(this._program, this._setupInfo.viewMatrixStr);
-			if (this._viewMatrix == -1) alert(this._setupInfo.viewMatrixStr + ": unknown/invalid shader location");
-		}
-		if (this._setupInfo.normalMatrixStr != null) {
-			this._normalMatrix = this._gTarget.getUniformLocation(this._program, this._setupInfo.normalMatrixStr);
-			if (this._normalMatrix == -1) alert(this._setupInfo.normalMatrixStr + ": unknown/invalid shader location");
-		}
+		this._projMatrix = new _uniformLocation(this._setupInfo.projMatrixStr, this._gTarget, this._program);
+		this._viewMatrix = new _uniformLocation(this._setupInfo.viewMatrixStr, this._gTarget, this._program);
+		this._normalMatrix = new _uniformLocation(this._setupInfo.normalMatrixStr, this._gTarget, this._program);
+		this._modelMatrix = new _uniformLocation(this._setupInfo.modelMatrixStr, this._gTarget, this._program);
+		this._lightIndLoc = new _uniformLocation(this._setupInfo.lightsIndexStr, this._gTarget, this._program);
+		this._cameraPosLoc = new _uniformLocation(this._setupInfo.cameraPosStr, this._gTarget, this._program);
+		this._cameraSclLoc = new _uniformLocation(this._setupInfo.cameraScaleStr, this._gTarget, this._program);
 
-		if (this._setupInfo.modelMatrixStr != null) {
-			this._modelMatrix = this._gTarget.getUniformLocation(this._program, this._setupInfo.modelMatrixStr);
-			if (this._modelMatrix == -1) alert(this._setupInfo.modelMatrixStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.lightsIndexStr != null) {
-			this._lightIndLoc = this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsIndexStr);
-			if (this._lightIndLoc == -1) alert(this._setupInfo.lightsIndexStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.cameraPosStr != null) {
-			this._cameraPosLoc = this._gTarget.getUniformLocation(this._program, this._setupInfo.cameraPosStr);
-			if (this._cameraPosLoc == -1) alert(this._setupInfo.cameraPosStr + ": unknown/invalid shader location");
-		}
-
-		if (this._setupInfo.cameraScaleStr != null) {
-			this._cameraSclLoc = this._gTarget.getUniformLocation(this._program, this._setupInfo.cameraScaleStr);
-			if (this._cameraSclLoc == -1) alert(this._setupInfo.cameraScaleStr + ": unknown/invalid shader location");
-		}
-
+		//TODO: cleanup
 		if (this._setupInfo.lightsArrayStr != null)
 			for (var i = 0; i < _maxLightCount; i++) {
 				this._lightTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, this._setupInfo.lightsArrayStr + "[" + i + "].type"))
@@ -233,6 +248,7 @@ class _ScreenBuffer {
 				//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(this._program, lightsArrayStr+"["+i+"].lightmask"))
 			}
 
+		//finalize initial buffer stup
 		this._bufLimit = (this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
 			this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
 			this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS)
@@ -242,6 +258,8 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(this._postProcessProgram)
 		this._outBuffer = this._gTarget.createFramebuffer();
 
+
+		//setup postprocess buffers
 		if (this._setupInfo.postTexStr != null) {
 			this._postTexCount = this._setupInfo.postTexCount;
 			for (var i = 0; i < this._setupInfo.postTexCount; i++) {
@@ -301,6 +319,7 @@ class _ScreenBuffer {
 			for(var i = 0; i < this._postTexCount; i++) this._drawBuffers.push(this._gTarget.COLOR_ATTACHMENT0+i)
 		}
 
+		//complete setup
 		this._gTarget.useProgram(this._program)
 		this._setup = true
 		this._inSetup = false
@@ -321,18 +340,18 @@ class _ScreenBuffer {
 	}
 
 	_setViewMatrix(v, p, s) {
-		if (this._viewMatrix != null) this._gTarget.uniformMatrix4fv(this._viewMatrix, false, flatten(v));
-		if (this._cameraPosLoc != null) this._gTarget.uniform3fv(this._cameraPosLoc, flatten(p))
-		if (this._cameraSclLoc != null) this._gTarget.uniform3fv(this._cameraSclLoc, flatten(s))
+		if (this._viewMatrix.location != null) this._gTarget.uniformMatrix4fv(this._viewMatrix.location, false, flatten(v));
+		if (this._cameraPosLoc.location != null) this._gTarget.uniform3fv(this._cameraPosLoc.location, flatten(p))
+		if (this._cameraSclLoc.location != null) this._gTarget.uniform3fv(this._cameraSclLoc.location, flatten(s))
 	}
 
 	_setModelMatrix(m) {
-		if (this._modelMatrix != null) this._gTarget.uniformMatrix4fv(this._modelMatrix, false, flatten(m))
-		if (this._normalMatrix != null) this._gTarget.uniformMatrix4fv(this._normalMatrix, true, flatten(inverse(m)))
+		if (this._modelMatrix.location != null) this._gTarget.uniformMatrix4fv(this._modelMatrix.location, false, flatten(m))
+		if (this._normalMatrix.location != null) this._gTarget.uniformMatrix4fv(this._normalMatrix.location, true, flatten(inverse(m)))
 	}
 
 	_setProjMatrix(p) {
-		if (this._projMatrix != null) this._gTarget.uniformMatrix4fv(this._projMatrix, false, flatten(p));
+		if (this._projMatrix.location != null) this._gTarget.uniformMatrix4fv(this._projMatrix.location, false, flatten(p));
 	}
 
 	_updateLights() {
@@ -447,13 +466,17 @@ class _ScreenBuffer {
 		if (this._points.length > 0) {
 			this._customPreRenderFunction(this._gTarget, this._program);
 
-			if (this._posBuffer != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._posBuffer);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._points), this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inPos, 3, this._gTarget.FLOAT, false, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inPos);
-			}
+			this._posBuffer.loadBufferData(this._gTarget, 
+				this._gTarget.ARRAY_BUFFER, 
+				this._gTarget.STATIC_DRAW, 
+				flatten(this._points), 
+				3, 
+				this._gTarget.FLOAT, 
+				false, 
+				0, 
+				0);
 
+			//TODO: update when _matIndBuf is made into custom class
 			if (this._matIndBuf != null) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matIndBuf);
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, new Int16Array(this._matIndicies), this._gTarget.STATIC_DRAW);
@@ -462,6 +485,7 @@ class _ScreenBuffer {
 			}
 
 			//load materials
+			//TODO: clean this up
 			for (var i = 0; i < this._matParamCount; i++) {
 				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._matParamsBufs[i]);
 				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._matParams[i]), this._gTarget.STATIC_DRAW);
@@ -469,33 +493,45 @@ class _ScreenBuffer {
 				this._gTarget.enableVertexAttribArray(this._inMatParams[i]);
 			}
 
-			if (this._normBuf != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._normBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._normals), this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inNormal, 3, this._gTarget.FLOAT, true, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inNormal);
-			}
+			this._normBuf.loadBufferData(this._gTarget, 
+				this._gTarget.ARRAY_BUFFER, 
+				this._gTarget.STATIC_DRAW, 
+				flatten(this._normals), 
+				3, 
+				this._gTarget.FLOAT, 
+				true, 
+				0, 
+				0);
 
-			if (this._tanBuf != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._tanBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._tangents), this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inTan, 3, this._gTarget.FLOAT, true, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inTan);
-			}
+			this._tanBuf.loadBufferData(this._gTarget, 
+				this._gTarget.ARRAY_BUFFER, 
+				this._gTarget.STATIC_DRAW, 
+				flatten(this._tangents), 
+				3, 
+				this._gTarget.FLOAT, 
+				true, 
+				0, 
+				0);
 
-			if (this._biTanBuf != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._biTanBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._bitangents), this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inBiTan, 3, this._gTarget.FLOAT, true, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inBiTan);
-			}
+			this._biTanBuf.loadBufferData(this._gTarget, 
+				this._gTarget.ARRAY_BUFFER, 
+				this._gTarget.STATIC_DRAW, 
+				flatten(this._bitangents), 
+				3, 
+				this._gTarget.FLOAT, 
+				true, 
+				0, 
+				0);
 
-			if (this._txBuf != null) {
-				this._gTarget.bindBuffer(this._gTarget.ARRAY_BUFFER, this._txBuf);
-				this._gTarget.bufferData(this._gTarget.ARRAY_BUFFER, flatten(this._texCoords), this._gTarget.STATIC_DRAW);
-				this._gTarget.vertexAttribPointer(this._inTexCoord, 2, this._gTarget.FLOAT, false, 0, 0);
-				this._gTarget.enableVertexAttribArray(this._inTexCoord);
-			}
+			this._txBuf.loadBufferData(this._gTarget, 
+				this._gTarget.ARRAY_BUFFER, 
+				this._gTarget.STATIC_DRAW, 
+				flatten(this._texCoords), 
+				2, 
+				this._gTarget.FLOAT, 
+				false, 
+				0, 
+				0);
 
 			//draw
 			var offset = 0;
@@ -520,6 +556,9 @@ class _ScreenBuffer {
 		this._clearBuffers();
 	}
 
+	/**
+	 * Manually apply final step postprocessing to output image by drawing a rectangle on the entire screen containing the scene image processed via the post process shaders
+	 */
 	_applyPostProcessToScene() {
 
 		//this._gTarget.drawBuffers([this._gTarget.NONE, this._gTarget.NONE]);
