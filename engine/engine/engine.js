@@ -94,7 +94,7 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, postVerte
 	_setDefaultGraphics(vertexPath, fragmentPath, postVertex, postFragment);
 }
 
-function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../engine/default-shaders/fragment.glsl",
+function _engineInit(defaultCanvas, userInit, userTick, userKey = function(e) {}, userMouse = function(e) {}, defaultVertex = "../default-shaders/vertex.glsl", defaultFragment = "../default-shaders/fragment.glsl",
 defaultPostVertex="../default-shaders/postprocess-vertex.glsl", defaultPostFragment="../default-shaders/postprocess-fragment.glsl", userPostTick = function(delta, time) {}) {
 	_userInitFunction = userInit
 	_userTickFunction = userTick;
