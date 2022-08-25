@@ -376,7 +376,7 @@ class _ScreenBuffer {
 			_lights.forEach((l) => {
 				if (l != null && x < _maxLightCount - 1 && l._enabled && this._lightTypeArrayLoc.length - 1 > x && ((l._lightMask & this._bufferMask) != 0)) {
 					x++;
-					//this._gTarget.uniform1iv(this._lightIndLoc.location, new Int32Array([x])) //note: extra line???
+					this._gTarget.uniform1iv(this._lightIndLoc.location, new Int32Array([x]))
 					this._gTarget.uniform1iv(this._lightTypeArrayLoc[x], new Int32Array([l._type]))
 					switch (l._type) {
 						case 4:
