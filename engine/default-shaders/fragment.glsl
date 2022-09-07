@@ -51,7 +51,7 @@ uniform sampler2D depthMap;
 uniform sampler2D diffuseMap; //light multiplier
 uniform sampler2D roughnessMap; //light multiplier
 uniform sampler2D emissiveImage; //emissive
-uniform sampler3D shadowMaps; //depth maps for lights used for shadows. Format (w, u, v) is (lightNum, Uindex, Vindex)
+//uniform sampler3D shadowMaps; //depth maps for lights used for shadows. Format (w, u, v) is (lightNum, Uindex, Vindex)
 //Shadow maps are: in equirectangular format for point, See https://stackoverflow.com/questions/54101329/project-cubemap-to-2d-texture
 //2D orthographic for directional lights (with range defined upon shadow map generation)
 //spotlight: TODO
