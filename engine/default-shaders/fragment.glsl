@@ -94,7 +94,7 @@ struct sMat{
 	vec4 specular;
 };
 
-texture getShadowMap()
+//texture getShadowMap()
 
 sMat getStandardLight(vec4 mp5, vec3 norm, vec3 pos, vec3 viewPos, bool tangentSpace){
 	sMat r;
