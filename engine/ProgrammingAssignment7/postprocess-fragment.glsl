@@ -25,7 +25,7 @@ const vec4 fogColor = vec4(1., 0., 0., 1.);
 void main(void){
     vec4 results;
     //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
-    fColor = mix(fogColor, texture(scene, texCoords), clamp(texture(depth, texCoords),0.,1.));
+    fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(depth, texCoords)+1000)*100)*(position.z*.1),0.,1.));
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
