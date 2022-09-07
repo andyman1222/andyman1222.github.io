@@ -195,6 +195,6 @@ function init() {
 }
 
 window.onload = function () {
-	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent, "https://andyman1222.github.io/engine/default-shaders/vertex.glsl", "https://andyman1222.github.io/engine/default-shaders/fragment.glsl",
-	"https://andyman1222.github.io/engine/default-shaders/postprocess-vertex.glsl", "postprocess-fragment.glsl")
+	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl",
+	"../default-shaders/postprocess-vertex.glsl", "postprocess-fragment.glsl")
 }
