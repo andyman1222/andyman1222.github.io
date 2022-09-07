@@ -20,7 +20,7 @@ const int samples = 4;
 const float minDepth = .1;
 const float dist = 3.;
 const float scale = 50.;
-const vec3 fogColor = vec3(1., 0., 0.);
+const vec4 fogColor = vec3(1., 0., 0., 1.);
 
 void main(void){
     vec4 results;
