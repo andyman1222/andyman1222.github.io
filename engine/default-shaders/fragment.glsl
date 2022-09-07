@@ -13,6 +13,7 @@ in vec3 cameraPosT;
 in vec3 cameraPosW;
 in vec3 normalT;
 in vec3 normalW;
+in vec3 positionW;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
@@ -21,7 +22,7 @@ in vec4 matProp[MAT_PROP_COUNT];
 layout(location=0) out vec4 fScene; //final scene output with lights and colors (no postprocessing)
 layout(location=1) out vec4 fDepth; //depth map
 layout(location=2) out vec4 fNormal; //surface normals
-layout(location=3) out vec4 fPosition; //fragment coordinates
+layout(location=3) out vec4 fPosition; //fragment world coordinates
 layout(location=4) out vec4 fColor; //surface color * ambient multiply
 layout(location=5) out vec4 fDiffuse; //surface diffuse multiply
 layout(location=6) out vec4 fSpecular; //surface specular multiply
@@ -298,7 +299,7 @@ vec4 standardImage(vec4 mp[MAT_PROP_COUNT], vec3 pos, vec2 tx, vec3 viewPos, boo
 }
 
 void main(void){
-	fPosition = vec4(positionT, 1);
+	fPosition = vec4(positionW, 1);
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	float d = 1.-texture(depthMap, txc).r;
 	//vec2 txc = texCoord;
