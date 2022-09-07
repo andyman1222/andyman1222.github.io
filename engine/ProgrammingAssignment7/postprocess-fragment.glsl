@@ -20,10 +20,12 @@ const int samples = 4;
 const float minDepth = .1;
 const float dist = 3.;
 const float scale = 50.;
+const vec3 fogColor = vec3(1, 0, 0);
 
 void main(void){
     vec4 results;
-    fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
+    //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
+    fColor = texture(mix(scene, fogColor, clamp(texture(depth, texCoords),0,1)), texCoords);
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
         fColor = t;
