@@ -281,7 +281,7 @@ class _ScreenBuffer {
 				this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);
 				this._gTarget.bindTexture(this._gTarget.TEXTURE_2D, this._outImages[i]);
 				this._gTarget.texStorage2D(this._gTarget.TEXTURE_2D,
-					0,
+					1,
 					(_FLOATING_EXT && _FLOATING_BUF_EXT ? this._gTarget.RGBA32F : this._gTarget.RGBA),
 					this._gTarget.canvas.clientWidth,
 					this._gTarget.canvas.clientHeight)
