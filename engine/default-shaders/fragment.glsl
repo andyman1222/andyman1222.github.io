@@ -271,7 +271,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 	fDiffuse = mp[1];
 	fColor = mp[0]*mp[3];
 	fEmissive = mp[4];
-	fDepth = 1.-positionL;
+	//fDepth = 1.-positionL;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
@@ -304,7 +304,7 @@ void main(void){
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	float d = 1.-texture(depthMap, txc).r;
 	//vec2 txc = texCoord;
-	fDepth = gl_FragCoord;
+	fDepth = 1.-positionL;
 	switch(matIndex){
 		case -3: //debug- draw depth
 		fScene = fDepth;
