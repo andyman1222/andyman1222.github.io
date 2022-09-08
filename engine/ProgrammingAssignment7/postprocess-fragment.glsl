@@ -22,7 +22,7 @@ const float dist = 3.;
 const float scale = 50.;
 const vec4 fogColor = vec4(.5, .5, .25, 1.);
 const float minViewDist = 10.;
-const float maxViewDist = 100.;
+const float maxViewDist = 20.;
 const float minViewHeight = 1.;
 const float maxViewHeight = 5.;
 
