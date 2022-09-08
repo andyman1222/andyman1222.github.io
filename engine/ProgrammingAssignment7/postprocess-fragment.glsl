@@ -27,7 +27,7 @@ void main(void){
     //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
     //fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(depth, texCoords)))*((texture(position, texCoords).y)),0.,1.));
     //fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(position, texCoords).y-5.)),0.,1.));
-    fColor=texture(position,texCoords)+vec4(0.,1.,0.,0.);
+    fColor=texture(position,texCoords)-vec4(0.,1.,0.,0.);
     //fColor = texture(position, texCoords);
     /*//fColor = vec4(t.rgb, 1);
     if(d.b > minDepth)
