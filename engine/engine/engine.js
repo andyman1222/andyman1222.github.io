@@ -90,7 +90,10 @@ function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, postVerte
 	}, false);*/
 	_gl = _canvas.getContext('webgl2');
 	if (!_gl) { alert("WebGL 2.0 isn't available"); }
-
+	_FLOATING_EXT = _gl.getExtension("OES_texture_float_linear");
+	if(!_FLOATING_EXT) console.warn("Floating point textures unsupported! Postprocess buffers will have undesired effects!");
+	_FLOATING_BUF_EXT = _gl.getExtension("EXT_color_float_buffer");
+	if(!_FLOATING_BUF_EXT) console.warn("Floating point buffers unsupported! Postprocess buffers will have undesired effects!");
 	_setDefaultGraphics(vertexPath, fragmentPath, postVertex, postFragment);
 }
 

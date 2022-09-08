@@ -25,6 +25,10 @@ var _lights = [];
 var _complexTextures = [];
 var _bounds = []
 
+//WEBGL EXTENSIONS
+var _FLOATING_EXT;
+var _FLOATING_BUF_EXT;
+
 
 ////COLLISION VARIABLES
 var _maskMap = []
