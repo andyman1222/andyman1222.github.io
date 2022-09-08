@@ -270,7 +270,7 @@ vec4 standardMaterial(vec4 mp[MAT_PROP_COUNT], vec3 norm, vec3 pos, vec3 viewPos
 	fDiffuse = mp[1];
 	fColor = mp[0]*mp[3];
 	fEmissive = mp[4];
-	fDepth = 1-gl_FragCoord;
+	fDepth = 1.-gl_FragCoord;
 	return vec4(max(tmp.r,0.),max(tmp.g,0.),max(tmp.b,0.),clamp(tmp.a,0.,1.));
 }
 
