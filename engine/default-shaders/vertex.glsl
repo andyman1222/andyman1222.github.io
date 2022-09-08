@@ -39,7 +39,7 @@ out vec3 cameraPosW;
 out vec3 normalT;
 out vec3 normalW;
 out vec3 positionW;
-out vec3 positionL; //includes depth + non-projected camera scaled XY adjusted to viewMatrix
+out vec4 positionL; //includes depth + non-projected camera scaled XY adjusted to viewMatrix
 
 out mat3 TBN;
 flat out int matIndex;
@@ -49,7 +49,7 @@ out vec4 matProp[MAT_PROP_COUNT];
 void main(void) {
     vec4 coordsW = modelMatrix * (vec4(inPointsL, 1.) * vec4(1,1,-1,1)) * vec4(1, 1, -1, 1);
     gl_Position = projMatrix * viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.));
-    positionL = (viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.))).xyz;
+    positionL = (viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.)));
     vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(-1,1,-1)); //tangent
     //vec3 T = normalize(inTangent);
     vec3 N = normalize((normalMatrix*(vec4(inNormalL, 0.) * vec4(1,1,-1,1))).xyz*vec3(1,1,-1)); //normal

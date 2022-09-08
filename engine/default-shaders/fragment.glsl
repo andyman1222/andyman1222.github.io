@@ -14,7 +14,7 @@ in vec3 cameraPosW;
 in vec3 normalT;
 in vec3 normalW;
 in vec3 positionW;
-in vec3 positionL;
+in vec4 positionL;
 
 flat in int matIndex;
 in vec4 matProp[MAT_PROP_COUNT];
