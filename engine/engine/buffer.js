@@ -459,7 +459,7 @@ class _ScreenBuffer {
 		this._gTarget.viewport(0, 0, _canvas.width, _canvas.height);
 		this._gTarget.enable(this._gTarget.DEPTH_TEST);
 		this._gTarget.enable(this._gTarget.CULL_FACE);
-		this._gTarget.enable(this._gTarget.DEPTH_CLAMP);
+		//this._gTarget.enable(this._gTarget.DEPTH_CLAMP); //not supported in WebGL
 		this._gTarget.colorMask(true, true, true, true);
 		this._gTarget.enable(this._gTarget.BLEND)
 		this._gTarget.blendFunc(this._gTarget.SRC_ALPHA, this._gTarget.ONE_MINUS_SRC_ALPHA);
