@@ -304,7 +304,7 @@ void main(void){
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	float d = 1.-texture(depthMap, txc).r;
 	//vec2 txc = texCoord;
-	fDepth = 1.-positionL;
+	fDepth = positionL;
 	switch(matIndex){
 		case -3: //debug- draw depth
 		fScene = fDepth;
