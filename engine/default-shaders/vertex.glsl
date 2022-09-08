@@ -49,7 +49,6 @@ out vec4 matProp[MAT_PROP_COUNT];
 void main(void) {
     vec4 coordsW = modelMatrix * (vec4(inPointsL, 1.) * vec4(1,1,-1,1)) * vec4(1, 1, -1, 1);
     gl_Position = projMatrix * viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.));
-    positionL = (viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.)));
     vec3 T = normalize((normalMatrix*vec4(inTangentL, 0.)).xyz*vec3(-1,1,-1)); //tangent
     //vec3 T = normalize(inTangent);
     vec3 N = normalize((normalMatrix*(vec4(inNormalL, 0.) * vec4(1,1,-1,1))).xyz*vec3(1,1,-1)); //normal
@@ -63,6 +62,9 @@ void main(void) {
     //view = tsMatrix*vec3(0.0, 0.0, 0.0);
     //normal = tsMatrix*N;
     positionW = coordsW.xyz;
+    vec4 tmp = (viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.)));
+    positionL = vec4(tmp.r, tmp.g, abs(cameraPosW-positionW), tmp.a);
+    
     positionT = TBN*(coordsW.xyz);
     positionVT = TBN * (viewMatrix * coordsW).xyz;
     //positionS = gl_Position;
