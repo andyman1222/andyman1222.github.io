@@ -303,6 +303,7 @@ void main(void){
 	vec2 txc = (texCoord*vec2(matProp[6][0], matProp[6][1]))+vec2(matProp[6][2], matProp[6][3]);
 	float d = 1.-texture(depthMap, txc).r;
 	//vec2 txc = texCoord;
+	fDepth = gl_FragCoord;
 	switch(matIndex){
 		case -3: //debug- draw depth
 		fScene = fDepth;
@@ -311,7 +312,7 @@ void main(void){
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		fDepth = gl_FragCoord;
+		//fDepth = gl_FragCoord;
 		break;
 		case -2: //debug- draw texcoord
 		fScene = vec4(txc, 0., 1.);
@@ -320,7 +321,7 @@ void main(void){
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		fDepth = gl_FragCoord;
+		//fDepth = gl_FragCoord;
 		break;
 		case -1: //nodraw. Doesn't even put anything into postprocess
 		return;
@@ -328,24 +329,24 @@ void main(void){
 		case 1: //no texture
 		fScene=standardMaterial(matProp, normalT, positionT, cameraPosT, true);
 		fNormal = vec4(normalT, 1);
-		fDepth = gl_FragCoord;
+		//fDepth = gl_FragCoord;
 		break;
 
 		case 2: //parallaxed texture
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
-		fDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
+		//fDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 		//break;
 
 		case 3: //texture, no parallax
 		fScene = standardImage(matProp, positionT, txc, cameraPosT, true);
 		if(matIndex == 3){
-			fDepth = gl_FragCoord;
+			//fDepth = gl_FragCoord;
 		}
 		break;
 
 		case 4: //unlit texture, parallax
 		txc = parallax(txc, -normalize((cameraPosT*vec3(1,1,1))-positionT)*vec3(1,1,-1), normalT, matProp[5][1], matProp[5][2], matProp[5][3]);
-		fDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
+		//fDepth = vec4(gl_FragCoord.rgb-(vec3(d, d, d)), gl_FragCoord.a*texture(depthMap, txc).a);
 
 		case 5: //unlit texture, no parallax
 		fScene = texture(baseImage, txc) * matProp[0];
@@ -355,7 +356,7 @@ void main(void){
 		fEmissive = matProp[4];
 		if(matIndex == 5){
 			fNormal = vec4(normalT, 1);
-			fDepth = gl_FragCoord;
+			//fDepth = gl_FragCoord;
 		}
 		break;
 
@@ -366,7 +367,7 @@ void main(void){
 		fSpecular = matProp[2];
 		fDiffuse = matProp[1];
 		fEmissive = matProp[4];
-		fDepth = gl_FragCoord;
+		//fDepth = gl_FragCoord;
 		break;
 	}
 	
