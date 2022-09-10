@@ -29,3 +29,4 @@ _javascript/PHPServerTest/storage.txt
 _javascript/PHPServerTest/userFiles/
 *.ini
 *.db
+.github/workflows/.cpanel.yml
