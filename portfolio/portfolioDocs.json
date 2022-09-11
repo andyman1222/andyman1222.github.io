@@ -1,5 +1,15 @@
 {
     "Game Design/Development": {
+        "Fishing Ducks": {
+            "image": "images/fishingducks.png",
+            "link": "/portfolio/game_dev/fishingducks/",
+            "desc": "Epic Games MegaJam 2022 submission"
+        },
+        "Space Bar Defender": {
+            "image": "images/spacebardefenders.png",
+            "link": "/portfolio/game_dev/spacebardefenders/",
+            "desc": "Epic Games MegaJam 2021 submission"
+        },
         "Amazeing": {
             "image": "images/Amazeing.png",
             "link": "/portfolio/game_dev/Amazeing/",
@@ -10,20 +20,11 @@
             "link": "/portfolio/game_dev/KungFuRun/",
             "desc": "A class project, a 3D Chinese-themed platformer"
         },
-        "Space Bar Defender": {
-            "image": "images/spacebardefenders.png",
-            "link": "/portfolio/game_dev/spacebardefenders/",
-            "desc": "Epic Games MegaJam 2021 submission"
-        },
+        
         "Schooled In": {
             "image": "images/schooledin.png",
             "link": "https://quantumquantonium.itch.io/schooled-in",
             "desc": "Epic Games MegaJam 2020 submission"
-        },
-        "Betaa": {
-            "image": "images/betaa.PNG",
-            "link": "/portfolio/game_dev/Betaa/",
-            "desc": "Fast-paced multiplayer FPS concept"
         },
         "LaserTag": {
             "image": "images/LaserTag.png",
@@ -34,6 +35,28 @@
             "image": "images/actiondemo.png",
             "link": "/portfolio/game_dev/ActionDemo/",
             "desc": "single level WIP project to demonstrate cool gameplay"
+        },
+        "Betaa": {
+            "image": "images/betaa.PNG",
+            "link": "/portfolio/game_dev/Betaa/",
+            "desc": "Fast-paced multiplayer FPS concept"
+        }
+    },
+    "Tech Art, VFX, Graphics": {
+        "'First Contact'": {
+            "image": "images/lightingChallenge.png",
+            "link": "/portfolio/tech/lightingChallenge",
+            "desc": "30 second lighting challenge submission"
+        },
+        "Office Scene": {
+            "image": "images/office.png",
+            "link": "/portfolio/tech/officeScene",
+            "desc": "Office scene made in Unreal Engine 5"
+        },
+        "Qeng": {
+            "image": "images/qeng.png",
+            "link": "/engine/",
+            "desc": "WebGL engine with custom shaders and a postprocess layer"
         }
     }
 }
