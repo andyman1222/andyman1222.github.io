@@ -5,10 +5,10 @@
             "link": "/portfolio/game_dev/fishingducks/",
             "desc": "Epic Games MegaJam 2022 submission"
         },
-        "Space Bar Defender": {
+        "Space Bar/One Touch Defender": {
             "image": "images/spacebardefenders.png",
             "link": "/portfolio/game_dev/spacebardefenders/",
-            "desc": "Epic Games MegaJam 2021 submission"
+            "desc": "Epic Games MegaJam 2021 submission + Android port"
         },
         "Amazeing": {
             "image": "images/Amazeing.png",
