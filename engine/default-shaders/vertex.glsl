@@ -63,7 +63,7 @@ void main(void) {
     //normal = tsMatrix*N;
     positionW = coordsW.xyz;
     vec4 tmp = (viewMatrix * coordsW * (vec4(1.,1.,1.,1.) / vec4(inCameraScale, 1.)));
-    positionL = vec4(tmp.r, tmp.g, length(inCameraPosW-positionW), tmp.a);
+    positionL = vec4(tmp.r, tmp.g, length(coordsW), tmp.a);
 
     positionT = TBN*(coordsW.xyz);
     positionVT = TBN * (viewMatrix * coordsW).xyz;
