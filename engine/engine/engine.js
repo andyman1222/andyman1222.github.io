@@ -119,11 +119,11 @@ function _engineInit(defaultCanvas, userInit, userTick, userKey = function (e) {
 	.then(() => {
 		//delay initial running of code by 1s to allow stuff to load in
 		//TODO: more dynamic wait to load
-		//setTimeout(function () {
 		_userInitFunction();
-		_queueNewTick(_tick);
-		_render();
-		//}, 1000);
+		setTimeout(function () {
+			_queueNewTick(_tick);
+			_render();
+		}, 100);
 	})
 	.catch((err) => {alert(err); console.error(err);})
 
