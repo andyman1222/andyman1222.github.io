@@ -122,8 +122,9 @@ function _engineInit(defaultCanvas, userInit, userTick, userKey = function (e) {
 		_userInitFunction();
 		setTimeout(function () {
 			_queueNewTick(_tick);
-			_render();
 		}, 100);
+		_render();
+		
 	})
 	.catch((err) => {alert(err); console.error(err);})
 
