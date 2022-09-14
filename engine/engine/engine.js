@@ -79,6 +79,9 @@ async function _initDefaultGraphics(defaultCanvas, vertexPath, fragmentPath, pos
 	return new Promise((resolve, reject) => {
 
 		_canvas = document.getElementById(defaultCanvas);
+		var ratio = window.devicePixelRatio || 1;
+		_canvas.width = ratio * _canvas.clientWidth;
+		_canvas.height = ratio * _canvas.clientHeight;
 		_canvas.addEventListener("webglcontextlost", function (event) {
 			event.preventDefault();
 			cancelAnimationFrame(_requestId);
