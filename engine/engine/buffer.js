@@ -156,7 +156,7 @@ class _ScreenBuffer {
 		this._program = program.getProgram();
 		this._bufferMask = bufferMask;
 		this._clearColor = clearColor;
-		this._postProcessProgram = postProcessProgram;
+		this._postProcessProgram = postProcessProgram.getProgram();
 
 		this._setupInfo = {
 			coordStr: coordStr, matStr: matStr, matParamCount: matParamCount, matIndStr: matIndStr, texStr: texStr, texCount: texCount, postTexStr: postTexStr, postTexCount: postTexCount,
