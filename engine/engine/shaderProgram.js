@@ -1,15 +1,9 @@
 class shaderProgram{
 
     program;
-    gl;
-    vShader;
-    fShader;
 
     constructor(gl, vShader, fShader){
-        //this.compileShaders(gl, vShader, fShader);
-        this.gl = gl;
-        this.vShader = vShader;
-        this.fShader = fShader;
+        this.compileShaders(gl, vShader, fShader);
     }
 
     getProgram(){
@@ -17,7 +11,7 @@ class shaderProgram{
     }
 
     //initially from common files
-    async compileShaders(gl, vShaderName, fShaderName) {
+    compileShaders(gl, vShaderName, fShaderName) {
         async function getShader(gl, shaderName, type) {
             var shader = gl.createShader(type),
                 shaderScript = await loadFileAJAX(shaderName);
@@ -34,8 +28,8 @@ class shaderProgram{
             }
             return shader;
         }
-        var vertexShader = await getShader(gl, vShaderName, gl.VERTEX_SHADER),
-            fragmentShader = await getShader(gl, fShaderName, gl.FRAGMENT_SHADER);
+        var vertexShader = getShader(gl, vShaderName, gl.VERTEX_SHADER),
+            fragmentShader = getShader(gl, fShaderName, gl.FRAGMENT_SHADER);
         this.program = gl.createProgram();
     
         gl.attachShader(this.program, vertexShader);
