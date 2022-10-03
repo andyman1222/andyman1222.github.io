@@ -12,9 +12,9 @@ class shaderProgram{
 
     //initially from common files
     compileShaders(gl, vShaderName, fShaderName) {
-        async function getShader(gl, shaderName, type) {
+        function getShader(gl, shaderName, type) {
             var shader = gl.createShader(type),
-                shaderScript = await loadFileAJAX(shaderName);
+                shaderScript = loadFileAJAX(shaderName);
             if (!shaderScript) {
                 alert("Could not find shader source: "+shaderName);
             }
