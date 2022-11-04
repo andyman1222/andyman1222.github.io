@@ -255,6 +255,10 @@ class _ScreenBuffer {
 		this._lightIndLoc = new _uniformLocation(this._setupInfo.lightsIndexStr, this._gTarget, shaderProgram);
 		this._cameraPosLoc = new _uniformLocation(this._setupInfo.cameraPosStr, this._gTarget, shaderProgram);
 		this._cameraSclLoc = new _uniformLocation(this._setupInfo.cameraScaleStr, this._gTarget, shaderProgram);
+		this._timeLoc = new _uniformLocation(this._setupInfo.timeStr, this._gTarget, shaderProgram);
+		this._frameTimeLoc = new _uniformLocation(this._setupInfo.frameTimeStr, this._gTarget, shaderProgram);
+		this._postTimeLoc = new _uniformLocation(this._setupInfo.postTimeStr, this._gTarget, postShaderProgram);
+		this._postFrameTimeLoc = new _uniformLocation(this._setupInfo.postFrameTimeStr, this._gTarget, postShaderProgram);
 
 		//TODO: cleanup
 		if (this._setupInfo.lightsArrayStr != null)
@@ -274,12 +278,6 @@ class _ScreenBuffer {
 				//this._lightsTypeArrayLoc.push(this._gTarget.getUniformLocation(shaderProgram.program, lightsArrayStr+"["+i+"].lightmask"))
 			}
 		
-		if(this._setupInfo.timeStr != null)
-			this._timeLoc = this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.timeStr);
-
-		if(this._setupInfo.frameTimeStr != null)
-			this._frameTimeLoc = this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.frameTimeStr);
-
 		//finalize initial buffer stup
 		this._bufLimit = (this._gTarget.MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS > this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS ?
 			this._gTarget.MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS :
@@ -362,12 +360,6 @@ class _ScreenBuffer {
 	
 			for(var i = 0; i < this._postTexCount; i++) this._drawBuffers.push(this._gTarget.COLOR_ATTACHMENT0+i)
 		}
-
-		if(this._setupInfo.postTimeStr != null)
-			this._postTimeLoc = this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.postTimeStr);
-
-		if(this._setupInfo.postFrameTimeStr != null)
-			this._postFrameTimeLoc = this._gTarget.getUniformLocation(shaderProgram.program, this._setupInfo.postFrameTimeStr);
 
 		//complete setup
 		this._gTarget.useProgram(this._program.program)
