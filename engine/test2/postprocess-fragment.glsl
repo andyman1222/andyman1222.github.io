@@ -31,9 +31,10 @@ const float maxViewHeight = 5.;
 
 void main(void){
     vec4 results;
+    fColor = vec4(texture(scene, mix(texCoords, vec2(texCoords)+vec2(sin(texCoords*10)), abs(cos(time/10)))));
     //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
     //fColor = mix(texture(scene, texCoords), fogColor, 1.-clamp(((texture(depth, texCoords).r-minViewDist)/(maxViewDist-minViewDist))*clamp((texture(position, texCoords).y-minViewHeight)/(maxViewHeight-minViewHeight),0.,1.),0.,1.));
-    fColor = texture(depth, texCoords);
+    //fColor = texture(depth, texCoords);
     //fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(position, texCoords).y-5.)),0.,1.));
     //fColor=(texture(position,texCoords)-vec4(1.,1.,0.,0.))/vec4(20.,1.,20.,1.);
     //fColor = texture(position, texCoords);
