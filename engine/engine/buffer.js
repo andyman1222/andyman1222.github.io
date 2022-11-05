@@ -515,8 +515,8 @@ class _ScreenBuffer {
 		if (this._points.length > 0) {
 			this._customPreRenderFunction(this._gTarget, this._program);
 
-			if(this._timeLoc.location != null) this._gTarget.uniform1f(this._timeLoc.location, this._lastFrameTime);
-			if(this._frameTimeLoc.location != null) this._gTarget.uniform1f(this._frameTimeLoc.location, this._deltaFrameTime);
+			if(this._timeLoc.location != null) this._gTarget.uniform1ui(this._timeLoc.location, this._lastFrameTime);
+			if(this._frameTimeLoc.location != null) this._gTarget.uniform1ui(this._frameTimeLoc.location, this._deltaFrameTime);
 
 			this._posBuffer.loadBufferData(this._gTarget, 
 				this._gTarget.ARRAY_BUFFER, 
@@ -618,8 +618,8 @@ class _ScreenBuffer {
 		this._gTarget.depthFunc(this._gTarget.LESS)
 		this._gTarget.bindFramebuffer(this._gTarget.FRAMEBUFFER, null);
 
-		if(this._postTimeLoc.location != null) this._gTarget.uniform1f(this._postTimeLoc.location, this._lastFrameTime);
-			if(this._postFrameTimeLoc.location != null) this._gTarget.uniform1f(this._postFrameTimeLoc.location, this._deltaFrameTime);
+		if(this._postTimeLoc.location != null) this._gTarget.uniform1ui(this._postTimeLoc.location, this._lastFrameTime);
+			if(this._postFrameTimeLoc.location != null) this._gTarget.uniform1ui(this._postFrameTimeLoc.location, this._deltaFrameTime);
 
 		for(var i = 0; i < this._postTexCount; i++){
 			this._gTarget.activeTexture(this._gTarget.TEXTURE0+i);

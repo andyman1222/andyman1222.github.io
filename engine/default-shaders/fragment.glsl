@@ -46,8 +46,8 @@ struct light
 
 uniform light lights[LIGHT_COUNT];
 uniform int maxLightIndex;
-uniform int time; //total time since level load
-uniform int frameTime; //time between current and previous frame; delta time
+uniform highp uint time; //total time since level load
+uniform highp uint frameTime; //time between current and previous frame; delta time
 
 uniform sampler2D baseImage;
 uniform sampler2D normalMap;

@@ -27,8 +27,8 @@ uniform mat4 normalMatrix;
 uniform mat4 modelMatrix;
 uniform vec3 inCameraPosW;
 
-uniform int time; //total time since level load
-uniform int frameTime; //time between current and previous frame; delta time
+uniform highp uint time; //total time since level load
+uniform highp uint frameTime; //time between current and previous frame; delta time
 
 //varying vec3 normal;
 out vec2 texCoord;

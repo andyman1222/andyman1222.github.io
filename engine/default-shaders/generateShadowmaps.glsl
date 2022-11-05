@@ -3,8 +3,8 @@ precision highp float;
 
 const int LIGHT_COUNT=64;
 
-uniform int time; //total time since level load
-uniform int frameTime; //time between current and previous frame; delta time
+uniform highp uint time; //total time since level load
+uniform highp uint frameTime; //time between current and previous frame; delta time
 
 struct light
 {

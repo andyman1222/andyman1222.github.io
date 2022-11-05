@@ -5,8 +5,8 @@ precision highp float;
 in vec2 inPointsL;
 out vec2 texCoords;
 
-uniform int time; //total time since level load
-uniform int frameTime; //time between current and previous frame; delta time
+uniform highp uint time; //total time since level load
+uniform highp uint frameTime; //time between current and previous frame; delta time
 
 void main(void){
     gl_Position = vec4(inPointsL, -1, 1);
