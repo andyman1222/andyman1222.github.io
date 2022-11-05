@@ -30,5 +30,5 @@ const float minViewHeight = 1.;
 const float maxViewHeight = 5.;
 
 void main(void){
-    fColor = mix(texture(scene,texCoords), texture(scene,texCoords)*fogColor, min(max(texture(depth, texCoords).z-minViewDist, 0.), 1.));
+    fColor = mix(texture(scene,texCoords), texture(scene,texCoords)*fogColor, clamp(texture(depth, texCoords).z-minViewDist, 0., 1.));
 }
