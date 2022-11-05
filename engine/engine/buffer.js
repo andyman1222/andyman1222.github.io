@@ -257,8 +257,6 @@ class _ScreenBuffer {
 		this._cameraSclLoc = new _uniformLocation(this._setupInfo.cameraScaleStr, this._gTarget, shaderProgram);
 		this._timeLoc = new _uniformLocation(this._setupInfo.timeStr, this._gTarget, shaderProgram);
 		this._frameTimeLoc = new _uniformLocation(this._setupInfo.frameTimeStr, this._gTarget, shaderProgram);
-		this._postTimeLoc = new _uniformLocation(this._setupInfo.postTimeStr, this._gTarget, postShaderProgram);
-		this._postFrameTimeLoc = new _uniformLocation(this._setupInfo.postFrameTimeStr, this._gTarget, postShaderProgram);
 
 		//TODO: cleanup
 		if (this._setupInfo.lightsArrayStr != null)
@@ -289,6 +287,10 @@ class _ScreenBuffer {
 		this._gTarget.useProgram(postShaderProgram.program)
 		this._currentProgram = postShaderProgram;
 		this._outBuffer = this._gTarget.createFramebuffer();
+
+		//setup post shader locations
+		this._postTimeLoc = new _uniformLocation(this._setupInfo.postTimeStr, this._gTarget, postShaderProgram);
+		this._postFrameTimeLoc = new _uniformLocation(this._setupInfo.postFrameTimeStr, this._gTarget, postShaderProgram);
 
 		if (this._setupInfo.postTexStr != null) {
 			this._postTexCount = this._setupInfo.postTexCount;
