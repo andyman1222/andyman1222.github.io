@@ -30,26 +30,5 @@ const float minViewHeight = 1.;
 const float maxViewHeight = 5.;
 
 void main(void){
-    vec4 results;
-    //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
-    fColor = mix(texture(scene, texCoords), fogColor, 1.-clamp(((texture(depth, texCoords).r-minViewDist)/(maxViewDist-minViewDist))*clamp((texture(position, texCoords).y-minViewHeight)/(maxViewHeight-minViewHeight),0.,1.),0.,1.));
-    //fColor = texture(depth, texCoords)-vec4(0.,0.,10.,0.);
-    //fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(position, texCoords).y-5.)),0.,1.));
-    //fColor=(texture(position,texCoords)-vec4(1.,1.,0.,0.))/vec4(20.,1.,20.,1.);
-    //fColor = texture(position, texCoords);
-    /*//fColor = vec4(t.rgb, 1);
-    if(d.b > minDepth)
-        fColor = t;
-    else{
-        //fColor = vec4(1,0,0,1);
-        fColor = mix(t, texture(scene, round(texCoords/vec2(5, 5))*vec2(5,5)), (minDepth-d.b)/minDepth);
-        /*for(int x = 1; x < samples; x++){
-            for(int y = 0; y < samples; y++){
-                vec2 tx = texCoords+vec2(cos((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)), sin((float(y)/float(samples))*2.*3.14)*dist*(float(x)/float(samples)));
-                results = results + texture(scene, tx);
-            }
-        }
-        fColor = results / (float(samples)*float(samples));
-        //fColor = mix(t, results / (float(samples)*float(samples)), (d.b-minDepth)/scale);
-    }*/
+    fColor = mix(texture(scene,texCoords), texture(scene,texCoords)*fogColor, clamp(texture(depth, texCoords).z-minViewDist, 0, 1))
 }
