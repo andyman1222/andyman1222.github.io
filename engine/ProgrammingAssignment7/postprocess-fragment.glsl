@@ -33,7 +33,7 @@ void main(void){
     vec4 results;
     //fColor = texture(scene, mix(round(texCoords*vec2(scale, scale))/vec2(scale,scale),texCoords, length(texture(depth, round(texCoords*vec2(scale, scale))/vec2(scale,scale)))));
     //fColor = mix(texture(scene, texCoords), fogColor, 1.-clamp(((texture(depth, texCoords).r-minViewDist)/(maxViewDist-minViewDist))*clamp((texture(position, texCoords).y-minViewHeight)/(maxViewHeight-minViewHeight),0.,1.),0.,1.));
-    fColor = texture(depth, texCoords)-vec4(0.,0.,10.);
+    fColor = texture(depth, texCoords)-vec4(0.,0.,10.,0.);
     //fColor = mix(fogColor, texture(scene, texCoords), clamp(((texture(position, texCoords).y-5.)),0.,1.));
     //fColor=(texture(position,texCoords)-vec4(1.,1.,0.,0.))/vec4(20.,1.,20.,1.);
     //fColor = texture(position, texCoords);
