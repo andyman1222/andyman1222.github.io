@@ -208,5 +208,6 @@ function init() {
 }
 
 window.onload = function () {
-	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
+	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl",
+	"../default-shaders/postprocess-vertex.glsl", "postprocess-fragment.glsl")
 }
