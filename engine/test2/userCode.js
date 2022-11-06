@@ -207,7 +207,7 @@ function init() {
 	testLight._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 }
 
-document.getElementById("gl-canvas").onload = function () {
+window.onload = function () {
 	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl",
 	"../default-shaders/postprocess-vertex.glsl", "postprocess-fragment.glsl")
 }
