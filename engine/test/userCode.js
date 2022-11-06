@@ -207,6 +207,6 @@ function init() {
 	testLight._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 }
 
-window.onload = function () {
+document.getElementById("gl-canvas").onload = function () {
 	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
 }

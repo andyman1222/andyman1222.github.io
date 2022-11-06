@@ -194,7 +194,7 @@ function init() {
 		, tmp.points, [new _Material(), new _Material(-1)], _Bounds._RECT)
 }
 
-window.onload = function () {
+document.getElementById("gl-canvas").onload = function () {
 	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent, "../default-shaders/vertex.glsl", "../default-shaders/fragment.glsl",
 	"../default-shaders/postprocess-vertex.glsl", "postprocess-fragment.glsl")
 }

@@ -254,7 +254,7 @@ function init() {
 		}
 }
 
-window.onload = function () {
+document.getElementById("gl-canvas").onload = function () {
 	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
 }
 
