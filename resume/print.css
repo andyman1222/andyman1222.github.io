@@ -24,6 +24,14 @@ a{
 
 @media print{
 
+  #top{
+    page-break-after: avoid;
+  }
+
+  #projects{
+    page-break-before: always;
+  }
+
   @page{
     margin: 0 !important;
     margin-top: 20px !important;
