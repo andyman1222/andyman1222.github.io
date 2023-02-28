@@ -1,4 +1,4 @@
-,
+{
     "Other 3D": {
         "CP_city_beta": {
             "image": "images/cpcitybeta.jpg",
@@ -45,3 +45,4 @@
             "desc": "Videos featuring editing and VFX."
         }
     }
+}

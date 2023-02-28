@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
-	<title>Space Bar Defender</title>
+	<title>Space Bar/One Touch Defender</title>
 	<link rel="stylesheet" href="../../../style.css" id="style" type="text/css">
 	<link rel="icon" href="../../../_images/fish.png" id="icon" type="image/x-icon">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -19,14 +19,22 @@
 	<div id="centerMenu">
 		<button onclick="document.location.href=document.location.origin + '/portfolio';" style="margin: 1em;">&lt;&lt;
 			Go back to portfolio</button>
-		<h1>Space Bar Defender</h1>
+		<h1>Space Bar/One Touch Defender</h1>
 		<hr>
 		<div style="display: flex;">
 			<div style="width:50%;padding:1%;">
-				
-				<button onclick="document.location.href='https://itch.io/jam/2021-epic-megajam/rate/1183642';">Game Jam Submission</button>
-				<br><hr><br>
+
+				<button onclick="document.location.href='https://itch.io/jam/2021-epic-megajam/rate/1183642';">Game Jam
+					Submission</button>
+					<button onclick="document.location.href='https://play.google.com/store/apps/details?id=net.quantonium.OneTouchDefender';">Google Play store listing</button>
+				<br>
+				<hr><br>
 				<h3>Videos</h3>
+				<div style="width: 100%; padding-top:56.25%;position: relative;"><iframe
+						style="position:absolute;top:0;left:0;bottom:0;right:0;" width="100%" height="100%"
+						src="https://www.youtube.com/embed/FztosvqZ0Ws" title="YouTube video player" frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe></div>
 				<div style="width: 100%; padding-top:56.25%;position: relative;"><iframe
 						style="position:absolute;top:0;left:0;bottom:0;right:0;" width="100%" height="100%"
 						src="https://www.youtube-nocookie.com/embed/Wq50qSc0jyI" frameborder="0"
@@ -37,21 +45,37 @@
 						src="https://www.youtube-nocookie.com/embed/4HQU334lhqo" frameborder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						allowfullscreen></iframe></div>
-				
+
 			</div>
 			<div style="flex: 1;padding:2.5%;">
-				<p>Space Bar Defender is my solo submission for the 2021 Epic Games Megajam, with the theme "Running out of Space". The theme
-					may typically imply "space" as in physical room in an environment, or storage within a computer, container, etc., or outer space.
-					I chose to explore the idea of "running out of space" as in running out of the spacebar on a keyboard. My idea was to limit the user
-					to a single key for the entire game- the spacebar- where they would have a limited amount of time which the key can be pressed down.
+				<p>Space Bar Defender is my solo submission for the 2021 Epic Games Megajam, with the theme "Running out
+					of Space". The theme
+					may typically imply "space" as in physical room in an environment, or storage within a computer,
+					container, etc., or outer space.
+					I chose to explore the idea of "running out of space" as in running out of the spacebar on a
+					keyboard. My idea was to limit the user
+					to a single key for the entire game- the spacebar- where they would have a limited amount of time
+					which the key can be pressed down.
 					<br><br>
-					To take this idea into a game, I chose to create an outer space-themed linear tower defense game. The player is given a number of turrets
-					and a lane of slots to place said turrets, to defend their homeworld from incoming aliens. When holding the spacebar, the next available turret moves down 
-					the lane of slots, highlighting slots which the turretb can be placed in. Upon releasing the spacebar, the turret will settle down in the 
-					highlighted slot, unless it is already occupied by another turret, or a "squatter" enemy. When all turrets are placed, a wave of aliens 
-					travel in front of the lane, getting damaged by each turret. Upon reaching the end of the lane, the aliens will invade the planet, reducing the 
-					level of "The Space Bar," which acts as the health of the planet, as well as a meter for usage of the spacebar key. During a wave, the player can
-					also activate the "Super Space Laser" by mashing the spacebar, which will fire a powerful laser beam, at the cost of The Space Bar's health.
+					After the game jam I have chosen to continue working on the game, including implementing an infinite
+					waves mode, and porting it to Android.
+					The game is now currently available on Google Play, playable similar to the PC version but using the
+					screen instead of the spacebar.
+					<br><br>
+					To take this idea into a game, I chose to create an outer space-themed linear tower defense game.
+					The player is given a number of turrets
+					and a lane of slots to place said turrets, to defend their homeworld from incoming aliens. When
+					holding the spacebar, the next available turret moves down
+					the lane of slots, highlighting slots which the turretb can be placed in. Upon releasing the
+					spacebar, the turret will settle down in the
+					highlighted slot, unless it is already occupied by another turret, or a "squatter" enemy. When all
+					turrets are placed, a wave of aliens
+					travel in front of the lane, getting damaged by each turret. Upon reaching the end of the lane, the
+					aliens will invade the planet, reducing the
+					level of "The Space Bar," which acts as the health of the planet, as well as a meter for usage of
+					the spacebar key. During a wave, the player can
+					also activate the "Super Space Laser" by mashing the spacebar, which will fire a powerful laser
+					beam, at the cost of The Space Bar's health.
 				</p>
 			</div>
 		</div>
