@@ -50,6 +50,10 @@
 				oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
 				checked><label for="projects">Show projects?</label>
 				<input
+				type="checkbox" name="skills" id="skillsin"
+				oninput="document.querySelectorAll('#skills').forEach((v) => v.style.display = (document.querySelector('#skillsin').checked ? 'initial' : 'none'));"
+				checked><label for="skills">Show skills/experience?</label>
+				<input
 				type="checkbox" name="classes" id="classesin"
 				oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
 				checked><label for="classes">Show highlighted classes?</label><br>
@@ -59,8 +63,9 @@
 
 		<div class="indent1" id="nobreak">
 			<!--p>CM 2394 5500 Wabash Avenue, Terre Haute, IN, USA<br-->
-			<a href="mailto:andy@herbertland.com">andy@herbertland.com</a>
+			
 			<p style="display: flex;">
+				<a href="mailto:andy@herbertland.com">andy@herbertland.com</a>
 				<span style="flex: auto" class="printOnly"><a href="https://andyherbert.net">https://andyherbert.net</a></span>
 				<span style="flex: auto">Portfolio: <a href="https://andyherbert.net/portfolio/">https://andyherbert.net/portfolio/</a></span>
 				<span style="flex: auto">Github: <a href="https://github.com/andyman1222/">https://github.com/andyman1222/</a></span>
@@ -68,13 +73,13 @@
 		</div>
 		<br>
 		<hr id="nobreak">
-		<section>
+		<!--section>
 			<h2>Objective</h2>
 			<div class="indent1">
 				<p>Computer science major looking for experience in game development, technical art, IoT, and other related
 					areas</p>
 			</div>
-		</section>
+		</section-->
 		<section id="edu">
 			<h2>Education</h2>
 			<section style="display: flex;">
@@ -109,27 +114,22 @@
 						<h3 class="indent1">Intel Corporation Summer Internship</h3>
 						<p class="indent2">Santa Clara, CA (online): Intel Corporation<br>
 							June, 2020 - August, 2020<br>
-
 						</p>
-						<p class="indent3">
-							Developed Python scripts to automate checking out virtual machines for driver testing. Set up testing
-							frameworks and developed scripts for compatibility between another framework. Wrote a Python test to
-							stress
-							test QoS configuration in network cards. Worked to test network interfaces in development within the
-							company.
-						</p>
+						<ul class="indent3">
+							<li>Developed Python scripts to automate checking out virtual machines for driver testing.</li>
+							<li>Worked to test network interfaces in development within the
+								company.</li>
+						</ul>
 					</div>
 					<div class="CS other" style="flex: auto">
 						<h3 class="indent1">Computer Networks TA</h3>
 						<p class="indent2">Salt Lake City, UT: University of Utah<br>
 							January 2023 - present<br>
 						</p>
-						<p class="indent3">
-							Grading homework and assignments; Assisting students, answering questions and hosting office hours. The
-							computer networks
-							class goes over broadly each layer of computer networking, from application to physical, and some
-							security.
-						</p>
+						<ul class="indent3">
+							<li>Grading homework and assignments</li>
+							<li>Assisting students, answering questions and hosting office hours.</li>
+						</ul>
 					</div>
 					<div class="CS other" style="flex: auto">
 						<h3 class="indent1">Robotics TA</h3>
@@ -137,13 +137,10 @@
 							June, 2021 - July, 2021<br>
 
 						</p>
-						<p class="indent3">
-							Helped out and taught at a summer robotics camp at Bellarmine College Preparatory. Instructed kids in
-							elementary and
-							middle school about various robot design mechanics and choices, with the VEX ecosystem. Taught and
-							assisted kids
-							in the basics of programming simple autonomous routines for their own robots.
-						</p>
+						<ul class="indent3">
+							<li>Instructed kids pre-high school about various robot design mechanics and choices.</li>
+							<li>Taught kids in the basics of programming simple autonomous routines.</li>
+						</ul>
 					</div>
 				</section>
 			</section>
@@ -157,7 +154,7 @@
 							<ul>
 								<li>Led small teams (2-3 people incl. myself) for Epic Games MegaJam entries</li>
 								<li>Worked with artists to ensure smooth pipeline between design software and engine</li>
-								<li>Incorporated andimplemented assets from tools (Maya, Blender, Photoshop, LMMS) into game as needed</li>
+								<li>Incorporated and implemented assets from tools (Maya, Blender, Photoshop, LMMS) into game as needed</li>
 							</ul>
 							<li>Robotics- small group leadership; production-like management</li>
 							<ul>
@@ -192,7 +189,7 @@
 								<li>Rigged and animated some 3D models from Maya and Blender, incorporated into Unreal Engine with animation blueprints</li>
 								<li>Modeled static objects, such as ones for 3D printing with single and dual-extruder models</li>
 							</ul>
-							<li>VFX- lighting, postprocessing, particles an ddestruction</li>
+							<li>VFX- lighting, postprocessing, particles an destruction</li>
 							<ul>
 								<li>Created various dynamic particle systems, destruction with Unreal Engine Niagara</li>
 								<li>Created stylistic outdoor and indoor environmental lighting in Unreal Engine</li>
@@ -217,7 +214,7 @@
 							</ul>
 							<li>Utilized profiling/debugging tools in Chrome and with Nvidia Nsight for gaphics programming
 							</li>
-							<li>Set up, managed home netowrking/IT setups, storage and application servers, VPNs</li>
+							<li>Set up, managed home networking/IT setups, storage and application servers, VPNs</li>
 							<li>Projects in IoT- Arduino, Raspberry Pi GPIO; building/soldering circuits and wires</li>
 						</ul>
 
