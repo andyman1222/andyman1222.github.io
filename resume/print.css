@@ -3,7 +3,7 @@
 }
 
 #centerMenu{
-  font-size: 9pt; 
+  font-size: 9pt;
 }
 
 a{
@@ -44,7 +44,7 @@ a{
     color: black !important;
     text-align: left;
     margin: 0 100px 40px 20px !important;
-    zoom: 75%;
+    zoom: 70%;
   }
 
   @page:first{
