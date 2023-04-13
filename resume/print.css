@@ -11,15 +11,15 @@ a{
 }
 
 .indent1{
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .indent2{
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .indent3{
-  margin-left: 60px;
+  margin-left: 30px;
 }
 
 @media print{
