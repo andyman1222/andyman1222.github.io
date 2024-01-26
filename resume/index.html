@@ -31,40 +31,39 @@
 	<div id='headAndText'>
 	</div>
 	<div id="centerMenu">
-		<div class="noprint" style="display: inline;"><button
-				onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="resetView();">Reset
-				visible fields</button><br>
-			<input type="checkbox" name="CS" id="CSin"
-				oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('#CSin').checked ? 'initial' : 'none'));"
-				checked><label for="CS">Show Computer Science related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input
-				type="checkbox" name="noCS" id="noCSin"
-				oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('#noCSin').checked ? 'initial' : 'none'));"
-				checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input
-				type="checkbox" name="other" id="otherin"
-				oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('#otherin').checked ? 'initial' : 'none'));"
-				checked><label for="other">Show EE/IoT/other related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input
-				type="checkbox" name="projects" id="projectsin"
-				oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
-				checked><label for="projects">Show projects?</label>
-				<input
-				type="checkbox" name="classes" id="classesin"
-				oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
-				checked><label for="classes">Show highlighted classes?</label><br>
-				<input
-				type="checkbox" name="classes" id="classesin"
-				oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
-				checked><label for="classes">Show Quantonium?</label><br>
-			<hr>
+		<div class="noprint" style="display: inline;"><input type="checkbox" id="showsettings"
+				oninput="document.getElementById('settings').style.display = document.getElementById('#showsettings').checked ? 'initial' : 'none'" unchecked><label>Show settings?</label>
+			<div id="settings" style="display: none"><br><button onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
+					onclick="resetView();">Reset
+					visible fields</button><br>
+				<input type="checkbox" name="CS" id="CSin"
+					oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('#CSin').checked ? 'initial' : 'none'));"
+					checked><label for="CS">Show Computer Science related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="noCS" id="noCSin"
+					oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('#noCSin').checked ? 'initial' : 'none'));"
+					checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="other" id="otherin"
+					oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('#otherin').checked ? 'initial' : 'none'));"
+					checked><label for="other">Show EE/IoT/other related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="projects" id="projectsin"
+					oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
+					checked><label for="projects">Show projects?</label>
+				<input type="checkbox" name="classes" id="classesin"
+					oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
+					checked><label for="classes">Show highlighted classes?</label><br>
+				<input type="checkbox" name="classes" id="quantoniumin"
+					oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
+					checked><label for="classes">Show Quantonium?</label><br>
+				<hr>
+			</div>
 		</div>
 		<h1>Andrew Herbert</h1>
 
 		<div class="indent1" id="nobreak">
 			<!--p>CM 2394 5500 Wabash Avenue, Terre Haute, IN, USA<br-->
 			<a href="mailto:andy@herbertland.com">andy@herbertland.com</a><br>
-			<a href="https://andyherbert.net" class="printOnly">https://andyherbert.net</a><span class="printOnly"> (latest
+			<a href="https://andyherbert.net" class="printOnly">https://andyherbert.net</a><span class="printOnly">
+				(latest
 				resumé and portfolio linked on website)</span>
 		</div>
 		<br>
@@ -74,13 +73,17 @@
 			<div class="indent1">
 				<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 					areas</p-->
-				<p>Seeking jobs in computer science, game development, technical art, IoT, and related areas,<span id="quantonium"> to assist in funding and expanding Quantonium LLC</span>.</p>
+				<p>Seeking jobs in computer science, game development, technical art, IoT, and related areas,<span
+						id="quantonium"> to assist in funding and expanding Quantonium LLC</span>.</p>
 			</div>
 		</section>
 		<section id="quantonium">
 			<h2>Quantonium LLC</h2>
-			<p class="indent1">Founder, CEO; 2023-present. Game development company seeking to "push the industry forward" and develop new software and research.</p>
-			<p class="indent2">For inquiries about Quantonium (directed to company):<a href="mailto:support@quantonium.net">support@quantonium.net</a>; <a href="https://quantonium.net">quantonium.net</a></p>
+			<p class="indent1">Founder, CEO; 2023-present. Game development company seeking to "push the industry
+				forward" and develop new software and research.</p>
+			<p class="indent2">For inquiries about Quantonium (directed to company):<a
+					href="mailto:support@quantonium.net">support@quantonium.net</a>; <a
+					href="https://quantonium.net">quantonium.net</a></p>
 		</section>
 		<section id="edu">
 			<h2>Education</h2>
@@ -104,7 +107,8 @@
 				<h3 class="indent1">Highlighted Classes</h3>
 				<p class="indent2">Game Development (U of U EAE program); Physics; Web Development; Computer Networks;
 					Operating Systems; Computer Graphics (will emphasize for master's); Algorithms;<span class="CS">
-						Database Systems; Computer Architecture; Programming Language Concepts;</span><span class="noCS">
+						Database Systems; Computer Architecture; Programming Language Concepts;</span><span
+						class="noCS">
 					</span><span class="other"> Creative Writing; DC Circuits;</span></span></p>
 			</section>
 			<section id="work">
@@ -117,10 +121,13 @@
 
 						</p>
 						<p class="indent3">
-							Developed Python scripts to automate checking out virtual machines for driver testing. Set up testing
-							frameworks and developed scripts for compatibility between another framework. Wrote a Python test to
+							Developed Python scripts to automate checking out virtual machines for driver testing. Set
+							up testing
+							frameworks and developed scripts for compatibility between another framework. Wrote a Python
+							test to
 							stress
-							test QoS configuration in network cards. Worked to test network interfaces in development within the
+							test QoS configuration in network cards. Worked to test network interfaces in development
+							within the
 							company.
 						</p>
 					</div>
@@ -130,8 +137,10 @@
 							January 2023 - present<br>
 						</p>
 						<p class="indent3">
-							Grading homework and assignments; Assisting students, answering questions and hosting office hours. TAed
-							in computer networks class, as well as introductory/intermediate class "Software Practice" emphasizing documentation
+							Grading homework and assignments; Assisting students, answering questions and hosting office
+							hours. TAed
+							in computer networks class, as well as introductory/intermediate class "Software Practice"
+							emphasizing documentation
 							and software architecture.
 						</p>
 					</div>
@@ -153,20 +162,25 @@
 			</section>
 			<section id="skills">
 				<h2>Skills And Experience</h2>
-					<div style="display: flex; flex-wrap: wrap;">
+				<div style="display: flex; flex-wrap: wrap;">
+
 					<section class="other" style="flex-basis: 50%;">
 						<h3 class="indent1">Leadership</h3>
 						<ul class="indent2">
-							<li>Game development- working in a small group, engineering/tech art production/lead engineer role</li>
+							<li>Game development- engineering, tech art, production/devops roles</li>
 							<ul>
 								<li>Led small teams (2-3 people incl. myself) for Epic Games MegaJam entries</li>
-								<li>Worked with artists to ensure smooth pipeline between design software and engine</li>
-								<li>Incorporated andimplemented assets from tools (Maya, Blender, Photoshop, LMMS) into game as needed</li>
+								<li>Worked with artists to ensure smooth pipeline between design software and engine
+								</li>
+								<li>Incorporated andimplemented assets from tools (Maya, Blender, Photoshop, LMMS) into
+									game as needed</li>
 							</ul>
 							<li>Robotics- small group leadership; production-like management</li>
 							<ul>
-								<li>Team leader- Assisted and instructed teammates to build and compete with a robot</li>
-								<li>Team coordinator for robotics team 254- Managed teams, hosted workshops, coordinated a large
+								<li>Team leader- Assisted and instructed teammates to build and compete with a robot
+								</li>
+								<li>Team coordinator for robotics team 254- Managed teams, hosted workshops, coordinated
+									a large
 									competition</li>
 							</ul>
 						</ul>
@@ -176,46 +190,58 @@
 						<ul class="indent2">
 							<li>Experience with engines</li>
 							<ul>
-								<li>Made various games and projects with Unreal Engine 4, 5 (including blueprint scripts and C++); Unity (C#); Alternate engine MultiMedia Fusion 2</li>
+								<li>Made various games and projects with Unreal Engine 4, 5 (including blueprint scripts
+									and C++); Unity (C#); Alternate engine MultiMedia Fusion 2</li>
 							</ul>
-							<li>developed VR prototype for a game jam, currently developing network multiplayer games</li>
-							<li>Experience with gameplay programming, UI development, level design, tech art (lighting, vfx,
+							<li>developed VR prototype for a game jam, currently developing network multiplayer games
+							</li>
+							<li>Experience with gameplay programming, UI development, level design, tech art (lighting,
+								vfx,
 								postprocessing)</li>
-								<ul>
-									<li>Created and edited maps with brush-style map editing/whiteboxing (BSP, Hammer map editor)</li>
-								</ul>
-							<li>Limited experience with game design, looking to develop such skill further</li>
+							<ul>
+								<li>Created and edited maps with brush-style map editing/whiteboxing (BSP, Hammer map
+									editor)</li>
+							</ul>
 						</ul>
 					</section>
 					<section class="noCS" style="flex-basis: 50%;">
 						<h3 class="indent1">Technical Art, VFX, media</h3>
 						<ul class="indent2">
-							<li>3D modeling- Blender (modeling, model editing); Maya (modeling, 3D animation); Solidworks (sketching,
+							<li>3D modeling- Blender (modeling, model editing); Maya (modeling, 3D animation);
+								Solidworks (sketching,
 								part assembly); Sketchup</li>
 							<ul>
-								<li>Rigged and animated some 3D models from Maya and Blender, incorporated into Unreal Engine with animation blueprints</li>
-								<li>Modeled static objects, such as ones for 3D printing with single and dual-extruder models</li>
+								<li>Rigged and animated some 3D models from Maya and Blender, incorporated into Unreal
+									Engine with animation blueprints</li>
+								<li>Modeled static objects, such as ones for 3D printing with single and dual-extruder
+									models</li>
 							</ul>
 							<li>VFX- lighting, postprocessing, particles an ddestruction</li>
 							<ul>
-								<li>Created various dynamic particle systems, destruction with Unreal Engine Niagara</li>
+								<li>Created various dynamic particle systems, destruction with Unreal Engine Niagara
+								</li>
 								<li>Created stylistic outdoor and indoor environmental lighting in Unreal Engine</li>
 								<li>Developed postprocess effects in Unreal Engine and GLSL shaders</li>
 							</ul>
 							<li>Video/photo editing- compositing, VFX, editing, digital art</li>
 							<ul>
-								<li>Created, edited videos and machinimas in FXHome Hitfilm (Express), Adobe Premiere, Unreal Engine sequencer</li>
-								<li>Created, edited imagery and iconography in GiMP, Adobe Photoshop, Adobe Illustrator, Inkscape</li>
+								<li>Created, edited videos and machinimas in FXHome Hitfilm (Express), Adobe Premiere,
+									Unreal Engine sequencer</li>
+								<li>Created, edited imagery and iconography in GiMP, Adobe Photoshop, Adobe Illustrator,
+									Inkscape</li>
 							</ul>
 						</ul>
 					</section>
 					<section class="CS" style="flex-basis: 50%;">
 						<h3 class="indent1">Software Engineering</h3>
 						<ul class="indent2">
-							<li>Extensive experience in programming languages in fields of networking, graphics, web, UI, databases, architecture, general purpose</li>
+							<li>Extensive experience in programming languages in fields of networking, graphics, web,
+								UI, databases, architecture, general purpose</li>
 							<li>Experience with OpenGL, WebGL, and GLSL- see <a
-									href="https://andyherbert.net/engine/">https://andyherbert.net/engine/</a> for demos.</li>
-							<li>Utilized profiling/debugging tools in Chrome and with Nvidia Nsight for gaphics programming
+									href="https://andyherbert.net/engine/">https://andyherbert.net/engine/</a> for
+								demos.</li>
+							<li>Utilized profiling/debugging tools in Chrome and with Nvidia Nsight for gaphics
+								programming
 							</li>
 							<li>Set up, managed home netowrking/IT setups, storage and application servers, VPNs</li>
 							<li>Projects in IoT- Arduino, Raspberry Pi GPIO; building/soldering circuits and wires</li>
@@ -231,7 +257,8 @@
 					<h3 class="indent1">Featured Games</h3>
 					<section>
 						<h4 class="indent2">LaserTag (WIP title)</h4>
-						<p class="indent3">Multiplayer game recreating the experience of real-life laser tag, potentially in VR.
+						<p class="indent3">Multiplayer game recreating the experience of real-life laser tag,
+							potentially in VR.
 							Sole developer.</p>
 						<ul class="indent3">
 							<li><strong>Information: </strong><a
@@ -242,7 +269,8 @@
 					</section>
 					<section>
 						<h4 class="indent2">Fishing Ducks</h4>
-						<p class="indent3">Game designed in one week for the Epic Games MegaJam 2022. Developed in a team
+						<p class="indent3">Game designed in one week for the Epic Games MegaJam 2022. Developed in a
+							team
 							of 2.</p>
 						<ul class="indent3">
 							<li><strong>Information and download page: </strong><a
@@ -253,7 +281,8 @@
 					</section>
 					<section>
 						<h4 class="indent2">Space Bar/One Touch Defender</h4>
-						<p class="indent3">Tower defense game with only one input for the Epic Games MegaJam 2021. Later ported onto
+						<p class="indent3">Tower defense game with only one input for the Epic Games MegaJam 2021. Later
+							ported onto
 							mobile, published on Google Play</p>
 						<ul class="indent3">
 							<li><strong>Information and download page: </strong><a
@@ -264,7 +293,8 @@
 					</section>
 					<section>
 						<h4 class="indent2">Schooled In</h4>
-						<p class="indent3">VR game initially designed in one week for the Epic Games MegaJam 2020. Developed in a
+						<p class="indent3">VR game initially designed in one week for the Epic Games MegaJam 2020.
+							Developed in a
 							team
 							of 3.</p>
 						<ul class="indent3">
@@ -290,30 +320,35 @@
 				<section class="CS">
 					<h3 class="indent1">Software</h3>
 					<section>
-					<h4 class="indent2">Networking</h4>
-					<p class="indent3"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website designed to host user-created JS games and allow others
-						to play. Created for a class in a group of 2.</p>
-					<ul class="indent3">
-						<li><a
-								href="https://github.com/rhit-herberac/RoseGamesOnline">https://github.com/rhit-herberac/RoseGamesOnline</a>
-						</li>
-					</ul>
-					<p class="indent3"><strong>TCP vs. UDP tester:</strong> server+client program which tests real-world performance (RTT and reliability) of TCP and UDP, generating a CSV with the results. Made for WinSock.</p>
-					<ul class="indent3">
-						<li><a
-								href="https://github.com/andyman1222/speedtestnetthing">https://github.com/andyman1222/speedtestnetthing</a>
-						</li>
-					</ul>
-					<p class="indent3"><strong>snakeInC:</strong> Multiplayer snake-like game written in C for WinSock.</p>
-					<ul class="indent3">
-						<li><a
-								href="https://github.com/andyman1222/snakeInC">https://github.com/andyman1222/snakeInC</a>
-						</li>
-					</ul>
-				</section>
+						<h4 class="indent2">Networking</h4>
+						<p class="indent3"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website designed
+							to host user-created JS games and allow others
+							to play. Created for a class in a group of 2.</p>
+						<ul class="indent3">
+							<li><a
+									href="https://github.com/rhit-herberac/RoseGamesOnline">https://github.com/rhit-herberac/RoseGamesOnline</a>
+							</li>
+						</ul>
+						<p class="indent3"><strong>TCP vs. UDP tester:</strong> server+client program which tests
+							real-world performance (RTT and reliability) of TCP and UDP, generating a CSV with the
+							results. Made for WinSock.</p>
+						<ul class="indent3">
+							<li><a
+									href="https://github.com/andyman1222/speedtestnetthing">https://github.com/andyman1222/speedtestnetthing</a>
+							</li>
+						</ul>
+						<p class="indent3"><strong>snakeInC:</strong> Multiplayer snake-like game written in C for
+							WinSock.</p>
+						<ul class="indent3">
+							<li><a
+									href="https://github.com/andyman1222/snakeInC">https://github.com/andyman1222/snakeInC</a>
+							</li>
+						</ul>
+					</section>
 					<section>
 						<h4 class="indent2">Qeng</h4>
-						<p class="indent3">WebGL-based 3D engine which runs within a web browser. Supports multiple complex lights,
+						<p class="indent3">WebGL-based 3D engine which runs within a web browser. Supports multiple
+							complex lights,
 							dynamic materials,
 							postprocessing, and more.
 						</p>
@@ -326,8 +361,10 @@
 					</section>
 					<section>
 						<h4 class="indent2">Smart light emulation and LED sync</h4>
-						<p class="indent3">Using 3rd party software diyHue, emulated IoT smart lights in order to control computer
-							peripherals and LEDs as one system via an HTTP and UDP server. LEDs are connected to Raspberry Pi GPIO via
+						<p class="indent3">Using 3rd party software diyHue, emulated IoT smart lights in order to
+							control computer
+							peripherals and LEDs as one system via an HTTP and UDP server. LEDs are connected to
+							Raspberry Pi GPIO via
 							an H-bridge voltage
 							conversion circuit and PWM.</p>
 						<ul class="indent3">
@@ -336,10 +373,12 @@
 					</section>
 					<p class="indent2"><strong>Code repositories</strong>
 					<ul>
-						<li><a href="https://github.com/rhit-herberac">https://github.com/andyman1222</a> (Personal/Univ. of Utah
+						<li><a href="https://github.com/rhit-herberac">https://github.com/andyman1222</a>
+							(Personal/Univ. of Utah
 							Github)</li>
 						<li><a href="https://gitlab.com/andyman1222">https://gitlab.com/andyman1222</a> (Gitlab)</li>
-						<li><a href="https://github.com/rhit-herberac">https://github.com/rhit-herberac</a> (Rose Hulman Github)
+						<li><a href="https://github.com/rhit-herberac">https://github.com/rhit-herberac</a> (Rose Hulman
+							Github)
 						</li>
 					</ul>
 					</p>
