@@ -53,23 +53,19 @@
 				<input type="checkbox" name="classes" id="classesin"
 					oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
 					checked><label for="classes">Show highlighted classes?</label>
-				<input type="checkbox" name="media"
-					id="mediain"
+				<input type="checkbox" name="media" id="mediain"
 					oninput="document.querySelectorAll('#media').forEach((v) => v.style.display = (document.querySelector('#mediain').checked ? 'initial' : 'none'));"
 					checked><label for="media">Show media?</label>
-				<input type="checkbox" name="robo"
-					id="roboin"
+				<input type="checkbox" name="robo" id="roboin"
 					oninput="document.querySelectorAll('#robo').forEach((v) => v.style.display = (document.querySelector('#roboin').checked ? 'initial' : 'none'));"
 					checked><label for="robo">Show robotics (HS)?</label>
-				<input type="checkbox" name="roboTA"
-					id="roboTAin"
+				<input type="checkbox" name="roboTA" id="roboTAin"
 					oninput="document.querySelectorAll('#roboTA').forEach((v) => v.style.display = (document.querySelector('#roboTAin').checked ? 'initial' : 'none'));"
 					checked><label for="roboTA">Show robotics (TA)?</label>
 				<input type="checkbox" name="quantonium" id="quantoniumin"
 					oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
 					checked><label for="Quantonium">Show Quantonium?</label>
-				<input type="checkbox" name="rhit"
-					id="rhitin"
+				<input type="checkbox" name="rhit" id="rhitin"
 					oninput="document.querySelectorAll('#rhit').forEach((v) => v.style.display = (document.querySelector('#rhitin').checked ? 'initial' : 'none'));"
 					checked><label for="RHIT">Show RHIT?</label>
 				<hr>
@@ -95,31 +91,33 @@
 						id="quantonium">, to assist in funding and expanding Quantonium LLC</span>.</p>
 			</div>
 		</section>
-		<section id="quantonium">
-			<h2>Quantonium LLC</h2>
-			<p class="indent1">Founder, CEO; 2023-present. Game development company seeking to "push the industry
-				forward" and develop new software and research.</p>
-			<p class="indent2">For inquiries about Quantonium (directed to company):<a
-					href="mailto:support@quantonium.net">support@quantonium.net</a>; <a
-					href="https://quantonium.net">quantonium.net</a></p>
-		</section>
-		<section id="edu">
-			<h2>Education</h2>
-			<section style="display: flex;">
-				<div style="flex: auto">
-					<h3 class="indent1">University of Utah</h3>
-					<p class="indent2">Salt Lake City, UT<br>
-						CS (games emphasis) bachelor's + CS master's<br>
-						Focus: computer graphics, technical art, computer networks
-						2021 - present<br>
-					</p>
-				</div>
-				<div style="flex: auto" id="rhit">
-					<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
-					<p class="indent2">Terre Haute, IN<br>
-						2019 - 2021<br>
-					</p>
-				</div>
+		<section style="display: flex">
+			<section id="quantonium" style="flex: 1">
+				<h2>Quantonium LLC</h2>
+				<p class="indent1">Founder, CEO; 2023-present. Game development company seeking to "push the industry
+					forward" and develop new software and research.</p>
+				<p class="indent2">For inquiries about Quantonium (directed to company):<a
+						href="mailto:support@quantonium.net">support@quantonium.net</a>; <a
+						href="https://quantonium.net">quantonium.net</a></p>
+			</section>
+			<section id="edu" style="flex: 2">
+				<h2>Education</h2>
+				<section style="display: flex;">
+					<div style="flex: auto">
+						<h3 class="indent1">University of Utah</h3>
+						<p class="indent2">Salt Lake City, UT<br>
+							CS (games emphasis) bachelor's + CS master's<br>
+							Focus: computer graphics, technical art, computer networks
+							2021 - present<br>
+						</p>
+					</div>
+					<div style="flex: auto" id="rhit">
+						<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
+						<p class="indent2">Terre Haute, IN<br>
+							2019 - 2021<br>
+						</p>
+					</div>
+				</section>
 			</section>
 			<section id="classes">
 				<h3 class="indent1">Highlighted Classes</h3>
@@ -169,9 +167,11 @@
 
 						</p>
 						<p class="indent3">
-							Helped out and taught at a summer robotics camp at Bellarmine College Preparatory. Instructed kids in
+							Helped out and taught at a summer robotics camp at Bellarmine College Preparatory.
+							Instructed kids in
 							elementary and
-							middle school about various robot design mechanics and choices, with the VEX ecosystem. Taught and
+							middle school about various robot design mechanics and choices, with the VEX ecosystem.
+							Taught and
 							assisted kids
 							in the basics of programming simple autonomous routines for their own robots.
 						</p>
@@ -198,7 +198,8 @@
 								<ul>
 									<li>Team leader- Assisted and instructed teammates to build and compete with a robot
 									</li>
-									<li>Team coordinator for robotics team 254- Managed teams, hosted workshops, coordinated
+									<li>Team coordinator for robotics team 254- Managed teams, hosted workshops,
+										coordinated
 										a large
 										competition</li>
 								</ul>
@@ -241,7 +242,7 @@
 								<li>Created various dynamic particle systems, destruction with Unreal Engine Niagara
 								</li>
 								<li>Created stylistic outdoor and indoor environmental lighting in Unreal Engine</li>
-								<li>Developed postprocess effects in Unreal Engine and GLSL shaders</li>
+								<li>Developed postprocess effects in Unreal Engine, Unity; GLSL, HLSL</li>
 							</ul>
 							<li>Video/photo editing- compositing, VFX, editing, digital art</li>
 							<ul>
@@ -342,7 +343,8 @@
 					<h3 class="indent1">Software</h3>
 					<section>
 						<h4 class="indent2">Networking</h4>
-						<p class="indent3" id="rhit"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website designed
+						<p class="indent3" id="rhit"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website
+							designed
 							to host user-created JS games and allow others
 							to play. Created for a class in a group of 2.</p>
 						<ul class="indent3">
