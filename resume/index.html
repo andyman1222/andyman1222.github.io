@@ -32,8 +32,10 @@
 	</div>
 	<div id="centerMenu">
 		<div class="noprint" style="display: inline;"><input type="checkbox" id="showsettings"
-				oninput="document.getElementById('settings').style.display = document.getElementById('showsettings').checked ? 'initial' : 'none'" unchecked><label>Show settings?</label>
-			<div id="settings" style="display: none"><br><button onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
+				oninput="document.getElementById('settings').style.display = document.getElementById('showsettings').checked ? 'initial' : 'none'"
+				unchecked><label>Show settings?</label>
+			<div id="settings" style="display: none"><br><button
+					onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
 					onclick="resetView();">Reset
 					visible fields</button><br>
 				<input type="checkbox" name="CS" id="CSin"
@@ -50,10 +52,26 @@
 					checked><label for="projects">Show projects?</label>
 				<input type="checkbox" name="classes" id="classesin"
 					oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
-					checked><label for="classes">Show highlighted classes?</label><br>
-				<input type="checkbox" name="classes" id="quantoniumin"
+					checked><label for="classes">Show highlighted classes?</label>
+				<input type="checkbox" name="media"
+					id="mediain"
+					oninput="document.querySelectorAll('#media').forEach((v) => v.style.display = (document.querySelector('#mediain').checked ? 'initial' : 'none'));"
+					checked><label for="media">Show media?</label>
+				<input type="checkbox" name="robo"
+					id="roboin"
+					oninput="document.querySelectorAll('#robo').forEach((v) => v.style.display = (document.querySelector('#roboin').checked ? 'initial' : 'none'));"
+					checked><label for="robo">Show robotics (HS)?</label>
+				<input type="checkbox" name="roboTA"
+					id="roboTAin"
+					oninput="document.querySelectorAll('#roboTA').forEach((v) => v.style.display = (document.querySelector('#roboTAin').checked ? 'initial' : 'none'));"
+					checked><label for="roboTA">Show robotics (TA)?</label>
+				<input type="checkbox" name="quantonium" id="quantoniumin"
 					oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
-					checked><label for="classes">Show Quantonium?</label><br>
+					checked><label for="Quantonium">Show Quantonium?</label>
+				<input type="checkbox" name="rhit"
+					id="rhitin"
+					oninput="document.querySelectorAll('#rhit').forEach((v) => v.style.display = (document.querySelector('#rhitin').checked ? 'initial' : 'none'));"
+					checked><label for="RHIT">Show RHIT?</label>
 				<hr>
 			</div>
 		</div>
@@ -73,8 +91,8 @@
 			<div class="indent1">
 				<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 					areas</p-->
-				<p>Seeking jobs in computer science, game development, technical art, IoT, and related areas,<span
-						id="quantonium"> to assist in funding and expanding Quantonium LLC</span>.</p>
+				<p>Seeking jobs in computer science, game development, technical art, IoT, QA/QC, and related areas<span
+						id="quantonium">, to assist in funding and expanding Quantonium LLC</span>.</p>
 			</div>
 		</section>
 		<section id="quantonium">
@@ -96,12 +114,12 @@
 						2021 - present<br>
 					</p>
 				</div>
-				<!--div style="flex: auto">
+				<div style="flex: auto" id="rhit">
 					<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
 					<p class="indent2">Terre Haute, IN<br>
 						2019 - 2021<br>
 					</p>
-				</div-->
+				</div>
 			</section>
 			<section id="classes">
 				<h3 class="indent1">Highlighted Classes</h3>
@@ -144,7 +162,7 @@
 							and software architecture.
 						</p>
 					</div>
-					<!--div class="CS other" style="flex: auto">
+					<div class="CS other" id="roboTA" style="flex: auto">
 						<h3 class="indent1">Robotics TA</h3>
 						<p class="indent2">San Jose, CA: Bellarmine College Preparatory<br>
 							June, 2021 - July, 2021<br>
@@ -157,7 +175,7 @@
 							assisted kids
 							in the basics of programming simple autonomous routines for their own robots.
 						</p>
-					</div-->
+					</div>
 				</section>
 			</section>
 			<section id="skills">
@@ -175,14 +193,16 @@
 								<li>Incorporated andimplemented assets from tools (Maya, Blender, Photoshop, LMMS) into
 									game as needed</li>
 							</ul>
-							<li>Robotics- small group leadership; production-like management</li>
-							<ul>
-								<li>Team leader- Assisted and instructed teammates to build and compete with a robot
-								</li>
-								<li>Team coordinator for robotics team 254- Managed teams, hosted workshops, coordinated
-									a large
-									competition</li>
-							</ul>
+							<div id="robo">
+								<li>Robotics- small group leadership; production-like management</li>
+								<ul>
+									<li>Team leader- Assisted and instructed teammates to build and compete with a robot
+									</li>
+									<li>Team coordinator for robotics team 254- Managed teams, hosted workshops, coordinated
+										a large
+										competition</li>
+								</ul>
+							</div>
 						</ul>
 					</section>
 					<section style="flex-basis: 50%;">
@@ -216,7 +236,7 @@
 								<li>Modeled static objects, such as ones for 3D printing with single and dual-extruder
 									models</li>
 							</ul>
-							<li>VFX- lighting, postprocessing, particles an ddestruction</li>
+							<li>VFX- lighting, postprocessing, particles and destruction</li>
 							<ul>
 								<li>Created various dynamic particle systems, destruction with Unreal Engine Niagara
 								</li>
@@ -240,7 +260,7 @@
 							<li>Experience with OpenGL, WebGL, and GLSL- see <a
 									href="https://andyherbert.net/engine/">https://andyherbert.net/engine/</a> for
 								demos.</li>
-							<li>Utilized profiling/debugging tools in Chrome and with Nvidia Nsight for gaphics
+							<li>Utilized profiling/debugging tools in Chrome and with Nvidia Nsight for graphics
 								programming
 							</li>
 							<li>Set up, managed home netowrking/IT setups, storage and application servers, VPNs</li>
@@ -304,16 +324,17 @@
 							<li><strong>Status: </strong>Work-in-progress (download available)</li>
 						</ul>
 					</section>
-					<!--section>
-					<h4 class="indent2">Kung-Fu Run</h4>
-					<p class="indent3">Singleplayer parkour map developed for a class. Created in a team of 4 people.</p>
-					<ul class="indent3">
-						<li><strong>Information: </strong><a
-								href="https://andyherbert.net/portfolio/game_dev/KungFuRun/">https://andyherbert.net/portfolio/game_dev/KungFuRun/</a>
-						</li>
-						<li><strong>Status: </strong>Complete</li>
-					</ul>
-				</section-->
+					<section id="rhit">
+						<h4 class="indent2">Kung-Fu Run</h4>
+						<p class="indent3">Singleplayer parkour map developed for a class. Created in a team of 4
+							people.</p>
+						<ul class="indent3">
+							<li><strong>Information: </strong><a
+									href="https://andyherbert.net/portfolio/game_dev/KungFuRun/">https://andyherbert.net/portfolio/game_dev/KungFuRun/</a>
+							</li>
+							<li><strong>Status: </strong>Complete</li>
+						</ul>
+					</section>
 					<p class="indent2"><strong>More games on portfolio: </strong> <a
 							href="https://andyherbert.net/portfolio">https://andyherbert.net/portfolio</a></p>
 				</section>
@@ -321,7 +342,7 @@
 					<h3 class="indent1">Software</h3>
 					<section>
 						<h4 class="indent2">Networking</h4>
-						<p class="indent3"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website designed
+						<p class="indent3" id="rhit"><strong>RoseGamesOnline:</strong> Realtime NodeJS WebSocket website designed
 							to host user-created JS games and allow others
 							to play. Created for a class in a group of 2.</p>
 						<ul class="indent3">
@@ -383,7 +404,7 @@
 					</ul>
 					</p>
 				</section>
-				<section class="noCS">
+				<section class="media">
 					<h3 class="indent1">Media</h3>
 					<section>
 						<h4 class="indent2">Quantum Quantonium: Video game Youtube channel + livestreaming.</h4>
