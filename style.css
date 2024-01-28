@@ -1,3 +1,5 @@
+/*Stylesheet for majority of website. Includes functionality for mobile view*/
+
 p, ol, ul, label{
 	font-family: Verdana;
 	color:white;
@@ -210,6 +212,8 @@ button:hover{
 	clear: both;
     display: block;
 }
+
+/*hide side menus for smaller screens*/
 
 @media screen and (max-width: 900px){
 	#leftMenu{
