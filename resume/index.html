@@ -69,10 +69,10 @@
 					oninput="document.querySelectorAll('#rhit').forEach((v) => v.style.display = (document.querySelector('#rhitin').checked ? 'initial' : 'none'));"
 					checked><label for="RHIT">Show RHIT?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="devops" id="devopsin"
-					oninput="document.querySelectorAll('#devops').forEach((v) => v.style.display = (document.querySelector('#devopsin').checked ? 'initial' : 'none'));"
+					oninput="document.querySelectorAll('.devops').forEach((v) => v.style.display = (document.querySelector('#devopsin').checked ? 'initial' : 'none'));"
 					checked><label for="DevOps">Show DevOps?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="prod" id="prodin"
-					oninput="document.querySelectorAll('#prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
+					oninput="document.querySelectorAll('.prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
 					checked><label for="Production">Show Production?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<hr>
 			</div>
@@ -189,7 +189,6 @@
 		<section id="skills">
 			<h2>Skills And Experience</h2>
 			<div style="display: flex; flex-wrap: wrap;">
-
 				<section class="prod" style="flex-basis: 50%;">
 					<h3 class="indent1">Leadership, Production</h3>
 					<ul class="indent2">
@@ -266,7 +265,7 @@
 							demos.</li>
 						<li>Utilize profiling/debugging tools to identify bottlenecks, improve framerate performance in applications</li>
 						<li>Experience with Linux, virtualization, WSL/WSA, Docker containers</li>
-						<li>Specialty projects- <span id="other">Arduino, </span>Raspberry Pi (custom OS setups<span id="other"> and GPIO programming</span>);<span id="other"> building/soldering circuits and wires; programming WS281x LEDs;</span>
+						<li>Specialty projects- <span class="other">Arduino, </span>Raspberry Pi (custom OS setups<span class="other"> and GPIO programming</span>);<span class="other"> building/soldering circuits and wires; programming WS281x LEDs;</span>
 							game development for PC and mobile VR; hand tracking integration with Leap Motion; "Hacknitosh" and custom Android ROM installation;</li>
 					</ul>
 
