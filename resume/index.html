@@ -68,6 +68,9 @@
 				<input type="checkbox" name="rhit" id="rhitin"
 					oninput="document.querySelectorAll('#rhit').forEach((v) => v.style.display = (document.querySelector('#rhitin').checked ? 'initial' : 'none'));"
 					checked><label for="RHIT">Show RHIT?</label>
+					<input type="checkbox" name="devops" id="devopsin"
+					oninput="document.querySelectorAll('#devops').forEach((v) => v.style.display = (document.querySelector('#devopsin').checked ? 'initial' : 'none'));"
+					checked><label for="DevOps">Show DevOps?</label>
 				<hr>
 			</div>
 		</div>
@@ -108,7 +111,7 @@
 							<h3 class="indent1">University of Utah</h3>
 							<p class="indent2">Salt Lake City, UT<br>
 								CS (games emphasis) bachelor's + CS master's<br>
-								Focus: computer graphics, technical art, computer networks
+								Focus: computer graphics, technical art, computer networks<br>
 								2021 - present<br>
 							</p>
 						</div>
@@ -205,7 +208,7 @@
 						</div>
 					</ul>
 				</section>
-				<section style="flex-basis: 50%;">
+				<section style="flex-basis: 50%; flex: auto;">
 					<h3 class="indent1">Video Game Development</h3>
 					<ul class="indent2">
 						<li>Experience with engines</li>
@@ -220,7 +223,7 @@
 							vfx, postprocessing)</li>
 					</ul>
 				</section>
-				<section class="noCS" style="flex-basis: 50%;">
+				<section class="noCS" style="flex-basis: 50%; flex: auto;">
 					<h3 class="indent1">Technical Art, VFX<span id="media">, media</span></h3>
 					<ul class="indent2">
 						<li>3D modeling- Blender (modeling, model editing); Maya (modeling, 3D animation);
@@ -250,7 +253,7 @@
 						</div>
 					</ul>
 				</section>
-				<section class="CS" style="flex-basis: 50%;">
+				<section class="CS" style="flex-basis: 50%; flex: auto;">
 					<h3 class="indent1">Software Engineering</h3>
 					<ul class="indent2">
 						<li>Extensive experience in programming languages in fields of networking, graphics, web,
@@ -259,12 +262,24 @@
 								href="https://andyherbert.net/engine/">https://andyherbert.net/engine/</a> for
 							demos.</li>
 						<li>Utilize profiling/debugging tools to identify bottlenecks, improve framerate performance in applications</li>
-						<li>Set up, managed home netowrking/IT setups, storage and application servers, VPNs</li>
 						<li>Experience with Linux, virtualization, WSL/Docker containers</li>
 						<li>Specialty projects- Arduino, Raspberry Pi (custom OS setups and GPIO programming); building/soldering circuits and wires; programming WS281x LEDs;
 							game development for PC and mobile VR; hand tracking integration with Leap Motion; "Hacknitosh" and custom Android ROM installation;</li>
 					</ul>
 
+				</section>
+				<section class="CS DevOps" style="flex-basis: 50%; flex: auto;">
+					<h3 class="indent1">Development Operations</h3>
+					<ul class="indent2">
+						<li>Set up, managed home networking/IT setups, storage and application servers, VPNs, personal computers</li>
+						<li>Managing DNS records, SSL certificates, backend server configuration for multiple websites</li>
+						<li>Set up version controls for teams: Git, Subversion, Perforce; initialize servers, create repos, manage + maintain files and branch structures</li>
+						<li>Set up, maintain OpenProject server for Quantonium project management; Created OpenLDAP server for user accounts</li>
+						<ul class="indent3">
+							<li>Utilizing reverse proxy Traefik for more secure public connections into Quantonium systems</li>
+						</ul>
+						<li>Developed automation software to compile, upload Unreal Engine packaged game builds and development binaries</li>
+					</ul>
 				</section>
 			</div>
 		</section>
