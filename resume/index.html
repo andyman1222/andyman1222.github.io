@@ -15,8 +15,8 @@
 		function resetView() {
 			document.querySelectorAll('.CS').forEach((v) => v.style.display = 'initial');
 			document.querySelector('#CSin').checked = true;
-			document.querySelectorAll('.noCS').forEach((v) => v.style.display = 'initial');
-			document.querySelector('#noCSin').checked = true;
+			document.querySelectorAll('.art').forEach((v) => v.style.display = 'initial');
+			document.querySelector('#artin').checked = true;
 			document.querySelectorAll('.other').forEach((v) => v.style.display = 'initial');
 			document.querySelector('#otherin').checked = true;
 			document.querySelectorAll('#projects').forEach((v) => v.style.display = 'initial');
@@ -41,36 +41,39 @@
 				<input type="checkbox" name="CS" id="CSin"
 					oninput="document.querySelectorAll('.CS').forEach((v) => v.style.display = (document.querySelector('#CSin').checked ? 'initial' : 'none'));"
 					checked><label for="CS">Show Computer Science related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="checkbox" name="noCS" id="noCSin"
-					oninput="document.querySelectorAll('.noCS').forEach((v) => v.style.display = (document.querySelector('#noCSin').checked ? 'initial' : 'none'));"
-					checked><label for="noCS">Show animation/design/VFX related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="art" id="artin"
+					oninput="document.querySelectorAll('.art').forEach((v) => v.style.display = (document.querySelector('#artin').checked ? 'initial' : 'none'));"
+					checked><label for="art">Show art related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="other" id="otherin"
 					oninput="document.querySelectorAll('.other').forEach((v) => v.style.display = (document.querySelector('#otherin').checked ? 'initial' : 'none'));"
 					checked><label for="other">Show EE/IoT/other related fields?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="projects" id="projectsin"
 					oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
-					checked><label for="projects">Show projects?</label>
+					checked><label for="projects">Show projects?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="classes" id="classesin"
 					oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
-					checked><label for="classes">Show highlighted classes?</label>
+					checked><label for="classes">Show highlighted classes?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="media" id="mediain"
 					oninput="document.querySelectorAll('#media').forEach((v) => v.style.display = (document.querySelector('#mediain').checked ? 'initial' : 'none'));"
-					checked><label for="media">Show media?</label>
+					checked><label for="media">Show media?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="robo" id="roboin"
 					oninput="document.querySelectorAll('#robo').forEach((v) => v.style.display = (document.querySelector('#roboin').checked ? 'initial' : 'none'));"
-					checked><label for="robo">Show robotics (HS)?</label>
+					checked><label for="robo">Show robotics (HS)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="roboTA" id="roboTAin"
 					oninput="document.querySelectorAll('#roboTA').forEach((v) => v.style.display = (document.querySelector('#roboTAin').checked ? 'initial' : 'none'));"
-					checked><label for="roboTA">Show robotics (TA)?</label>
+					checked><label for="roboTA">Show robotics (TA)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="quantonium" id="quantoniumin"
 					oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
-					checked><label for="Quantonium">Show Quantonium?</label>
+					checked><label for="Quantonium">Show Quantonium?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="rhit" id="rhitin"
 					oninput="document.querySelectorAll('#rhit').forEach((v) => v.style.display = (document.querySelector('#rhitin').checked ? 'initial' : 'none'));"
-					checked><label for="RHIT">Show RHIT?</label>
-					<input type="checkbox" name="devops" id="devopsin"
+					checked><label for="RHIT">Show RHIT?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="devops" id="devopsin"
 					oninput="document.querySelectorAll('#devops').forEach((v) => v.style.display = (document.querySelector('#devopsin').checked ? 'initial' : 'none'));"
-					checked><label for="DevOps">Show DevOps?</label>
+					checked><label for="DevOps">Show DevOps?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="prod" id="prodin"
+					oninput="document.querySelectorAll('#prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
+					checked><label for="Production">Show Production?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<hr>
 			</div>
 		</div>
@@ -128,7 +131,7 @@
 						Networks;
 						Operating Systems; Computer Graphics (will emphasize for master's); Algorithms;<span class="CS">
 							Database Systems; Computer Architecture; Programming Language Concepts;</span><span
-							class="noCS">
+							class="art">
 						</span><span class="other"> Creative Writing; DC Circuits;</span></span></p>
 				</section>
 			</section>
@@ -187,7 +190,7 @@
 			<h2>Skills And Experience</h2>
 			<div style="display: flex; flex-wrap: wrap;">
 
-				<section class="other" style="flex-basis: 50%;">
+				<section class="prod" style="flex-basis: 50%;">
 					<h3 class="indent1">Leadership, Production</h3>
 					<ul class="indent2">
 						<li>Game development- engineering, tech art, production/DevOps roles</li>
@@ -208,7 +211,7 @@
 						</div>
 					</ul>
 				</section>
-				<section style="flex-basis: 50%; flex: auto;">
+				<section style="flex-basis: 50%;">
 					<h3 class="indent1">Video Game Development</h3>
 					<ul class="indent2">
 						<li>Experience with engines</li>
@@ -223,7 +226,7 @@
 							vfx, postprocessing)</li>
 					</ul>
 				</section>
-				<section class="noCS" style="flex-basis: 50%; flex: auto;">
+				<section class="art" style="flex-basis: 50%;">
 					<h3 class="indent1">Technical Art, VFX<span id="media">, media</span></h3>
 					<ul class="indent2">
 						<li>3D modeling- Blender (modeling, model editing); Maya (modeling, 3D animation);
@@ -253,7 +256,7 @@
 						</div>
 					</ul>
 				</section>
-				<section class="CS" style="flex-basis: 50%; flex: auto;">
+				<section class="CS" style="flex-basis: 50%;">
 					<h3 class="indent1">Software Engineering</h3>
 					<ul class="indent2">
 						<li>Extensive experience in programming languages in fields of networking, graphics, web,
@@ -263,12 +266,12 @@
 							demos.</li>
 						<li>Utilize profiling/debugging tools to identify bottlenecks, improve framerate performance in applications</li>
 						<li>Experience with Linux, virtualization, WSL/WSA, Docker containers</li>
-						<li>Specialty projects- Arduino, Raspberry Pi (custom OS setups and GPIO programming); building/soldering circuits and wires; programming WS281x LEDs;
+						<li>Specialty projects- <span id="other">Arduino, </span>Raspberry Pi (custom OS setups<span id="other"> and GPIO programming</span>);<span id="other"> building/soldering circuits and wires; programming WS281x LEDs;</span>
 							game development for PC and mobile VR; hand tracking integration with Leap Motion; "Hacknitosh" and custom Android ROM installation;</li>
 					</ul>
 
 				</section>
-				<section class="CS DevOps" style="flex-basis: 50%; flex: auto;">
+				<section class="CS DevOps" style="flex-basis: 50%;">
 					<h3 class="indent1">Development Operations</h3>
 					<ul class="indent2">
 						<li>Set up, managed home networking/IT setups, storage and application servers, VPNs, personal computers</li>
