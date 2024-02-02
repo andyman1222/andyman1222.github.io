@@ -1,3 +1,11 @@
+/**
+HeaderGet.js handles code for website header functionality, 
+as well as utilizing JQuery to insert header and sidebar 
+content where appropriate.
+There is a little easter egg with the header, defined in 
+this document.
+**/
+
 var xhttpHead = new XMLHttpRequest();
 var currentHeader;
 var date = new Date();
