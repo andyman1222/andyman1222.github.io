@@ -22,6 +22,18 @@ a{
   margin-left: 60px;
 }
 
+h1{
+  line-height: 0;
+}
+
+h2{
+  line-height: .5;
+}
+
+h3{
+  line-height: 1;
+}
+
 @media print{
 
   #nobreak{
