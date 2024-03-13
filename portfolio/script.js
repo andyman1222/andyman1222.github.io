@@ -69,9 +69,10 @@ function changePage(newPage){
 		window.history.pushState({path:newurl},'',newurl);
 	}
 }
-
-if(urlParams.get("page") != ""){
-	changePage(urlParams.get("page"));
+$(window).on('load', function() {
+	if(urlParams.get("page") != ""){
+		changePage(urlParams.get("page"));
+	}
 }
 
 //readFromFile("portfolioDocs.json", "ports");
