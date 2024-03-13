@@ -69,7 +69,7 @@ function changePage(newPage){
 		window.history.pushState({path:newurl},'',newurl);
 	}
 }
-$(window).on('load', function() {
+$(document).ready(function() {
 	$.getJSON("portfolioDocs.json").done(function(data) {
 		json = data;
 		if(urlParams.has("page")){
