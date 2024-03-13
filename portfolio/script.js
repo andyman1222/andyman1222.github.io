@@ -72,7 +72,7 @@ function changePage(newPage){
 $(document).ready(function() {
 	//console.log("ready");
 	fetch("./portfolioDocs.json").then((res) => {return res.json();}).then((response) => {
-		json = response.json();
+		json = response;
 		if(urlParams.has("page")){
 			changePage(urlParams.get("page"));
 		}
