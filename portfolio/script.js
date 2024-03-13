@@ -70,7 +70,7 @@ function changePage(newPage){
 	}
 }
 $(document).ready(function() {
-	console.log("ready");
+	//console.log("ready");
 	fetch("./portfolioDocs.json").then((response) => {
 		json = response.json();
 		if(urlParams.has("page")){

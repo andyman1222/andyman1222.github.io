@@ -30,16 +30,6 @@
 			"image": "images/LaserTag.png",
 			"link": "/portfolio/game_dev/LaserTag/",
 			"desc": "FPS based off of laser tag group activities"
-			//},
-			//"Action Demo": {
-			//	"image": "images/actiondemo.png",
-			//	"link": "/portfolio/game_dev/ActionDemo/",
-			//	"desc": "single level WIP project to demonstrate cool gameplay"
-			//},
-			//"Betaa": {
-			//	"image": "images/betaa.PNG",
-			//	"link": "/portfolio/game_dev/Betaa/",
-			//	"desc": "Fast-paced multiplayer FPS concept"
 		}
 	},
 	"vfx": {
