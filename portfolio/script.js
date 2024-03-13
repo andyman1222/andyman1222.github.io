@@ -72,7 +72,7 @@ function changePage(newPage){
 $(window).on('load', function() {
 	$.getJSON("portfolioDocs.json").done(function(data) {
 		json = data;
-		if(urlParams.get("page") != ""){
+		if(urlParams.has("page")){
 			changePage(urlParams.get("page"));
 		}});
 	
