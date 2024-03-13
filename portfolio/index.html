@@ -2,125 +2,176 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="../style.css" id="style" type="text/css">
-  <link rel="icon" href="../images/fish.png" id="icon" type="image/x-icon">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="../headerGet.js"></script>
-  <script>
-    function showDescription(parentId, textId, imageDiv) {
-      document.getElementById(textId).style.display = 'block';
-      document.getElementById(parentId).style.height = '100%';
-      //document.getElementById(parentId).style.position='relative';
-      document.getElementById(parentId).style.marginTop = '-10em';
-      document.getElementById(parentId).style.paddingBottom = '0%';
-      document.getElementById(imageDiv).style.filter = "blur(10px)";
-      document.getElementById(imageDiv).style.webkitFilter = "blur(10px)";
-    }
-
-    function hideDescription(parentId, textId, imageDiv) {
-      //return;
-      document.getElementById(textId).style.display = 'none';
-      document.getElementById(parentId).style.height = null;
-      //document.getElementById(parentId).style.position='absolute';
-      document.getElementById(parentId).style.marginTop = null;
-      document.getElementById(parentId).style.paddingBottom = null;
-      document.getElementById(imageDiv).style.filter = null;
-      document.getElementById(imageDiv).style.webkitFilter = null;
-    }
-  </script>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Portfolio</title>
+	<link rel="stylesheet" href="../style.css" id="style" type="text/css">
+	<link rel="icon" href="../images/fish.png" id="icon" type="image/x-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../headerGet.js"></script>
+	<script src="script.js"></script>
 
 </head>
 
 <body>
-  <style>
-    div.port-item {
-      height: 10em;
-      margin: 0 1.125%;
-      margin-bottom: 2em;
-      display: inline-block;
-    }
+	<style>
+		div.port-item {
+			height: 10em;
+			margin: 0 1.125%;
+			margin-bottom: 2em;
+			display: inline-block;
+		}
 
-    div.nice-background {
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-      filter: blur(0);
-      -webkit-filter: blur(0);
-      z-index: 1;
+		div.directory-item {
+			height: 30em;
+			flex-shrink: 1;
+			flex-basis: 30%;
+			display: inline-block;
 
-      /*position:absolute;*/
-    }
+		}
 
-    div.nice-text {
-      width: 100%;
-      height: 4em;
-      background-color: rgba(0, 0, 0, .5);
-      text-align: center;
-      word-wrap: break-word;
-      margin-top: -4.5em;
-      padding-top: .5em;
-      position: relative;
-      z-index: 10;
-      cursor: pointer;
-    }
+		div.nice-big-background {
+			width: 100%;
+			height: 100%;
+			background-repeat: no-repeat;
+			background-size: auto 100%;
+			background-position: center;
+			filter: blur(0);
+			-webkit-filter: blur(0);
+			z-index: 1;
 
-    img {
-      height: 100%;
-    }
+			position: absolute;
+		}
 
-    p.description {
-      position: absolute;
-      width: 100%;
-      margin-top: 4em;
-    }
+		div.nice-background {
+			width: 100%;
+			height: 100%;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+			filter: blur(0);
+			-webkit-filter: blur(0);
+			z-index: 1;
 
-    h3.port-item {
-      position: absolute;
-      width: 100%;
-    }
-  </style>
-  <div id='headAndText'>
-  </div>
-  <div id="centerMenu">
-    <!--PAGE CONTENTS HERE-->
-    <h1>Portfolio</h1>
-    <hr>
-    <section id="ports">
-      <script>
-        let t = document.getElementById("ports");
-        $.getJSON("portfolioDocs.json").done(function (data) {
+			/*position:absolute;*/
+		}
 
-          for (c in data) {
-            console.log(c);
-            t.innerHTML = t.innerHTML + ("<h2>" + c + "</h2><div id='portSection'>");
-            let s = t.lastChild;
-            console.log(data[c]);
-            for (j in data[c]) {
-              let i = data[c][j];
-              console.log(i);
-              s.innerHTML = s.innerHTML + (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
-                onmouseout="hideDescription('${j}D', '${j}', '${j}Img');">
-                <div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
-                  <img src="${i.image}" style="visibility: hidden;">
-                </div>
-                <div id="${j}D" class="nice-text"
-                  onmousedown="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : "document.location.origin + "} '${i.link}';">
-                  <h3 class="port-item">${j}</h3>
-                  <p id="${j}" style="display: none;" class="description">${i.desc}</p>
-                </div>
-                </div>`
-              );
-            }
-          }
-        });
-      </script>
-    </section>
-    <br>
+		div.nice-text {
+			width: 100%;
+			height: 4em;
+			background-color: rgba(0, 0, 0, .5);
+			text-align: center;
+			word-wrap: break-word;
+			margin-top: -4.5em;
+			padding-top: .5em;
+			position: relative;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+		div.nice-big-text {
+			width: 100%;
+			height: 100%;
+			vertical-align: middle;
+			text-align: center;
+			word-wrap: break-word;
+			position: relative;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+		img {
+			height: 100%;
+
+		}
+
+		p.description {
+			position: absolute;
+			width: 100%;
+			margin-top: 4em;
+		}
+
+		h3.port-item {
+			position: absolute;
+			width: 100%;
+		}
+
+		h3.port-big-item {
+			position: absolute;
+			width: 100%;
+			padding-top: 1em;
+			padding-bottom: 1em;
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			background-color: rgba(0, 0, 0, .5);
+		}
+	</style>
+	<div id='headAndText'>
+	</div>
+	<div id="centerMenu">
+		<!--PAGE CONTENTS HERE-->
+		<h1>Portfolio</h1>
+		<section id="small-directory" style="display: none">
+			<button onclick="changePage('')">Return to main page</button>
+			<button onclick="changePage('vfx')">Tech Art/VFX</button>
+			<button onclick="changePage('games')">Game Development</button>
+			<button onclick="changePage('photo')">Photography/cinematography</button>
+			<button onclick="changePage('other')">Other</button>
+		</section>
+		<hr>
+
+		<section id="directory">
+			<div style="display: flex; justify-content: space-evenly; min-width: 0;">
+				<div class="directory-item">
+					<div class="nice-big-background"
+						style="background-image: url('images/lightingChallenge.png'); position: relative;">
+						<div class="nice-big-background" id="vfx_bg"
+							style="background-image: url('images/lightingChallenge.png');"></div>
+						<div class="nice-big-text" onclick="changePage('vfx')"
+							onmouseover="document.getElementById('vfx_bg').style.filter = 'blur(10px)'"
+							onmouseout="document.getElementById('vfx_bg').style.filter = 'blur(0px)'">
+							<h3 class="port-big-item">Technical Art, VFX</h3>
+						</div>
+					</div>
+
+				</div>
+				<div class="directory-item">
+					<div class="nice-big-background"
+						style="background-image: url('images/lightingChallenge.png'); position: relative;">
+						<div class="nice-big-background" id="games_bg"
+							style="background-image: url('images/lightingChallenge.png');"></div>
+						<div class="nice-big-text" onclick="changePage('games')"
+							onmouseover="document.getElementById('games_bg').style.filter = 'blur(10px)'"
+							onmouseout="document.getElementById('games_bg').style.filter = 'blur(0px)'">
+							<h3 class="port-big-item">Game Development</h3>
+						</div>
+					</div>
+
+				</div>
+				<div class="directory-item">
+					<div class="nice-big-background"
+						style="background-image: url('images/arte contesto entry.png'); position: relative;">
+						<div class="nice-big-background" id="photo_bg"
+							style="background-image: url('images/arte contesto entry.png');"></div>
+						<div class="nice-big-text" onclick="changePage('photo')"
+							onmouseover="document.getElementById('photo_bg').style.filter = 'blur(10px)'"
+							onmouseout="document.getElementById('photo_bg').style.filter = 'blur(0px)'">
+							<h3 class="port-big-item">Photography/Cinematography</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div style="width: 100%; display:flex;justify-content: center;">
+				<a onclick="newPage('other')" href="">Other (modeling/design, Youtube)</a>
+			</div>
+		</section>
+		<section id="ports">
+		</section>
+		<br>
+	</div>
 
 </body>
 
