@@ -20,7 +20,7 @@ function hideDescription(parentId, textId, imageDiv) {
 }
 
 var urlParams = new URLSearchParams(window.location.search);
-var json;
+let json;
 
 function readFromFile(category){
 	let t = document.getElementById("ports");
@@ -70,12 +70,13 @@ function changePage(newPage){
 	}
 }
 $(document).ready(function() {
-	$.getJSON("portfolioDocs.json").done(function(data) {
-		json = data;
+	console.log("ready");
+	fetch("./portfolioDocs.json").then((response) => {
+		json = response.json();
 		if(urlParams.has("page")){
 			changePage(urlParams.get("page"));
-		}});
-	
+		}
+	})
 });
 
 //readFromFile("portfolioDocs.json", "ports");
