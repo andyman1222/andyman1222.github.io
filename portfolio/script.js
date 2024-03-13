@@ -52,7 +52,7 @@ function readFromFile(category){
 
 function changePage(newPage){
 	if(json.hasOwnProperty(newPage)){
-		document.title = "Portfolio | " + json.newPage.name;
+		document.title = "Portfolio | " + json[newPage].name;
 		document.getElementById("directory").style.display = "none";
 		document.getElementById("small-directory").style.display = "initial";
 		readFromFile(newPage);
