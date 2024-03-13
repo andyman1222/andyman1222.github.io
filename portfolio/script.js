@@ -20,7 +20,8 @@ function hideDescription(parentId, textId, imageDiv) {
 }
 
 var urlParams = new URLSearchParams(window.location.search);
-var json = $.getJSON("portfolioDocs.json");
+var json;
+$.getJSON("portfolioDocs.json").done(function(data) {json = data;});
 
 function readFromFile(category){
 	let t = document.getElementById("ports");
@@ -73,6 +74,6 @@ $(window).on('load', function() {
 	if(urlParams.get("page") != ""){
 		changePage(urlParams.get("page"));
 	}
-}
+});
 
 //readFromFile("portfolioDocs.json", "ports");
