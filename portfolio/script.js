@@ -27,24 +27,26 @@ function readFromFile(category){
 	t.innerHTML = "";
 	
 	if(json.hasOwnProperty(category)){
-		t.innerHTML += ("<section id='" + category + "'><h2>" + category.name + "</h2><div id='portSection'>");
+		t.innerHTML += ("<section id='" + category + "'><h2>" + json[category].name + "</h2><div id='portSection'>");
 		let s = t.lastChild;
 		//console.log(data[category]);
 		for (j in json[category]) {
-			let i = json[category][j];
-			//console.log(i);
-			s.innerHTML += (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
-				onmouseout="hideDescription('${j}D', '${j}', '${j}Img');"
-				onclick="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : "document.location.origin + "} '${i.link}';">
-				<div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
-				<img src="${i.image}" style="visibility: hidden;">
-				</div>
-				<div id="${j}D" class="nice-text">
-				<h3 class="port-item">${j}</h3>
-				<p id="${j}" style="display: none;" class="description">${i.desc}</p>
-				</div>
-				</div>`
-			);
+			if(j != "name"){
+				let i = json[category][j];
+				//console.log(i);
+				s.innerHTML += (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
+					onmouseout="hideDescription('${j}D', '${j}', '${j}Img');"
+					onclick="document.location.href= ${String(i.link).indexOf('http') == 0 ? '' : "document.location.origin + "} '${i.link}';">
+					<div class="nice-background" id="${j}Img" style="background-image: url('${i.image}');">
+					<img src="${i.image}" style="visibility: hidden;">
+					</div>
+					<div id="${j}D" class="nice-text">
+					<h3 class="port-item">${j}</h3>
+					<p id="${j}" style="display: none;" class="description">${i.desc}</p>
+					</div>
+					</div>`
+				);
+			}
 		}
 		t.innerHTML += "</section>"
 	}
