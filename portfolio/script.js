@@ -30,8 +30,8 @@ function readFromFile(category){
 		t.innerHTML += ("<section id='" + category + "'><h2>" + category.name + "</h2><div id='portSection'>");
 		let s = t.lastChild;
 		//console.log(data[category]);
-		for (j in data[category]) {
-			let i = data[category][j];
+		for (j in json[category]) {
+			let i = json[category][j];
 			//console.log(i);
 			s.innerHTML += (`<div class="port-item" onmouseover="showDescription('${j}D', '${j}', '${j}Img');"
 				onmouseout="hideDescription('${j}D', '${j}', '${j}Img');"
