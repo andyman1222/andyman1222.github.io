@@ -1,6 +1,9 @@
 {
 	"games": {
 		"name": "Game Development",
+		"Cat Smash!": {
+
+		},
 		"Fishing Ducks": {
 			"image": "images/fishingducks.png",
 			"link": "/portfolio/game_dev/fishingducks/",
@@ -16,11 +19,6 @@
 			"link": "/portfolio/game_dev/Amazeing/",
 			"desc": "WIP indie puzzle/maze game"
 		},
-		"Kung-Fu Run": {
-			"image": "images/kungfurun.png",
-			"link": "/portfolio/game_dev/KungFuRun/",
-			"desc": "A class project, a 3D Chinese-themed platformer"
-		},
 		"Schooled In": {
 			"image": "images/schooledin.png",
 			"link": "https://quantumquantonium.itch.io/schooled-in",
@@ -34,6 +32,16 @@
 	},
 	"vfx": {
 		"name": "Tech Art, VFX, Graphics",
+		"Tech art/VFX in games": {
+			"image": "images/catsmash-tech.gif",
+			"link": "/portfolio/tech/games",
+			"desc": "Tech art showcase as seen in games I've worked on"
+		},
+		"Christmas Scene": {
+			"image": "",
+			"link": "/portfolio/tech/christmas",
+			"desc": "Christmas environment with dim lighting and particles"
+		},
 		"“First Contact”": {
 			"image": "images/lightingChallenge.png",
 			"link": "/portfolio/tech/lightingChallenge",
@@ -48,6 +56,11 @@
 			"image": "images/qeng.png",
 			"link": "/engine/",
 			"desc": "WebGL engine with custom shaders and a postprocess layer"
+		},
+		"Others": {
+			"image": "images/getoveritinvr.png",
+			"link": "https://photos.app.goo.gl/MMGMyVygyeKHs3RC9",
+			"desc": "Album of miscellaneous art pieces"
 		}
 	},
 	"photo": {
@@ -69,7 +82,22 @@
 		}
 	},
 	"other": {
-		"name": "Other (not maintained)",
+		"name": "Other",
+		"Kung-Fu Run": {
+			"image": "images/kungfurun.png",
+			"link": "/portfolio/game_dev/KungFuRun/",
+			"desc": "A class project, a 3D Chinese-themed platformer"
+		},
+		"Action Demo": {
+            "image": "images/actiondemo.png",
+            "link": "/portfolio/game_dev/ActionDemo/",
+            "desc": "single level WIP project to demonstrate cool gameplay"
+        },
+        "Betaa": {
+            "image": "images/betaa.PNG",
+            "link": "/portfolio/game_dev/Betaa/",
+            "desc": "Fast-paced multiplayer FPS concept"
+        },
 		"CP_city_beta": {
 			"image": "images/cpcitybeta.jpg",
 			"link": "/portfolio/3D/cp_city_beta/",
