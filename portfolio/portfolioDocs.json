@@ -45,7 +45,7 @@
 			"desc": "Tech art showcase as seen in games I've worked on"
 		},
 		"Christmas Scene": {
-			"image": "christmas.gif",
+			"image": "images/christmas.gif",
 			"link": "/portfolio/tech/christmas",
 			"desc": "Christmas environment with dim lighting and particles"
 		},
