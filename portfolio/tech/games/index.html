@@ -1,0 +1,155 @@
+<!--
+Template to utilize for every webpage on the website.
+-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Tech art in games</title>
+	<!--
+  NOTE- update the references to style.css, the icon, and headerGet.
+  They use local references to avoid cross-site scripting
+  (between andyherbert.net and andyman1222.github.io)
+  -->
+	<link rel="stylesheet" href="../../../style.css" id="style" type="text/css">
+	<link rel="icon" href="../../../images/fish.png" id="icon" type="image/x-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../../../headerGet.js"></script>
+	<style>
+		img {
+			max-width: 100%;
+			cursor: pointer;
+			max-width: 50em;
+		}
+
+		#img-wide {
+			max-width: 25em;
+			padding: 1em;
+			padding-bottom: 0;
+		}
+
+		h3 {
+			text-align: center;
+			vertical-align: center;
+		}
+
+		#main-container {
+			flex-grow: 1;
+			max-width: 50em;
+			padding: 2em;
+			padding-top: 0;
+
+		}
+
+		#main-container-wide {
+			flex-grow: 2;
+			max-width: 100%;
+			padding: 2em;
+			padding-top: 0;
+
+		}
+
+		p {
+			word-wrap: break-word;
+		}
+
+		#game {
+			width: 100%;
+		}
+
+		#item {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<div id='headAndText'>
+	</div>
+	<div id="centerMenu">
+		<button onclick="document.location.href=document.location.origin + '/portfolio';" style="margin: 1em;">&lt;&lt;
+			Go back to portfolio</button>
+		<h1>Games tech art</h1>
+		<br>
+		<hr><br>
+		<p>Note: This page is still work-in-progress. Currently present is various art created for Syke, my capstone's game currently in development. Missing from here: Cat Smash!, Fishing Ducks, One Touch Defender (mobile optimized)</p>
+		<div style="text-align: center; display: flex; justify-content: center; align-items: center;">
+			<div id="game">
+				<h2>Syke</h2>
+				<div id="item">
+					<div id="main-container">
+						<h3>Postprocess fog</h3>
+						<img src="../../images/Syke/fog.gif" onclick="window.location.href='../../images/Syke/fog.gif'">
+						<p>Gradient via 3D noise, highly customizable, multiplicative+additive, supports position-based
+							coloring</p>
+					</div>
+					<div id="main-container">
+						<h3>Trees</h3>
+						<img src="../../images/Syke/Syke-trees.gif"
+							onclick="window.location.href='../../images/Syke/Syke-trees.gif'">
+						<p>WIP- waving/hiding effect to depict intentional game mechanic</p>
+					</div>
+					<div id="main-container-wide">
+						<h3>Chemistry fluid and bubbles</h3>
+						<img id="img-wide" src="../../images/Syke/Syke-chemistry.gif"
+							onclick="window.location.href='../../images/Syke/Syke-chemistry.gif'">
+						<img id="img-wide" src="../../images/Syke/chemistry-fluid.gif"
+							onclick="window.location.href='../../images/Syke/chemistry-fluid.gif'">
+						<p>Transparent shader projecting a 3D intersecting plane onto a 2D surface for a fluid-like
+							effect</p>
+							<img id="img-wide" src="../../images/Syke/chemistry-bubbles.gif"
+							onclick="window.location.href='../../images/Syke/chemistry-bubbles.gif'">
+						<p>Bubbles created via animated noise, colliding particles</p>
+					</div>
+					<div id="main-container-wide">
+						<h3>Custom stencil interactables</h3>
+						<img id="img-wide" src="../../images/Syke/glow.gif" onclick="window.location.href='../../images/Syke/glow.gif'">
+						<img id="img-wide" src="../../images/Syke/outline.gif" onclick="window.location.href='../../images/Syke/outline.gif'">
+						<p>Outline + shiny effect to indicate interactable objects, controllable with stencil values</p>
+					</div>
+					<div id="main-container">
+						<h3>Transitionary postprocess</h3>
+						<img src="../../images/Syke/Syke-load.gif"
+							onclick="window.location.href='../../images/Syke/Syke-load.gif'">
+						<p>Fade from white to black and white to scene color, transitioning based distance, reversible, intended for loading transitions</p>
+					</div>
+					<div id="main-container">
+						<h3>Fireflies</h3>
+						<img src="../../images/Syke/fireflies.gif"
+							onclick="window.location.href='../../images/Syke/fireflies.gif'">
+						<p>Lit particles circling around central axis</p>
+					</div>
+					<div id="main-container">
+						<h3>Paper on ceiling</h3>
+						<img src="../../images/Syke/papers-on-ceiling.gif"
+							onclick="window.location.href='../../images/Syke/papers-on-ceiling.gif'">
+						<p>Initially created by separate teammate, improved to allow for any direction gravity, paper-like collision with surfaces</p>
+					</div>
+					<div id="main-container">
+						<h3>Optimized portal visuals</h3>
+						<img src="../../images/Syke/portals.gif"
+							onclick="window.location.href='../../images/Syke/portals.gif'">
+						<p>Material with built-in texture switches to prioritize better performing cubemap rendering, depending on performance requirements</p>
+					</div>
+					<div id="main-container">
+						<h3>Flowing river test</h3>
+						<img src="../../images/Syke/river.gif"
+							onclick="window.location.href='../../images/Syke/river.gif'">
+						<p>Unused flowing river material, interpolates three black and white texture maps, integrates auto generated normals and displacement mapping</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--PAGE CONTENTS HERE-->
+	</div>
+
+</body>
+
+</html>

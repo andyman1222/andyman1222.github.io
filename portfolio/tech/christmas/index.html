@@ -1,0 +1,88 @@
+<!--
+Template to utilize for every webpage on the website.
+-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<title>Christmas scene</title>
+	<!--
+	NOTE- update the references to style.css, the icon, and headerGet.
+	They use local references to avoid cross-site scripting
+	(between andyherbert.net and andyman1222.github.io)
+	-->
+	<link rel="stylesheet" href="../../../style.css" id="style" type="text/css">
+	<link rel="icon" href="../../../images/fish.png" id="icon" type="image/x-icon">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../../../headerGet.js"></script>
+
+</head>
+
+<body>
+	<div id='headAndText'>
+	</div>
+
+	<div id="centerMenu">
+		<button onclick="document.location.href=document.location.origin + '/portfolio';" style="margin: 1em;">&lt;&lt;
+			Go back to portfolio</button>
+		<h1>Christmas scene</h1>
+		<hr>
+		<div style="display: flex;">
+			<div style="width:50%;padding:1%;">
+				<div style="width: 100%; padding-top:56.25%;position: relative;"><iframe
+						style="position:absolute;top:0;left:0;bottom:0;right:0;" width="100%" height="100%"
+						src="https://www.youtube-nocookie.com/embed/oLJ4gdfQD2c?si=7Z-xtjGv6Yq1QOIh"
+						title="YouTube video player" frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe></div>
+				<br>
+				<hr><br>
+				<h2>Bonus: hand controlled christmas lights</h2>
+				<div style="width: 100%; padding-top:56.25%;position: relative;"><iframe
+						style="position:absolute;top:0;left:0;bottom:0;right:0;" width="100%" height="100%"
+						src="https://www.youtube-nocookie.com/embed/j5rvpq-9GuE?si=d3sdKBIjY9YIcl6q"
+						title="YouTube video player" frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe></div>
+			</div>
+			<div style="flex: 1;padding:2.5%;">
+				<p>A neat little holiday themed scene I worked on a bit over the past few holiday breaks, based on my
+					family's living room area. The objective of this, apart from celebrating the holidays, was to see
+					how much VFX I could create procedurally, rather than with textures- all the vfx particles are made
+					with a procedural material rather than a UV mapped texture, and the lighting is produced by the
+					particles.
+					<br><br>
+					Features:
+				</p>
+				<ul>
+					<li>
+						made in Unreal Engine 5 with Lumen, Nanite, Niagara
+					</li>
+					<li>
+						Procedurally generated textures create the tree topper, branches, and garland
+					</li>
+					<li>
+						A blend of gently twinkling red and green lights produce a soft golden glow
+					</li>
+					<li>
+						Fire made procedurally, with licking flames and gentle blue and orange glows
+					</li>
+					<li>
+						Snow that blows in the wind and sticks to the ground, blocking out the cloudy moonscape
+					</li>
+					<li>
+						Map layout, lighting environment, and all particle VFX created by myself
+					</li>
+					<li>
+						Some models and textures are 3rd party assets
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
