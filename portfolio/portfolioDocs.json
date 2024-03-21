@@ -2,37 +2,37 @@
 	"games": {
 		"name": "Game Development",
 		"LaserTag": {
-			"image": "images/LaserTag.png",
+			"image": "https://i.imgur.com/9fOhfML.png",
 			"link": "/portfolio/game_dev/LaserTag/",
 			"desc": "Fun laser tag FPS for everyone"
 		},
 		"Cat Smash!": {
-			"image": "images/catsmash.png",
+			"image": "https://i.imgur.com/LW9bNkx.png",
 			"link": "https://awesomejax25.itch.io/catsmash",
 			"desc": "Multiplayer destructible mayhem"
 		},
 		"Fishing Ducks": {
-			"image": "images/fishingducks.png",
+			"image": "https://i.imgur.com/cSpHDAB.png",
 			"link": "/portfolio/game_dev/fishingducks/",
 			"desc": "Fish vs. ducks diving challenge"
 		},
 		"Space Bar/One Touch Defender": {
-			"image": "images/spacebardefenders.png",
+			"image": "https://i.imgur.com/oe2WzCa.png",
 			"link": "/portfolio/game_dev/spacebardefenders/",
 			"desc": "One tap tower defense + Android port"
 		},
 		"Amazeing": {
-			"image": "images/Amazeing.png",
+			"image": "https://i.imgur.com/ZR1EPtO.png",
 			"link": "/portfolio/game_dev/Amazeing/",
 			"desc": "Mesmerizing puzzle/maze game"
 		},
 		"Schooled In": {
-			"image": "images/schooledin.png",
+			"image": "https://i.imgur.com/RJo4DmJ.png",
 			"link": "https://quantumquantonium.itch.io/schooled-in",
 			"desc": "Play as a school troublemaker in VR"
 		},
 		"School‘s Out": {
-			"image": "images/schoolsout.jpg",
+			"image": "https://i.imgur.com/8eppA1a.jpeg",
 			"link": "https://docs.google.com/document/d/13UN5x04ZVtGCsXBES7rWoBynA6UhnA0mQK0gV3JjsY4/edit?usp=sharing",
 			"desc": "Singleplayer/co-op board game madness based on Schooled In"
 		}
@@ -40,37 +40,37 @@
 	"vfx": {
 		"name": "Tech Art, VFX, Graphics",
 		"Tech art/VFX in games": {
-			"image": "images/catsmash-tech.gif",
+			"image": "https://i.imgur.com/UyD8UGc.gif",
 			"link": "/portfolio/tech/games",
 			"desc": "Tech art showcase as seen in games I've worked on"
 		},
 		"Christmas Scene": {
-			"image": "images/christmas.gif",
+			"image": "https://i.imgur.com/5CuqiBZ.gif",
 			"link": "/portfolio/tech/christmas",
 			"desc": "Christmas environment with dim lighting and particles"
 		},
 		"“First Contact”": {
-			"image": "images/lightingChallenge.png",
+			"image": "https://i.imgur.com/zXDT1gY.png",
 			"link": "/portfolio/tech/lightingChallenge",
 			"desc": "30 second lighting challenge submission"
 		},
 		"Office Scene": {
-			"image": "images/office.png",
+			"image": "https://i.imgur.com/XJhs0PG.png",
 			"link": "/portfolio/tech/officeScene",
 			"desc": "Office scene made in Unreal Engine 5"
 		},
 		"Action Demo": {
-            "image": "images/actiondemo.png",
+            "image": "https://i.imgur.com/X0tDlZ7.png",
             "link": "/portfolio/tech/ActionDemo/",
             "desc": "single level WIP project featuring various effects and styling"
         },
 		"Qeng": {
-			"image": "images/qeng.png",
+			"image": "https://i.imgur.com/Dfm8lKl.png",
 			"link": "/engine/",
 			"desc": "WebGL engine with custom shaders and a postprocess layer"
 		},
 		"Others": {
-			"image": "images/getoveritinvr.png",
+			"image": "https://i.imgur.com/9ZUluq2.png",
 			"link": "https://photos.app.goo.gl/MMGMyVygyeKHs3RC9",
 			"desc": "Album of miscellaneous art pieces"
 		}
@@ -78,17 +78,17 @@
 	"photo": {
 		"name": "Photography/Cinematography",
 		"Drone album": {
-			"image": "images/drone.png",
+			"image": "https://i.imgur.com/HQF4B4X.png",
 			"link": "https:\/\/photos.app.goo.gl/KS6UZzncgxRePV5TA",
 			"desc": "Photo album of drone videos/photos and similar"
 		},
 		"Photo album": {
-			"image": "images/picture.jpg",
+			"image": "https://i.imgur.com/eg6WQJX.jpeg",
 			"link": "https:\/\/photos.app.goo.gl/tvTk7Se1MgYAoPbk8",
 			"desc": "Photo album of images (and some videos) I took"
 		},
 		"Random photo edits": {
-			"image": "images/arte contesto entry.png",
+			"image": "https://i.imgur.com/Fh9AQOg.png",
 			"link": "/portfolio/randomPhotoshops/",
 			"desc": "An assortment of photo editing done in Photoshop or GIMP"
 		}
@@ -96,37 +96,37 @@
 	"other": {
 		"name": "Other",
 		"Kung-Fu Run": {
-			"image": "images/kungfurun.png",
+			"image": "ihttps://i.imgur.com/R9pcLTS.png",
 			"link": "/portfolio/game_dev/KungFuRun/",
 			"desc": "A class project, a 3D Chinese-themed platformer"
 		},
         "Betaa": {
-            "image": "images/betaa.PNG",
+            "image": "https://i.imgur.com/sMql2zH.png",
             "link": "/portfolio/game_dev/Betaa/",
             "desc": "Fast-paced multiplayer FPS concept"
         },
 		"CP_city_beta": {
-			"image": "images/cpcitybeta.jpg",
+			"image": "https://i.imgur.com/tieecVZ.jpeg",
 			"link": "/portfolio/3D/cp_city_beta/",
 			"desc": "A Team Fortress 2 custom map"
 		},
 		"3D trophy model": {
-			"image": "images/trophy.png",
+			"image": "https://i.imgur.com/vyC0IYZ.png",
 			"link": "/portfolio/3D/trophy",
 			"desc": "A 3D modeled and 3D printed trophy design"
 		},
 		"3D speaker model": {
-			"image": "images/speaker.png",
+			"image": "https://i.imgur.com/sc0BkkN.png",
 			"link": "/portfolio/3D/speaker",
 			"desc": "A 3D modeled and 3D printed speaker design"
 		},
 		"Youtube channel art": {
-			"image": "youtubeChannelArt/new channel art.png",
+			"image": "https://i.imgur.com/7R4t660.png",
 			"link": "/portfolio/youtubeChannelArt/",
 			"desc": "Channel art and branding for my gaming Youtbe channel"
 		},
 		"Youtube": {
-			"image": "images/piranha-resized.jpg",
+			"image": "https://i.imgur.com/zMQ7GxA.jpeg",
 			"link": "https:\/\/youtube.com/c/AndyHerbert254",
 			"desc": "Videos featuring editing and VFX."
 		}
