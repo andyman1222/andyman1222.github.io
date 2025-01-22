@@ -23,7 +23,6 @@ class shaderProgram{
     
             if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
                 alert(gl.getShaderInfoLog(shader));
-                gl.deleteShader(shader);
                 return null;
             }
             return shader;
@@ -39,7 +38,6 @@ class shaderProgram{
         if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
             alert("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( this.program ));
             console.error("Could not initialise shaders The error log is: " + gl.getProgramInfoLog( this.program ));
-            
             return null;
         }
     };

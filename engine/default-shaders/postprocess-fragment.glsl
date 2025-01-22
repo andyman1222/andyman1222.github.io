@@ -11,9 +11,6 @@ uniform sampler2D diffuse;
 uniform sampler2D specular;
 uniform sampler2D emissive;
 
-uniform highp uint time; //total time since level load
-uniform highp uint frameTime; //time between current and previous frame; delta time
-
 //uniform sampler2D cameraAngle;
 
 in vec2 texCoords;
