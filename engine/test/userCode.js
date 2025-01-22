@@ -1,7 +1,5 @@
 "use strict";
 
-import Q from "../engine/engine.js"
-
 var keys = []
 var pointerLocked = false;
 var mouseMove = false
@@ -20,11 +18,11 @@ var altCamera;
 var directLight;
 
 function switchCamera() {
-	if (Q.mainCamera.enabled) {
-		Q.mainCamera.enabled = false
+	if (_mainCamera._enabled) {
+		_mainCamera._enabled = false
 		altCamera._enabled = true
 	} else {
-		Q.mainCamera.enabled = true
+		_mainCamera._enabled = true
 		altCamera._enabled = false
 	}
 }
@@ -48,21 +46,21 @@ function userMouseEvent(e) {
 
 				xSpeed = e.movementX * maxSpeed
 				ySpeed = e.movementY * maxSpeed
-				if (Q.mainCamera.enabled) {
-					Q.mainCamera.transform.rot = addRotation(Q.mainCamera.transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-					Q.mainCamera.transform.rot = addRotation(Q.mainCamera.transform.rot, eulerToQuat(right(Q.mainCamera.transform.rot), ySpeed))
+				if (_mainCamera._enabled) {
+					_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
+					_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(right(_mainCamera._transform.rot), ySpeed))
 				}
 				else {
-					altCamera.transform.rot = addRotation(altCamera.transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-					altCamera.transform.rot = addRotation(altCamera.transform.rot, eulerToQuat(right(altCamera.transform.rot), ySpeed))
+					altCamera._transform.rot = addRotation(altCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
+					altCamera._transform.rot = addRotation(altCamera._transform.rot, eulerToQuat(right(altCamera._transform.rot), ySpeed))
 				}
-				Q.canvas.requestPointerLock();
+				_canvas.requestPointerLock();
 				pointerLocked = true;
 			}
 			break;
 		case "mousedown":
 			if (e.button == 0) {
-				var pos = _getMousePos(e, Q.canvas)
+				var pos = _getMousePos(e, _canvas)
 				if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
 					mouseReleased = false
 					mouseInRect = true
@@ -77,12 +75,12 @@ function userMouseEvent(e) {
 				pointerLocked = false;
 				if (!mouseMove) {
 
-					var pos = _getMousePos(e, Q.canvas)
+					var pos = _getMousePos(e, _canvas)
 					if (pos[0] > -1 && pos[0] < 1 && pos[1] > -1 && pos[1] < 1) {
-						//var M = mult(Q.mainCamera.getProjMat(), Q.mainCamera.getViewMat())
-						Q.mainCamera.clearDebug()
-						//var mousePos = _getScreenPosInWorldSpace(Q.mainCamera, pos)
-						//var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1), fastNorm), [mousePos, Q.mainCamera.getWorldTransform().pos])
+						//var M = mult(_mainCamera.getProjMat(), _mainCamera.getViewMat())
+						_mainCamera._clearDebug()
+						//var mousePos = _getScreenPosInWorldSpace(_mainCamera, pos)
+						//var intersect = linearIntersect(getPlane(vec3(0, 1, 0), vec3(1, 1, 0), vec3(1, 1, 1), fastNorm), [mousePos, _mainCamera._getWorldTransform().pos])
 					}
 					rClick = 1;
 				}
@@ -99,48 +97,48 @@ function userMouseEvent(e) {
 
 
 function userTick(delta, time) {
-	directLight.transform.rot = addRotation(directLight.transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
+	directLight._transform.rot = addRotation(directLight._transform.rot, eulerToQuat(vec3(0, 1, 0), delta * .1))
 	for (var i = 0; i < keys.length; i++)
 		if (keys[i]) {
-			if (Q.mainCamera.enabled) {
+			if (_mainCamera._enabled) {
 				var d = vec3(0,0,0)
-				var f = forward(Q.mainCamera.transform.rot), r = right(Q.mainCamera.transform.rot)
+				var f = forward(_mainCamera._transform.rot), r = right(_mainCamera._transform.rot)
 				if ((i == 87) || (i == 119)) {//w
-					var n = add(Q.mainCamera.transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-						Q.mainCamera.transform.pos = n
+					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
+						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 65) || (i == 97)) {//a
-					var n = add(Q.mainCamera.transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-						Q.mainCamera.transform.pos = n
+					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
+						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 83) || (i == 115)) {//s
-					var n = add(Q.mainCamera.transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
-						Q.mainCamera.transform.pos = n
+					var n = add(_mainCamera._transform.pos, mult(-.01 * delta, fastNorm(vec3(f[0], 0, f[2]))))
+						_mainCamera._transform.pos = n
 				}
 
 				if ((i == 68) || (i == 100)) {//d
-					var n = add(Q.mainCamera.transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
-						Q.mainCamera.transform.pos = n
+					var n = add(_mainCamera._transform.pos, mult(.01 * delta, fastNorm(vec3(r[0], 0, r[2]))))
+						_mainCamera._transform.pos = n
 				}
 			}
 			else {
 				if ((i == 87) || (i == 119)) //w
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.01 * delta, forward(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 65) || (i == 97))//a
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.01 * delta, right(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 83) || (i == 115))//s
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.01 * delta, forward(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, forward(altCamera._transform.rot)))
 
 				if ((i == 68) || (i == 100))//d
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.01 * delta, right(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, right(altCamera._transform.rot)))
 				if ((i == 81))//q
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(-.01 * delta, up(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(-.01 * delta, up(altCamera._transform.rot)))
 
 				if ((i == 69))//e
-					altCamera.transform.pos = add(altCamera.transform.pos, mult(.01 * delta, up(altCamera.transform.rot)))
+					altCamera._transform.pos = add(altCamera._transform.pos, mult(.01 * delta, up(altCamera._transform.rot)))
 			}
 
 
@@ -154,8 +152,8 @@ function userTick(delta, time) {
 		}
 
 	/*if(!pointerLocked){
-		Q.mainCamera.transform.rot = addRotation(Q.mainCamera.transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
-		Q.mainCamera.transform.rot = addRotation(Q.mainCamera.transform.rot, eulerToQuat(right(Q.mainCamera.transform.rot), ySpeed))
+		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(vec3(0, 1, 0), -xSpeed))
+		_mainCamera._transform.rot = addRotation(_mainCamera._transform.rot, eulerToQuat(right(_mainCamera._transform.rot), ySpeed))
 		if(Math.abs(xSpeed) > .1)
 			xSpeed -= Math.sign(xSpeed)*delta*(maxSpeed*.001)
 		else xSpeed = 0
@@ -173,11 +171,11 @@ var rClick = 0
 function init() {
 	altCamera = new _Camera(_bData, vec3(0, 20, 0), eulerToQuat(vec3(1, 0, 0), 90), vec3(1, 1, 1))
 	altCamera._enabled = false
-	Q.mainCamera.transform.pos = vec3(0, 1, 0)
+	_mainCamera._transform.pos = vec3(0, 1, 0)
 	new _AmbientLight(vec4(1, 0, 0, 1), null)
 	directLight = new _DirectionalLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(.5, .5, .5), 90), scl: vec3(1, 1, 1) }, vec4(0, 0, 1, 1), null)
 	var playerLight = new _PointLight({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(1, 0, 0), 0), scl: vec3(1, 1, 1) }, vec4(0, 1, 0, 1), null, 10)
-	Q.mainCamera.attachChildToSelf(playerLight, "relative")
+	_mainCamera._attachChildToSelf(playerLight, "relative")
 	altCamera._renderEngine = false
 	var tmp = _getRect(vec3(0, 0, 0), vec3(100, 0, 100))
 	new _Object({ pos: vec3(0, 0, 0), rot: eulerToQuat(vec3(0, 0, 1), 0), scl: vec3(1, 1, 1) }, [
@@ -204,11 +202,11 @@ function init() {
 	var x = new _Object({pos: vec3(0, 1, 0), rot: eulerToQuat(vec3(0,0,1),0),scl: vec3(1,1,1)},[{pointIndex: s.index, matIndex: [0], texCoords: s.texCoords, 
 	type: _gl.TRIANGLES, normals: s.normals, tangents: s.tangents, textureIndex: -1}], s.points, [new _BasicMaterial()], _Bounds._RECT, [])
 	x._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
-	t._customTickFunc = function(d, t) {this.transform.rot = addRotation(this.transform.rot, eulerToQuat(vec3(1,0,0), d*.01))}.bind(t)
+	t._customTickFunc = function(d, t) {this._transform.rot = addRotation(this._transform.rot, eulerToQuat(vec3(1,0,0), d*.01))}.bind(t)
 	var testLight = new _PointLight({pos: vec3(0,-1,0),rot:eulerToQuat(vec3(1,0,0),0),scl: vec3(1,1,1)}, vec4(1,1,1,1),null,10)
 	testLight._attachSelfToParent(t, {pos: "noChange", rot: "noChange", scl: "noChange"})
 }
 
 window.onload = function () {
-	Engine._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
+	this._engineInit("gl-canvas", init, userTick, userKeyEvent, userMouseEvent)
 }

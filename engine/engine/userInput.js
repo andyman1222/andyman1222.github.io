@@ -1,8 +1,5 @@
 "use strict";
 
-//userInput.js defines functions to assist with translating between screen input and the 3D world,
-//and sets up key and mouse bindings to be used with the user defined functions.
-
 /**
  * gets mouse position relative to target canvas, in a scale of -1 to 1
  * @param {*} evt 
@@ -33,24 +30,22 @@ function _getScreenPosInWorldSpace(camera, pos) {
 
 }
 
-function _initInputs(keyBuffer, mouseBuffer){
-	window.addEventListener("keyup", (e) => {
-		keyBuffer.push(e);
-	})
+window.addEventListener("keyup", (e) => {
+	_keyBuffer.push(e);
+})
 
-	window.addEventListener("keydown", (e) => {
-		keyBuffer.push(e);
-	})
+window.addEventListener("keydown", (e) => {
+	_keyBuffer.push(e);
+})
 
-	window.addEventListener("mouseup", (e) => {
-		mouseBuffer.push(e);
-	})
+window.addEventListener("mouseup", (e) => {
+	_mouseBuffer.push(e);
+})
 
-	window.addEventListener("mousedown", (e) => {
-		mouseBuffer.push(e);
-	})
+window.addEventListener("mousedown", (e) => {
+	_mouseBuffer.push(e);
+})
 
-	window.addEventListener("mousemove", (e) => {
-		mouseBuffer.push(e);
-	})
-}
+window.addEventListener("mousemove", (e) => {
+	_mouseBuffer.push(e);
+})
