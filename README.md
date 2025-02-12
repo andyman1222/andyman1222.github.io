@@ -9,3 +9,4 @@ Github says this is made up of Mathematica files, however these are .ma Maya fil
 * Resume built in HTML, utilizing flex boxes, CSS settings to format to printable document format
 * Portfolio with json-based main pages, as well as templated project information pages, and styling+blur animation for previews
 * Template skeleton system in JS- header and sidebars are defined in a separate document and loaded in place upon page load
+ 
