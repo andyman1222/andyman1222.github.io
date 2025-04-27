@@ -74,6 +74,9 @@
 				<input type="checkbox" name="prod" id="prodin"
 					oninput="document.querySelectorAll('.prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
 					checked><label for="Production">Show Production?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="checkbox" name="links" id="linksin"
+					oninput="document.querySelectorAll('.links').forEach((v) => v.style.display = (document.querySelector('#linksin').checked ? 'initial' : 'none'));"
+					checked><label for="Links">Show repos?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<hr>
 			</div>
 		</div>
@@ -157,6 +160,17 @@
 							<span class="CS">
 							</span></span></p>
 					</div>
+					<div id="links" style="flex: auto">
+						<h3 class="indent1">Repositories</h3>
+						<p class="indent2">
+						<ul>
+							<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
+							<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
+							<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
+							<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
+							
+							</span></span></p>
+					</div>
 				</section>
 
 			</div>
@@ -166,7 +180,7 @@
 					<div class="indent1">
 						<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-						<p>Seeking professional experience in computer science, game development, technical art, XR,
+						<p>Seeking professional experience in computer science, technical art, XR,
 							DevOps
 							+ QA/QC, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
