@@ -74,9 +74,15 @@
 				<input type="checkbox" name="prod" id="prodin"
 					oninput="document.querySelectorAll('.prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
 					checked><label for="Production">Show Production?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="checkbox" name="links" id="linksin"
+				<input type="checkbox" name="links" id="linksin"
 					oninput="document.querySelectorAll('.links').forEach((v) => v.style.display = (document.querySelector('#linksin').checked ? 'initial' : 'none'));"
 					checked><label for="Links">Show repos?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="network" id="networkin"
+					oninput="document.querySelectorAll('.network').forEach((v) => v.style.display = (document.querySelector('#networkin').checked ? 'initial' : 'none'));"
+					checked><label for="Network">Show networks?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="proj" id="projin"
+					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
+					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<hr>
 			</div>
 		</div>
@@ -182,16 +188,40 @@
 							areas</p-->
 						<p>Seeking professional experience in computer science, technical art, XR,
 							DevOps
-							+ QA/QC, where I can explore my passions and leverage my skills<!--span
+							+ QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
 					</div>
 				</section>
 				<section id="skills">
 					<h2>Skills</h2>
 					<div style="flex-wrap: wrap;">
+						<section class="proj" style="flex-basis: 50%;">
+							<h3 class="indent1">Research, Projects</h3>
+							<ul class="indent1">
+								<li>Games, tech art: see <a href="https://andyherbert.net/portfolio/?page=">andyherbert.net/portfolio</a></li>
+								<li>Multiplayer/AI Behavior Study: WIP paper/project analyzing player behavior in The Laser Games, recreating in bot logic</li>
+								<div class="CS">
+									<li>Q-Engine: WIP game engine in browser JS, with advanced graphics and physics</li>
+									<li>Randomness and Uniformity study: paper-like project analyzing human-computer interaction regarding randomness</li>
+									<div class="network">
+										<li>RoseGamesOnline: Class website project with NodeJS WebSocket backend, running sanitized client generated code</li>
+										<li>DiscordStatsTest: Discord bot which records data about conversations to an SQL database</li>
+										<li>speedtestnetthing: TCP/UDP comparison program to determine which protocol is faster</li>
+										<li>Wireless VR comparison: compared techniques of VR streaming with profiling tools</li>
+									</div>
+									<li>Specialty projects- <span class="other">Arduino, </span>Raspberry Pi (custom OS
+										setups<span class="other"> and GPIO programming</span>);<span class="other">
+											building/soldering
+											circuits and wires; programming WS281x LEDs;</span>
+										game development for PC and mobile VR; hand tracking integration with Leap Motion;
+										"Hacknitosh" and custom Android ROM installation</li>
+								</div>
+							</ul>
+						</section>
 						<section class="prod" style="flex-basis: 50%;">
 							<h3 class="indent1">Leadership, Production</h3>
 							<ul class="indent1">
+								<li>Quantonium: running a company, including distributing tasks, assistance, recruitment</li>
 								<li>Technical lead role in large team (20+ people) for bachelor capstone
 								</li>
 								<li>Led small teams (2-3 people incl. myself) for Epic Games MegaJam entries</li>
@@ -251,12 +281,7 @@
 									performance in
 									applications</li>
 								<li>Experience with Linux, virtualization, WSL/WSA, Docker</li>
-								<li>Specialty projects- <span class="other">Arduino, </span>Raspberry Pi (custom OS
-									setups<span class="other"> and GPIO programming</span>);<span class="other">
-										building/soldering
-										circuits and wires; programming WS281x LEDs;</span>
-									game development for PC and mobile VR; hand tracking integration with Leap Motion;
-									"Hacknitosh" and custom Android ROM installation</li>
+								
 							</ul>
 
 						</section>
@@ -264,8 +289,7 @@
 							<h3 class="indent1">Development Operations</h3>
 							<ul class="indent1">
 								<li>Set up, managed home networking/IT setups, storage and application servers, VPNs,
-									personal
-									computers</li>
+									VLANs</li>
 								<li>Managing DNS records, SSL certificates, backend server configuration for multiple
 									websites
 								</li>
