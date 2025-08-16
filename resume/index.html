@@ -81,11 +81,12 @@
 					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
 					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				Objective: <select name="objective" id="objective" onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
-					<option value="intern">Seeking professional experience in computer science, technical art, XR,
+					<option value="Seeking professional experience in computer science, technical art, XR,
 							DevOps
-							+ QA/QC, HCI, where I can explore my passions and leverage my skills.</option>
-					<option value="devops">Seeking experience in development operations and similar soft pipeline development careers.</option>
-					<option value="servers">Seeking a career in datacenter management and site reliability engineering.</option>
+							+ QA/QC, HCI, where I can explore my passions and leverage my skills.">intern</option>
+					<option value="Seeking experience in development operations and similar soft pipeline development careers.">devops</option>
+					<option value="Seeking a career in datacenter management and site reliability engineering.">servers</option>
+					<option value="Looking to apply for a PhD to research user experience in multiplayer games, and in turn teach about game development.">PhD/teaching</option>
 				</select>
 				<hr>
 			</div>
