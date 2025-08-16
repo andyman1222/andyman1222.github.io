@@ -80,6 +80,13 @@
 				<input type="checkbox" name="proj" id="projin"
 					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
 					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				Objective: <select name="objective" id="objective" onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
+					<option value="intern">Seeking professional experience in computer science, technical art, XR,
+							DevOps
+							+ QA/QC, HCI, where I can explore my passions and leverage my skills.</option>
+					<option value="devops">Seeking experience in development operations and similar soft pipeline development careers.</option>
+					<option value="servers">Seeking a career in datacenter management and site reliability engineering.</option>
+				</select>
 				<hr>
 			</div>
 		</div>
@@ -183,7 +190,7 @@
 					<div class="indent1">
 						<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-						<p>Seeking professional experience in computer science, technical art, XR,
+						<p id="objText">Seeking professional experience in computer science, technical art, XR,
 							DevOps
 							+ QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
