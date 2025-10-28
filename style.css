@@ -1,24 +1,28 @@
 /*Stylesheet for majority of website. Includes functionality for mobile view*/
 
-p, ol, ul, label{
-	font-family: Verdana;
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Tektur:wdth@87.5&display=swap');
+
+p, ol, ul, label, body, a, li {
+	font-family: "PT Sans", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 	color:white;
+}
+
+p, ol, ul, label{
 	line-height: 1.5em;
 	font-size: 1em;
 }
 h1, h2, h3, h4, h5{
-	font-family: "Lucida Console";
+	font-family: "Tektur", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+	font-variation-settings:
+    	"wdth" 100;
 	color:white;
 }
 
-a{
-	font-family: Verdana;
-	color:white;
-}
-li{
-	font-family: Verdana;
-	color:white;
-}
 #currentPage{
 	background-color: white;
 	color: white;
@@ -53,11 +57,9 @@ li{
 }
 #headAndText h1{
 	color:white;
-	font-family: "Lucida Console";
 }
 body{
 	background-color:black;
-	font-family: Verdana;
 	overflow-y: auto;
 }
 iframe{
@@ -147,7 +149,6 @@ button:hover{
 #headerButtons button span{
 	overflow-wrap: normal;
 	text-overflow: ellipsis;
-}
 }
 
 #headerButtons button:hover{

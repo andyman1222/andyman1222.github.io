@@ -59,9 +59,6 @@
 				<input type="checkbox" name="robo" id="roboin"
 					oninput="document.querySelectorAll('#robo').forEach((v) => v.style.display = (document.querySelector('#roboin').checked ? 'initial' : 'none'));"
 					checked><label for="robo">Show robotics (HS)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="checkbox" name="roboTA" id="roboTAin"
-					oninput="document.querySelectorAll('#roboTA').forEach((v) => v.style.display = (document.querySelector('#roboTAin').checked ? 'initial' : 'none'));"
-					checked><label for="roboTA">Show robotics (TA)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="quantonium" id="quantoniumin"
 					oninput="document.querySelectorAll('#quantonium').forEach((v) => v.style.display = (document.querySelector('#quantoniumin').checked ? 'initial' : 'none'));"
 					checked><label for="Quantonium">Show Quantonium?</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -83,6 +80,13 @@
 				<input type="checkbox" name="proj" id="projin"
 					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
 					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				Objective: <select name="objective" id="objective" onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
+					<option value="Seeking professional experience in computer science, technical art, XR, DevOps + QA/QC, HCI, where I can explore my passions and leverage my skills.">intern</option>
+					<option value="Seeking experience in development operations and similar software pipeline development.">devops</option>
+					<option value="Seeking a career in datacenter management and site reliability engineering.">servers</option>
+					<option value="Looking to apply for a PhD to research user experience in multiplayer games, and in turn teach about game development and computer science.">PhD/teaching</option>
+					<option value="Seeking opportnities to grow Quantonium LLC.">Quantonium</option>
+				</select>
 				<hr>
 			</div>
 		</div>
@@ -110,6 +114,12 @@
 								forward" and develop new software and research.</p>
 							<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
 						</div>
+						<div class="CS" style="flex: auto">
+							<h3 class="indent1">AP CS Substitute Teacher</h3>
+							<p class="indent2">
+								Taught Java arrays for AP Computer Science; assisted students, helped develop projects for class.
+							</p>
+						</div>
 						<div style="flex: auto">
 							<h3 class="indent1">Intel Corporation Internship</h3>
 							<p class="indent2">
@@ -122,13 +132,6 @@
 								TAed in computer networks class, "Software Practice"
 								and software architecture. Assisted in creation and revision of new labs and
 								assignments.
-							</p>
-						</div>
-						<div class="CS" id="roboTA" style="flex: auto">
-							<h3 class="indent1">Robotics Teaching Assistant</h3>
-							<p class="indent2">
-								Taught and assisted kids in the basics of programming simple autonomous
-								routines for their own robots.
 							</p>
 						</div>
 
@@ -187,9 +190,7 @@
 					<div class="indent1">
 						<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-						<p>Seeking professional experience in computer science, technical art, XR,
-							DevOps
-							+ QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
+						<p id="objText">Seeking professional experience in computer science, technical art, XR, DevOps + QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
 					</div>
 				</section>
