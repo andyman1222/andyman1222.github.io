@@ -50,7 +50,7 @@
 	<div id="centerMenu">
 		<div class="noprint" style="display: inline;"><input type="checkbox" id="showsettings"
 				oninput="document.getElementById('settings').style.display = document.getElementById('showsettings').checked ? 'initial' : 'none'"
-				unchecked><label>Show settings?</label><button onclick="changeTab()" id="tabSwitcher">Switch to CV</button>
+				unchecked><label>Show settings? </label><button onclick="changeTab()" id="tabSwitcher">Switch to CV</button>
 			<div id="settings" style="display: none"><br><button
 					onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
 					onclick="resetView();">Reset
@@ -129,7 +129,7 @@
 
 				</div>
 				<hr id="nobreak">
-				<section id="resume">
+				<div id="resume">
 					<section id="work">
 						<h2>Experience</h2>
 						<section>
@@ -209,10 +209,11 @@
 
 								</span></span></p>
 					</section>
+				</div>
 
 
 			</div>
-			<div style="flex: 3">
+			<div style="flex: 3" id="resume">
 				<section>
 					<h2>Objective</h2>
 					<div class="indent1">
