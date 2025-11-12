@@ -42,7 +42,8 @@ h3{
     page-break-before: avoid;
   }
 
-  #projects{
+  #CV{
+    page-break-before: avoid;
     /**page-break-before: always;**/
   }
 
