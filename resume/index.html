@@ -27,14 +27,14 @@
 
 		function changeTab() {
 			if(onResume) {
-				document.getElementById("resume").style.display = "none";
-				document.getElementById("CV").style.display = "initial";
+				document.querySelectorAll("#resume").forEach((e) => {e.style.display = "none"});
+				document.querySelectorAll("#CV").forEach((e) => {e.style.display = "block"});
 				document.getElementById("tabSwitcher").innerText = "Switch to resumé";
 				onResume = false;
 			}
 			else {
-				document.getElementById("CV").style.display = "none";
-				document.getElementById("resume").style.display = "initial";
+				document.querySelectorAll("#CV").forEach((e) => {e.style.display = "none"});
+				document.querySelectorAll("#resume").forEach((e) => {e.style.display = "block"});
 				document.getElementById("tabSwitcher").innerText = "Switch to CV";
 				onResume = true;
 			}
