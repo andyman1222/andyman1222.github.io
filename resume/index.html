@@ -21,6 +21,8 @@
 			document.querySelector('#otherin').checked = true;
 			document.querySelectorAll('#projects').forEach((v) => v.style.display = 'initial');
 			document.querySelector('#projectsin').checked = true;
+			document.querySelectorAll("#CV").forEach((e) => {e.style.display = "none"});
+			document.querySelectorAll("#resume").forEach((e) => {e.style.display = "block"});
 		}
 
 		var onResume = true;
@@ -361,7 +363,7 @@
 			</div>
 		</div>
 		</section>
-		<section id="projects">
+		<section id="projects" style="display: none;">
 			<h2>Projects</h2>
 			<section>
 				<h3 class="indent1">Featured Games</h3>
