@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
-	<title>Andrew Herbert Resumé</title>
+	<title>Andrew Herbert Resumé/CV</title>
 
 	<link rel="stylesheet" href="../style.css" id="style" type="text/css">
 	<link rel="stylesheet" href="print.css" type="text/css">
@@ -22,6 +22,23 @@
 			document.querySelectorAll('#projects').forEach((v) => v.style.display = 'initial');
 			document.querySelector('#projectsin').checked = true;
 		}
+
+		var onResume = true;
+
+		function changeTab() {
+			if(onResume) {
+				document.getElementById("resume").style.display = "none";
+				document.getElementById("CV").style.display = "initial";
+				document.getElementById("tabSwitcher").innerText = "Switch to resumé";
+				onResume = false;
+			}
+			else {
+				document.getElementById("CV").style.display = "none";
+				document.getElementById("resume").style.display = "initial";
+				document.getElementById("tabSwitcher").innerText = "Switch to CV";
+				onResume = true;
+			}
+		}
 	</script>
 
 
@@ -33,7 +50,7 @@
 	<div id="centerMenu">
 		<div class="noprint" style="display: inline;"><input type="checkbox" id="showsettings"
 				oninput="document.getElementById('settings').style.display = document.getElementById('showsettings').checked ? 'initial' : 'none'"
-				unchecked><label>Show settings?</label>
+				unchecked><label>Show settings?</label><button onclick="changeTab()" id="tabSwitcher">Switch to CV</button>
 			<div id="settings" style="display: none"><br><button
 					onclick="window.print()">Print/export</button>&nbsp;&nbsp;&nbsp;&nbsp;<button
 					onclick="resetView();">Reset
@@ -80,11 +97,19 @@
 				<input type="checkbox" name="proj" id="projin"
 					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
 					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				Objective: <select name="objective" id="objective" onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
-					<option value="Seeking professional experience in computer science, technical art, XR, DevOps + QA/QC, HCI, where I can explore my passions and leverage my skills.">intern</option>
-					<option value="Seeking experience in development operations and similar software pipeline development.">devops</option>
-					<option value="Seeking a career in datacenter management and site reliability engineering.">servers</option>
-					<option value="Looking to apply for a PhD to research user experience in multiplayer games, and in turn teach about game development and computer science.">PhD/teaching</option>
+				Objective: <select name="objective" id="objective"
+					onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
+					<option
+						value="Seeking professional experience in computer science, technical art, XR, DevOps + QA/QC, HCI, where I can explore my passions and leverage my skills.">
+						intern</option>
+					<option
+						value="Seeking experience in development operations and similar software pipeline development.">
+						devops</option>
+					<option value="Seeking a career in datacenter management and site reliability engineering.">servers
+					</option>
+					<option
+						value="Looking to apply for a PhD to research user experience in multiplayer games, and in turn teach about game development and computer science.">
+						PhD/teaching</option>
 					<option value="Seeking opportnities to grow Quantonium LLC.">Quantonium</option>
 				</select>
 				<hr>
@@ -104,83 +129,86 @@
 
 				</div>
 				<hr id="nobreak">
-				<section id="work">
-					<h2>Experience</h2>
-					<section>
-						<div id="quantonium" style="flex: auto">
-							<h3 class="indent1">Quantonium LLC</h3>
-							<p class="indent2">Founder, CEO. Game development company seeking to "push the
-								industry
-								forward" and develop new software and research.</p>
-							<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
-						</div>
-						<div class="CS" style="flex: auto">
-							<h3 class="indent1">AP CS Substitute Teacher</h3>
-							<p class="indent2">
-								Taught Java arrays for AP Computer Science; assisted students, helped develop projects for class.
-							</p>
-						</div>
-						<div style="flex: auto">
-							<h3 class="indent1">Intel Corporation Internship</h3>
-							<p class="indent2">
-								Developed Python scripts to automate checking out virtual machines for driver testing.
-							</p>
-						</div>
-						<div class="CS" style="flex: auto">
-							<h3 class="indent1">University Teaching Assistant</h3>
-							<p class="indent2">
-								TAed in computer networks class, "Software Practice"
-								and software architecture. Assisted in creation and revision of new labs and
-								assignments.
-							</p>
-						</div>
+				<section id="resume">
+					<section id="work">
+						<h2>Experience</h2>
+						<section>
+							<div id="quantonium" style="flex: auto">
+								<h3 class="indent1">Quantonium LLC</h3>
+								<p class="indent2">Founder, CEO. Game development company seeking to "push the
+									industry
+									forward" and develop new software and research.</p>
+								<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
+							</div>
+							<div class="CS" style="flex: auto">
+								<h3 class="indent1">AP CS Substitute Teacher</h3>
+								<p class="indent2">
+									Taught Java arrays for AP Computer Science; assisted students, helped develop
+									projects for class.
+								</p>
+							</div>
+							<div style="flex: auto">
+								<h3 class="indent1">Intel Corporation Internship</h3>
+								<p class="indent2">
+									Developed Python scripts to automate checking out virtual machines for driver
+									testing.
+								</p>
+							</div>
+							<div class="CS" style="flex: auto">
+								<h3 class="indent1">University Teaching Assistant</h3>
+								<p class="indent2">
+									TAed in computer networks class, "Software Practice"
+									and software architecture. Assisted in creation and revision of new labs and
+									assignments.
+								</p>
+							</div>
 
+						</section>
 					</section>
-				</section>
-				<section id="edu" style="">
-					<h2>Education</h2>
-					<div style="">
-						<h3 class="indent1">University of Utah</h3>
-						<p class="indent2">Salt Lake City, UT<br>
-							CS bachelor's (games emphasis)<br>CS master's<br>
-							2021 - 2025 (expected)<br>
-						</p>
-					</div>
-					<div style="" id="rhit">
-						<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
-						<p class="indent2">Terre Haute, IN<br>
-							Transferred to Utah<br>
-							2019 - 2021<br>
-						</p>
-					</div>
-					<div id="classes" style="flex: auto">
-						<h3 class="indent1">Areas of Interest</h3>
-						<p class="indent2">
-						<ul>
-							<li>Computer graphics</li>
-							<li>Virtual Reality</li>
-							<span class="art">
-								<li>VFX</li>
-							</span>
-							<li>Computer networks and security</li>
-							<li>Database systems, web development</li>
-							<li>Human-Computer Interaction</li>
-							<li>Game engine development</li>
-							<span class="CS">
-							</span></span></p>
-					</div>
-				</section>
-				<section id="links" style="flex: auto">
-					<h2>Repositories</h3>
-						<p class="indent2">
-						<ul>
-							<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
-							<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
-							<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
-							<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
+					<section id="edu" style="">
+						<h2>Education</h2>
+						<div style="">
+							<h3 class="indent1">University of Utah</h3>
+							<p class="indent2">Salt Lake City, UT<br>
+								CS bachelor's (games emphasis)<br>CS master's<br>
+								2021 - 2025 (expected)<br>
+							</p>
+						</div>
+						<div style="" id="rhit">
+							<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
+							<p class="indent2">Terre Haute, IN<br>
+								Transferred to Utah<br>
+								2019 - 2021<br>
+							</p>
+						</div>
+						<div id="classes" style="flex: auto">
+							<h3 class="indent1">Areas of Interest</h3>
+							<p class="indent2">
+							<ul>
+								<li>Computer graphics</li>
+								<li>Virtual Reality</li>
+								<span class="art">
+									<li>VFX</li>
+								</span>
+								<li>Computer networks and security</li>
+								<li>Database systems, web development</li>
+								<li>Human-Computer Interaction</li>
+								<li>Game engine development</li>
+								<span class="CS">
+								</span></span></p>
+						</div>
+					</section>
+					<section id="links" style="flex: auto">
+						<h2>Repositories</h3>
+							<p class="indent2">
+							<ul>
+								<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
+								<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
+								<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
+								<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
 
-							</span></span></p>
-				</section>
+								</span></span></p>
+					</section>
 
 
 			</div>
@@ -190,7 +218,8 @@
 					<div class="indent1">
 						<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-						<p id="objText">Seeking professional experience in computer science, technical art, XR, DevOps + QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
+						<p id="objText">Seeking professional experience in computer science, technical art, XR, DevOps +
+							QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
 					</div>
 				</section>
@@ -206,17 +235,23 @@
 								Laser Games, recreating in bot logic</li>
 							<li><strong>LaserGraph/LaserVis: </strong>Data visualizations for The Laser Games</li>
 							<div class="CS">
-								<li><strong>Matchmaking simulation:</strong> WIP distributed systems architecture to assign machines based on criteria</li>
-								<li><strong>Q-Engine:</strong> WIP game engine in browser JS, with advanced graphics and physics</li>
-								<li><strong>Randomness and Uniformity study:</strong> paper-like project analyzing human-computer
+								<li><strong>Matchmaking simulation:</strong> WIP distributed systems architecture to
+									assign machines based on criteria</li>
+								<li><strong>Q-Engine:</strong> WIP game engine in browser JS, with advanced graphics and
+									physics</li>
+								<li><strong>Randomness and Uniformity study:</strong> paper-like project analyzing
+									human-computer
 									interaction regarding randomness</li>
 								<div class="network">
-									<li><strong>RoseGamesOnline:</strong> Class website project with NodeJS WebSocket backend,
+									<li><strong>RoseGamesOnline:</strong> Class website project with NodeJS WebSocket
+										backend,
 										running sanitized client generated code</li>
-									<li><strong>Wireless VR comparison:</strong> compared techniques of VR streaming using profiling
+									<li><strong>Wireless VR comparison:</strong> compared techniques of VR streaming
+										using profiling
 										tools</li>
 								</div>
-								<li><strong>Specialty projects:</strong> <span class="other">Arduino, </span>Raspberry Pi (custom OS
+								<li><strong>Specialty projects:</strong> <span class="other">Arduino, </span>Raspberry
+									Pi (custom OS
 									setups<span class="other"> and GPIO programming</span>);<span class="other">
 										building/soldering
 										circuits and wires; programming WS281x LEDs;</span>
@@ -324,6 +359,7 @@
 				<br>
 			</div>
 		</div>
+		</section>
 		<section id="projects">
 			<h2>Projects</h2>
 			<section>
