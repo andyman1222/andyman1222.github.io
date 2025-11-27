@@ -23,15 +23,25 @@ a{
 }
 
 h1{
-  line-height: 0;
+  /*line-height: 0;*/
+  /*margin-top: 0;*/
+  margin-bottom: 0;
 }
 
 h2{
-  line-height: .5;
+  /*line-height: .5;*/
+  margin-bottom: .5em
 }
 
 h3{
-  line-height: 1;
+  /*line-height: 1;*/
+  margin-bottom: .25em;
+  margin-top: .5em;
+}
+
+p, ul{
+  margin-top: .1em;
+  margin-bottom: .5em;
 }
 
 @media print{
@@ -42,9 +52,13 @@ h3{
     page-break-before: avoid;
   }
 
-  #CV{
+  #CV, #resume{
     page-break-before: avoid;
     /**page-break-before: always;**/
+  }
+
+  #CV, #projects {
+    page-break-inside: auto;
   }
 
   @page{
@@ -79,6 +93,14 @@ h3{
 
   h1, h2, h4{
     color: #792ed3 !important;
+  }
+
+  #allow-break-after, #CV section {
+    page-break-after: auto;
+  }
+
+  #require-break {
+    page-break-after: always;
   }
 
   p, ul, div, section{
