@@ -57,8 +57,12 @@ p, ul{
     /**page-break-before: always;**/
   }
 
-  #CV, #projects {
+  #CV, #projects, #workEducation, #games, #software {
     page-break-inside: auto;
+  }
+
+  #research {
+    page-break-before: avoid;
   }
 
   @page{
