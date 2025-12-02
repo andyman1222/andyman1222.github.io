@@ -1,143 +1,161 @@
 .printOnly{
-  display: none;
+	display: none;
 }
 
 #centerMenu{
-  font-size: 9pt;
+	font-size: 9pt;
 }
 
 a{
-  display: inline;
+	display: inline;
 }
 
 .indent1{
-  margin-left: 20px;
+	margin-left: 20px;
 }
 
 .indent2{
-  margin-left: 40px;
+	margin-left: 40px;
 }
 
 .indent3{
-  margin-left: 60px;
+	margin-left: 60px;
 }
 
 h1{
-  /*line-height: 0;*/
-  /*margin-top: 0;*/
-  margin-bottom: 0;
+	/*line-height: 0;*/
+	/*margin-top: 0;*/
+	margin-bottom: 0;
 }
 
 h2{
-  /*line-height: .5;*/
-  margin-bottom: .5em
+	/*line-height: .5;*/
+	margin-bottom: .5em
 }
 
 h3{
-  /*line-height: 1;*/
-  margin-bottom: .25em;
-  margin-top: .5em;
+	/*line-height: 1;*/
+	margin-bottom: .25em;
+	margin-top: .5em;
 }
 
 p, ul{
-  margin-top: .1em;
-  margin-bottom: .5em;
+	margin-top: .1em;
+	margin-bottom: .5em;
 }
 
 @media print{
 
-  #nobreak{
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    page-break-before: avoid;
-  }
+	.nobreak{
+		page-break-after: avoid;
+		page-break-inside: avoid;
+		page-break-before: avoid;
+	}
 
-  #CV, #resume{
-    page-break-before: avoid;
-    /**page-break-before: always;**/
-  }
+	.nobreak-before {
+		page-break-before: avoid;
+	}
+	.nobreak-after {
+		page-break-after: avoid;
+	}
+	.nobreak-inside {
+		page-break-inside: avoid;
+	}
 
-  #CV, #projects, #workEducation, #games, #software {
-    page-break-inside: auto;
-  }
+	.allowbreak-after, .allowbreak-outside {
+		page-break-after: auto;
+	}
 
-  #research {
-    page-break-before: avoid;
-  }
+	.allowbreak-before, .allowbreak-outside{
+		page-break-before: auto;
+	}
 
-  @page{
-    margin: 0 !important;
-    margin-top: 20px !important;
-  }
-  
-  body{
-    background-color: white !important;
-    color: black !important;
-    text-align: left;
-    margin: 0 100px 40px 20px !important;
-    zoom: 70%;
-  }
+	#CV, #resume{
+		page-break-before: avoid;
+		/**page-break-before: always;**/
+	}
 
-  @page:first{
-    margin-top: 0;
-  }
-  
-  img, #headAndText, btn{
-    display: none !important;
-  }
+	#CV, #CV section{
+		page-break-inside: auto;
+	}
 
-  a, #printOnly a{
-    display: inline;
-    color: #868686 !important;
-  }
+	section section {
+		page-break-after: auto;
+	}
 
-  p, li, ul, h3, h4, h5{
-    color: black;
-  }
+	#research {
+		page-break-before: avoid;
+	}
 
-  h1, h2, h4{
-    color: #792ed3 !important;
-  }
+	@page{
+		margin: 0 !important;
+		margin-top: 20px !important;
+	}
+	
+	body{
+		background-color: white !important;
+		color: black !important;
+		text-align: left;
+		margin: 0 100px 40px 20px !important;
+		zoom: 70%;
+	}
 
-  #allow-break-after, #CV section {
-    page-break-after: auto;
-  }
+	@page:first{
+		margin-top: 0;
+	}
+	
+	img, #headAndText, btn{
+		display: none !important;
+	}
 
-  #require-break {
-    page-break-after: always;
-  }
+	a, #printOnly a{
+		display: inline;
+		color: #868686 !important;
+	}
 
-  p, ul, div, section{
-    page-break-inside: avoid;
-    page-break-after: auto;
-    page-break-before: avoid;
-  }
+	p, li, ul, h3, h4, h5{
+		color: black;
+	}
 
-  h1, h2, h3, h4, h5{
-    page-break-before: auto;
-    page-break-after: avoid;
-  }
+	h1, h2, h4{
+		color: #792ed3 !important;
+	}
 
-  .printOnly{
-    display: initial;
-  }
+	#require-break {
+		page-break-after: always;
+	}
 
-  .noprint{
-    display: none !important;
-  }
+	p, ul, div, section{
+		page-break-inside: avoid;
+		page-break-after: auto;
+		page-break-before: avoid;
+	}
 
-  hr{
-    width: 50%;
-    margin: 0;
-  }
+	h1, h2, h3, h4, h5{
+		page-break-before: auto;
+		page-break-after: avoid;
+	}
 
-  #centerMenu{
-    margin: 0 !important;
-    padding: 0 10px !important;
-    border: 0px !important;
-    width: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
+	.printOnly{
+		display: initial;
+	}
+
+	.noprint{
+		display: none !important;
+	}
+
+	hr{
+		width: 50%;
+		margin: 0;
+	}
+
+	#centerMenu{
+		margin: 0 !important;
+		padding: 0 10px !important;
+		border: 0px !important;
+		width: 100% !important;
+		left: 0 !important;
+		top: 0 !important;
+	}
 }
 

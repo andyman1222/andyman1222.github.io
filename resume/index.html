@@ -119,9 +119,9 @@
 			</div>
 		</div>
 		<div style="display: flex">
-			<section style="flex: 2" id="nobreak">
+			<div style="flex: 2" class="nobreak">
 				<h1 style="margin-top: 0;">Andrew Herbert</h1>
-				<div class="indent1" id="nobreak" style="font-size: 11pt">
+				<div class="indent1 nobreak" style="font-size: 11pt">
 					<!--p>CM 2394 5500 Wabash Avenue, Terre Haute, IN, USA<br-->
 					<p><a href="mailto:andy@herbertland.com">andy@herbertland.com</a><br>
 
@@ -131,7 +131,7 @@
 					</p>
 
 				</div>
-				<hr id="nobreak">
+				<hr class="nobreak">
 				<div id="resume">
 					<section id="work">
 						<h2>Experience</h2>
@@ -213,7 +213,7 @@
 							</span></span></p>
 					</section>
 				</div>
-				<section id="CV" style="display: none;">
+				<div id="CV" style="display: none;">
 					<br>
 					<section id="statement">
 						Graduate/undergraduate student at the University of Utah, focusing on graphics and
@@ -247,8 +247,8 @@
 					<section id="workEducation">
 						<section id="work">
 							<h2>Work Experience</h2>
-							<section style="display: flex; flex-direction: column;">
-								<div id="quantonium" style="flex: auto">
+							<div style="display: flex; flex-direction: column;">
+								<div id="quantonium" class="nobreak-inside" style="flex: auto">
 									<h3 class="indent1">Quantonium LLC- Founder, 2023-</h3>
 									<p class="indent2"><i>Our focus is to create fun and innovative games in an attempt
 											to push the
@@ -262,27 +262,22 @@
 										Touch Defender, single key tower defense game jam project, on Android</p>
 									<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
 								</div>
-								<div class="CS" style="flex: auto">
+								<div class="CS" style="flex: auto" class="nobreak-inside">
 									<h3 class="indent1">University of Utah- Teaching Assistant, 2023-</h3>
-									<p class="indent2"><strong>Classes TAed for:</strong></h4>
+									<p class="indent2"><strong>Classes TAed for:</strong> Intro to Computer Programming,
+										Senior Capstone, Algorithms, Software Practice, Computer Networks<br><br>
+										<strong>Highlights:</strong>
 									<ul class="indent2">
-										<li><strong>Intro to Computer Programming</strong></li>
-										<li><strong>Senior Capstone</strong></li>
-										<li><strong>Algorithms</strong></li>
-										<li><strong>Software Practice</strong></li>
-										<li><strong>Computer Networks</strong></li>
+										<li>Lectured in Intro to Computer Programming about
+											PyGame; Recorded progress updates on senior capstone projects;</li>
+										<li>Developed
+											networking basics lab in Softwaare Practice;</li>
+										<li>Began developing a network
+											simulation for a proposed project in Computer Networks</li>
 									</ul>
-									<p class="indent2"><strong>Highlights:</strong></p>
-									<p class="indent3">
-										<br>Lectured in Intro to Computer Programming about
-										PyGame; Recorded progress updates on senior capstone projects;
-										<br>Developed
-										networking basics lab in Softwaare Practice;
-										<br>Began developing a network
-										simulation for a proposed project in Computer Networks
 									</p>
 								</div>
-								<div class="CS" style="flex: auto">
+								<div class="CS" style="flex: auto" class="nobreak-inside">
 									<h3 class="indent1">Bellarmine College Preparatory- AP CS Substitute Teacher, 2025
 									</h3>
 									<ul class="indent2">
@@ -296,7 +291,7 @@
 											with missing gameplay functions for students to implement.</li>
 									</ul>
 								</div>
-								<div style="flex: auto">
+								<div style="flex: auto" class="nobreak-inside">
 									<h3 class="indent1">Intel Corporation- Intern (remote), 2020</h3>
 									<ul class="indent2">
 										<li>Developed Python scripts to automate checking out virtual machines for
@@ -307,13 +302,12 @@
 										<li>Worked to test network interfaces in development within the company</li>
 									</ul>
 								</div>
-
-
-							</section>
+							</div>
 						</section>
-						<section id="edu" style="">
-							<h2>Education</h2>
-							<div style="">
+						<section id="edu" style="" class="nobreak-inside">
+
+							<div class="nobreak-inside">
+								<h2>Education</h2>
 								<h3 class="indent1">University of Utah</h3>
 								<p class="indent2">Salt Lake City, UT<br>
 									CS bachelor's (games emphasis), 2022-2024<br>
@@ -329,10 +323,10 @@
 						</section>
 					</section>
 					<section id="projects">
-						<h1 id="nobreak">Past Works/Projects</h1>
+						<h1 class="nobreak">Past Works/Projects</h1>
 						<section id="research">
 							<h2 class="indent1">Research</h2>
-							<section>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Randomness and Uniformity in Computer Software: A Brief Study</h3>
 								<p class="indent3">A research paper developed for the Human-Computer Interaction course
 									at the
@@ -343,8 +337,8 @@
 									Computer Software: A Brief Study. In <i>CS 6540: Human-Computer Interac-
 										tion, Fall 2024.</i> Not published, 9 pages. Available upon request.
 								</p>
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Multiplayer AI/player behavorial study</h3>
 								<p class="indent3">A class project developed into a component of Quantonium's The Laser
 									Games. Objective
@@ -364,8 +358,8 @@
 										href="https://github.com/quantonium">https://github.com/quantonium</a>.
 								</p>
 
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Matchmaking simulation for distributed systems</h3>
 								<p class="indent3">A class project currently in progress, working to develop an
 									architecture based on
@@ -377,11 +371,11 @@
 									<br><br>
 									Current progress: in experimentation
 								</p>
-							</section>
+							</div>
 						</section>
 						<section id="games">
 							<h2 class="indent1">Games</h2>
-							<section>
+							<div class="nobreak-inside">
 								<h3 class="indent2">The Laser Games</h3>
 								<p class="indent3"><i>The Laser Games is a casual/competitive shooter, embracing the
 										thrill and experience from real laser tag. Jump in with friends, strangers, or
@@ -405,8 +399,8 @@
 									<li><strong>Planned release:</strong> fall 2026, dependent on team size and funding
 									</li>
 								</ul>
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Syke</h3>
 								<p class="indent3"><i>Introducing Syke, a first-person exploratory puzzle game set in a
 										mesmerizing and enigmatic reality. Awakening in a world of impossible physics,
@@ -424,16 +418,19 @@
 											href="https://store.steampowered.com/app/2876980/Syke/">https://store.steampowered.com/app/2876980/Syke/</a>
 									</li>
 								</ul>
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Space Bar/One Touch Defender</h3>
-								<p class="indent3">Your homeworld is being invaded, and YOU must build up the defenses
-									to protect it! You have one tool and one tool only to help you: the "Touch Bar".
-									Simply press down on the almighty key to place turrets, but be careful! You only
-									have limited room, and limited space, and if misplaced, the turret's lost! If all
-									else fails, you can activate the "Super Space Weapon" during a wave to stop all
-									enemies and deal massive damage- at a cost. Will you defend your homeworld in time,
-									or will the Touch Bar run out?
+								<p class="indent3"><i>Your homeworld is being invaded, and YOU must build up the
+										defenses
+										to protect it! You have one tool and one tool only to help you: the "Touch Bar".
+										Simply press down on the almighty key to place turrets, but be careful! You only
+										have limited room, and limited space, and if misplaced, the turret's lost! If
+										all
+										else fails, you can activate the "Super Space Weapon" during a wave to stop all
+										enemies and deal massive damage- at a cost. Will you defend your homeworld in
+										time,
+										or will the Touch Bar run out?</i>
 								</p>
 								<ul class="indent3">
 									<li><strong>Information and download page: </strong><a
@@ -441,8 +438,8 @@
 									</li>
 									<li><strong>Status: </strong>Complete; periodic updates for Android port</li>
 								</ul>
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Cat Smash!</h3>
 								<p class="indent3"><i>Cat Smash is an online multiplayer cat destruction game, where two
 										players can push, scratch, or even eat items around the apartment in order to
@@ -459,8 +456,8 @@
 									</li>
 									<li><strong>Status: </strong>Complete</li>
 								</ul>
-							</section>
-							<section>
+							</div>
+							<div class="nobreak-inside">
 								<h3 class="indent2">Fishing Ducks</h3>
 								<p class="indent3">Game designed in one week for the Epic Games MegaJam 2022. Developed
 									in a
@@ -475,50 +472,60 @@
 									</li>
 									<li><strong>Status: </strong>Complete</li>
 								</ul>
-							</section>
+							</div>
 							<p class="indent2"><strong>More games on portfolio: </strong> <a
 									href="https://andyherbert.net/portfolio">https://andyherbert.net/portfolio</a></p>
 						</section>
 						<section class="CS" id="software">
-							<h2 class="indent1">Software</h2>
-							<section>
-								<h3 class="indent2">With Quantonium</h3>
-								<section>
+							<h2 class="indent1 nobreak">Software</h2>
+							<section class="nobreak-before">
+								<h3 class="indent2 nobreak">With Quantonium</h3>
+								<div class="nobreak-before nobreak-inside allowbreak-after">
 									<h4 class="indent3">LaserGraph</h4>
 									<ul class="indent3">
-										<li>LaserGraph is a stats visualization webpage for The Laser Games. Players can
-											save game stats in a ".ljson" file, which can then be processed locally on a
+										<li>LaserGraph is a stats visualization webpage for The Laser Games. Players
+											can
+											save game stats in a ".ljson" file, which can then be processed locally
+											on a
 											website.</li>
-										<li>Features a leaderboard, hit timeline, performance hexagon, tagging network
-											graph, by-event score progression, and hit sensor target distribution chart.
+										<li>Features a leaderboard, hit timeline, performance hexagon, tagging
+											network
+											graph, by-event score progression, and hit sensor target distribution
+											chart.
 										</li>
-										<li>Clicking on some graphs opens a fullscreen view with an additional visual
+										<li>Clicking on some graphs opens a fullscreen view with an additional
+											visual
 											and
 											more information</li>
-										<li>Planned features include filtering by player and team, improved time range
+										<li>Planned features include filtering by player and team, improved time
+											range
 											selection, and paper printing support.</li>
 										<li><strong>Website: </strong><a
 												href="https://laserstats.quantonium.net/">https://laserstats.quantonium.net/</a>
 										</li>
 									</ul>
-								</section>
-								<section>
+								</div>
+								<div class="nobreak-inside allowbreak-outside">
 									<h4 class="indent3">Qeng</h4>
 									<ul class="indent3">
-										<li>Game engine written in Javascript/webGL. Latest changes include modular JS
+										<li>Game engine written in Javascript/webGL. Latest changes include modular
+											JS
 											backend and complex physics animation simulation
 											(unstable)</li>
 										<li>Sophisticated lighting- support currently for up to 64 lights, with
 											customizable parameters to cast on
 											materials differently, and negative and translucent lighting</li>
 										<li>Postrpocess layer- supports 10+ buffer inputs</li>
-										<li>Gameplay update mechanics- tick-based updating with optional customizable
+										<li>Gameplay update mechanics- tick-based updating with optional
+											customizable
 											functions to be called before
 											or after tick/graphics/input</li>
-										<li>Buffered input controls- Handle all inputs by the player in the order they
+										<li>Buffered input controls- Handle all inputs by the player in the order
+											they
 											arrive, not missing any
 											inputs</li>
-										<li>Separate graphics thread- Updates visuals independently from game logic</li>
+										<li>Separate graphics thread- Updates visuals independently from game logic
+										</li>
 										<li><strong>Demos (old): </strong><a
 												href="https://andyherbert.net/engine/">https://andyherbert.net/engine/</a>
 											(modular and physics simulation demos not yet available publicly)
@@ -527,11 +534,12 @@
 												href="https://github.com/quantonium/Q-Engine">https://github.com/quantonium/Q-Engine</a>
 										</li>
 									</ul>
-								</section>
+								</div>
 							</section>
 							<section>
-								<h3 class="indent2">Networking</h3>
-								<section id="rhit">
+
+								<div class="nobreak-inside" id="rhit">
+									<h3 class="indent2">Networking</h3>
 									<h4 class="indent3">RoseGamesOnline</h4>
 									<ul class="indent3">
 										<li>Rose Games Online is a
@@ -547,8 +555,8 @@
 												href="https://github.com/Andyman1222School/RoseGamesOnline">https://github.com/Andyman1222School/RoseGamesOnline</a>
 										</li>
 									</ul>
-								</section>
-								<section>
+								</div>
+								<div class="nobreak-inside">
 									<h4 class="indent3">TCP vs. UDP tester</h4>
 									<ul class="indent3">
 										<li>server+client program which tests real-world performance (RTT and
@@ -558,8 +566,8 @@
 												href="https://github.com/andyman1222/speedtestnetthing">https://github.com/andyman1222/speedtestnetthing</a>
 										</li>
 									</ul>
-								</section>
-								<section>
+								</div>
+								<div class="nobreak-inside">
 									<h4 class="indent3">snakeInC/snakeInPy</h4>
 									<ul class="indent3">
 										<li>Multiplayer snake-like game written in C for WinSock, and later in
@@ -575,7 +583,7 @@
 												href="https://github.com/Andyman1222School/SnakeInPy">https://github.com/Andyman1222School/SnakeInPy</a>
 										</li>
 									</ul>
-								</section>
+								</div>
 							</section>
 							<!--section>
 								<h3 class="indent2">Graphics</h3>
@@ -619,39 +627,38 @@
 							</ul>
 							</span></span></p>
 					</section>
-				</section>
-				<section class="media" id="media">
-					<h3 class="indent1">Media</h3>
-					<section>
-						<h4 class="indent2">Quantum Quantonium: Video game Youtube channel + livestreaming.
-						</h4>
-						<ul class="indent3">
-							<li><strong>Channel: </strong><a
-									href="https://youtube.com/c/QuantumQuantonium">https://youtube.com/c/QuantumQuantonium</a>
-							</li>
-						</ul>
+					<section class="media" id="media">
+						<h3 class="indent1">Media</h3>
+						<div class="nobreak-inside">
+							<h4 class="indent2">Quantum Quantonium: Video game Youtube channel + livestreaming.
+							</h4>
+							<ul class="indent3">
+								<li><strong>Channel: </strong><a
+										href="https://youtube.com/c/QuantumQuantonium">https://youtube.com/c/QuantumQuantonium</a>
+								</li>
+							</ul>
+						</div>
+						<div class="nobreak-inside">
+							<h4 class="indent2">Alternate Youtube channel: smaller channel with more practical
+								focus
+							</h4>
+							<ul class="indent3">
+								<li><strong>Channel: </strong><a
+										href="https://youtube.com/c/andyherbert254">https://youtube.com/c/andyherbert254</a>
+								</li>
+							</ul>
+						</div>
 					</section>
-					<section>
-						<h4 class="indent2">Alternate Youtube channel: smaller channel with more practical
-							focus
-						</h4>
-						<ul class="indent3">
-							<li><strong>Channel: </strong><a
-									href="https://youtube.com/c/andyherbert254">https://youtube.com/c/andyherbert254</a>
-							</li>
-						</ul>
-					</section>
-				</section>
-			</section>
-			</section>
-			</section>
+				</div>
+			</div>
 			<div style="flex: 3" id="resume">
 				<section>
 					<h2>Objective</h2>
 					<div class="indent1">
 						<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-						<p id="objText">Seeking professional experience in computer science, technical art, XR, DevOps +
+						<p id="objText">Seeking professional experience in computer science, technical art, XR,
+							DevOps +
 							QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
 					</div>
@@ -664,26 +671,30 @@
 							<li><strong>Games, tech art:</strong> see <a
 									href="https://andyherbert.net/portfolio/?page=">andyherbert.net/portfolio</a>
 							</li>
-							<li><strong>Multiplayer/AI Behavior Study:</strong> Project analyzing player behavior in The
+							<li><strong>Multiplayer/AI Behavior Study:</strong> Project analyzing player behavior in
+								The
 								Laser Games, recreating in bot logic</li>
 							<li><strong>LaserGraph/LaserVis: </strong>Data visualizations for The Laser Games</li>
 							<div class="CS">
 								<li><strong>Matchmaking simulation:</strong> WIP distributed systems architecture to
 									assign machines based on criteria</li>
-								<li><strong>Q-Engine:</strong> WIP game engine in browser JS, with advanced graphics and
+								<li><strong>Q-Engine:</strong> WIP game engine in browser JS, with advanced graphics
+									and
 									physics</li>
 								<li><strong>Randomness and Uniformity study:</strong> paper-like project analyzing
 									human-computer
 									interaction regarding randomness</li>
 								<div class="network">
-									<li><strong>RoseGamesOnline:</strong> Class website project with NodeJS WebSocket
+									<li><strong>RoseGamesOnline:</strong> Class website project with NodeJS
+										WebSocket
 										backend,
 										running sanitized client generated code</li>
 									<li><strong>Wireless VR comparison:</strong> compared techniques of VR streaming
 										using profiling
 										tools</li>
 								</div>
-								<li><strong>Specialty projects:</strong> <span class="other">Arduino, </span>Raspberry
+								<li><strong>Specialty projects:</strong> <span class="other">Arduino,
+									</span>Raspberry
 									Pi (custom OS
 									setups<span class="other"> and GPIO programming</span>);<span class="other">
 										building/soldering
@@ -701,7 +712,8 @@
 						<section class="prod" style="flex-basis: 50%;">
 							<h3 class="indent1">Leadership, Production</h3>
 							<ul class="indent1">
-								<li>Quantonium: running a company, including distributing tasks, assistance, recruitment
+								<li>Quantonium: running a company, including distributing tasks, assistance,
+									recruitment
 								</li>
 								<li>Technical lead role in large team (20+ people) for bachelor capstone
 								</li>
@@ -769,9 +781,11 @@
 						<section class="CS devops" style="flex-basis: 50%;">
 							<h3 class="indent1">Development Operations</h3>
 							<ul class="indent1">
-								<li>Set up, managed home networking/IT setups, storage and application servers, VPNs,
+								<li>Set up, managed home networking/IT setups, storage and application servers,
+									VPNs,
 									VLANs</li>
-								<li>Managing DNS records, SSL certificates, backend server configuration for multiple
+								<li>Managing DNS records, SSL certificates, backend server configuration for
+									multiple
 									websites
 								</li>
 								<li>Set up and manage version control servers and repos for various teams: Git,
@@ -782,7 +796,8 @@
 								<li>Utilizing reverse proxy Traefik for more secure public connections into
 									Quantonium
 									systems</li>
-								<li>Developed automation software to compile, upload Unreal Engine packaged game builds
+								<li>Developed automation software to compile, upload Unreal Engine packaged game
+									builds
 									and
 									development binaries</li>
 							</ul>
