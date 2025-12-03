@@ -1,116 +1,161 @@
 .printOnly{
-  display: none;
+	display: none;
 }
 
 #centerMenu{
-  font-size: 9pt;
+	font-size: 9pt;
 }
 
 a{
-  display: inline;
+	display: inline;
 }
 
 .indent1{
-  margin-left: 20px;
+	margin-left: 20px;
 }
 
 .indent2{
-  margin-left: 40px;
+	margin-left: 40px;
 }
 
 .indent3{
-  margin-left: 60px;
+	margin-left: 60px;
 }
 
 h1{
-  line-height: 0;
+	/*line-height: 0;*/
+	/*margin-top: 0;*/
+	margin-bottom: 0;
 }
 
 h2{
-  line-height: .5;
+	/*line-height: .5;*/
+	margin-bottom: .5em
 }
 
 h3{
-  line-height: 1;
+	/*line-height: 1;*/
+	margin-bottom: .25em;
+	margin-top: .5em;
+}
+
+p, ul{
+	margin-top: .1em;
+	margin-bottom: .5em;
 }
 
 @media print{
 
-  #nobreak{
-    page-break-after: avoid;
-    page-break-inside: avoid;
-    page-break-before: avoid;
-  }
+	.nobreak{
+		page-break-after: avoid;
+		page-break-inside: avoid;
+		page-break-before: avoid;
+	}
 
-  #projects{
-    page-break-before: always;
-  }
+	.nobreak-before {
+		page-break-before: avoid;
+	}
+	.nobreak-after {
+		page-break-after: avoid;
+	}
+	.nobreak-inside {
+		page-break-inside: avoid;
+	}
 
-  @page{
-    margin: 0 !important;
-    margin-top: 20px !important;
-  }
-  
-  body{
-    background-color: white !important;
-    color: black !important;
-    text-align: left;
-    margin: 0 100px 40px 20px !important;
-    zoom: 70%;
-  }
+	.allowbreak-after, .allowbreak-outside {
+		page-break-after: auto;
+	}
 
-  @page:first{
-    margin-top: 0;
-  }
-  
-  img, #headAndText, btn{
-    display: none !important;
-  }
+	.allowbreak-before, .allowbreak-outside{
+		page-break-before: auto;
+	}
 
-  a, #printOnly a{
-    display: inline;
-    color: #868686 !important;
-  }
+	#CV, #resume{
+		page-break-before: avoid;
+		/**page-break-before: always;**/
+	}
 
-  p, li, ul, h3, h4, h5{
-    color: black;
-  }
+	#CV, #CV section{
+		page-break-inside: auto;
+	}
 
-  h1, h2, h4{
-    color: #792ed3 !important;
-  }
+	section section {
+		page-break-after: auto;
+	}
 
-  p, ul, div, section{
-    page-break-inside: avoid;
-    page-break-after: auto;
-    page-break-before: avoid;
-  }
+	#research {
+		page-break-before: avoid;
+	}
 
-  h1, h2, h3, h4, h5{
-    page-break-before: auto;
-    page-break-after: avoid;
-  }
+	@page{
+		margin: 0 !important;
+		margin-top: 20px !important;
+	}
+	
+	body{
+		background-color: white !important;
+		color: black !important;
+		text-align: left;
+		margin: 0 100px 40px 20px !important;
+		zoom: 70%;
+	}
 
-  .printOnly{
-    display: initial;
-  }
+	@page:first{
+		margin-top: 0;
+	}
+	
+	img, #headAndText, btn{
+		display: none !important;
+	}
 
-  .noprint{
-    display: none !important;
-  }
+	a, #printOnly a{
+		display: inline;
+		color: #868686 !important;
+	}
 
-  hr{
-    width: 50%;
-    margin: 0;
-  }
+	p, li, ul, h3, h4, h5{
+		color: black;
+	}
 
-  #centerMenu{
-    margin: 0 !important;
-    padding: 0 10px !important;
-    border: 0px !important;
-    width: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
+	h1, h2, h4{
+		color: #792ed3 !important;
+	}
+
+	#require-break {
+		page-break-after: always;
+	}
+
+	p, ul, div, section{
+		page-break-inside: avoid;
+		page-break-after: auto;
+		page-break-before: avoid;
+	}
+
+	h1, h2, h3, h4, h5{
+		page-break-before: auto;
+		page-break-after: avoid;
+	}
+
+	.printOnly{
+		display: initial;
+	}
+
+	.noprint{
+		display: none !important;
+	}
+
+	hr{
+		width: 50%;
+		margin: 0;
+	}
+
+	#centerMenu{
+		margin: 0 !important;
+		padding: 0 10px !important;
+		border: 0px !important;
+		width: 100% !important;
+		left: 0 !important;
+		top: 0 !important;
+	}
 }
 
