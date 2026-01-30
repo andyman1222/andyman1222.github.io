@@ -1,44 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script>
-			const TITLE = "This is a test."
-			const DESCRIPTION = "This is a test of image embeds. Check out https://andyherbert.net"
-			const IMAGE = "https://andyherbert.net/images/fish.png"
-			const _URL = "https://andyherbert.net"
-			const DATE = "2026, January, 29"
-			const TYPE = "website"
-
-			var titleElement = document.createElement("title")
-			title.setInnerText(TITLE)
-
-			var descElem = document.createElement("meta")
-			descElem.property="og:description"
-			descElem.content=DESCRIPTION
-
-			plainDescElem = document.createElement("meta")
-			plainDescElem.name = "description"
-			plainDescElem.content = DESCRIPTION
-
-			var imgElem = document.createElement("meta")
-			imgElem.property="og:image"
-			imgElem.content=IMAGE
-
-			var urlElem = document.createElement("meta")
-			urlElem.property="og:url"
-			urlElem.content=_URL
-
-			var typeElem = document.createElement("meta")
-			typeElem.property="og:type"
-			typeElem.content=TYPE
-
-			var dateElem = document.createElement("meta")
-			dateElem.property="og:article:published_time"
-			dateElem.content=DATE
-		</script>
+		<title>This is a test.</title>
+		<meta name="description" content="This is a test of image embeds. Check out https://andyherbert.net">
+		<meta property="og:description" content="This is a test of image embeds. Check out https://andyherbert.net">
+		<meta property="og:image" content="https://andyherbert.net/images/fish.png">
+		<meta property="og:url" content="https://andyherbert.net">
+		<meta property="og:article:published_time" content="2026, January, 29">
 		
 	</head>
 	<body>
+		<!--img src="https://andyherbert.net/images/fish.png"-->
 		<script>setTimeout(() => window.location.href="https://andyherbert.com", 100)</script>
 	</body>
 </html>
