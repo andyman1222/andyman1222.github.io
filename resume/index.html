@@ -118,6 +118,9 @@
 				<input type="checkbox" name="teaching" id="teachingin"
 					oninput="document.querySelectorAll('.teaching').forEach((v) => v.style.display = (document.querySelector('#teachingin').checked ? 'initial' : 'none'));"
 					checked><label for="Teaching">Show teaching/TA?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="design" id="designin"
+					oninput="document.querySelectorAll('.design').forEach((v) => v.style.display = (document.querySelector('#designin').checked ? 'initial' : 'none'));"
+					checked><label for="Desgin">Show game design?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				Objective: <select name="objective" id="objective"
 					onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
 					<option
@@ -156,7 +159,8 @@
 						<div class="indent1">
 							<!--p>Computer science major looking for experience in game development, technical art, IoT, and other related
 							areas</p-->
-							<p id="objText">Seeking professional experience in computer science, technical art, XR,
+							<p id="objText" contenteditable="true">Seeking professional experience in computer science,
+								technical art, XR,
 								DevOps +
 								QA/QC, HCI, where I can explore my passions and leverage my skills<!--span
 								id="quantonium">, to assist in funding and expanding Quantonium LLC</span-->.</p>
@@ -166,16 +170,19 @@
 			<hr class="nobreak">
 			<div id="resume" style="display:flex">
 				<section id="work">
-					<!--h2>Work Experience</h2-->
+					<h1><u>Experience</u></h1>
 					<section>
 						<div id="quantonium" style="flex: auto">
-							<h2>Quantonium LLC, 2023-</h2>
+							<div style="display: flex; align-items: center;">
+								<h2>Quantonium LLC, 2023-present</h2><a class="indent2"
+									href="https://quantonium.net">https://quantonium.net</a>
+							</div>
 							<div style="display: flex" class="add-bottom-margin">
 								<div style="flex-shrink: 2;">
-									<p class="indent2">Founder, CEO. Game development company seeking to "push the
+									<p class="indent2">Founder. Game development company seeking to "push the
 										industry
 										forward" and develop new software and research.</p>
-									<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
+
 								</div>
 								<div class="prod" style="flex-shrink: 1;">
 									<p class="indent2">Regular Tasks:</p>
@@ -194,35 +201,37 @@
 							<div class="add-bottom-margin">
 								<div class="indent1 resume-item">
 									<h3 class="left-align">The Laser Games</h3>
-									<p class=" right-align"><i><a
-												href="https://playlaser.games">playlaser.games</a></i></p>
+									<p class=" right-align"><i><a href="https://playlaser.games">playlaser.games</a></i>
+									</p>
 								</div>
 								<ul>
-									<li>In-development multiplayer title, with LiveOps. Made in Unreal Engine, themed around real life laser tag
+									<li>In-development multiplayer title. Made in Unreal Engine, themed
+										around real life laser tag
 										and fun sci-fi.</li>
-									<li>Modular gameplay built with intention to easily support
+									<li class="design">Modular gameplay built with intention to easily support
 										modding and quick additions to gameplay</li>
-									<li class="graphics">VFX- lasers with mirrors to reflect on; sensors with flashing
+									<li class="graphics">VFX- lasers with mirrors to reflect on (Niagara, migrated from
+										Cascade); sensors with flashing
 										emissive
 										materials, parameterized; postprocess fog and flourescence effect</li>
-									<li class="CS">Targeted for Steam Deck and other low end devices with baked
+									<li class="CS graphics">Targeted for Steam Deck and other low end devices with baked
 										lighting, as
 										well
 										as high end raytracing compatible devices with Lumen; native Linux support
 									</li>
-									<li class="network">Utilize Unreal Engine replication, Steam online subsystem functionality</li>
+									<li class="network">Utilize Unreal Engine replication, Steam online subsystem
+										functionality</li>
 								</ul>
 							</div>
 							<div class="add-bottom-margin CS vis">
 								<div class="indent1 resume-item">
 									<h3 class="left-align">LaserStats, LaserVis</h3>
-									<p class=" right-align"><i>Visualization systems for The
-											Laser Games.</i></p>
+									<p class=" right-align"><i><a
+												href="https://stats.playlaser.games/">stats.playlaser.games</a></i></p>
 								</div>
 								<ul>
 									<li>LaserStats is a data visualization framework and website for The Laser Games
-										player stats. Developed as a component of visualization class. <a
-											href="https://stats.playlaser.games/">stats.playlaser.games</a></li>
+										player stats. Developed as a component of visualization class. </li>
 									<ul class="">
 										<li>Export stats from game into a JSON format, importable and processed locally
 											on the website.</li>
@@ -245,8 +254,8 @@
 							<div class="add-bottom-margin graphics">
 								<div class="indent1 resume-item">
 									<h3 class="left-align">Space Bar Defender</h3>
-									<p class=" right-align"><i>Game jam game in Unreal
-											Engine 4/5.</i>
+									<p class=" right-align"><a
+											href="https://andyherbert.net/portfolio/game_dev/spacebardefenders/">andyherbert.net/portfolio/game_dev/spacebardefenders</a>
 									</p>
 								</div>
 								<ul>
@@ -255,27 +264,55 @@
 										and starry nebula sky</li>
 									<li>Custom Niagara particle VFX- electricity, lasers, explosions, wind/shockwave,
 										freezing</li>
-									<li>Available to download and play on itch.io, Google Play (One Touch Defender).</li>
+									<!--li>Available to download and play on itch.io, Google Play (One Touch Defender).
+									</li-->
 								</ul>
 							</div>
 							<div class="add-bottom-margin graphics">
 								<div class="indent1 resume-item">
 									<h3 class="left-align">Q-Engine</h3>
-									<p class=" right-align"><i>Game engine in JS/WebGL. URL
-											TBD.</i></p>
+									<p class=" right-align"><i><a
+												href="https://github.com/Andyman1222School/PhysicsAnimation-Q-Engine">github.com/Andyman1222School/PhysicsAnimation-Q-Engine</a></i>
+									</p>
 								</div>
 								<ul>
 									<li>Dynamic mesh updating, experimental softbody physics animation support,
 										parent-child object linking</li>
 									<li>Parameterized material shaders with PBR texture support</li>
 									<li>Postprocess rendering pass</li>
-									<li>Tick-based update engine with rendering function separated (experimental
+									<li class="design">Tick-based update engine with rendering function separated
+										(experimental
 										multiprocessing support)</li>
-									<li>Buffered input processing</li>
+									<li class="design">Buffered input processing</li>
 								</ul>
 							</div>
 						</div>
 					</section>
+					<div id="teaching" style="flex: auto">
+						<h2>Teaching/TA Experience</h2>
+						<p><i>Helped, taught students of varying experience one-on-one and in groups, with various
+								subject matters in CS. Collaborated with teacher, other TAs for grading coordination,
+								assistance with other teaching tasks.</i></p>
+						<div style="display: flex">
+							<div style="flex: auto">
+								<h3 class="indent1">AP CS Substitute Teacher, 2025</h3>
+								<ul class="">
+									<li>Taught Java arrays for AP Computer Science</li>
+									<li>assisted students, helped develop
+										projects for class.</li>
+								</ul>
+							</div>
+							<div style="flex: auto">
+								<h3 class="indent1">University Teaching Assistant, 2023-2025</h3>
+								<ul class="">
+									<li>TAed in: Intro to CS; Senior capstone; Algorithms; Software practice; computer
+										networks</li>
+
+									<li>Conducted labs, graded assignments, hosted office hours, lectured.
+									</li>
+							</div>
+						</div>
+					</div>
 					<div class="CS" style="flex: auto">
 						<h2 class="">Intel Corporation Internship, 2020</h2>
 						<ul class="">
@@ -294,7 +331,7 @@
 							<ul>
 								<li>Implement ray and path tracing</li>
 								<li>Monte Carlo GI, final gathering, experimental radiance calculation</li>
-								<li>Submitted into University of Utah Teapot Rendering Competition, 2025</li>
+								<li>University of Utah Teapot Rendering Competition, 2025, submission</li>
 							</ul>
 						</div>
 						<div class="add-bottom-margin research">
@@ -383,75 +420,83 @@
 						</div>
 					</div>
 				</section>
-				<div style="width: 0px; border: .5px solid black; margin: 0 2px;"><!--spacer--></div>
-				<section style="width: 33%;">
+				<div style="width: 0px; border: .5px solid black; margin: 0 4px;"><!--spacer--></div>
+				<section style="width: 35%;">
+					<div id="classes" style="flex: auto">
+						<h2 class="">Skills/Interests</h2>
+						<p class="">
+							<div class="graphics indent1">
+								<h3>Computer graphics</h3>
+								<ul>
+									<li>OpenGL, WebGL</li>
+									<li>HLSL, GLSL</li>
+									<li>Ray tracing algorithms</li>
+									<li>Data visualization methods</li>
+									<li>Computational geometry algorithms</li>
+									<li class="vr">Virtual Reality prototypes</li>
+							</div>
+							<div class="graphics indent1">
+								<h3>VFX</h3>
+								<ul>
+									<li>Particles, shaders/materials, postprocessing</li>
+									<li>Unreal Engine Niagara, Cascade</li>
+									<li>Unity old particles, new particle pipeline</li>
+								</ul>
+							</div>
+							<h3 class="network indent1">Computer networks and security</h3>
+							<div class="network indent1">
+								<h3>Database systems, web development</h3>
+								<ul>
+									<li>HTML/CSS/JS</li>
+									<li>mySQL, PostgreSQL</li>
+									<li>Firebase</li>
+								</ul>
+							</div>
+							<div class="research indent1">
+								<h3>Human-Computer Interaction</h3>
+								<ul>
+									<li>Multiplayer games</li>
+								</ul>
+							</div>
+							<div class="CS indent1"><h3>Game engines</h3>
+								<ul>
+									<li>Unreal Engine (C++/BP)</li>
+									<li>Godot (GDScript/C#)</li>
+									<li>Unity (C#)</li>
+								</ul>
+							</div>
+							<h3 class="CS indent1">Profiling, debugging, optimizing</h3>
+						</p>
+					</div>
 					<h2 id="edu">Education</h2>
 					<section id="edu" style="">
 						<div style="">
 							<h3 class="indent1">University of Utah</h3>
-							<p class="indent2">Salt Lake City, UT; 2021 - 2025<br>
+							<p class="indent2">Salt Lake City, UT<br>
+								2021 - 2025<br>
 								CS master's; CS bachelor's (games emphasis)<br>
 							</p>
 							</p>
 						</div>
 						<div style="" id="rhit">
 							<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
-							<p class="indent2">Terre Haute, IN; 2019 - 2021<br>
+							<p class="indent2">Terre Haute, IN<br>
+								2019 - 2021<br>
 								Transferred to Utah<br>
 								<br>
 							</p>
 						</div>
-						<!--div id="classes" style="flex: auto">
-							<h3 class="indent1">Areas of Interest</h3>
-							<p class="indent2">
-							<ul>
-								<li>Computer graphics</li>
-								<li>Virtual Reality</li>
-								<span class="art">
-									<li>VFX</li>
-								</span>
-								<li>Computer networks and security</li>
-								<li>Database systems, web development</li>
-								<li>Human-Computer Interaction</li>
-								<li>Game engine development</li>
-								<span class="CS">
-								</span></span></p>
-						</div-->
+
 					</section>
-					<div id="teaching" style="flex: auto">
-						<h2>Teaching/TA Experience</h2>
-						<div style="">
-							<div style="flex: auto">
-								<h3 class="indent1">AP CS Substitute Teacher, 2025</h3>
-								<ul class="">
-									<li>Taught Java arrays for AP Computer Science</li>
-									<li>assisted students, helped develop
-										projects for class.</li>
-								</ul>
-							</div>
-							<div style="flex: auto">
-								<h3 class="indent1">University Teaching Assistant, 2023-2025</h3>
-								<p class="indent1">TAed in: </p>
-								<ul>
-									<li>Intro to CS</li>
-									<li>Senior capstone</li>
-									<li>Algorithms</li>
-									<li>Software practice</li>
-									<li>computer networks</li>
-								</ul>
-								<p class="indent1">Conducted labs, graded assignments, hosted office hours, lectured.
-								</p>
-							</div>
-						</div>
-					</div>
 					<section id="links" style="flex: auto">
 						<h2>Repositories</h3>
 							<p class="indent2">
 							<ul>
-								<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
-								<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
-								<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
-								<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
+								<li>Personal: <a href="https://github.com/andyman1222">github/andyman1222</a></li>
+								<li>Academic: <a
+										href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
+								<!--li>Quantonium: <a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li-->
+								<!--li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li-->
 							</ul>
 							</span></span></p>
 					</section>
