@@ -70,9 +70,9 @@
 				<input type="checkbox" name="projects" id="projectsin"
 					oninput="document.querySelectorAll('#projects').forEach((v) => v.style.display = (document.querySelector('#projectsin').checked ? 'initial' : 'none'));"
 					checked><label for="projects">Show projects?</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="checkbox" name="classes" id="classesin"
+				<!--input type="checkbox" name="classes" id="classesin"
 					oninput="document.querySelectorAll('#classes').forEach((v) => v.style.display = (document.querySelector('#classesin').checked ? 'initial' : 'none'));"
-					checked><label for="classes">Show highlighted classes?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					checked><label for="classes">Show highlighted classes?</label>&nbsp;&nbsp;&nbsp;&nbsp;-->
 				<input type="checkbox" name="media" id="mediain"
 					oninput="document.querySelectorAll('#media').forEach((v) => v.style.display = (document.querySelector('#mediain').checked ? 'initial' : 'none'));"
 					checked><label for="media">Show media?</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -90,7 +90,7 @@
 					checked><label for="DevOps">Show DevOps?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="prod" id="prodin"
 					oninput="document.querySelectorAll('.prod').forEach((v) => v.style.display = (document.querySelector('#prodin').checked ? 'initial' : 'none'));"
-					checked><label for="Production">Show Production?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+					checked><label for="Production">Show Production (Quantonium only)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="checkbox" name="links" id="linksin"
 					oninput="document.querySelectorAll('.links').forEach((v) => v.style.display = (document.querySelector('#linksin').checked ? 'initial' : 'none'));"
 					checked><label for="Links">Show repos?</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -100,6 +100,21 @@
 				<input type="checkbox" name="proj" id="projin"
 					oninput="document.querySelectorAll('.proj').forEach((v) => v.style.display = (document.querySelector('#projin').checked ? 'initial' : 'none'));"
 					checked><label for="Proj">Show projects (main page)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="home" id="homein"
+					oninput="document.querySelectorAll('.home').forEach((v) => v.style.display = (document.querySelector('#homein').checked ? 'initial' : 'none'));"
+					checked><label for="Home">Show home project/hobbies?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="vr" id="vrin"
+					oninput="document.querySelectorAll('.vr').forEach((v) => v.style.display = (document.querySelector('#vrin').checked ? 'initial' : 'none'));"
+					checked><label for="VR">Show VR?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="research" id="researchin"
+					oninput="document.querySelectorAll('.research').forEach((v) => v.style.display = (document.querySelector('#researchin').checked ? 'initial' : 'none'));"
+					checked><label for="Research">Show Research (resume only)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="graphics" id="graphicsin"
+					oninput="document.querySelectorAll('.graphics').forEach((v) => v.style.display = (document.querySelector('#graphicsin').checked ? 'initial' : 'none'));"
+					checked><label for="Graphics">Show graphics/vfx?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="vis" id="visin"
+					oninput="document.querySelectorAll('.vis').forEach((v) => v.style.display = (document.querySelector('#visin').checked ? 'initial' : 'none'));"
+					checked><label for="Vis">Show visualization (no graphics)?</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				Objective: <select name="objective" id="objective"
 					onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
 					<option
@@ -146,12 +161,12 @@
 				</div>
 			</div>
 			<hr class="nobreak">
-			<div id="resume">
+			<div id="resume" style="display:flex">
 				<section id="work">
-					<h2>Work Experience</h2>
+					<!--h2>Work Experience</h2-->
 					<section>
 						<div id="quantonium" style="flex: auto">
-							<h3 class="indent1">Quantonium LLC, 2023-</h3>
+							<h2>Quantonium LLC, 2023-</h2>
 							<div style="display: flex">
 								<div class=" left-align">
 									<p class="indent2">Founder, CEO. Game development company seeking to "push the
@@ -159,23 +174,23 @@
 										forward" and develop new software and research.</p>
 									<a class="indent3" href="https://quantonium.net">https://quantonium.net</a>
 								</div>
-								<div class="right-align">
+								<div class="right-align prod">
 									<p class="indent2">Regular Tasks:</p>
 									<ul class="indent3">
 										<li>Managing team members, organizing meetings, accomodating as necessary,
 											performing interviews
 										</li>
 										<li>Business and development operations of company management</li>
-										<li>DevOps- software and account management, CI/CD, backup solutions</li>
+										<li class="devops">DevOps- software and account management (Authentik, LDAP; Docker, Kubernetes; Git, Subversion, Perforce), CI/CD, backup solutions (Bash/PowerShell scripting)</li>
 									</ul>
 								</div>
 							</div>
-							<p class="indent1"><i>Affiliated projects:</i></p>
+							<p class=""><i>Affiliated projects:</i></p>
 							<div class="add-bottom-margin">
-								<div class="indent2"
-									style="display: flex; justify-content: space-between; align-items: center;">
+								<div class="indent1 resume-item">
 									<h3 class="left-align">The Laser Games</h3>
-									<p class="indent4 right-text-align right-align"><i>The Laser Games is a casual/competitive shooter, embracing
+									<p class=" right-align"><i>A
+											casual/competitive shooter, embracing
 											the
 											thrill and experience from real laser tag. An authentic experience, fun
 											for
@@ -183,99 +198,193 @@
 								</div>
 								<ul>
 									<li>In-development multiplayer title set for full release 2027-2028, with
-										post-release updates</li>
-									<li>themed around fun sci-fi, mixed with visual effects and elements found in
-										real
-										life laser tag</li>
+										post-release updates. Made in Unreal Engine, themed around real life laser tag and fun sci-fi.</li>
 									<li>Modular gameplay built from the ground up with intention to easily support
 										modding and quick additions to gameplay</li>
-									<li>VFX- lasers with mirrors to reflect on; sensors with flashing emissive
+									<li class="graphics">VFX- lasers with mirrors to reflect on; sensors with flashing emissive
 										materials, parameterized; postprocess fog and flourescence effect</li>
-									<li>Targeted for Steam Deck and other low end devices with baked lighting, as
+									<li class="CS">Targeted for Steam Deck and other low end devices with baked lighting, as
 										well
 										as high end raytracing compatible devices with Lumen; native Linux support
 									</li>
 								</ul>
 							</div>
-							<div class="add-bottom-margin">
-								<div class="indent2"
-									style="display: flex; justify-content: space-between; align-items: center;">
-									<h3 class="left-align">Q-Engine</h3>
-									<p class="indent4 right-text-align right-align"><i>Game engine in JS/WebGL. URL TBD.</i></p>
-								</div>
-								<ul>
-									<li>Dynamic mesh updating, experimental softbody physics animation support, parent-child object linking</li>
-									<li>Parameterized material shaders with PBR texture support</li>
-									<li>Postprocess rendering pass</li>
-									<li>Tick-based update engine with rendering function separated (experimental multiprocessing support)</li>
-									<li>Buffered input processing</li>
-								</ul>
-							</div>
-							<div class="add-bottom-margin">
-								<div class="indent2"
-									style="display: flex; justify-content: space-between; align-items: center;">
+							<div class="add-bottom-margin CS">
+								<div class="indent1 resume-item">
 									<h3 class="left-align">LaserStats, LaserVis</h3>
-									<p class="indent4 right-text-align right-align"><i>Visualization systems for The Laser Games.</i></p>
+									<p class=" right-align"><i>Visualization systems for The
+											Laser Games.</i></p>
 								</div>
 								<ul>
-									<li>. LaserVis not stable for open source release yet.</li>
-									<li>LaserStats is a data visualization framework and website for The Laser Games player stats. Developed as a component of visualization class. <a href="https://stats.playlaser.games/">stats.playlaser.games</a></li>
-									<ul>
-										<li>Export stats from game into a JSON format, importable and processed locally on the website.</li>
-										<li>Modular design for customization, interactability of visualizations. Builds on traditional laser tag score cards.</li>
+									<li>LaserStats is a data visualization framework and website for The Laser Games
+										player stats. Developed as a component of visualization class. <a
+											href="https://stats.playlaser.games/">stats.playlaser.games</a></li>
+									<ul class="vis">
+										<li>Export stats from game into a JSON format, importable and processed locally
+											on the website.</li>
+										<li>Modular design for customization, interactability of visualizations. Builds
+											on traditional laser tag score cards.</li>
 										<li>Made with d3.js.</li>
 									</ul>
-									<li>LaserGraph is an in-game 3D data visualization system, indended as a plugin to be adaptable in different projects. Not yet open source.</li>
+									<li class="vis">LaserGraph is an in-game 3D data visualization system, indended as a plugin to
+										be adaptable in different projects. Not yet open source.</li>
 									<ul>
 										<li>Visualizations displayed, processed in match replays.</li>
-										<li>Utilizes glyphs, colors, vector streams to depict player velocity, shooting stat, direction.</li>
+										<li>Utilizes glyphs, colors, vector streams to depict player velocity, shooting
+											stat, direction.</li>
+										<li>Create UE materials, color atlases, to visually depict game data</li>
 									</ul>
 									<ul></ul>
 								</ul>
 							</div>
+							<div class="add-bottom-margin graphics">
+								<div class="indent1 resume-item">
+									<h3 class="left-align">One Touch/Space Bar Defender</h3>
+									<p class=" right-align"><i>A small tower defense game jam game in Unreal
+											Engine 4/5, utilizing a single button input, adapted for mobile and PC.</i>
+									</p>
+								</div>
+								<ul>
+									<li>Procedurally generated materials for simple planet terrain, city lights, clouds,
+										and starry nebula sky</li>
+									<li>Custom Niagara particle VFX- electricity, lasers, explosions, wind/shockwave,
+										freezing</li>
+									<li>Available to download and play on Google Play, itch.io.</li>
+								</ul>
+							</div>
+							<div class="add-bottom-margin graphics">
+								<div class="indent1 resume-item">
+									<h3 class="left-align">Q-Engine</h3>
+									<p class=" right-align"><i>Game engine in JS/WebGL. URL
+											TBD.</i></p>
+								</div>
+								<ul>
+									<li>Dynamic mesh updating, experimental softbody physics animation support,
+										parent-child object linking</li>
+									<li>Parameterized material shaders with PBR texture support</li>
+									<li>Postprocess rendering pass</li>
+									<li>Tick-based update engine with rendering function separated (experimental
+										multiprocessing support)</li>
+									<li>Buffered input processing</li>
+								</ul>
+							</div>
 						</div>
-						<div class="CS" style="flex: auto">
-							<h3 class="indent1">AP CS Substitute Teacher, 2025</h3>
-							<p class="indent2">
-								Taught Java arrays for AP Computer Science; assisted students, helped develop
-								projects for class.
-							</p>
-						</div>
-						<div class="CS" style="flex: auto">
-							<h3 class="indent1">University Teaching Assistant, 2023-2025</h3>
-							<p class="indent2">
-								TAed in: intro to CS, senior capstone, algorithms, software practice, computer
-								networks.<br>Conducted labs, graded assignments, hosted office hours, lectured.
-							</p>
-						</div>
-						<div style="flex: auto">
-							<h3 class="indent1">Intel Corporation Internship, 2020</h3>
-							<p class="indent2">
-								Developed Python scripts to automate checking out virtual machines for driver
-								testing.
-							</p>
-						</div>
-
-
 					</section>
+					<div class="CS" style="flex: auto">
+						<h2 class="">Intel Corporation Internship, 2020</h2>
+						<ul class="">
+							<li>Developed Python scripts to automate checking out virtual machines for driver
+								testing.</li>
+							<li>Experience with QA remote hardware validation, Qemu VM setup.</li>
+						</ul>
+					</div>
+					<div id="projects">
+						<h2>Other Projects, Research</h2>
+						<div class="add-bottom-margin graphics">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Ray Tracer</h3>
+									<p class="right-align"><i>OpenGL cross platform C++ software ray tracer</i></p>
+								</div>
+								<ul>
+									<li>Implement ray and path tracing</li>
+									<li>Monte Carlo GI, final gathering, experimental radiance calculation</li>
+									<li>Submitted into University of Utah Teapot Rendering Competition, 2025</li>
+								</ul>
+						</div>
+						<div class="add-bottom-marginresearch">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Multiplayer/AI Behavior Study</h3>
+									<p class="right-align"><i>Project analyzing player behavior in The Laser Games, recreating in bot logic.</i></p>
+								</div>
+								<ul>
+									<li>Research laser tag player behavior, studied common behaviors and interpreted into actions, conditions</li>
+									<li>Integrate AI via Unreal Engine Blackboards, State Machine, and with UE senses framework</li>
+								</ul>
+						</div>
+						<div class="add-bottom-margin networking">
+							<div class="indent1 resume-item research"
+									style="">
+									<h3 class="left-align">Distributed Systems Matchmaking Algorithm</h3>
+									<p class="right-align"><i>Distributed systems architecture to assign machines based on criteria.</i></p>
+								</div>
+								<ul>
+									<li>Developed optimized "MatchTree" algorithm intended to matchmake players/machines efficiently via pruning, caching</li>
+								</ul>
+						</div>
+						<div class="add-bottom-margin research">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Randomness and Uniformity study</h3>
+									<p class="right-align"><i>paper-like project analyzing human-computer interaction regarding randomness.</i></p>
+								</div>
+								<ul>
+									<li>Developed web-based cookie clicker minigame with different weighted random algorithms.</li>
+									<li>Interviewed participants with the game, analyzing their preception on the fairness, funness, randomness of different levels</li>
+									<li>Performed a more broad user survey with questions regarding random systems in general software, games</li>
+								</ul>
+						</div>
+						<div class="add-bottom-margin vr">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Wireless VR Comparison</h3>
+									<p class="right-align"><i>compared techniques of VR streaming using profiling tools.</i></p>
+								</div>
+								<ul>
+									<li>Benchmark includes stress testing connection with Unreal Engine Niagara CPU particle spawning, visual+profiled comparisons</li>
+									<li>Prototyped physics interaction in VR, using Unreal Engine chaos physics+destruction</li>
+								</ul>
+						</div>
+						<div class="add-bottom-margin home">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Home projects/hobbies</h3>
+								</div>
+								<ul>
+									<li>IoT integration- Home Assistant, diyHue setup, connecting with WS281x raspberry pi, DC circuits, soldering</li>
+									<li class="network">Home networking configuration, IT management: VLANs, config in OPNSense, TrueNAS install and app setup, Traefik reverse proxy, VPN server</li>
+									<li>General Linux, Windows installation, debugging (PowerShell, administrative tools); created "Hackintosh" computer</li>
+									<li class="network">DNS, SSL management for family-owned domains; family webpage setups.</li>
+								</ul>
+						</div>
+						<div class="add-bottom-margin other">
+							<div class="indent1 resume-item"
+									style="">
+									<h3 class="left-align">Misc. projects/hobbies</h3>
+								</div>
+								<ul>
+									<li>Unity experience; C#, HLSL</li>
+									<li>Virtualization (HyperV, VirtualBox), WSL/WSA on Windows 10 and 11</li>
+									<li>Rooting Android devices, custom ROM installation</li>
+									<li>Hand tracking integration with Leap Motion</li>
+									<li id="robo">High school robotics leadership, mechanical engineering experience</li>
+									<li id="media">Social media management, content creation; GiMP, Krita, Inkscape, Kden Live, Adobe suite</li>
+									<li class="networking">TCP vs. UDP tester</li>
+									<li class="networking">RoseGamesOnline: Class website project with NodeJS WebSocket backend, running sanitized client generated code</li>
+								</ul>
+						</div>
+					</div>
 				</section>
-				<h2>Education</h2>
-				<section id="edu" style="display: flex">
-					<div style="">
-						<h3 class="indent1">University of Utah</h3>
-						<p class="indent2">Salt Lake City, UT; 2021 - 2025<br>
-							CS master's; CS bachelor's (games emphasis)<br>
-						</p>
-						</p>
-					</div>
-					<div style="" id="rhit">
-						<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
-						<p class="indent2">Terre Haute, IN; 2019 - 2021<br>
-							Transferred to Utah<br>
-							<br>
-						</p>
-					</div>
-					<!--div id="classes" style="flex: auto">
+				<div style="width: 0px; border: .5px solid black; margin: 0 2px;"><!--spacer--></div>
+				<section style="width: 33%;">
+					<h2 id="edu">Education</h2>
+					<section id="edu" style="">
+						<div style="">
+							<h3 class="indent1">University of Utah</h3>
+							<p class="indent2">Salt Lake City, UT; 2021 - 2025<br>
+								CS master's; CS bachelor's (games emphasis)<br>
+							</p>
+							</p>
+						</div>
+						<div style="" id="rhit">
+							<h3 class="indent1">Rose-Hulman Institute of Technology</h3>
+							<p class="indent2">Terre Haute, IN; 2019 - 2021<br>
+								Transferred to Utah<br>
+								<br>
+							</p>
+						</div>
+						<!--div id="classes" style="flex: auto">
 							<h3 class="indent1">Areas of Interest</h3>
 							<p class="indent2">
 							<ul>
@@ -291,18 +400,39 @@
 								<span class="CS">
 								</span></span></p>
 						</div-->
+					</section>
+					<div id="teaching" style="flex: auto">
+						<h2>Teaching/TA</h2>
+						<div style="">
+							<div style="flex: auto">
+								<h3 class="indent1">AP CS Substitute Teacher, 2025</h3>
+								<p class="indent2">
+									Taught Java arrays for AP Computer Science; assisted students, helped develop
+									projects for class.
+								</p>
+							</div>
+							<div style="flex: auto">
+								<h3 class="indent1">University Teaching Assistant, 2023-2025</h3>
+								<p class="indent2">
+									TAed in: intro to CS, senior capstone, algorithms, software practice, computer
+									networks.<br>Conducted labs, graded assignments, hosted office hours, lectured.
+								</p>
+							</div>
+						</div>
+					</div>
+					<section id="links" style="flex: auto">
+						<h2>Repositories</h3>
+							<p class="indent2">
+							<ul>
+								<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
+								<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
+								<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
+								<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
+							</ul>
+							</span></span></p>
+					</section>
 				</section>
-				<section id="links" style="flex: auto">
-					<h2>Repositories</h3>
-						<p class="indent2">
-						<ul>
-							<li><a href="https://github.com/andyman1222">github/andyman1222</a></li>
-							<li><a href="https://github.com/Andyman1222School">github/Andyman1222School</a></li>
-							<li><a href="https://github.com/AndyQuantonium">github/AndyQuantonium</a></li>
-							<li><a href="https://gitlab.com/andyman1222">gitlab/andyman1222</a></li>
-						</ul>
-						</span></span></p>
-				</section>
+
 			</div>
 			<div id="CV" style="display: none;">
 				<br>
@@ -742,9 +872,8 @@
 				</section>
 			</div>
 		</div>
-		<div style="flex: 3" id="resume">
 
-
+		<div style="flex: 3; display: none;" id="CV">
 			<section class="proj">
 				<h2>Research, Projects</h2>
 				<div style="flex-wrap: wrap;">
