@@ -44,6 +44,11 @@ p, ul{
   margin-bottom: .5em;
 }
 
+.hidden {
+  font-size: .01px;
+  color: black;
+}
+
 @media print{
 
   #nobreak{
@@ -135,5 +140,10 @@ p, ul{
     left: 0 !important;
     top: 0 !important;
   }
+
+  .hidden {
+  font-size: .01px;
+  color: white;
+}
 }
 
