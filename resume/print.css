@@ -1,47 +1,72 @@
-.printOnly{
+.printOnly {
   display: none;
 }
 
-#centerMenu{
+#centerMenu {
   font-size: 9pt;
 }
 
-a{
+a {
   display: inline;
 }
 
-.indent1{
+.indent1 {
   margin-left: 20px;
 }
 
-.indent2{
+.indent2 {
   margin-left: 40px;
 }
 
-.indent3{
+.indent3 {
   margin-left: 60px;
 }
 
-h1{
+.left-align {
+  width: 33%;
+  text-align: left;
+}
+
+.right-align {
+  width: 66%;
+
+}
+
+.right-text-align {
+  text-align: right;
+}
+
+h1 {
   /*line-height: 0;*/
   /*margin-top: 0;*/
   margin-bottom: 0;
 }
 
-h2{
+h2 {
   /*line-height: .5;*/
   margin-bottom: .5em
 }
 
-h3{
+h3 {
   /*line-height: 1;*/
   margin-bottom: .25em;
   margin-top: .5em;
 }
 
-p, ul{
+p,
+ul {
   margin-top: .1em;
   margin-bottom: .5em;
+}
+
+.add-bottom-margin {
+  margin-bottom: 1.5em;
+}
+
+.resume-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .hidden {
@@ -49,29 +74,61 @@ p, ul{
   color: black;
 }
 
-@media print{
+@media print {
 
-  #nobreak{
+  .nobreak {
     page-break-after: avoid;
     page-break-inside: avoid;
     page-break-before: avoid;
   }
 
-  #CV, #resume{
+  .nobreak-before {
+    page-break-before: avoid;
+  }
+
+  .nobreak-after {
+    page-break-after: avoid;
+  }
+
+  .nobreak-inside {
+    page-break-inside: avoid;
+  }
+
+  .allowbreak-after,
+  .allowbreak-outside {
+    page-break-after: auto;
+  }
+
+  .allowbreak-before,
+  .allowbreak-outside {
+    page-break-before: auto;
+  }
+
+  #CV,
+  #resume {
     page-break-before: avoid;
     /**page-break-before: always;**/
   }
 
-  #CV, #projects {
+  #CV,
+  #CV section {
     page-break-inside: auto;
   }
 
-  @page{
+  section section {
+    page-break-after: auto;
+  }
+
+  #research {
+    page-break-before: avoid;
+  }
+
+  @page {
     margin: 0 !important;
     margin-top: 20px !important;
   }
-  
-  body{
+
+  body {
     background-color: white !important;
     color: black !important;
     text-align: left;
@@ -79,60 +136,73 @@ p, ul{
     zoom: 70%;
   }
 
-  @page:first{
+  @page: first {
     margin-top: 0;
   }
-  
-  img, #headAndText, btn{
+
+  img,
+  #headAndText,
+  btn {
     display: none !important;
   }
 
-  a, #printOnly a{
+  a,
+  #printOnly a {
     display: inline;
     color: #868686 !important;
   }
 
-  p, li, ul, h3, h4, h5{
+  p,
+  li,
+  ul,
+  h3,
+  h4,
+  h5 {
     color: black;
   }
 
-  h1, h2, h4{
+  h1,
+  h2,
+  h4 {
     color: #792ed3 !important;
-  }
-
-  #allow-break-after, #CV section {
-    page-break-after: auto;
   }
 
   #require-break {
     page-break-after: always;
   }
 
-  p, ul, div, section{
+  p,
+  ul,
+  div,
+  section {
     page-break-inside: avoid;
     page-break-after: auto;
     page-break-before: avoid;
   }
 
-  h1, h2, h3, h4, h5{
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     page-break-before: auto;
     page-break-after: avoid;
   }
 
-  .printOnly{
+  .printOnly {
     display: initial;
   }
 
-  .noprint{
+  .noprint {
     display: none !important;
   }
 
-  hr{
+  hr {
     width: 50%;
     margin: 0;
   }
 
-  #centerMenu{
+  #centerMenu {
     margin: 0 !important;
     padding: 0 10px !important;
     border: 0px !important;
@@ -142,8 +212,7 @@ p, ul{
   }
 
   .hidden {
-  font-size: .01px;
-  color: white;
+    font-size: .01px;
+    color: white;
+  }
 }
-}
-
