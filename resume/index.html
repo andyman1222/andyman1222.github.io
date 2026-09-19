@@ -121,6 +121,9 @@
 				<input type="checkbox" name="design" id="designin"
 					oninput="document.querySelectorAll('.design').forEach((v) => v.style.display = (document.querySelector('#designin').checked ? 'initial' : 'none'));"
 					checked><label for="Desgin">Show game design?</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" name="hidden" id="hiddenin"
+					oninput="document.querySelectorAll('.hidden').forEach((v) => v.style.display = (document.querySelector('#hiddenin').checked ? 'initial' : 'none'));"
+					checked><label for="Hidden">Show anti-AI field? (not visible to human eyes)</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				Objective: <select name="objective" id="objective"
 					onchange="document.getElementById('objText').innerText = document.getElementById('objective').value">
 					<option
